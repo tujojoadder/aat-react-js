@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.chat-section{
+  height: 50vh;
+  width: 100%;
+  overflow-y: scroll;
+}
+.group-chat-section{
+  height: 50vh;
+  width: 100%;
+  overflow-y: scroll;
+}
+.chat-container{
+  display: none;
+ 
+}
+.group-chat-container{
+  display: none;
+ 
+}
+.list-group-item{
+  cursor: pointer;
+}
+.offline-status{
+  color: green;
+}
+.online-status{
+  color: red;
+}
+.current-user-chat{
+  text-align: right;
+  padding: 5px;
+  padding-right: 15px;
+}
+.distance-user-chat{
+  text-align: left;
+  padding: 5px;
+}
+.fa-trash{
+  cursor: pointer;
+}
+.modal-content * {
+  border: none; /* Remove borders from all elements */
+}
+.modal-footer{
+  padding-top: 0px;
+  margin-top: 0px;
+}
+.modal-body{
+  padding: 0px;
+  margin: 0px;
+}
+.modal-head{
+  padding: 0px;
+  margin: 0px;
+}
+.fa-copy{
+  cursor: pointer;
+}
