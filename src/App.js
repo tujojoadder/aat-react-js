@@ -4,6 +4,7 @@ import { BrowserRouter, Route,Routes } from 'react-router-dom'
 
 
 import Home from './features/home/Home';
+import Login from './features/Login/Login';
 function App() {
   
 
@@ -12,6 +13,7 @@ function App() {
   
     <Routes>
     <Route path='/' exact element={<Home/>} />
+    <Route path='/login' exact element={<Login/>} />
    
     </Routes>
   
