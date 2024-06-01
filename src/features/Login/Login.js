@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import "./Login.css";
+import $ from 'jquery';
 import googleLogo from "./images/google.png"; // Import the image
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { change } from "./LoginSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from 'js-cookie';
+
 
 import {
+  useAdditionalInformationMutation,
   useGoogleHandleMutation,
   useUserLoginMutation,
 } from "../../services/userLoginApi";
@@ -27,10 +31,18 @@ export default function Login() {
     { isSuccess: googleHandleSuccess, isLoading: googleHandleLoadding },
   ] = useGoogleHandleMutation();
 
+  const [
+    additionalinformation,
+    { isSuccess: additionalinformationSuccess, isLoading: additionalinformationLoadding },
+  ] = useAdditionalInformationMutation();
+
+
+
+
   //functions
 
   //function for submit the form
-  // Handle form submission
+  // Handle handleCridential
   const handleCridential = async (credentialResponse) => {
     const { credential } = credentialResponse;
     const res = await googleHandle({ token: credential });
@@ -38,6 +50,10 @@ export default function Login() {
     if (res.data) {
       console.log('Login successful', res.data);
       console.log(res.data.user);
+      let token=Cookies.get('userToken');
+      console.log("My token is "+token);
+      console.log(res.data.user);
+
       dispatch(change({ email: res.data.user.email }));  // Example of setting the email
     } else if (res.error) {
       console.log('Login failed', res.error);
@@ -46,7 +62,28 @@ export default function Login() {
   };
   
 
-  const [formData, setFormData] = useState({
+  //handle form submition
+  const handleSubmission = async (e) => {
+   e.preventDefault();
+    const res = await additionalinformation({ formData,email });
+    if (res.data) {
+      console.log('Login successful', res.data.token);
+  
+      Cookies.set('userToken', res.data.token, { expires: 7 }); 
+
+      //error message handaling 
+    } else if (res.error.status==422   ) {
+      console.log( res.error.data.error);
+      $("#submitError").text(res.error.data.error);
+    }
+  };
+
+
+
+
+
+
+  let [formData, setFormData] = useState({
     fname: "",
     lname: "",
     password: "",
@@ -86,7 +123,7 @@ export default function Login() {
 
   // Handle input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
@@ -108,7 +145,7 @@ export default function Login() {
                 <div className="header-text ">
                   <h3 className=" text-center">Create a new account</h3>
                 </div>
-                <form>
+                <form onSubmit={handleSubmission}>
                   <label htmlFor="fname"></label>
                   <input
                     className="form-control form-control-lg bg-light fs-6"
@@ -222,11 +259,13 @@ export default function Login() {
                   </div>
 
                   <div className="text-center ">
-                    <button className="mt-2 btn btn-lg btn-primary text-light w-50 fs-6">
+                    <button className="mt-1 btn btn-lg btn-primary text-light w-50 fs-6">
                       <b>Submit</b>
                     </button>
                   </div>
                 </form>
+                
+                <p className="mx-3 mt-2 text-danger" id="submitError"></p>
               </div>
             </div>
           ) : (

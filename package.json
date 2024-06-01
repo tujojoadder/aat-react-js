@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^14.5.2",
     "bootstrap": "^5.3.3",
     "jquery": "^3.7.1",
+    "js-cookie": "^3.0.5",
     "laravel-echo": "^1.16.1",
     "popper.js": "^1.16.1",
     "pusher-js": "^8.4.0-rc2",

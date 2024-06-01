@@ -34,6 +34,20 @@ googleHandle: builder.mutation({
         },
       }),
 
+
+
+
+ //go with credition 
+additionalInformation: builder.mutation({
+  query: (user) => {
+    return {
+      url: "additionalinformation",
+      method: "POST",
+      body: user,
+    };
+  },
+}),
+
  
 
       
@@ -42,4 +56,4 @@ googleHandle: builder.mutation({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGoogleHandleMutation,useUserLoginMutation} = userLoginApi
+export const { useAdditionalInformationMutation,useGoogleHandleMutation,useUserLoginMutation} = userLoginApi
