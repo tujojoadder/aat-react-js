@@ -42,4 +42,4 @@ googleHandle: builder.mutation({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useUserLoginMutation} = userLoginApi
+export const { useGoogleHandleMutation,useUserLoginMutation} = userLoginApi

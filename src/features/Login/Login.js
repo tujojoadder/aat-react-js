@@ -1,45 +1,50 @@
 import React, { useState } from "react";
 import "./Login.css";
 import googleLogo from "./images/google.png"; // Import the image
-
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { change } from "./LoginSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useUserLoginMutation } from "../../services/userLoginApi";
-export default function Login() {
 
+import {
+  useGoogleHandleMutation,
+  useUserLoginMutation,
+} from "../../services/userLoginApi";
+export default function Login() {
   //selectors
   const email = useSelector((state) => state.login.email);
   //dispacchers
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
 
   //
   //naviaget
   const navigate = useNavigate();
   //Mutation
 
-const [userLogin,{isSuccess}]=useUserLoginMutation();
+  const [userLogin, { isSuccess }] = useUserLoginMutation();
+  const [
+    googleHandle,
+    { isSuccess: googleHandleSuccess, isLoading: googleHandleLoadding },
+  ] = useGoogleHandleMutation();
 
   //functions
 
-  //function for sucessfull getcradention from gmail
-  const handleGoogleLoginSuccess =  () => {
-console.log('dvv');
+  //function for submit the form
+  // Handle form submission
+  const handleCridential = async (credentialResponse) => {
+    const { credential } = credentialResponse;
+    const res = await googleHandle({ token: credential });
+
+    if (res.data) {
+      console.log('Login successful', res.data);
+      console.log(res.data.user);
+      dispatch(change({ email: res.data.user.email }));  // Example of setting the email
+    } else if (res.error) {
+      console.log('Login failed', res.error);
+    }
+
   };
-
-//function for submit the form
-// Handle form submission
-const handleClick = async () => {
-  const res = await userLogin();
-  if (res) {
-   
-    console.log(res);
-  } else if (res.error && res.error.data && res.error.data.error) {
-    console.log(res.error.data.error);
-  }
-};
-
+  
 
   const [formData, setFormData] = useState({
     fname: "",
@@ -49,7 +54,6 @@ const handleClick = async () => {
     birthdate_year: "",
     birthdate_month: "",
     birthdate_day: "",
-   
   });
 
   // Function to populate days based on the selected month and year
@@ -80,8 +84,6 @@ const handleClick = async () => {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   };
 
-  
-
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -106,7 +108,7 @@ const handleClick = async () => {
                 <div className="header-text ">
                   <h3 className=" text-center">Create a new account</h3>
                 </div>
-                <form >
+                <form>
                   <label htmlFor="fname"></label>
                   <input
                     className="form-control form-control-lg bg-light fs-6"
@@ -221,7 +223,7 @@ const handleClick = async () => {
 
                   <div className="text-center ">
                     <button className="mt-2 btn btn-lg btn-primary text-light w-50 fs-6">
-                  <b>Submit</b>    
+                      <b>Submit</b>
                     </button>
                   </div>
                 </form>
@@ -268,25 +270,28 @@ const handleClick = async () => {
                     </small>
                   </div>
                 </div>
-                <div  onClick={handleClick} className="input-group mb-3">
-                  <button className="btn btn-lg btn-primary w-100 fs-6">
+                <div className="input-group mb-3">
+                  <button className="btn btn-lg btn-primary w-100 fs-6" disabled={googleHandleLoadding}>
                     Login
                   </button>
                 </div>
-                
-                
-
-
-
-
-
-
-
 
                 <div className="row">
-                  <small>
-                    Don't have an account? <a href="#">Sign Up</a>
-                  </small>
+                  <small>Don't have an account?</small>
+                </div>
+
+                <div className="text-center mt-2">
+                  <GoogleLogin
+              
+                    onSuccess={(credentialResponse) => {
+                      console.log(credentialResponse);
+                      handleCridential(credentialResponse);
+                    }}
+                    onError={() => {
+                      console.log("Login Failed");
+                    }}
+                  
+                  />
                 </div>
               </div>
             </div>
