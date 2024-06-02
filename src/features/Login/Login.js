@@ -41,13 +41,8 @@ export default function Login() {
     },
   ] = useAdditionalInformationMutation();
 
-  const [
-    login,
-    {
-      isSuccess: loginSucess,
-      isLoading: loginLoading,
-    },
-  ] = useLoginMutation();
+  const [login, { isSuccess: loginSucess, isLoading: loginLoading }] =
+    useLoginMutation();
 
   //functions
 
@@ -80,7 +75,7 @@ export default function Login() {
     const res = await additionalinformation({ formData, email });
     if (res.data) {
       Cookies.set("userToken", res.data.token, { expires: 7 });
-navigate('/');
+      navigate("/");
       //error message handaling
     } else if (res.error.status == 422) {
       console.log(res.error.data.error);
@@ -88,38 +83,27 @@ navigate('/');
     }
   };
 
-  
-
   //handle normal login form submition
   const handleLogdataSubmit = async (e) => {
     e.preventDefault();
 
     const res = await login(loginformData);
     if (res.data) {
-     
-      if (res.data.message=='passwordInvalid') {
-        $("#loginError").text('Password Invalid');
-      }else if(res.data.message=='noEmail'){
-        $("#loginError").text('No email found');
-      }else{// when success
+      if (res.data.message == "passwordInvalid") {
+        $("#loginError").text("Password Invalid");
+      } else if (res.data.message == "noEmail") {
+        $("#loginError").text("No email found");
+      } else {
+        // when success
         Cookies.set("userToken", res.data.token, { expires: 7 });
         navigate("/");
       }
-
     } else if (res.error) {
-     
       $("#loginError").text(res.error.data.error);
     }
   };
 
-
-
-
-
-
-
-
-//addition form data
+  //addition form data
 
   let [formData, setFormData] = useState({
     fname: "",
@@ -131,15 +115,15 @@ navigate('/');
     birthdate_day: "",
   });
 
-//login form data
+  //login form data
 
-let [loginformData, setloginFormData] = useState({
-  email: "",
-  password: "",
-});
+  let [loginformData, setloginFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-//login sate
-const [loadding, setloadding] = useState(false);
+  //login sate
+  const [loadding, setloadding] = useState(false);
 
   // Function to populate days based on the selected month and year
   const populateDays = () => {
@@ -182,244 +166,247 @@ const [loadding, setloadding] = useState(false);
   };
 
   return (
-   
-   
-   
-  
-   <div className="full-body">
+    <div className="full-body">
+      {googleHandleLoadding ? (
+        <Spinner />
+      ) : (
+        <div className="  d-flex justify-content-center align-items-center min-vh-100">
+          {/* Login Container */}
+          <div className="row border rounded-5 p-3 bg-white shadow box-area">
+            {/* Left Box */}
+            <div className="col-md-3">
+              {/* Add content for left box here if needed */}
+            </div>
 
-    {googleHandleLoadding ? (<Spinner/>):(<div className="  d-flex justify-content-center align-items-center min-vh-100">
-        {/* Login Container */}
-        <div className="row border rounded-5 p-3 bg-white shadow box-area">
-          {/* Left Box */}
-          <div className="col-md-3">
-            {/* Add content for left box here if needed */}
-          </div>
+            {/* Right Box */}
 
-          {/* Right Box */}
-
-          {email ? (
-            <div className="col-md-6 right-box">
-              <div className="row align-items-center">
-                <div className="header-text ">
-                  <h3 className=" text-center">Create a new account</h3>
-                </div>
-                <form onSubmit={handleSubmission}>
-                  <label htmlFor="fname"></label>
-                  <input
-                    className="form-control form-control-lg bg-light fs-6"
-                    name="fname"
-                    type="text"
-                    placeholder="First Name"
-                    value={formData.fname}
-                    onChange={handleChange}
-                    required
-                  />
-
-                  <label htmlFor="lname">Last Name:</label>
-                  <input
-                    className="form-control form-control-lg bg-light fs-6"
-                    name="lname"
-                    type="text"
-                    placeholder="Last Name"
-                    value={formData.lname}
-                    onChange={handleChange}
-                    required
-                  />
-
-                  <label htmlFor="password">Password:</label>
-                  <input
-                    className="form-control form-control-lg bg-light fs-6"
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    minLength="8"
-                  />
-
-                  <div className="form-group">
-                    <label htmlFor="gender">Gender:</label>
-                    <select
-                      name="gender"
-                      className="form-control"
-                      value={formData.gender}
+            {email ? (
+              <div className="col-md-6 right-box">
+                <div className="row align-items-center">
+                  <div className="header-text ">
+                    <h3 className=" text-center">Create a new account</h3>
+                  </div>
+                  <form onSubmit={handleSubmission}>
+                    <label htmlFor="fname"></label>
+                    <input
+                      className="form-control form-control-lg bg-light fs-6"
+                      name="fname"
+                      type="text"
+                      placeholder="First Name"
+                      value={formData.fname}
                       onChange={handleChange}
                       required
-                    >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="others">Others</option>
-                    </select>
-                  </div>
+                    />
 
-                  <div className="form-group">
-                    <label htmlFor="birthdate">Birthdate:</label>
-                    <div className="row">
-                      <div className="col-4">
-                        <select
-                          name="birthdate_year"
-                          className="form-control"
-                          value={formData.birthdate_year}
-                          onChange={handleChange}
-                          required
-                        >
-                          <option value="" disabled selected>
-                            Year
-                          </option>
-                          {Array.from(
-                            { length: 100 },
-                            (_, i) => new Date().getFullYear() - i
-                          ).map((year) => (
-                            <option key={year} value={year}>
-                              {year}
+                    <label htmlFor="lname">Last Name:</label>
+                    <input
+                      className="form-control form-control-lg bg-light fs-6"
+                      name="lname"
+                      type="text"
+                      placeholder="Last Name"
+                      value={formData.lname}
+                      onChange={handleChange}
+                      required
+                    />
+
+                    <label htmlFor="password">Password:</label>
+                    <input
+                      className="form-control form-control-lg bg-light fs-6"
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                      minLength="8"
+                    />
+
+                    <div className="form-group">
+                      <label htmlFor="gender">Gender:</label>
+                      <select
+                        name="gender"
+                        className="form-control"
+                        value={formData.gender}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="others">Others</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="birthdate">Birthdate:</label>
+                      <div className="row">
+                        <div className="col-4">
+                          <select
+                            name="birthdate_year"
+                            className="form-control"
+                            value={formData.birthdate_year}
+                            onChange={handleChange}
+                            required
+                          >
+                            <option value="" disabled selected>
+                              Year
                             </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="col-4">
-                        <select
-                          name="birthdate_month"
-                          className="form-control"
-                          value={formData.birthdate_month}
-                          onChange={handleChange}
-                          required
-                        >
-                          <option value="" disabled selected>
-                            Month
-                          </option>
-                          {Array.from({ length: 12 }, (_, i) => i + 1).map(
-                            (month) => (
-                              <option key={month} value={month}>
-                                {new Date(0, month - 1).toLocaleString("en", {
-                                  month: "short",
-                                })}
+                            {Array.from(
+                              { length: 100 },
+                              (_, i) => new Date().getFullYear() - i
+                            ).map((year) => (
+                              <option key={year} value={year}>
+                                {year}
                               </option>
-                            )
-                          )}
-                        </select>
-                      </div>
-                      <div className="col-4">
-                        <select
-                          name="birthdate_day"
-                          className="form-control"
-                          value={formData.birthdate_day}
-                          onChange={handleChange}
-                          required
-                        >
-                          <option value="" disabled selected>
-                            Day
-                          </option>
-                          {populateDays()}
-                        </select>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-4">
+                          <select
+                            name="birthdate_month"
+                            className="form-control"
+                            value={formData.birthdate_month}
+                            onChange={handleChange}
+                            required
+                          >
+                            <option value="" disabled selected>
+                              Month
+                            </option>
+                            {Array.from({ length: 12 }, (_, i) => i + 1).map(
+                              (month) => (
+                                <option key={month} value={month}>
+                                  {new Date(0, month - 1).toLocaleString("en", {
+                                    month: "short",
+                                  })}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </div>
+                        <div className="col-4">
+                          <select
+                            name="birthdate_day"
+                            className="form-control"
+                            value={formData.birthdate_day}
+                            onChange={handleChange}
+                            required
+                          >
+                            <option value="" disabled selected>
+                              Day
+                            </option>
+                            {populateDays()}
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="text-center ">
-                    <button className="mt-1 btn btn-lg btn-primary text-light w-50 fs-6">
-                      <b>Submit</b>
-                    </button>
-                  </div>
-                </form>
+                    <div className="text-center ">
+                      <button className="mt-1 btn btn-lg btn-primary text-light w-50 fs-6">
+                        <b>Submit</b>
+                      </button>
+                    </div>
+                  </form>
 
-                <p className="mt-2 text-danger text-center" id="submitError"></p>
+                  <p
+                    className="mt-2 text-danger text-center"
+                    id="submitError"
+                  ></p>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="col-md-6 right-box">
-              <div className="row align-items-center">
-                <div className="header-text mb-4">
-                  <h2>Hello, Again</h2>
-                  <p>We are happy to have you back.</p>
-                </div>
+            ) : (
+              <div className="col-md-6 right-box">
+                <div className="row align-items-center">
+                  <div className="header-text mb-4">
+                    <h2>Hello, Again</h2>
+                    <p>We are happy to have you back.</p>
+                  </div>
 
+                  <form onSubmit={handleLogdataSubmit}>
+                    <div className="input-group mb-3">
+                      <input
+                        type="email"
+                        className="form-control form-control-lg bg-light fs-6"
+                        placeholder="Email address"
+                        name="email"
+                        value={loginformData.email}
+                        onChange={handleLogdataChange}
+                        required
+                      />
+                    </div>
+                    <div className="input-group mb-1">
+                      <input
+                        type="password"
+                        className="form-control form-control-lg bg-light fs-6"
+                        placeholder="Password"
+                        name="password"
+                        value={loginformData.password}
+                        onChange={handleLogdataChange}
+                        minLength="8"
+                        required
+                      />
+                    </div>
+                    <div className="input-group mb-5 d-flex justify-content-between">
+                      <div className="form-check">
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          id="formCheck"
+                        />
+                        <label
+                          htmlFor="formCheck"
+                          className="form-check-label text-secondary"
+                        >
+                          <small>Remember Me</small>
+                        </label>
+                      </div>
+                      <div className="forgot">
+                        <small>
+                          <div>
+                            <p
+                              className="link-like"
+                              onClick={() => navigate("/forgotpassword")}
+                            >
+                              Forgot Password?
+                            </p>
+                          </div>{" "}
+                        </small>
+                      </div>
+                    </div>
+                    <div className="input-group mb-3">
+                      <button
+                        className="btn btn-lg btn-primary w-100 fs-6"
+                        disabled={googleHandleLoadding || loginLoading}
+                      >
+                        Login
+                      </button>
+                    </div>
+                  </form>
+                  <div className="row">
+                    <small>Don't have an account?</small>
+                  </div>
 
-               <form onSubmit={handleLogdataSubmit}>
-                <div className="input-group mb-3">
-                  <input
-                    type="email"
-                    className="form-control form-control-lg bg-light fs-6"
-                    placeholder="Email address"
-                    name="email"  
-                    value={loginformData.email}
-                    onChange={handleLogdataChange}
-                    required
-
-                  />
-                </div>
-                <div className="input-group mb-1">
-                  <input
-                    type="password"
-                    className="form-control form-control-lg bg-light fs-6"
-                    placeholder="Password"
-                    name="password"  
-                    value={loginformData.password}
-                    onChange={handleLogdataChange}
-                    minLength="8"
-                    required
-
-                  />
-                </div>
-                <div className="input-group mb-5 d-flex justify-content-between">
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="formCheck"
+                  <div className="text-center mt-2 w-75 ">
+                    <GoogleLogin
+                      size="large" // Setting the button size
+                      onSuccess={(credentialResponse) => {
+                        console.log(credentialResponse);
+                        handleCridential(credentialResponse);
+                      }}
+                      onError={() => {
+                        console.log("Login Failed");
+                      }}
                     />
-                    <label
-                      htmlFor="formCheck"
-                      className="form-check-label text-secondary"
-                    >
-                      <small>Remember Me</small>
-                    </label>
                   </div>
-                  <div className="forgot">
-                    <small>
-                      <a href="#">Forgot Password?</a>
-                    </small>
-                  </div>
+
+                  <p
+                    className="mt-2 text-danger text-center"
+                    id="loginError"
+                  ></p>
                 </div>
-                <div className="input-group mb-3">
-                  <button
-                    className="btn btn-lg btn-primary w-100 fs-6"
-                    disabled={googleHandleLoadding || loginLoading}
-                  >
-                    Login
-                  </button>
-                </div>
-                </form>
-                <div className="row">
-                  <small>Don't have an account?</small>
-                </div>
-
-                <div className="text-center mt-2 w-75 ">
-                 
-  <GoogleLogin 
-    size="large" // Setting the button size
-    
-    onSuccess={(credentialResponse) => {
-      console.log(credentialResponse);
-      handleCridential(credentialResponse);
-    }}
-    onError={() => {
-      console.log("Login Failed");
-    }}
-  />
-</div>
-
-
-
-<p className="mt-2 text-danger text-center" id="loginError"></p>
-
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>)}
-      
+      )}
     </div>
   );
 }

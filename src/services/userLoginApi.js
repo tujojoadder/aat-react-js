@@ -61,7 +61,40 @@ login: builder.mutation({
 }),
 
 
+//send email to forgot password
 
+forgotPassword: builder.mutation({
+  query: (user) => {
+    return {
+      url: "forgotpassword",
+      method: "POST",
+      body: user,
+    };
+  },
+}),
+
+
+// reaset password
+resetPassword: builder.mutation({
+  query: (user) => {
+    return {
+      url: "resetpassword",
+      method: "POST",
+      body: user,
+    };
+  },
+}),
+
+// confirm password
+confirmPassword: builder.mutation({
+  query: (user) => {
+    return {
+      url: "confirmpassword",
+      method: "POST",
+      body: user,
+    };
+  },
+}),
 
       
     }),
@@ -69,4 +102,4 @@ login: builder.mutation({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useLoginMutation,useAdditionalInformationMutation,useGoogleHandleMutation,useUserLoginMutation} = userLoginApi
+export const { useConfirmPasswordMutation,useResetPasswordMutation,useForgotPasswordMutation,useLoginMutation,useAdditionalInformationMutation,useGoogleHandleMutation,useUserLoginMutation} = userLoginApi
