@@ -188,8 +188,7 @@ const [loadding, setloadding] = useState(false);
   
    <div className="full-body">
 
-    {googleHandleLoadding && <Spinner/>}
-      <div className="  d-flex justify-content-center align-items-center min-vh-100">
+    {googleHandleLoadding ? (<Spinner/>):(<div className="  d-flex justify-content-center align-items-center min-vh-100">
         {/* Login Container */}
         <div className="row border rounded-5 p-3 bg-white shadow box-area">
           {/* Left Box */}
@@ -396,17 +395,22 @@ const [loadding, setloadding] = useState(false);
                   <small>Don't have an account?</small>
                 </div>
 
-                <div className="text-center mt-2">
-                  <GoogleLogin
-                    onSuccess={(credentialResponse) => {
-                      console.log(credentialResponse);
-                      handleCridential(credentialResponse);
-                    }}
-                    onError={() => {
-                      console.log("Login Failed");
-                    }}
-                  />
-                </div>
+                <div className="text-center mt-2 w-75 ">
+                 
+  <GoogleLogin 
+    size="large" // Setting the button size
+    
+    onSuccess={(credentialResponse) => {
+      console.log(credentialResponse);
+      handleCridential(credentialResponse);
+    }}
+    onError={() => {
+      console.log("Login Failed");
+    }}
+  />
+</div>
+
+
 
 <p className="mt-2 text-danger text-center" id="loginError"></p>
 
@@ -414,7 +418,8 @@ const [loadding, setloadding] = useState(false);
             </div>
           )}
         </div>
-      </div>
+      </div>)}
+      
     </div>
   );
 }
