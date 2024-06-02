@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import "./Login.css";
-import $ from 'jquery';
+import $ from "jquery";
 import googleLogo from "./images/google.png"; // Import the image
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { change } from "./LoginSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from 'js-cookie';
-
+import Cookies from "js-cookie";
 
 import {
   useAdditionalInformationMutation,
   useGoogleHandleMutation,
+  useLoginMutation,
   useUserLoginMutation,
 } from "../../services/userLoginApi";
 export default function Login() {
+  //navigate
+  const navigate = useNavigate();
   //selectors
   const email = useSelector((state) => state.login.email);
   //dispacchers
   const dispatch = useDispatch();
 
   //
-  //naviaget
-  const navigate = useNavigate();
+
   //Mutation
 
   const [userLogin, { isSuccess }] = useUserLoginMutation();
@@ -33,11 +34,19 @@ export default function Login() {
 
   const [
     additionalinformation,
-    { isSuccess: additionalinformationSuccess, isLoading: additionalinformationLoadding },
+    {
+      isSuccess: additionalinformationSuccess,
+      isLoading: additionalinformationLoadding,
+    },
   ] = useAdditionalInformationMutation();
 
-
-
+  const [
+    login,
+    {
+      isSuccess: loginSucess,
+      isLoading: loginLoading,
+    },
+  ] = useLoginMutation();
 
   //functions
 
@@ -48,40 +57,68 @@ export default function Login() {
     const res = await googleHandle({ token: credential });
 
     if (res.data) {
-      console.log('Login successful', res.data);
-      console.log(res.data.user);
-      let token=Cookies.get('userToken');
-      console.log("My token is "+token);
-      console.log(res.data.user);
+      //if user has account
+      if (res.data.message == "have account") {
+        //set cookie
+        Cookies.set("userToken", res.data.token, { expires: 7 });
+        navigate("/");
+      } else {
+        //if user does not have account
 
-      dispatch(change({ email: res.data.user.email }));  // Example of setting the email
+        //set email
+        dispatch(change({ email: res.data.email }));
+      }
     } else if (res.error) {
-      console.log('Login failed', res.error);
+      console.log("Login failed", res.error);
     }
-
   };
-  
 
   //handle form submition
   const handleSubmission = async (e) => {
-   e.preventDefault();
-    const res = await additionalinformation({ formData,email });
+    e.preventDefault();
+    const res = await additionalinformation({ formData, email });
     if (res.data) {
-      console.log('Login successful', res.data.token);
-  
-      Cookies.set('userToken', res.data.token, { expires: 7 }); 
-
-      //error message handaling 
-    } else if (res.error.status==422   ) {
-      console.log( res.error.data.error);
+      Cookies.set("userToken", res.data.token, { expires: 7 });
+navigate('/');
+      //error message handaling
+    } else if (res.error.status == 422) {
+      console.log(res.error.data.error);
       $("#submitError").text(res.error.data.error);
     }
   };
 
+  
+
+  //handle normal login form submition
+  const handleLogdataSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await login(loginformData);
+    if (res.data) {
+     
+      if (res.data.message=='passwordInvalid') {
+        $("#loginError").text('Password Invalid');
+      }else if(res.data.message=='noEmail'){
+        $("#loginError").text('No email found');
+      }else{// when success
+        Cookies.set("userToken", res.data.token, { expires: 7 });
+        navigate("/");
+      }
+
+    } else if (res.error) {
+     
+      $("#loginError").text(res.error.data.error);
+    }
+  };
 
 
 
 
+
+
+
+
+//addition form data
 
   let [formData, setFormData] = useState({
     fname: "",
@@ -92,6 +129,13 @@ export default function Login() {
     birthdate_month: "",
     birthdate_day: "",
   });
+
+//login form data
+
+let [loginformData, setloginFormData] = useState({
+  email: "",
+  password: "",
+});
 
   // Function to populate days based on the selected month and year
   const populateDays = () => {
@@ -121,10 +165,16 @@ export default function Login() {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   };
 
-  // Handle input changes
+  // Handle input changes for addissional info
   const handleChange = (e) => {
     let { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle input changes for login in
+  const handleLogdataChange = (e) => {
+    let { name, value } = e.target;
+    setloginFormData({ ...loginformData, [name]: value });
   };
 
   return (
@@ -264,8 +314,8 @@ export default function Login() {
                     </button>
                   </div>
                 </form>
-                
-                <p className="mx-3 mt-2 text-danger" id="submitError"></p>
+
+                <p className="mt-2 text-danger text-center" id="submitError"></p>
               </div>
             </div>
           ) : (
@@ -275,11 +325,19 @@ export default function Login() {
                   <h2>Hello, Again</h2>
                   <p>We are happy to have you back.</p>
                 </div>
+
+
+               <form onSubmit={handleLogdataSubmit}>
                 <div className="input-group mb-3">
                   <input
-                    type="text"
+                    type="email"
                     className="form-control form-control-lg bg-light fs-6"
                     placeholder="Email address"
+                    name="email"  
+                    value={loginformData.email}
+                    onChange={handleLogdataChange}
+                    required
+
                   />
                 </div>
                 <div className="input-group mb-1">
@@ -287,6 +345,12 @@ export default function Login() {
                     type="password"
                     className="form-control form-control-lg bg-light fs-6"
                     placeholder="Password"
+                    name="password"  
+                    value={loginformData.password}
+                    onChange={handleLogdataChange}
+                    minLength="8"
+                    required
+
                   />
                 </div>
                 <div className="input-group mb-5 d-flex justify-content-between">
@@ -310,18 +374,20 @@ export default function Login() {
                   </div>
                 </div>
                 <div className="input-group mb-3">
-                  <button className="btn btn-lg btn-primary w-100 fs-6" disabled={googleHandleLoadding}>
+                  <button
+                    className="btn btn-lg btn-primary w-100 fs-6"
+                    disabled={googleHandleLoadding || loginLoading}
+                  >
                     Login
                   </button>
                 </div>
-
+                </form>
                 <div className="row">
                   <small>Don't have an account?</small>
                 </div>
 
                 <div className="text-center mt-2">
                   <GoogleLogin
-              
                     onSuccess={(credentialResponse) => {
                       console.log(credentialResponse);
                       handleCridential(credentialResponse);
@@ -329,9 +395,11 @@ export default function Login() {
                     onError={() => {
                       console.log("Login Failed");
                     }}
-                  
                   />
                 </div>
+
+<p className="mt-2 text-danger text-center" id="loginError"></p>
+
               </div>
             </div>
           )}

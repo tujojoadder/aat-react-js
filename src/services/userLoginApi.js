@@ -49,6 +49,19 @@ additionalInformation: builder.mutation({
 }),
 
  
+//normal login
+login: builder.mutation({
+  query: (user) => {
+    return {
+      url: "login",
+      method: "POST",
+      body: user,
+    };
+  },
+}),
+
+
+
 
       
     }),
@@ -56,4 +69,4 @@ additionalInformation: builder.mutation({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useAdditionalInformationMutation,useGoogleHandleMutation,useUserLoginMutation} = userLoginApi
+export const { useLoginMutation,useAdditionalInformationMutation,useGoogleHandleMutation,useUserLoginMutation} = userLoginApi
