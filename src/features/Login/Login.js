@@ -14,6 +14,7 @@ import {
   useLoginMutation,
   useUserLoginMutation,
 } from "../../services/userLoginApi";
+import Spinner from "./Spinner/Spinner";
 export default function Login() {
   //navigate
   const navigate = useNavigate();
@@ -137,6 +138,9 @@ let [loginformData, setloginFormData] = useState({
   password: "",
 });
 
+//login sate
+const [loadding, setloadding] = useState(false);
+
   // Function to populate days based on the selected month and year
   const populateDays = () => {
     const selectedMonth = parseInt(formData.birthdate_month);
@@ -178,7 +182,13 @@ let [loginformData, setloginFormData] = useState({
   };
 
   return (
-    <div className="full-body">
+   
+   
+   
+  
+   <div className="full-body">
+
+    {googleHandleLoadding && <Spinner/>}
       <div className="  d-flex justify-content-center align-items-center min-vh-100">
         {/* Login Container */}
         <div className="row border rounded-5 p-3 bg-white shadow box-area">
