@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../home/Home";
@@ -15,24 +15,24 @@ export default class Navbar extends Component {
             <div className="row h-50">
               <div className="row">
                 <div className="col-3 text-center">
-                  <Link to="/home" className="custom-link">
+                  <NavLink to="/home"  className="custom-link" >
                     <i className="fa-solid fa-house fs-3 py-3"></i>
-                  </Link>
+                  </NavLink>
                 </div>
                 <div className="col-3 text-center">
-                  <Link to="/page" className="custom-link">
+                  <NavLink to="/page"  className="custom-link" >
                     <i className="fa-solid fa-magnifying-glass fs-2 py-3"></i>
-                  </Link>
+                  </NavLink>
                 </div>
                 <div className="col-3 text-center">
-                  <Link to="/page" className="custom-link">
+                  <NavLink to="/page"  className="custom-link" >
                     <i className="fa-solid fa-bell fs-2 py-3"></i>
-                  </Link>
+                  </NavLink>
                 </div>
                 <div className="col-3 text-center">
-                  <Link to="/page" className="custom-link">
+                  <NavLink to="/page"  className="custom-link" >
                     <i className="fa-solid fa-envelope fs-2 py-3"></i>
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
             </div>
@@ -48,23 +48,24 @@ export default class Navbar extends Component {
               </span>
             </div>
 
-            <Link to="/home" className="custom-link">
-              <div className="d-flex align-items-center py-1 pl-5 my-2">
-                <span>
-                  <i className="fa-solid fa-house fs-3"></i>
-                </span>
-                <p className="d-none d-lg-block fs-4 ps-2">Home</p>
-              </div>
-            </Link>
+            <NavLink to="/home" className="custom-link">
+  <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link">
+    <span>
+      <i className="fa-solid fa-house fs-3"></i>
+    </span>
+    <p className="d-none d-lg-block fs-4 ps-2">Home</p>
+  </div>
+</NavLink>
 
-            <Link to="/page" className="custom-link">
+
+            <NavLink to="/page"  className="custom-link" >
               <div className="d-flex align-items-center py-1 my-2 pl-5">
                 <span>
                   <i className="fa-solid fa-hashtag fs-2 d-none d-md-block"></i>
                 </span>
                 <p className="d-none d-lg-block fs-4 ps-2">Explore</p>
               </div>
-            </Link>
+            </NavLink>
 
             <div className="d-flex align-items-center my-2 py-1 pl-5">
               <span>
