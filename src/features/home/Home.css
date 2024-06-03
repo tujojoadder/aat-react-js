@@ -1,0 +1,24 @@
+.scroll-container {
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 17px; /* Adjust as needed */
+  
+}
+
+/* Customize scrollbar styles */
+.scroll-container::-webkit-scrollbar {
+    width: 10px;
+   
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

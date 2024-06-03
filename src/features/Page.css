@@ -1,0 +1,33 @@
+/* Initially hide the scrollbar */
+.scroll-container {
+    height: 100%;
+    overflow-y: hidden;
+    padding-right: 17px; /* Adjust as needed */
+}
+
+/* Customize scrollbar styles */
+.scroll-container::-webkit-scrollbar {
+    width: 10px;
+    height: 20px;
+    
+    
+}
+
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background: #fff2f2;
+    border-radius: 10px;
+}
+
+
+/* Show scrollbar when hovering over the container */
+.scroll-container:hover {
+    overflow-y: scroll;
+}
+
+
+/* Scrolbar */
+
+.scroll-container::-webkit-scrollbar-track {
+    background: white;
+}

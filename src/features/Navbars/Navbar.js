@@ -8,7 +8,7 @@ import Page from "../Page";
 export default class Navbar extends Component {
   render() {
     return (
-      <div className="container-fluid container-md">
+      <div className=" container-sm">
         {/* xs NAV BAR */}
         <nav className="bg-light xs-nav fixed-bottom d-sm-none">
           <div className="container-fluid">
@@ -109,17 +109,37 @@ export default class Navbar extends Component {
             </div>
           </div>
 
-          {/* Main Section */}
-          <div className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar">
-            <div className="row d-flex justify-content-between align-items-center ps-1">
-              <Routes>
-             
+        
+ {/*              <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/page" element={<Page />} />
-              </Routes>
-            </div>
+              </Routes> */}
+
+
+{/* Mid section */}
+<div class="col-12 col-sm-10 col-md-9 col-lg-6  main_bar  ">
+          <div class="row d-flex justify-content-between align-items-center ps-1">
+          <Routes key={window.location.pathname}>
+          <Route path="/home" element={<Home />} />
+                <Route path="/page" element={<Page />} />
+                </Routes>
+ </div>
           </div>
+
+
+      {/* <!-- RIGHT SIDE BAR --> */}
+          <div class="col-lg-3 d-none d-lg-block  w-25 h-25 right_side_bar">  
+          <Routes key={window.location.pathname}>
+          <Route path="/home" element={<Page />} />
+                <Route path="/page" element={<Home />} />
+                </Routes>
+             </div>
+
+
+
+
+             
         </div>
       </div>
     );
