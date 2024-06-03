@@ -19,9 +19,9 @@ export default function ForgotPassword() {
     e.preventDefault();
     const res = await forgotPassword({email});
     if (res.data) {
-console.log(res.data)
+      $("#resetMessage").text(res.data.message);
     } else {
-console.log(res.error);
+      $("#resetMessage").text(res.error.data.error);
     }
   };
 
