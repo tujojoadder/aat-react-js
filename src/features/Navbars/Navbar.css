@@ -1,0 +1,51 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  input:focus {
+    outline: none;
+  }
+  
+  /* Navbar Styles */
+  .xs-nav {
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .left_sidebar {
+    position: sticky;
+    top: 0px;
+    height: fit-content;
+    padding: 20px 10px;
+  }
+  
+  .left_sidebar span {
+    color: #1DA1F2;
+  }
+  
+  .left_sidebar p {
+    margin: 0;
+    color: #333;
+  }
+  
+  .left_sidebar p:hover {
+    color: #1DA1F2;
+  }
+  
+  .left_sidebar .fa-solid,
+  .left_sidebar .fa-brands {
+    color: #1DA1F2;
+  }
+  
+  .left_sidebar .fa-solid:hover,
+  .left_sidebar .fa-brands:hover {
+    color: #1DA1F2;
+  }
+  
+  .left_sidebar div:hover {
+    background-color: hwb(0 83% 3%);
+   border-radius:50px;
+    
+    cursor: pointer;
+  }
+  

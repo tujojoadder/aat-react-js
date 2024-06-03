@@ -9,6 +9,7 @@ import Spinner from './features/Login/Spinner/Spinner';
 import ResetPassword from './features/ResetPassword/ResetPassword';
 import ForgotPassword from './features/ResetPassword/ForgotPassword';
 import NotFound from './features/404/NotFound';
+import Navbar from './features/Navbars/Navbar';
 function App() {
   
 
@@ -16,13 +17,17 @@ function App() {
     <BrowserRouter>
   
     <Routes>
+
+
+    <Route path='/navbar' exact element={<Navbar/>} />
+
+
+
     <Route path='/' exact element={<Home/>} />
     <Route path='/login' exact element={<Login/>} />
     <Route path='/spinner' exact element={<Spinner/>} />
     <Route path='/forgotpassword' exact element={<ForgotPassword/>} />
     <Route path='/resetpassword/:token' exact element={<ResetPassword/>} />
-    //{/* 
-    <Route path='/resetpassword' exact element={<ResetPassword/>} /> */}
     <Route path='*' exact element={<NotFound/>} />
 
     </Routes>
