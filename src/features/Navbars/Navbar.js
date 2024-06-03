@@ -42,50 +42,50 @@ export default class Navbar extends Component {
               </span>
             </div>
 
-            <div className="d-flex align-items-center py-1 pl-5">
+            <div className="d-flex align-items-center py-1 pl-5 my-2">
               <span>
                 <i className="fa-solid fa-house fs-3"></i>
               </span>
               <p className="d-none d-lg-block fs-4 ps-2 ">Home</p>
             </div>
 
-            <div className="d-flex align-items-center py-2 pl-5 ">
+            <div className="d-flex align-items-center py-1 my-2 pl-5 ">
               <span>
                 <i className="fa-solid fa-hashtag fs-2 d-none d-md-block"></i>
               </span>
               <p className="d-none d-lg-block fs-4 ps-2">Explore</p>
             </div>
-            <div className="d-flex align-items-center py-2 pl-5">
+            <div className="d-flex align-items-center my-2 py-1 pl-5">
               <span>
                 <i className="fa-solid fa-bell fs-2"></i>
               </span>
               <p className="d-none d-lg-block fs-4 ps-2">Notifications</p>
             </div>
-            <div className="d-flex align-items-center py-2 pl-5">
+            <div className="d-flex align-items-center my-2 py-1 pl-5">
               <span>
                 <i className="fa-solid fa-envelope fs-2"></i>
               </span>
               <p className="d-none d-lg-block fs-4 ps-2">Messages</p>
             </div>
-            <div className="d-flex align-items-center py-2 pl-5">
+            <div className="d-flex align-items-center my-2 py-1 pl-5">
               <span>
                 <i className="fa-solid fa-bookmark fs-2"></i>
               </span>
               <p className="d-none d-lg-block fs-4 ps-2">Bookmarks</p>
             </div>
-            <div className="d-flex align-items-center py-2 pl-5">
+            <div className="d-flex align-items-center my-2 py-1 pl-5">
               <span>
                 <i className="fa-solid fa-file-lines fs-2"></i>
               </span>
               <p className="d-none d-lg-block fs-4 ps-2">Lists</p>
             </div>
-            <div className="d-flex align-items-center py-2 pl-5">
+            <div className="d-flex align-items-center my-2 py-1 pl-5">
               <span>
                 <i className="fa-solid fa-user fs-2"></i>
               </span>
               <p className="d-none d-lg-block fs-4 ps-2">Profile</p>
             </div>
-            <div className="d-flex align-items-center py-2 pl-5">
+            <div className="d-flex align-items-center my-2 py-1 pl-5">
               <span>
                 <i className="fa-solid fa-ellipsis fs-2"></i>
               </span>
