@@ -14,9 +14,11 @@ body {
   
   .left_sidebar {
     position: sticky;
-    top: 0px;
-    height: fit-content;
+    top: 0;
+    height: 100vh; /* Full height of the viewport */
     padding: 20px 10px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
   }
   
   .left_sidebar span {
@@ -42,10 +44,24 @@ body {
     color: #1DA1F2;
   }
   
-  .left_sidebar div:hover {
-    background-color: hwb(0 83% 3%);
-   border-radius:50px;
-    
+  .left_sidebar .d-flex {
+    padding: 10px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   
+  .left_sidebar .d-flex:hover {
+    background-color: rgb(208, 173, 173);
+    border-radius: 45px;
+  }
+  
+  .left_sidebar .pl-5 {
+    padding-left: 1.25rem !important;
+    border-radius: 45px;
+  }
+.custom-link{
+    text-decoration: none;
+}
+.custom-link:hover {
+    text-decoration: none; /* Remove underline on hover */
+  }
