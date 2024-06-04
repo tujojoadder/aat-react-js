@@ -10,6 +10,7 @@ import ForgotPassword from "./features/ResetPassword/ForgotPassword";
 import NotFound from "./features/404/NotFound";
 import Navbar from "./features/Navbars/Navbar";
 import Page from "./features/Page";
+import Homeleft from "./features/home/Homeleft";
 function App() {
   return (
     <BrowserRouter>
@@ -18,7 +19,8 @@ function App() {
         //private Routes with navbar
         <Route path="/" exact element={<Navbar />}>
           <Route index exact element={<Home />} />
-          <Route path="home" exact element={<Home />} />
+          <Route index exact element={<Homeleft />} />
+
           <Route path="Page" exact element={<Page />} />
         </Route>
 

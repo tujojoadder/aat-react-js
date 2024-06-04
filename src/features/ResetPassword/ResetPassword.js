@@ -60,7 +60,7 @@ export default function ResetPassword() {
             email: response.data.email,
           }));
           setIsTokenValid(true);
-          console.log(response.data);
+         
         } else {
           $("#message").text("Token validation time over");
         }

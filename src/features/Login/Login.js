@@ -44,14 +44,14 @@ export default function Login() {
   const [login, { isSuccess: loginSucess, isLoading: loginLoading }] =
     useLoginMutation();
 
-  //functions
+  //functions 
 
   //function for submit the form
   // Handle handleCridential
   const handleCridential = async (credentialResponse) => {
     const { credential } = credentialResponse;
     const res = await googleHandle({ token: credential });
-
+try{
     if (res.data) {
       //if user has account
       if (res.data.message == "have account") {
@@ -65,28 +65,48 @@ export default function Login() {
         dispatch(change({ email: res.data.email }));
       }
     } else if (res.error) {
-      console.log("Login failed", res.error);
+      $("#loginError").text('Server problem plz try latter');
+    }} catch (error) {
+      // Handle network or unexpected errors
+      $("#loginError").text('Server problem plz try latter');
     }
+  
   };
 
   //handle form submition
   const handleSubmission = async (e) => {
     e.preventDefault();
-    const res = await additionalinformation({ formData, email });
-    if (res.data) {
-      Cookies.set("userToken", res.data.token, { expires: 7 });
-      navigate("/");
-      //error message handaling
-    } else if (res.error.status == 422) {
-      console.log(res.error.data.error);
-      $("#submitError").text(res.error.data.error);
+    try{
+     
+     
+      const res = await additionalinformation({ formData, email });
+      if (res.data) {
+        Cookies.set("userToken", res.data.token, { expires: 7 });
+        navigate("/");
+        //error message handaling
+      } else if (res.error.status == 422) {
+
+        $("#submitError").text(res.error.data.error);
+      }else{
+        $("#submitError").text('Server problem please try again');
+      }
+    }catch (error) {
+  
+      // Handle network or unexpected errors
+      $("#submitError").text('An error occurred while processing your request.');
     }
+   
   };
+
+
+
 
   //handle normal login form submition
   const handleLogdataSubmit = async (e) => {
-    e.preventDefault();
 
+    
+    e.preventDefault();
+try{
     const res = await login(loginformData);
     if (res.data) {
       if (res.data.message == "passwordInvalid") {
@@ -100,8 +120,20 @@ export default function Login() {
       }
     } else if (res.error) {
       $("#loginError").text(res.error.data.error);
+    }} catch (error) {
+     
+      $("#loginError").text('Server Problem please try later');
     }
   };
+
+
+
+
+
+
+
+
+
 
   //addition form data
 
@@ -388,11 +420,11 @@ export default function Login() {
                     <GoogleLogin
                       size="large" // Setting the button size
                       onSuccess={(credentialResponse) => {
-                        console.log(credentialResponse);
+                  
                         handleCridential(credentialResponse);
                       }}
                       onError={() => {
-                        console.log("Login Failed");
+                        $("#loginError").text('Server problem plz try latter ');
                       }}
                     />
                   </div>

@@ -13,18 +13,23 @@ export default function ForgotPassword() {
   //mutation
   const [forgotPassword, { isSuccess,isLoading }] = useForgotPasswordMutation();
 
-
-  //handle form submition
   const handleSubmission = async (e) => {
     e.preventDefault();
-    const res = await forgotPassword({email});
-    if (res.data) {
-      $("#resetMessage").text(res.data.message);
-    } else {
-      $("#resetMessage").text(res.error.data.error);
+    try {
+      const res = await forgotPassword({email});
+      if (res.data) {
+        $("#resetMessage").text(res.data.message);
+      } else {
+        // Ensure res.error and res.error.data are defined before accessing them
+        const errorMessage = res.error && res.error.data ? res.error.data.error : 'An unknown error occurred';
+        $("#resetMessage").text(errorMessage);
+      }
+    } catch (error) {
+      // Handle network or unexpected errors
+      $("#resetMessage").text('Server problem please try later');
     }
   };
-
+  
 
   return (
     <div className="full-body">

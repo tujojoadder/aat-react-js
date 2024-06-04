@@ -37,7 +37,7 @@ export default function Page() {
     const goToTable = () => {
         navigate('/table');
     };
-console.log("Refresh");
+
     return (
         <div style={{ overflowX: 'hidden' }}>
 <div ref={scrollRef} className="scroll-container" style={{ overflowY: 'scroll', position:'fixed'}}>
