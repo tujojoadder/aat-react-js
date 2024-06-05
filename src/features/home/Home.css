@@ -18,8 +18,8 @@
   
   .wrapper .item {
     /* Default width: 4 items for large screens */
-    width: calc((100% - 40px) / 4); /* 40px for margins and paddings */
-    height: 30vh;
+    width: calc((100% - 30px) / 3); /* 40px for margins and paddings */
+    height:auto;
     text-align: center;
     background-color: #ddd;
     margin-right: 10px;
@@ -28,11 +28,22 @@
     scroll-snap-align: start; /* Ensure proper snapping */
   }
   
-  /* Media query for small screens */
-  @media (max-width: 767px) {
-    .wrapper .item {
-      /* Adjust width for small screens */
-      width: calc((100% - 20px) / 2); /* 30px for margins and paddings */
-    }
-  }
-  
+
+    /* Media query for small screens */
+    @media (max-width: 600px) {
+        .wrapper .item {
+          /* Adjust width for small screens */
+          width: calc((100% - 20px) / 2); /* 30px for margins and paddings */
+        }
+      }
+
+          /* Media query for small screens */
+    @media (max-width: 350px) {
+        .wrapper .item {
+          /* Adjust width for small screens */
+          width: calc((100% - 10px) / 1); /* 30px for margins and paddings */
+        }
+      }
+      .name{
+        line-height: 0.9;
+      }
