@@ -19,7 +19,7 @@
   .wrapper .item {
     /* Default width: 4 items for large screens */
     width: calc((100% - 40px) / 4); /* 40px for margins and paddings */
-    height: 25vh;
+    height: 30vh;
     text-align: center;
     background-color: #ddd;
     margin-right: 10px;
@@ -32,7 +32,7 @@
   @media (max-width: 767px) {
     .wrapper .item {
       /* Adjust width for small screens */
-      width: calc((100% - 30px) / 3); /* 30px for margins and paddings */
+      width: calc((100% - 20px) / 2); /* 30px for margins and paddings */
     }
   }
   
