@@ -1,24 +1,21 @@
-.scroll-container {
-    height: 100%;
-    overflow-y: scroll;
-    padding-right: 17px; /* Adjust as needed */
-  
+.wrapper{
+    height:auto;
+    margin-top: 1%;
+   display: flex;
+   overflow-x: auto;
+   overflow-y: hidden;
 }
-
-/* Customize scrollbar styles */
-.scroll-container::-webkit-scrollbar {
-    width: 10px;
-   
+.wrapper::-webkit-scrollbar{
+    width: 0;
 }
+.wrapper .item{
+    min-width:20.5vh;
+    height:25vh;
+    line-height: 110px;
+    text-align: center;
+    background-color: #ddd;
+    margin-right: 10px;
+    border-radius: 15px;
 
-.scroll-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
 
-.scroll-container::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-.scroll-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
 }
