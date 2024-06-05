@@ -15,12 +15,12 @@ export default function SendFriendRequest(Props) {
       <div class="p-2 bd-highlight "style={{ height:'30px',overflow:'hidden' }}>
         
         <div class=" bd-highlight ">
-          <p class="fw-bold">Turjojoadder bfjsfb f jwfjf f jef jf jef je fe jf </p>
+          <p class="fw-bold">Turjo Joadder</p>
         </div>
       </div>
       <div class="ms-auto p-1 bd-highlight">
         
-        <button  type="button" class="btn btn-dark btn-sm ">
+        <button  style={{ borderRadius:'30px' }} type="button" class="btn btn-dark ">
           Add Friend
         </button>
       </div>

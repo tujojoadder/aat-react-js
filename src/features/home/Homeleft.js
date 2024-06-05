@@ -122,7 +122,7 @@ export default function Homeleft() {
                     <h4>Suggested</h4>
                   </div>
                   <div className="col-4">
-                    <h6 className="text-center pt-2 text-info">See All</h6>
+                    <h6 className="text-center pt-2 text-info"> <b>See All</b></h6>
                   </div>
                 </div>
               </div>
