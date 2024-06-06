@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Homeleft.css";
-import SendFriendRequest from "../components/SendFriendRequest";
+import SendFriendRequest from "./Components/SendFriendRequest/SendFriendRequest";
 
 export default function Homeleft() {
   const navigate = useNavigate();
