@@ -1,10 +1,11 @@
 import React from "react";
 import { NavLink, BrowserRouter, Route, Routes } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import Home from "../home/Home";
+
 import Page from "../Page";
 import Homeleft from "../home/Homeleft";
 import "./Navbar.css";
+import Home from "../home/Home";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -122,7 +123,7 @@ const Navbar = () => {
         </div>
 
         {/* RIGHT SIDE BAR */}
-        <div className="col-lg-3 d-none d-lg-block w-25 h-25 right_side_bar">
+        <div className=" col-lg-3 d-none d-lg-block w-25 h-25 right_side_bar">
           <Routes >
             <Route path="/" element={<Homeleft />} />
             <Route path="/page" element={<Home />} />

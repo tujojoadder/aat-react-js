@@ -1,34 +1,34 @@
 input:focus{
-    outline: none;
+  outline: none;
 }
 div.right_side_bar{
-    position: fixed;
-    right: 30px;
-    top: 10px;
-   
+  position: fixed;
+  right: 30px;
+  top: 10px;
+ 
 }
 .left_sidebar{
-    position: sticky;
-    top: 0px;
-    height: fit-content;
+  position: sticky;
+  top: 0px;
+  height: fit-content;
 }
 .hadis-head{
-    width: 100%;
+  width: 100%;
 }
 .hadis-body{
-    width: 100%;
-    
+  width: 100%;
+  
 }
 .hadis-head{
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
 }
 .btn-custom {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .btn-custom .fa-copy {
-    margin-left: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 
@@ -36,41 +36,39 @@ div.right_side_bar{
 
 
 .custom-scroll {
-    overflow-y: hidden;
-    padding-right: 15px; /* Reserve space for scrollbar */
-  }
-  
-  .custom-scroll:hover {
-    overflow-y: scroll;
-  }
-  
-  .custom-scroll::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .custom-scroll::-webkit-scrollbar-track {
-    background: #E5E5E5;
-    border-radius: 10px;
-    margin-bottom: 20px; /* Match the border radius */
+  overflow-y: hidden;
+  overflow-y: scroll;
+}
 
-    
-  }
+
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #E5E5E5;
+  border-radius: 10px;
+  margin-bottom: 20px; /* Match the border radius */
+
   
-  .custom-scroll::-webkit-scrollbar-thumb {
-    background: #cdbaba;
-    border-radius: 10px;
-  }
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #cdbaba;
+  border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #ecb1b1;
+}
+
+.custom-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 10px; /* Match the border radius */
+}
   
-  .custom-scroll::-webkit-scrollbar-thumb:hover {
-    background: #ecb1b1;
-  }
-  
-  .custom-scroll::-webkit-scrollbar-corner {
-    background: transparent;
-  }
-  
-  .custom-scroll::-webkit-scrollbar-track-piece:end {
-    background: transparent;
-    margin-bottom: 10px; /* Match the border radius */
-  }
-    
