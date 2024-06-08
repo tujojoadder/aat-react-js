@@ -180,7 +180,7 @@ ul {
 }
 
 /* Create Tweet box */
-.post-tweet {
+.post {
   background: #fff;
   border-bottom: 10px solid rgb(230, 236, 240);
 }
@@ -190,7 +190,7 @@ ul {
   padding: 0.3rem 1rem;
 }
 
-.post-tweet img {
+.post img {
   display: inline-block;
   margin-right: 5px;
   width: 50px;
@@ -199,7 +199,7 @@ ul {
   align-self: center; 
 }
 
-.post-tweet input {
+.post input {
   width: 90%;
   height: 60px;
   padding: 0.5rem 1rem;
@@ -207,10 +207,10 @@ ul {
   font-size: 1.2rem;
   font-weight: 300;
 }
-.post-tweet input::placeholder {
+.post input::placeholder {
   color: rgba(123, 124, 126, 0.719);
 }
-.post-tweet input:focus {
+.post input:focus {
   outline: none;
 }
 .form-group-2 {
@@ -254,18 +254,18 @@ ul {
 }
 
 /* User Content */
-.tweets img {
+.posts img {
   display: block;
   width: 100%;
 }
-.tweets .user-pics img {
+.posts .user-pics img {
   display: block;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin: 0rem 1rem;
 }
-.tweets {
+.posts {
   display: flex;
   flex-flow: row;
   justify-content: left;
@@ -275,7 +275,7 @@ ul {
   padding-top: 0.5rem;
   border-bottom: 1px solid rgb(230, 236, 240);
 }
-.tweets:hover {
+.posts:hover {
   background: rgb(245, 248, 250);
 }
 .full-name:hover {

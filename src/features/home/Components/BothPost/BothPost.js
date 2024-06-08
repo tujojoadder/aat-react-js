@@ -2,7 +2,7 @@ import React from 'react'
 import image from "./logo1.png";
 export default function BothPost() {
   return (
-    <div class="tweets">
+    <div class="posts">
             <div class="user-pics">
               <img src={image} alt="user1" />
             </div>

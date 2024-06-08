@@ -2,7 +2,7 @@ import React from 'react'
 import image from "./logo.jpg";
 export default function CreatePost() {
   return (
-    <div><div class="create-post">
+    <div><div class="post">
             <form action="">
               <div class="form-group-1">
                 <img src={image} alt="profile-pics" />

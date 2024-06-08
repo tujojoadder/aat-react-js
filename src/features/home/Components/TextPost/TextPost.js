@@ -2,7 +2,7 @@ import React from 'react'
 import image from "./logo.jpg";
 export default function TextPost() {
   return (
-    <div class="tweets">
+    <div class="posts">
             <div class="user-pics">
               <img src={image} alt="user3" />
             </div>
