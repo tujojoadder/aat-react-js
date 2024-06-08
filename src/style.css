@@ -268,7 +268,7 @@ ul {
 .tweets {
   display: flex;
   flex-flow: row;
-  justify-content: center;
+  justify-content: left;
   font-size: 15px;
   width: 100%;
   line-height: 1.75rem;
