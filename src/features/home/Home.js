@@ -1,6 +1,7 @@
 import React from "react";
 import "./Home.css";
 import image from "./logo.jpg";
+import image1 from "./logo2.png";
 import HadithIteam from "./Components/HadithItem/HadithIteam";
 import './.././../all.css';
 import './.././../style.css';
@@ -89,7 +90,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div class="tweets">
+        <div class="tweets ">
           <div class="user-pics"><img src={image} alt="user1"/></div>
           <div class="user-content-box">
             <div class="user-names">
@@ -99,10 +100,9 @@ export default function Home() {
             </div>
             
             <div class="user-content">
-              <p>Eat. Code, Sleep. repeat! <a href="#">#CodeNewbie</a> <a href="#">#100DaysOfCode</a></p>
-              <img style={{width:'100%',height:'auto'}} src={image} alt="content1"/>
+              <p >Eat. Code, Sleep. repeat! <a href="#">#CodeNewbie</a> <a href="#">#100DaysOfCode</a></p>
+              <img style={{Width:'100%',maxHeight:'65vh'}} src={image} alt="content1"/>
             </div>
-  
             <div class="content-icons">
               <i class="far fa-comment blue"> 273</i>
               <i class="fas fa-retweet green"> 2k</i>
@@ -111,7 +111,39 @@ export default function Home() {
             </div>
   
           </div>
+          
         </div>
+
+
+
+        <div class="tweets ">
+          <div class="user-pics"><img src={image} alt="user1"/></div>
+          <div class="user-content-box">
+            <div class="user-names">
+              <hi class="full-name">Eric Alvarez</hi>
+              <p class="user-name">@eric_alvarez</p>
+              <p class="time"> . 2hrs</p>
+            </div>
+            
+            <div class="user-content">
+              <p >Eat. Code, Sleep. repeat! <a href="#">#CodeNewbie</a> <a href="#">#100DaysOfCode</a></p>
+              <img style={{Width:'100%',maxHeight:'65vh'}} src={image1} alt="content1"/>
+            </div>
+             <div class="content-icons">
+              <i class="far fa-comment blue"> 273</i>
+              <i class="fas fa-retweet green"> 2k</i>
+              <i class="far fa-heart red"> 3k</i>
+              <i class="fas fa-chevron-up blue"></i>
+            </div>
+  
+          </div>
+        </div>
+
+
+
+
+
+
 
         <div class="tweets">
           <div class="user-pics"><img src="./img/user4.jpg" alt="user4"/></div>
