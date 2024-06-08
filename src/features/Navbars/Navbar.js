@@ -44,7 +44,7 @@ const Navbar = () => {
 
       <div className="row">
         {/* LEFT SIDE BAR */}
-        <div className="d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar border-end">
+        <div className="d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar">
           <div className="mb-3 d-flex align-items-center justify-content-center">
             <span>
               <i className="fa-brands fa-twitter display-5 text-info"></i>
@@ -113,7 +113,7 @@ const Navbar = () => {
         </div>
 
         {/* Mid section */}
-        <div className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar">
+        <div className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar border">
           <div className="row d-flex justify-content-between align-items-center ps-1">
             <Routes>
               <Route path="/" element={<Home />} />

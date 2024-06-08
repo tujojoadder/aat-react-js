@@ -73,7 +73,7 @@ export default function Homeleft() {
 
             {/* hadis box */}
 
-            <div class="mb-1 mx-3 haddis ">
+            <div class="mb-1 ms-2 haddis ">
               {/* Header */}
               <div
                 class="hadis-head  bg-info d-flex justify-content-between"
@@ -99,7 +99,7 @@ export default function Homeleft() {
                   height: "350px",
                   borderBottomRightRadius: "30px",
                   borderBottomLeftRadius: "30px",
-                  paddingLeft: "30px",
+                 
                 }}
               >
                 <div className="" style={{ maxWidth: "290px" }}>
@@ -118,10 +118,10 @@ export default function Homeleft() {
             <div className=" p-2">
               <div>
                 <div className="row">
-                  <div className="col-8">
+                  <div className="col-6">
                     <h4>Suggested</h4>
                   </div>
-                  <div className="col-4">
+                  <div className="col-6">
                     <h6 className="text-center pt-2 text-info"> <b>See All</b></h6>
                   </div>
                 </div>
