@@ -19,13 +19,20 @@ export default function HadithIteam() {
         </div>
         <div class=" px-1  bd-highlight name">
           <p>
+<<<<<<< HEAD
             <b>Inamul haque Bijoy</b>
+=======
+            <b>Inamul </b>
+>>>>>>> 7ce4116f385624637b2a41cfa44d4649967b55b5
           </p>
         </div>
         <div class=" bd-highlight px-1">এ মর্মে আল্লাহ্ তা’আলার</div>
       </div>
     </div>
+<<<<<<< HEAD
     
+=======
+>>>>>>> 7ce4116f385624637b2a41cfa44d4649967b55b5
   </div>
   )
 }
