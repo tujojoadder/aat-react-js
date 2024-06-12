@@ -21,6 +21,7 @@ export default function Home() {
         <HadithIteam />
         <HadithIteam />
         <HadithIteam />
+        <HadithIteam />
       </div>
       {/* //Main Home container */}
 
