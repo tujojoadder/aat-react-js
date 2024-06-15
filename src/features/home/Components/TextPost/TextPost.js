@@ -7,7 +7,7 @@ export default function TextPost() {
               <img src={image} alt="user3" />
             </div>
             <div class="user-content-box">
-              <div class="user-names">
+              <div class="user-names py-2">
                 <hi class="full-name">Olivia Brent</hi>
                 <p class="user-name">@iamolivia</p>
                 <p class="time"> . 58mins</p>

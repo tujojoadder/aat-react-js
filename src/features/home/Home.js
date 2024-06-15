@@ -12,7 +12,7 @@ import ImagePost from "./Components/ImagePost/ImagePost";
 import BothPost from "./Components/BothPost/BothPost";
 export default function Home() {
   return (
-    <div className=" bg-info p-0 m-0 border">
+    <div className=" p-0 m-0 border" style={{width:'100%'}}>
       {/* //HadithIteam */}
       <div className="wrapper ml-3 my-2  ">
         <HadithIteam />
@@ -26,7 +26,7 @@ export default function Home() {
 
       <div class="center-flex-container flex-item">
         {/*  //Home bar */}
-        <div class="home">
+        <div className="home py-2">
           <h1>Home</h1>
           <i class="fas fa-magic"></i>
         </div>
@@ -41,9 +41,43 @@ export default function Home() {
         <TextPost />
         {/* Image Post */}
         <ImagePost />
+        <ImagePost />
+        <ImagePost />
+        <TextPost />
         {/* BoothPost */}
         <BothPost />
+        <TextPost />
+        <TextPost />
+        <TextPost />
+        <TextPost />
+        {/* Image Post */}
         <ImagePost />
+        <TextPost />
+        {/* BoothPost */}
+        <BothPost />  <TextPost />
+        {/* Image Post */}
+        <ImagePost />
+        <TextPost />
+        {/* BoothPost */}
+        <BothPost />  <TextPost />
+        <BothPost />  <TextPost />
+        <BothPost />  <TextPost />
+        <BothPost />  <TextPost />
+        {/* Image Post */}
+        <ImagePost />
+        <ImagePost />
+        <ImagePost />
+        <ImagePost />
+        <ImagePost />
+        <TextPost />
+        {/* BoothPost */}
+        <BothPost />  <TextPost />
+        {/* Image Post */}
+        <ImagePost />
+        <TextPost />
+        {/* BoothPost */}
+        <BothPost />
+        
       </div>
     </div>
   );

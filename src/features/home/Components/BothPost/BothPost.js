@@ -1,12 +1,12 @@
 import React from 'react'
-import image from "./logo1.png";
+import image from "./logo.jpg";
 export default function BothPost() {
   return (
     <div class="posts">
             <div class="user-pics">
               <img src={image} alt="user1" />
             </div>
-            <div class="user-content-box mt-2">
+            <div class="user-content-box py-2">
               <div class="user-names">
                 <hi class="full-name">Eric Alvarez</hi>
                 <p class="user-name">@eric_alvarez</p>

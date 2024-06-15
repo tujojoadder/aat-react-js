@@ -12,9 +12,7 @@ export default function CreatePost() {
                 <div class="post-icons">
                   <i class="far fa-image"></i>
                   <i class="far fa-file-image"></i>
-                  <i class="fas fa-stream"></i>
-                  <i class="far fa-smile"></i>
-                  <i class="far fa-calendar-check"></i>
+                 
                 </div>
                 <button class="btn" type="submit">
                   Tweet
