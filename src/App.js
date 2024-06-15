@@ -11,6 +11,7 @@ import NotFound from "./features/404/NotFound";
 import Navbar from "./features/Navbars/Navbar";
 import Page from "./features/Page";
 import Homeleft from "./features/home/Homeleft";
+import HadithDay from "./features/home/Components/HadithDay/HadithDay";
 function App() {
   return (
     <BrowserRouter>
@@ -26,11 +27,15 @@ function App() {
 
         //public routes
         <Route path='/' exact element={<Home/>} />
+        <Route path='/day' exact element={<HadithDay/>} />
     <Route path='/login' exact element={<Login/>} />
     <Route path='/spinner' exact element={<Spinner/>} />
     <Route path='/forgotpassword' exact element={<ForgotPassword/>} />
     <Route path='/resetpassword/:token' exact element={<ResetPassword/>} />
     <Route path='*' exact element={<NotFound/>} />      </Routes>
+ 
+
+    
     </BrowserRouter>
   );
 }

@@ -45,70 +45,70 @@ const Navbar = () => {
       <div className="row">
         {/* LEFT SIDE BAR */}
         <div className="d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar">
-          <div className="mb-3 d-flex align-items-center justify-content-center">
+          <div className="mb-3 d-flex align-items-center justify-content-center mydiv">
             <span>
               <i className="fa-brands fa-twitter display-5 text-info"></i>
             </span>
           </div>
 
           <NavLink to="/" className="custom-link">
-            <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link">
+            <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
               <span>
                 <i className="fa-solid fa-house fs-3"></i>
               </span>
-              <p className="d-none d-lg-block fs-4 ps-2">Home</p>
+              <p className="d-none d-lg-block fs-4 ps-2 text">Home</p>
             </div>
           </NavLink>
 
           <NavLink to="/page" className="custom-link">
-            <div className="d-flex align-items-center py-1 my-2 pl-5">
+            <div className="d-flex align-items-center py-1 my-2 pl-5 mydiv">
               <span>
                 <i className="fa-solid fa-hashtag fs-2 d-none d-md-block"></i>
               </span>
-              <p className="d-none d-lg-block fs-4 ps-2">Explore</p>
+              <p className="d-none d-lg-block fs-4 ps-2 text">Explore</p>
             </div>
           </NavLink>
 
-          <div className="d-flex align-items-center my-2 py-1 pl-5">
+          <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
             <span>
               <i className="fa-solid fa-bell fs-2"></i>
             </span>
-            <p className="d-none d-lg-block fs-4 ps-2">Notifications</p>
+            <p className="d-none d-lg-block fs-4 ps-2 text">Notifications</p>
           </div>
 
-          <div className="d-flex align-items-center my-2 py-1 pl-5">
+          <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
             <span>
               <i className="fa-solid fa-envelope fs-2"></i>
             </span>
-            <p className="d-none d-lg-block fs-4 ps-2">Messages</p>
+            <p className="d-none d-lg-block fs-4 ps-2 text">Messages</p>
           </div>
 
-          <div className="d-flex align-items-center my-2 py-1 pl-5">
+          <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
             <span>
               <i className="fa-solid fa-bookmark fs-2"></i>
             </span>
-            <p className="d-none d-lg-block fs-4 ps-2">Bookmarks</p>
+            <p className="d-none d-lg-block fs-4 ps-2 text">Bookmarks</p>
           </div>
 
-          <div className="d-flex align-items-center my-2 py-1 pl-5">
+          <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
             <span>
               <i className="fa-solid fa-file-lines fs-2"></i>
             </span>
-            <p className="d-none d-lg-block fs-4 ps-2">Lists</p>
+            <p className="d-none d-lg-block fs-4 ps-2 text">Lists</p>
           </div>
 
-          <div className="d-flex align-items-center my-2 py-1 pl-5">
+          <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
             <span>
               <i className="fa-solid fa-user fs-2"></i>
             </span>
-            <p className="d-none d-lg-block fs-4 ps-2">Profile</p>
+            <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
           </div>
 
-          <div className="d-flex align-items-center my-2 py-1 pl-5">
+          <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
             <span>
               <i className="fa-solid fa-ellipsis fs-2"></i>
             </span>
-            <p className="d-none d-lg-block fs-4 ps-2">More</p>
+            <p className="d-none d-lg-block fs-4 ps-2 text">More</p>
           </div>
         </div>
 

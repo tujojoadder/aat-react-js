@@ -65,13 +65,15 @@ input:focus {
   border-radius: 45px;
 }
 
-.active p {
+.active .text {
   color: white; /* Change this to the desired color */
 }
-.active div {
+
+.active .mydiv {
   background-color: rgb(22, 130, 232);
   color: white;
 }
+
 .active > .d-flex > span > i {
 color: white;  }
 .custom-link:hover{

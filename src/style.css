@@ -275,9 +275,7 @@ ul {
   padding-top: 0.5rem;
   border-bottom: 1px solid rgb(230, 236, 240);
 }
-.posts:hover {
-  background: rgb(245, 248, 250);
-}
+
 .full-name:hover {
   text-decoration: underline;
 }

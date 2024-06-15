@@ -28,7 +28,7 @@ export default function Home() {
         {/*  //Home bar */}
         <div className="home py-2">
           <h1>Home</h1>
-          <i class="fas fa-magic"></i>
+          
         </div>
 
         {/* Create Post */}
