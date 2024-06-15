@@ -11,10 +11,40 @@ import TextPost from "./Components/TextPost/TextPost";
 import ImagePost from "./Components/ImagePost/ImagePost";
 import BothPost from "./Components/BothPost/BothPost";
 export default function Home() {
-  return <div className="bg-info">
+  return (
+    <div className=" bg-info p-0 m-0 border">
+      {/* //HadithIteam */}
+      <div className="wrapper ml-3 my-2  ">
+        <HadithIteam />
+        <HadithIteam />
+        <HadithIteam />
+        <HadithIteam />
+        <HadithIteam />
+        <HadithIteam />
+      </div>
+      {/* //Main Home container */}
 
+      <div class="center-flex-container flex-item">
+        {/*  //Home bar */}
+        <div class="home">
+          <h1>Home</h1>
+          <i class="fas fa-magic"></i>
+        </div>
 
+        {/* Create Post */}
+        <CreatePost />
 
-    
-  </div>;
+        {/*  <!-- User Content --> */}
+
+        {/* Test Post */}
+
+        <TextPost />
+        {/* Image Post */}
+        <ImagePost />
+        {/* BoothPost */}
+        <BothPost />
+        <ImagePost />
+      </div>
+    </div>
+  );
 }

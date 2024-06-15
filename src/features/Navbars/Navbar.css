@@ -18,7 +18,7 @@ input:focus {
   height: 100vh; /* Full height of the viewport */
   padding: 20px 10px;
   background-color: #fff;
-  border-right: 1px solid #ddd;
+
 }
 
 .left_sidebar span {

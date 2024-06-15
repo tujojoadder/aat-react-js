@@ -2,7 +2,7 @@ import React from 'react'
 import image from "./logo.jpg";
 export default function HadithIteam() {
   return (
-    <div className="item mt-1 pb-2">
+    <div className="item ">
     <div className="user-div ">
       <div class="d-flex flex-column bd-highlight ">
         <div class="mt-2 mb-1 bd-highlight">
