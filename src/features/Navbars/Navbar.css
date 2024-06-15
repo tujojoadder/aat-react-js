@@ -1,93 +1,93 @@
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
-  }
-  
-  input:focus {
-    outline: none;
-  }
-  
-  /* Navbar Styles */
-  .xs-nav {
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .left_sidebar {
-    position: sticky;
-    top: 0;
-    height: 100vh; /* Full height of the viewport */
-    padding: 20px 10px;
-    background-color: #fff;
-    border-right: 1px solid #ddd;
-  }
-  
-  .left_sidebar span {
-    color: #1DA1F2;
-  }
-  
-  .left_sidebar p {
-    margin: 0;
-    color: #333;
-  }
-  
-  .left_sidebar p:hover {
-    color: #ffffff;
-    text-decoration: none;
-  }
-  
-  /* icons */
-  .left_sidebar .fa-solid,
-  .left_sidebar .fa-brands {
-    color: #1DA1F2;
-  }
-  .left_sidebar .fa-solid:hover,
-  .left_sidebar .fa-brands:hover {
-    color: white;
-    
-  }
-  
-  .left_sidebar .d-flex {
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    
-  }
-  
-  .left_sidebar .d-flex:hover {
-    background-color: rgba(153, 137, 244, 0.929);
-    border-radius: 45px;
-    color: white;
-   
-  }
-  
-  .left_sidebar .pl-5 {
-    padding-left: 1.25rem !important;
-    border-radius: 45px;
-  }
+  font-family: Arial, sans-serif;
+}
 
-  .active p {
-    color: white; /* Change this to the desired color */
-  }
-  .active div {
-    background-color: rgb(22, 130, 232);
-    color: white;
-  }
-  .active > .d-flex > span > i {
+input:focus {
+  outline: none;
+}
+
+/* Navbar Styles */
+.xs-nav {
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.left_sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh; /* Full height of the viewport */
+  padding: 20px 10px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+}
+
+.left_sidebar span {
+  color: #1DA1F2;
+}
+
+.left_sidebar p {
+  margin: 0;
+  color: #333;
+}
+
+.left_sidebar p:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* icons */
+.left_sidebar .fa-solid,
+.left_sidebar .fa-brands {
+  color: #1DA1F2;
+}
+.left_sidebar .fa-solid:hover,
+.left_sidebar .fa-brands:hover {
+  color: white;
+  
+}
+
+.left_sidebar .d-flex {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+
+.left_sidebar .d-flex:hover {
+  background-color: rgba(153, 137, 244, 0.929);
+  border-radius: 45px;
+  color: white;
+ 
+}
+
+.left_sidebar .pl-5 {
+  padding-left: 1.25rem !important;
+  border-radius: 45px;
+}
+
+.active p {
+  color: white; /* Change this to the desired color */
+}
+.active div {
+  background-color: rgb(22, 130, 232);
+  color: white;
+}
+.active > .d-flex > span > i {
 color: white;  }
 .custom-link:hover{
-    text-decoration: none;
+  text-decoration: none;
 }
 .custom-link{
-    text-decoration: none;
+  text-decoration: none;
 }
 .custom-link:hover i {
-    color: white;
-  }
-  
-  .custom-link:hover p {
-    color: white;
-  }
-  
-  .left_sidebar .d-flex:hover i {
-    color: white;
-  }
+  color: white;
+}
+
+.custom-link:hover p {
+  color: white;
+}
+
+.left_sidebar .d-flex:hover i {
+  color: white;
+}

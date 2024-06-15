@@ -10,7 +10,7 @@ const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
 
   return (
-    <div className={isNotSm ? "container-sm" : ""}>
+    <div className={isNotSm ? "container-sm" : "mx-1"}>
       {/* xs NAV BAR */}
       <nav className="bg-light xs-nav fixed-bottom d-sm-none">
         <div className="container-fluid">
@@ -113,7 +113,7 @@ const Navbar = () => {
 
         {/* Mid section */}
         <div className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar">
-          <div className="row d-flex justify-content-between align-items-center ps-1">
+          <div className="row d-flex justify-content-between align-items-center">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/page" element={<Page />} />
