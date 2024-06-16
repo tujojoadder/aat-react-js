@@ -7,7 +7,7 @@ export default function TextPost() {
               <img src={image} alt="user3" />
             </div>
             <div class="user-content-box">
-              <div class="user-names py-2">
+              <div class="user-names pt-2">
                 <hi class="full-name">Olivia Brent</hi>
                 <p class="user-name">@iamolivia</p>
                 <p class="time"> . 58mins</p>
@@ -24,7 +24,7 @@ export default function TextPost() {
                 <i class="far fa-comment blue"> 109</i>
                 <i class="fas fa-retweet green"> 865</i>
                 <i class="far fa-heart red">1.6k</i>
-                <i class="fas fa-chevron-up blue"></i>
+             
               </div>
             </div>
           </div>

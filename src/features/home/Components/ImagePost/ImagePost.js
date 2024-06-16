@@ -25,7 +25,7 @@ export default function ImagePost() {
                 <i class="far fa-comment blue"> 273</i>
                 <i class="fas fa-retweet green"> 2k</i>
                 <i class="far fa-heart red"> 3k</i>
-                <i class="fas fa-chevron-up blue"></i>
+                
               </div>
             </div>
           </div>
