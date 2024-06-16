@@ -11,7 +11,7 @@ const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
 
   return (
-    <div className={isNotSm ? "container-sm" : "mx-1"}>
+    <div className={isNotSm ? "container-sm" : ""}>
       {/* xs NAV BAR */}
       <nav className="bg-light xs-nav fixed-bottom d-sm-none">
         <div className="container-fluid">
