@@ -10,12 +10,12 @@ import ImagePost from "./Components/ImagePost/ImagePost";
 import HadithStatus from "./Components/HadithStatus/HadithStatus";
 
 export default function Home() {
-
-
   return (
     <div className="p-0 m-0 border" style={{ width: "100%" }}>
+
+   {/*    Hadith Status */}
+      <HadithStatus />
       
-<HadithStatus/>
       <div className="center-flex-container flex-item">
         <div className="home py-2">
           <h1>Home</h1>
@@ -29,17 +29,7 @@ export default function Home() {
         {/* Image post */}
         <ImagePost />
         <BothPost />
-        <BothPost />
-        <TextPost />
-        <ImagePost />
-        <TextPost />
-        <BothPost />
-        <ImagePost />
-        <TextPost />
-        <BothPost />
-        <TextPost />
-        <TextPost />
-        <TextPost />
+
         <ImagePost />
         <TextPost />
         <TextPost />
