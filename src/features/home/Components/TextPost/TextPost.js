@@ -15,7 +15,7 @@ export default function TextPost() {
 
               <div class="user-content">
                 <p>
-                  We've gotta send kids back to school so one day they can be
+                  We've gotta ve gotta send kids back to ve gotta send kids back to ve gotta send kids back to send kids back to school so one day they can be
                   doctors and scientists, and everyone can ignore them.
                 </p>
               </div>
