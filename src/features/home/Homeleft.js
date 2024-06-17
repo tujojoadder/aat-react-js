@@ -51,21 +51,20 @@ export default function Homeleft() {
         className="scroll-container"
         style={{ overflowY: "scroll", position: "fixed" }}
       >
-        <div className="">
+        
           <div
             class="col-lg-3 d-none d-lg-block  w-25 h-25 right_side_bar"
-            style={{ width: "300px" }} // Set a fixed width for the container
+            style={{ width: "300px",marginLeft:'1000px' }} // Set a fixed width for the container
           >
             {/* search box  */}
             <SearchBox />
 
             {/* hadis box */}
-<HadithBox/>
-            
+            <HadithBox />
 
-            <SuggestedFriend/>
+            <SuggestedFriend />
           </div>
-        </div>
+       
       </div>
     </div>
   );

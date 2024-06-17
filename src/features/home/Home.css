@@ -58,11 +58,7 @@
         border-radius: 50%;
       }
       /* Remove focus outline from all Bootstrap buttons */
-/* Override Bootstrap's focus outline */
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn:focus:not(:focus-visible) {
-    outline: none !important;
-    box-shadow: none !important;
+.btn:focus {
+  outline: none;
+  border: none;
 }
