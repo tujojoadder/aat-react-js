@@ -1,5 +1,6 @@
 import React from 'react';
 import image from "./logo.jpg";
+import BothPost from '../BothPost/BothPost';
 
 const TextPost = () => {
   return (
@@ -37,7 +38,7 @@ const TextPost = () => {
             </div>
             <div className="modal-body">
               {/* Replace with your modal content */}
-              Placeholder text
+   <BothPost/>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
