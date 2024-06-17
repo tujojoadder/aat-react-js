@@ -642,18 +642,17 @@ ul {
 }
 
 .modal-dialog {
-  width: 100%;
+  max-width: 45%;
   position: relative;
- overflow-y: hidden;
    /* Adjust max-width as per your design */
   margin: 0 auto; /* Center modal vertically and leave space at top */
 }
 
 .modal-content {
   width: 100%;
-  height: auto; /* Allow modal content to determine its own height */
-  max-height: 100vh; /* Limit max height if needed */
-  overflow-y: auto; /* Allow modal content to scroll if it exceeds max-height */
+
+  height: 100vh; /* Limit max height if needed */
+  overflow-y: hidden; /* Allow modal content to scroll if it exceeds max-height */
 }
 
 body.modal-open {
@@ -666,3 +665,8 @@ body.modal-open {
   }
 }
 
+@media (max-width: 576px) { /* Adjust breakpoint as needed */
+  .modal-dialog {
+    max-width: 100%;
+  }
+}
