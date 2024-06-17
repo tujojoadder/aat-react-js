@@ -126,7 +126,7 @@ const Navbar = () => {
         <div className=" col-lg-3 d-none d-lg-block w-25 h-25 right_side_bar">
           <Routes >
             <Route path="/" element={<Homeleft />} />
-            <Route path="/page" element={<Home />} />
+        {/*     <Route path="/page" element={<Home />} /> */}
           </Routes>
         </div>
       </div>

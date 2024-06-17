@@ -634,13 +634,10 @@ ul {
 
 /* Prevent Bootstrap modal from hiding scrollbar */
 .modal-open {
-  position: fixed; /* Keep modal fixed within viewport */
+
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+ 
   overflow: auto; /* Ensure modal content can scroll */
 }
 
@@ -665,3 +662,4 @@ body.modal-open {
     margin-left: 10px;
   }
 }
+
