@@ -1,6 +1,8 @@
 import React from 'react';
 import image from "./logo.jpg";
 import BothPost from '../BothPost/BothPost';
+import Comment from '../Comment/Comment';
+import ImagePost from '../ImagePost/ImagePost';
 
 const TextPost = () => {
   return (
@@ -29,7 +31,7 @@ const TextPost = () => {
       </div>
 
       {/* Modal */}
-      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div style={{overflowY:'hidden'}} className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -37,13 +39,18 @@ const TextPost = () => {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              {/* Replace with your modal content */}
-   <BothPost/>
+              <div className="comments" style={{ height:'71vh',overflowY:'scroll' }}>
+<BothPost/>
+<ImagePost/>
+<ImagePost/>
+<ImagePost/>
+              </div>
+              <div className="my-comment" >
+              <Comment/>
+              </div>
+
             </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
-            </div>
+           
           </div>
         </div>
       </div>
