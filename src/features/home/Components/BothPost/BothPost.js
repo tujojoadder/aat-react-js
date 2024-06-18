@@ -24,7 +24,7 @@ export default function BothPost() {
                   alt="content1"
                 />
               </div>
-              <div class="content-icons">
+              <div class="content-icons" >
                 <i class="far fa-comment blue"> 273</i>
                 <i class="fas fa-retweet green"> 2k</i>
                 <i class="far fa-heart red"> 3k</i>
