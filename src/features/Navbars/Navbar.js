@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, BrowserRouter, Route, Routes } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-
+import { Scrollbars } from 'react-custom-scrollbars';
 import Page from "../Page";
 import Homeleft from "../home/Homeleft";
 import "./Navbar.css";
@@ -11,6 +11,7 @@ const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
 
   return (
+    <Scrollbars style={{ width: '100%', height:'101vh' }} >
     <div className={isNotSm ? "container-sm" : "ms-3 me-3"}>
       {/* xs NAV BAR */}
       <nav className="bg-light xs-nav fixed-bottom d-sm-none">
@@ -131,6 +132,7 @@ const Navbar = () => {
         </div>
       </div>
     </div>
+    </Scrollbars>
   );
 };
 

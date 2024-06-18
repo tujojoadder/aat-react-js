@@ -614,7 +614,7 @@ ul {
 
 /* Customize scrollbar */
 ::-webkit-scrollbar {
-  width: 4px; /* Adjust the width of the scrollbar */
+  width: 10px; /* Adjust the width of the scrollbar */
   position: absolute;
 }
 
@@ -670,4 +670,8 @@ body.modal-open {
   .modal-dialog {
     max-width: 100%;
   }
+}
+
+body {
+  overflow: hidden; /* Hide scrollbars */
 }
