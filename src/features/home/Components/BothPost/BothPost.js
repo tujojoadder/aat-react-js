@@ -2,7 +2,7 @@ import React from 'react'
 import image from "./logo.jpg";
 export default function BothPost() {
   return (
-    <div class="posts">
+    <div class="posts ">
             <div class="user-pics">
               <img src={image} alt="user1" />
             </div>
@@ -24,7 +24,7 @@ export default function BothPost() {
                   alt="content1"
                 />
               </div>
-              <div class="content-icons">
+              <div class="content-icons" >
                 <i class="far fa-comment blue"> 273</i>
                 <i class="fas fa-retweet green"> 2k</i>
                 <i class="far fa-heart red"> 3k</i>
