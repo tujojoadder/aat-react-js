@@ -9,9 +9,9 @@ export default function HadithIteam() {
           <img
             src={image}
             style={{
-              width: "60px",
-              height: "60px",
-              borderRadius: "100%",
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
               border: "2px solid blue",
             }}
             alt=""

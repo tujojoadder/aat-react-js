@@ -666,9 +666,9 @@ body.modal-open {
   }
 } */
 
-@media (max-width: 576px) { /* Adjust breakpoint as needed */
+@media (max-width: 1350px) { /* Adjust breakpoint as needed */
   .modal-dialog {
-    max-width: 100%;
+    max-width: 70%;
   }
 }
 

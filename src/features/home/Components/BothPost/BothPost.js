@@ -10,7 +10,7 @@ export default function BothPost() {
         <div className="user-names" style={{ marginTop: '2px' }}>
           <div className="name-column">
             <h1 className="full-name m-0 p-0">Turjo Joadder </h1>
-            <p className="user-name m-0 p-0">@eric_alvareeric</p>
+         fu <p className="user-name m-0 p-0">@eric_alvareeric</p>
           </div>
           <p className="time ms-3" style={{ marginTop: '18px' }}>  2hrs</p>
         </div>

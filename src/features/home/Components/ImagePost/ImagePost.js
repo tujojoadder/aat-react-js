@@ -2,7 +2,7 @@ import React from 'react'
 import image from "./logo1.jpg";
 export default function ImagePost() {
   return (
-    <div class="posts">
+    <div class="posts ">
             <div class="user-pics">
               <img src={image} alt="user1" />
             </div>
