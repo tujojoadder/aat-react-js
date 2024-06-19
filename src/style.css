@@ -659,19 +659,25 @@ body.modal-open {
   overflow-y: hidden !important;
 }
 /* 
-@media (min-width: 576px) {
-  body.modal-open {
-    margin-left: 10px;
-    
-  }
-} */
 
-@media (max-width: 1350px) { /* Adjust breakpoint as needed */
+/* Modal box width  */
+@media (max-width: 1450px) { /* Adjust breakpoint as needed */
   .modal-dialog {
     max-width: 70%;
   }
 }
+@media (max-width: 1200px) { /* Adjust breakpoint as needed */
+  .modal-dialog {
+    max-width: 80%;
+  }
+}
+@media (max-width: 650px) { /* Adjust breakpoint as needed */
+  .modal-dialog {
+    max-width: 100%;
+  }
+}
 
+/* Hide Scroll bar */
 body {
   overflow: hidden; /* Hide scrollbars */
 }
