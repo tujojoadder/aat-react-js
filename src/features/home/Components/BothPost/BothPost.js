@@ -26,7 +26,7 @@ export default function BothPost() {
             alt="content1"
           />
         </div>
-        <div className="content-icons px-4 ">
+        <div className="content-icons px-2 ">
           <i
             className="far fa-comment blue  "
             data-bs-toggle="modal"
@@ -39,7 +39,8 @@ export default function BothPost() {
           <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
 
           <i className="far fa-heart red ps-md-3"> 1.6k</i>
-          <i class="fa-solid fa-gear ps-md-3"></i>
+        
+          <i class="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
         </div>
       </div>
     </div>

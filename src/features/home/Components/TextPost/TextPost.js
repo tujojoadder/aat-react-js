@@ -27,7 +27,7 @@ const TextPost = () => {
           </p>
         </div>
 
-        <div className="content-icons px-4 ">
+        <div className="content-icons  pe-3">
           <i
             className="far fa-comment blue  "
             data-bs-toggle="modal"
@@ -37,10 +37,10 @@ const TextPost = () => {
             109
           </i>
 
-          <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
+          <i className="fa-regular fa-thumbs-down ps-md-3 ms-1"> 536</i>
 
-          <i className="far fa-heart red ps-md-3"> 1.6k</i>
-          <i class="fa-solid fa-gear ps-md-3"></i>
+          <i className="far fa-heart red ps-md-3 ms-1"> 1.6k</i>
+          <i class="fa-solid fa-chevron-up ps-md-3 me-2"></i>
         </div>
       </div>
 
