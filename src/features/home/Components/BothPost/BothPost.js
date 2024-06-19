@@ -26,9 +26,9 @@ export default function BothPost() {
             alt="content1"
           />
         </div>
-        <div className="content-icons ">
+        <div className="content-icons px-4 ">
           <i
-            className="far fa-comment blue ps-md-4"
+            className="far fa-comment blue  "
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >

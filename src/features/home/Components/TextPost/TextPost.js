@@ -13,23 +13,23 @@ const TextPost = () => {
         <img src={image} alt="user3" />
       </div>
       <div className="user-content-text-box">
-        <div className="user-names" style={{ marginTop: '2px' }}>
+        <div className="user-names-text" style={{ marginTop: '2px' }}>
           <div className="name-column">
-            <h1 className="full-name m-0 p-0">Mohammad </h1>
-            <p className="user-name m-0 p-0">@eric_alvareeric</p>
+            <h1 className="full-name-text m-0 p-0">Mohammad </h1>
+            <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
           </div>
-          <p className="time ms-3" style={{ marginTop: '18px' }}>  2hrs</p>
+          <p className="time-text ms-3" style={{ marginTop: '18px' }}>  2hrs</p>
         </div>
 
         <div className="user-content">
           <p>
-            Nc
+           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur, laboriosam sed temporibus qui corporis sequi quos vel officia perferendis fuga odit facere ullam, expedita assumenda illum voluptas commodi. Impedit?
           </p>
         </div>
 
-        <div className="content-icons">
+        <div className="content-icons px-4 ">
           <i
-            className="far fa-comment blue"
+            className="far fa-comment blue  "
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
@@ -37,14 +37,10 @@ const TextPost = () => {
             109
           </i>
 
+          <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
 
-
-        <i className="fa-regular fa-thumbs-down" > 536</i>
-    
-          <i className="far fa-heart red"> 1.6k</i>
-
-          <i class="fa-solid fa-gear"></i>
-       
+          <i className="far fa-heart red ps-md-3"> 1.6k</i>
+          <i class="fa-solid fa-gear ps-md-3"></i>
         </div>
       </div>
 
