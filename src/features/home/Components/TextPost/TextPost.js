@@ -11,10 +11,12 @@ const TextPost = () => {
         <img src={image} alt="user3" />
       </div>
       <div className="user-content-box">
-        <div className="user-names pt-2">
-          <h1 className="full-name">Olivia Brent</h1>
-          <p className="user-name">@iamolivia</p>
-          <p className="time">. 58mins</p>
+      <div className="user-names" style={{ marginTop: '2px' }}>
+          <div className="name-column">
+            <h1 className="full-name m-0 p-0">Mohammad </h1>
+            <p className="user-name m-0 p-0">@eric_alvareeric</p>
+          </div>
+          <p className="time ms-3" style={{ marginTop: '18px' }}>  2hrs</p>
         </div>
 
         <div className="user-content">

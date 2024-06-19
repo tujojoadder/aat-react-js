@@ -6,12 +6,14 @@ export default function ImagePost() {
             <div class="user-pics">
               <img src={image} alt="user1" />
             </div>
-            <div class="user-content-box py-2">
-              <div class="user-names">
-                <hi class="full-name">Eric Alvarez</hi>
-                <p class="user-name">@eric_alvarez</p>
-                <p class="time"> . 2hrs</p>
-              </div>
+            <div class="user-content-box ">
+            <div className="user-names" style={{ marginTop: '2px' }}>
+          <div className="name-column">
+            <h1 className="full-name m-0 p-0">Turjo Joadder </h1>
+            <p className="user-name m-0 p-0">@eric_alvareeric</p>
+          </div>
+          <p className="time ms-3" style={{ marginTop: '18px' }}>  2hrs</p>
+        </div>
 
               <div class="user-content ">
                
