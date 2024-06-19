@@ -28,7 +28,7 @@ export default function BothPost() {
         </div>
         <div className="content-icons px-2 ">
           <i
-            className="far fa-comment blue  "
+            className="far fa-heart red "
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
@@ -38,7 +38,7 @@ export default function BothPost() {
 
           <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
 
-          <i className="far fa-heart red ps-md-3"> 1.6k</i>
+          <i className="far fa-comment blue  ps-md-3"> 1.6k</i>
         
           <i class="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
         </div>
