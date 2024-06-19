@@ -10,7 +10,7 @@ export default function BothPost() {
         <div className="user-names" style={{ marginTop: '2px' }}>
           <div className="name-column">
             <h1 className="full-name m-0 p-0">Turjo Joadder </h1>
-          <p className="user-name m-0 p-0">@eric_alvareeric</p>
+         <p className="user-name m-0 p-0">@eric_alvareeric</p>
           </div>
           <p className="time ms-3" style={{ marginTop: '18px' }}>  2hrs</p>
         </div>
@@ -26,11 +26,20 @@ export default function BothPost() {
             alt="content1"
           />
         </div>
-        <div class="content-icons">
-          <i class="far fa-comment blue"> 273</i>
-          <i class="fas fa-retweet green"> 2k</i>
-          <i class="far fa-heart red"> 3k</i>
+        <div className="content-icons ">
+          <i
+            className="far fa-comment blue"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            {" "}
+            109
+          </i>
 
+          <i className="fa-regular fa-thumbs-down"> 536</i>
+
+          <i className="far fa-heart red"> 1.6k</i>
+          <i class="fa-solid fa-gear"></i>
         </div>
       </div>
     </div>
