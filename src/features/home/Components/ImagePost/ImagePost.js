@@ -20,7 +20,7 @@ export default function ImagePost() {
 
         <div class="user-content  "  style={{marginTop:'-5px'}}>
           <img
-            style={{ Width: "100%", maxHeight: "65vh",minHeight:'350px' }}
+            style={{ Width: "100%", maxHeight: "65vh" }}
             src={image}
             alt="content1"
           />
