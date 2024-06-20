@@ -48,13 +48,13 @@ export default function Homeleft() {
     <div style={{ overflowX: "hidden" }}>
       <div
         ref={scrollRef}
-        className="scroll-container"
+        className="scroll-container w-100"
         style={{ overflowY: "scroll", position: "fixed" }}
       >
         
           <div
-            class="col-lg-3 d-none d-lg-block  w-25 h-25 right_side_bar"
-            style={{ width: "300px",marginLeft:'1000px' }} // Set a fixed width for the container
+            class="col-lg-3 d-none d-lg-block  right_side_bar"
+             
           >
             {/* search box  */}
             <SearchBox />

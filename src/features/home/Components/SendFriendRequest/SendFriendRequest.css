@@ -1,0 +1,56 @@
+/* SendFriendRequest.css */
+.friend-request-container {
+    border: 1px solid #e1e4e8;
+    padding: 10px;
+    max-width: 450px;
+  }
+  
+  .profile-image img {
+    border: 2px solid #d1d5da;
+  }
+  
+  .profile-info {
+    min-width: 0;
+  }
+  
+  .profile-info p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .profile-info .text-muted {
+    font-size: 0.85rem;
+  }
+  
+  .btn-add-friend {
+    color: #fff;
+    background-color: #1da1f2;
+    border: none;
+    border-radius: 25px;
+    padding: 6px 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .btn-add-friend i {
+    margin-right: 5px;
+  }
+  
+  .btn-add-friend:hover {
+    background-color: #0d8de5;
+    color: #f0f8ff;
+  }
+  
+  .btn-add-friend:hover i {
+    color: #f0f8ff;
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+  }
+  

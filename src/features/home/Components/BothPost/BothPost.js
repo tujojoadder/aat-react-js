@@ -21,7 +21,7 @@ export default function BothPost() {
             <a href="#">#100DaysOfCode</a>
           </p>
           <img
-            style={{ Width: "100%", maxHeight: "65vh" }}
+            style={{ Width: "100%", maxHeight: "65vh",minHeight:'350px' }}
             src={image}
             alt="content1"
           />
