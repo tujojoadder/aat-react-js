@@ -31,7 +31,8 @@ const TextPost = () => {
   }, []); // Empty dependency array ensures effect runs only on mount and unmount
 
   return (
-    <div className="posts">
+    
+    <div className="posts ">
       <div className="user-pics">
         <img src={image} alt="user3" />
       </div>

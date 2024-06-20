@@ -35,7 +35,7 @@ export default function HadithStatus() {
         }
       }, []);
   return (
-    <div className="d-flex align-items-center position-relative wrapper-container">
+    <div className="my-2 d-flex align-items-center position-relative wrapper-container" style={{backgroundColor:'#f8f9fa'}}>
     <button
       className="btn btn-primary scroll-button left ms-1"
       onClick={scrollLeft}
