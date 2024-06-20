@@ -79,7 +79,7 @@ export default function TextComment() {
           </span>
         </div>
         {showReplyInput && (
-          <div className="reply-input-box me-md-3 mb-2 mt-1 me-sm-1 d-flex align-items-center">
+          <div className="reply-input-box me-md-3 mb-3 mt-1 me-sm-1 d-flex align-items-center">
             <input
               type="text"
               placeholder="Write a reply..."
@@ -100,7 +100,7 @@ export default function TextComment() {
         {replyComments.map((reply) => (
           <ReplyComment key={reply.id} text={reply.text} />
         ))}
-        <div className="view-replay mt-1 mb-2">
+        <div className="view-replay " style={{ marginTop:'-8px' }}>
           <span
             type="button"
             style={{
