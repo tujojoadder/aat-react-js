@@ -40,7 +40,7 @@ export default function TextComment() {
         </div>
       </div>
 
-      <div className="user-content-text ms-1">
+      <div className="user-content-text ms-2">
         <p style={{ margin: "0px" }}>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci
           tenetur, laboriosam sed temporibus qui corporis sequi quos vel officia
@@ -49,7 +49,7 @@ export default function TextComment() {
         </p>
       </div>
 
-      <div className="content-icons-text pt-2 pe-3 d-flex align-items-center">
+      <div className="content-icons-text pt-1 pb-2 pe-3 ps-2 d-flex align-items-center" style={{ padding: "0px" }}>
         <i
           className="far fa-heart red"
           data-bs-toggle="modal"

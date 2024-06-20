@@ -57,7 +57,7 @@ export default function TextComment() {
         </div>
 
         <div
-          className="content-icons-text pt-2 pe-3 d-flex align-items-center"
+          className="content-icons-text py-2 pe-3 d-flex align-items-center"
           style={{ padding: "0px" }}
         >
           <i
@@ -78,8 +78,29 @@ export default function TextComment() {
             Reply
           </span>
         </div>
-
-        <div className="view-replay mt-1 mb-2 ">
+        {showReplyInput && (
+          <div className="reply-input-box me-md-3 mb-2 mt-1 me-sm-1 d-flex align-items-center">
+            <input
+              type="text"
+              placeholder="Write a reply..."
+              className="form-control reply-input"
+              value={replyText}
+              onChange={handleInputChange}
+            />
+            <button
+              className="btn btn-primary d-flex align-items-center justify-content-center"
+              style={{ borderRadius: "20px", padding: "7px 13px" }}
+              disabled={!replyText.trim()}
+            >
+              <span>Send</span>
+            </button>
+          </div>
+        )}
+        {/* Render reply comments */}
+        {replyComments.map((reply) => (
+          <ReplyComment key={reply.id} text={reply.text} />
+        ))}
+        <div className="view-replay mt-1 mb-2">
           <span
             type="button"
             style={{
@@ -95,30 +116,9 @@ export default function TextComment() {
             View Replies
           </span>
         </div>
+        
 
-        {/* Render reply comments */}
-        {replyComments.map((reply) => (
-          <ReplyComment key={reply.id} text={reply.text} />
-        ))}
-
-        {showReplyInput && (
-          <div className="reply-input-box me-md-3 me-sm-1 d-flex align-items-center">
-            <input
-              type="text"
-              placeholder="Write a reply...x"
-              className="form-control reply-input"
-              value={replyText}
-              onChange={handleInputChange}
-            />
-            <button
-              className="btn btn-primary d-flex align-items-center justify-content-center"
-              style={{ borderRadius: "20px", padding: "7px 13px" }}
-              disabled={!replyText.trim()}
-            >
-              <span>Send</span>
-            </button>
-          </div>
-        )}
+        
       </div>
     </div>
   );
