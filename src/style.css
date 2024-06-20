@@ -614,13 +614,15 @@ ul {
 
 /* Customize scrollbar */
 ::-webkit-scrollbar {
-  width: 10px; /* Adjust the width of the scrollbar */
+  width: 8px; /* Adjust the width of the scrollbar */
   position: absolute;
+  
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #aeacac; /* Color of the scrollbar thumb */
    /* Rounded corners of the thumb */
+   border-radius: 50px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -650,6 +652,7 @@ ul {
 
 .modal-content {
   width: 100%;
+  margin-top: -2px;
 
   height: 100vh; /* Limit max height if needed */
   overflow-y: hidden; /* Allow modal content to scroll if it exceeds max-height */
@@ -664,6 +667,7 @@ body.modal-open {
 @media (max-width: 1450px) { /* Adjust breakpoint as needed */
   .modal-dialog {
     max-width: 70%;
+    height: 90%;
   }
 }
 @media (max-width: 1200px) { /* Adjust breakpoint as needed */

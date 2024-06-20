@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import image from "./logo.jpg";
 import BothPost from "../BothPost/BothPost";
-import Comment from "../Comment/Comment";
-import ImagePost from "../ImagePost/ImagePost";
 import TextComment from "../TextComment/TextComment";
-import ReplyComment from "../ReplyComment/ReplyComment";
+import Comment from "../Comment/Comment/Comment";
 import './TextPost.css';
+
 const TextPost = () => {
+  const [commentsHeight, setCommentsHeight] = useState("80vh"); // Default height for medium devices
+
+  // Function to update the height based on window width
+  const updateHeight = () => {
+    if (window.innerWidth < 576) {
+      setCommentsHeight("72vh"); // Small devices (sm) like mobile phones
+    } else {
+      setCommentsHeight("81vh"); // Medium devices (md) like tablets and desktops
+    }
+  };
+
+  // Effect to update height when component mounts and on window resize
+  useEffect(() => {
+    updateHeight(); // Initial height update
+
+    // Event listener for window resize
+    window.addEventListener("resize", updateHeight);
+
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []); // Empty dependency array ensures effect runs only on mount and unmount
+
   return (
     <div className="posts">
       <div className="user-pics">
@@ -47,13 +70,13 @@ const TextPost = () => {
       {/* Modal */}
       <div
         style={{ overflowY: "hidden" }}
-        className="modal fade"
+        className="modal fade "
         id="exampleModal"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog ">
           <div className="modal-content">
             <div className="modal-header shadow-sm p-3 bg-body rounded">
               <h5 className="modal-title fs-5" id="exampleModalLabel">
@@ -69,7 +92,7 @@ const TextPost = () => {
             <div className="modal-body">
               <div
                 className="comments pb-4"
-                style={{ height: "71vh", overflowY: "scroll" }}
+                style={{ height: commentsHeight, overflowY: "scroll" }}
               >
                 <BothPost />
                 <TextComment />
@@ -77,11 +100,10 @@ const TextPost = () => {
                 <TextComment />
                 <TextComment />
                 <TextComment />
-               
                 <TextComment />
               </div>
               <div className="my-comment">
-                <Comment />
+                <Comment/>
               </div>
             </div>
           </div>
