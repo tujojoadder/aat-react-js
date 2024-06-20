@@ -12,7 +12,7 @@ export default function Comment() {
     <div className="create-comment shadow-sm   bg-body rounded" >
       <div className="post ">
         <form action="">
-          <div className="form-group-1 d-flex align-items-center py-md-3 " style={{ padding: '10px 15px', borderRadius: '8px', backgroundColor: '#f0f2f5', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', position: 'relative' }}>
+          <div className="form-group-1 d-flex align-items-center py-md-3 " style={{ padding: '10px 15px', backgroundColor: '#f0f2f5', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', position: 'relative' }}>
             <img src={image} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} alt="profile-pic" />
             <div style={{ flexGrow: 1, position: 'relative' }} >
               <input

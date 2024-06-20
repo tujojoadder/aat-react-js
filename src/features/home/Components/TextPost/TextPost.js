@@ -77,7 +77,7 @@ const TextPost = () => {
         aria-hidden="true"
       >
         <div className="modal-dialog ">
-          <div className="modal-content">
+          <div className="modal-content ">
             <div className="modal-header shadow-sm p-3 bg-body rounded">
               <h5 className="modal-title fs-5" id="exampleModalLabel">
                 Comment
@@ -89,10 +89,10 @@ const TextPost = () => {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body ">
               <div
-                className="comments pb-4"
-                style={{ height: commentsHeight, overflowY: "scroll" }}
+                className="comments pb-4 px-md-4"
+                style={{ height: commentsHeight, overflowY: "scroll",overflowX:'hidden' }}
               >
                 <BothPost />
                 <TextComment />
