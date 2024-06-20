@@ -68,18 +68,16 @@ const TextPost = () => {
             </div>
             <div className="modal-body">
               <div
-                className="comments"
+                className="comments pb-4"
                 style={{ height: "71vh", overflowY: "scroll" }}
               >
                 <BothPost />
                 <TextComment />
                 <TextComment />
                 <TextComment />
-                <div className="replay ml-4">
-                  <ReplyComment />
-                  <ReplyComment />
-                  <ReplyComment />
-                </div>
+                <TextComment />
+                <TextComment />
+               
                 <TextComment />
               </div>
               <div className="my-comment">
