@@ -12,11 +12,11 @@ export default function BothPost() {
             <h1 className="full-name m-0 p-0">Turjo Joadder </h1>
          <p className="user-name m-0 p-0">@eric_alvareeric</p>
           </div>
-          <p className="time ms-3" style={{ marginTop: '18px' }}>  2hrs</p>
+          <p className="time ms-3" style={{ paddingTop: '18px' }}>  2hrs</p>
         </div>
 
-        <div class="user-content">
-          <p>
+        <div class="user-content" style={{marginTop:'-10px'}}>
+          <p style={{marginBottom:'5px'}}>
             Eat. Code, Sleep. repeat! <a href="#">#CodeNewbie</a>{" "}
             <a href="#">#100DaysOfCode</a>
           </p>

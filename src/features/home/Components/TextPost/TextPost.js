@@ -18,11 +18,11 @@ const TextPost = () => {
             <h1 className="full-name-text m-0 p-0">Mohammad </h1>
             <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
           </div>
-          <p className="time-text ms-3" style={{ marginTop: '18px' }}>  2hrs</p>
+          <p className="time-text ms-3" style={{ marginTop: '10px' }}>  2hrs</p>
         </div>
 
         <div className="user-content">
-          <p>
+          <p style={{margin:'0px'}}>
            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur, laboriosam sed temporibus qui corporis sequi quos vel officia perferendis fuga odit facere ullam, expedita assumenda illum voluptas commodi. Impedit?
           </p>
         </div>
@@ -72,6 +72,8 @@ const TextPost = () => {
                 style={{ height: "71vh", overflowY: "scroll" }}
               >
                 <BothPost />
+                <TextComment />
+                <TextComment />
                 <TextComment />
                 <div className="replay ml-4">
                   <ReplyComment />
