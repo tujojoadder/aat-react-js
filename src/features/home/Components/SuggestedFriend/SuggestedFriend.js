@@ -10,10 +10,10 @@ export default function SuggestedFriend() {
     <div>
       <div className="row">
         <div className="col-6">
-          <h3>Suggested</h3>
+          <h4 className='ps-3 pt-1'>Suggested</h4>
         </div>
         <div className="col-6">
-          <h6 className="text-center  text-info">
+          <h6 className="text-center pt-3 text-info ">
             {" "}
             <b>See All</b>
           </h6>
