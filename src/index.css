@@ -8,9 +8,18 @@ body {
 
 
   
-  background: linear-gradient(to right,#ffffff 50%, #f9f9f9 50%);
 
+background: linear-gradient(to right, #ffffff 20%, #f0f2f5 20%);
 }
+
+
+
+
+
+
+
+
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

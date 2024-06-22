@@ -11,11 +11,11 @@ const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
 
   return (
-    <Scrollbars style={{ width: '100%', height:'103vh' }} >
-  <div className={isNotSm ? "container-sm" : "ms-3 me-3"} 
+    <Scrollbars style={{ width: '100%', height:'105vh' }} >
+  <div className={isNotSm ? "container-sm " : "ms-3 me-3"} 
     style={{
-        backgroundColor: '#ffffff',  
-        background: 'linear-gradient(to right, #ffffff 20%, #f9f9f9 80%)'
+        
+        background: 'linear-gradient(to right, #ffffff 20%, #f0f2f5 80%)'
     }}
 >
       {/* xs NAV BAR */}
@@ -50,9 +50,9 @@ const Navbar = () => {
 
       <div className="row">
         {/* LEFT SIDE BAR */}
-        <div  className="p-0  d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar  ">
+        <div style={{backgroundColor:'#f1f3f5',height:'105vh'}}  className="p-0 d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar  ">
 
-          <div className="pe-2 pt-5    bg-body rounded" style={{width:'88%',height:'100vh'}}>
+          <div className="pe-2 pt-5   bg-body rounded" style={{width:'88%',height:'105vh'}}>
           <div className="  mb-3 d-flex align-items-center justify-content-center mydiv">
             <span>
               <i className="fa-brands fa-twitter display-5 text-info"></i>
