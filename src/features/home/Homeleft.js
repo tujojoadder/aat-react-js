@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Homeleft.css";
 import SendFriendRequest from "./Components/SendFriendRequest/SendFriendRequest";
 import SearchBox from "./Components/SearchBox/SearchBox";
 import HadithBox from "./Components/Hadithbox/HadithBox";
@@ -49,23 +48,19 @@ export default function Homeleft() {
       <div
         ref={scrollRef}
         className="scroll-container w-100"
-        style={{ overflowY: "scroll", position: "fixed" }}
+        style={{ overflowY: "hidden", position: "fixed" }}
       >
-        
-          <div
-            class="col-lg-3 d-none d-lg-block  right_side_bar"
-             
-          >
-            {/* search box  */}
-            <SearchBox />
+        <div className="col-lg-3 p-0 m-0 right_side_bar">
+          {/* search box  */}
+          <SearchBox />
 
-            {/* hadis box */}
-            <HadithBox />
+          {/* hadis box */}
+          <HadithBox />
 
-            <SuggestedFriend />
-          </div>
-       
+          <SuggestedFriend />
+        </div>
       </div>
+   
     </div>
   );
 }

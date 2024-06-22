@@ -10,7 +10,7 @@ export default function SuggestedFriend() {
     <div>
       <div className="row">
         <div className="col-6">
-          <h4>Suggested</h4>
+          <h3>Suggested</h3>
         </div>
         <div className="col-6">
           <h6 className="text-center  text-info">
@@ -20,7 +20,7 @@ export default function SuggestedFriend() {
         </div>
       </div>
     </div>
-    <Scrollbars style={{ width: '100%', height:'30vh' }} autoHide >
+    <Scrollbars style={{ width: '100%', height:'28vh' }} autoHide >
 
     <SendFriendRequest />
     <SendFriendRequest />
