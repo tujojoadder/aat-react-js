@@ -6,7 +6,7 @@ export default function SuggestedFriend() {
   return (
 
    
-    <div className=" ">
+    <div className=" ps-1">
     <div>
       <div className="row">
         <div className="col-6">
