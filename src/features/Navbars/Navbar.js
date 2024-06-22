@@ -50,7 +50,7 @@ const Navbar = () => {
 
       <div className="row">
         {/* LEFT SIDE BAR */}
-        <div style={{backgroundColor:'#f0f2f5'}} className="p-0  d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar  ">
+        <div style={{backgroundColor:'#f0f2f5',height:'103vh'}} className="p-0  d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar  ">
 
           <div className="pe-2 pt-5   bg-body rounded" style={{width:'88%',height:'105vh'}}>
           <div className="  mb-3 d-flex align-items-center justify-content-center mydiv">
