@@ -6,7 +6,7 @@ export default function SuggestedFriend() {
   return (
 
    
-    <div className=" p-2">
+    <div className=" ">
     <div>
       <div className="row">
         <div className="col-6">
@@ -20,7 +20,10 @@ export default function SuggestedFriend() {
         </div>
       </div>
     </div>
-    <Scrollbars style={{ width: '100%', height:'28vh' }} autoHide >
+    <Scrollbars style={{ width: '100%', height:'32vh' }} autoHide >
+<div className="mb-4">
+
+
 
     <SendFriendRequest />
     <SendFriendRequest />
@@ -29,6 +32,7 @@ export default function SuggestedFriend() {
     <SendFriendRequest />
     <SendFriendRequest />
     <SendFriendRequest />
+    </div>
     </Scrollbars>
   </div>
   )
