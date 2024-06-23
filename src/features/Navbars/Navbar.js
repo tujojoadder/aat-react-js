@@ -6,6 +6,8 @@ import Page from "../Page";
 import Homeleft from "../home/Homeleft";
 import "./Navbar.css";
 import Home from "../home/Home";
+import Friends from "../Friends/Friends";
+import FriendRight from "../Friends/FriendRight";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -52,7 +54,7 @@ const Navbar = () => {
         {/* LEFT SIDE BAR */}
         <div style={{backgroundColor:'#f0f2f5',height:'100vh',}} className="p-0  d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar  ">
 
-          <div className="pe-2 pt-5   bg-body rounded" style={{width:'90%',height:'100vh'}}>
+          <div className="pe-2 pt-5 border-end   bg-body rounded" style={{width:'93%',height:'100vh'}}>
           <div className="  mb-3 d-flex align-items-center justify-content-center mydiv">
             <span>
               <i className="fa-brands fa-twitter display-5 text-info"></i>
@@ -68,12 +70,13 @@ const Navbar = () => {
             </div>
           </NavLink>
 
-          <NavLink to="/page" className="custom-link">
-            <div className="d-flex align-items-center py-1 my-2 pl-5 mydiv">
+          <NavLink to="/friends" className="custom-link">
+            <div className="d-flex align-items-center py-1 my-2 pl-5 custom-link mydiv">
               <span>
-                <i className="fa-solid fa-hashtag fs-2 d-none d-md-block"></i>
+             
+                <i className="fas fa-user-friends fs-3"></i>
               </span>
-              <p className="d-none d-lg-block fs-4 ps-2 text">Explore</p>
+              <p className="d-none d-lg-block fs-4 ps-2 text">Friends</p>
             </div>
           </NavLink>
 
@@ -127,7 +130,7 @@ const Navbar = () => {
           <div className="row d-flex justify-content-between align-items-center">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/page" element={<Page />} />
+              <Route path="/friends" element={<Friends />} />
             </Routes>
           </div>
         </div>
@@ -136,6 +139,8 @@ const Navbar = () => {
         <div className=" col-lg-3 d-none d-lg-block w-25 h-25 right_side_bar">
           <Routes >
             <Route path="/" element={<Homeleft />} />
+            <Route path="/friends" element={<FriendRight />} />
+
         {/*     <Route path="/page" element={<Home />} /> */}
           </Routes>
         </div>

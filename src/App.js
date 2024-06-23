@@ -12,6 +12,8 @@ import Navbar from "./features/Navbars/Navbar";
 import Page from "./features/Page";
 import Homeleft from "./features/home/Homeleft";
 import HadithDay from "./features/home/Components/HadithDay/HadithDay";
+import Friends from "./features/Friends/Friends";
+import FriendRight from "./features/Friends/FriendRight";
 function App() {
   return (
     <BrowserRouter>
@@ -22,7 +24,8 @@ function App() {
           <Route index exact element={<Home />} />
           <Route index exact element={<Homeleft />} />
 
-          <Route path="Page" exact element={<Page />} />
+          <Route path="friends" exact element={<Friends />} />
+          <Route path="friends" exact element={<FriendRight />} />
         </Route>
 
         //public routes

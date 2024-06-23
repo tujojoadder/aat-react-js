@@ -1,0 +1,50 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Styling for the right-side bar */
+  .friend_right_side_bar {
+   
+    width:100%; /* Fixed width for sidebar */
+    background-color: #ffffff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    overflow-y: auto; /* Allow scrolling if content exceeds height */
+    position: fixed; /* Fixed position */
+    top: 0; /* Position from top */
+  
+  }
+  
+  /* Styling for the menu header */
+  .menu-header {
+    font-size: 1.8rem; /* Larger font size for header */
+    color: #007bff; /* Primary color */
+    margin-bottom: 20px; /* Space below the header */
+    text-align: center; /* Center align text */
+    padding: 10px 0; /* Padding top and bottom */
+    border-bottom: 1px solid #dee2e6; /* Bottom border */
+  }
+  
+  /* Styling for the navigation links */
+  .nav-link {
+    display: block; /* Display as block to take full width */
+    padding: 12px 20px; /* Padding around each link */
+    color: #333; /* Text color */
+    text-decoration: none; /* Remove default underline */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  }
+  
+  .nav-link:hover {
+    background-color: #f0f0f0; /* Light grey background on hover */
+    color: #007bff; /* Primary color text on hover */
+  }
+  
+  .nav-link.active {
+    font-weight: bold; /* Bold font for active link */
+    background-color: #f0f2f4; /* Active background color */
+
+  }
+  
