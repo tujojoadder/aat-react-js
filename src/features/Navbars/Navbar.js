@@ -16,7 +16,7 @@ const Navbar = () => {
     <Scrollbars style={{ width: '100%', height:'104vh',minHeight:'300px' }} >
   <div className={isNotSm ? "container-sm  " : "ms-3 me-3"} 
     style={{
-        backgroundColor: '#ffffff',  
+       
         background: 'linear-gradient(to right, #ffffff 20%, #f0f2f5 80%)'
     }}
 >

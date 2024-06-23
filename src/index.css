@@ -7,12 +7,33 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-
-  
-  background: linear-gradient(to right,#ffffff 50%, #f0f2f5 50%);
-
-background: linear-gradient(to right, #ffffff 20%, #f0f2f5 20%);
+  /* Default background gradient */
+  background: linear-gradient(to right, #ffffff 50%, #f0f2f5 50%);
 }
+
+/* Media query for medium devices and below */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Default background gradient */
+  background: linear-gradient(to right, #ffffff 50%, #f0f2f5 50%);
+}
+
+/* Media query for medium devices and below */
+@media (max-width: 767px) {
+  body {
+        
+        background: linear-gradient(to right, #ffffff 20%, #f0f2f5 80%);
+  }
+}
+
 
 
 
