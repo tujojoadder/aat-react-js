@@ -6,6 +6,7 @@ import Home from "../home/Home";
 import Homeleft from "../home/Homeleft";
 import SmallScreenCard from "./SmallScreenCard/SmallScreenCard";
 import LargeScreenCard from "./LargeScreenCard/LargeScreenCard";
+import Profile from "../Profile/Profile";
 
 export default function Friends() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -36,19 +37,6 @@ export default function Friends() {
   ];
 
   return (
-    <div className="container">
-      <h5 className="mt-3">Friend Requests</h5>
-      <div className="row pt-1" style={{ overflowX:'hidden' }}>
-        {profiles.map((profile, index) =>
-          isSmallScreen ? (
-            <div key={index} className="col-12 mb-2">
-              <SmallScreenCard name={profile.name} handle={profile.handle} image={profile.image}/>
-            </div>
-          ) : (
-            <LargeScreenCard name={profile.name} handle={profile.handle} image={profile.image}/>
-          )
-        )}
-      </div>
-    </div>
+   <Profile/>
   );
 }

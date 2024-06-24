@@ -92,8 +92,8 @@ const FriendRight = () => {
             </div>
 <h5 className="text-center">Friend Requests</h5>
             <Scrollbars
-              style={{ width: "100%", height: "54vh", minHeight: "300px" }}
-            className="p-5 "
+              style={{ width: "100%", height: "57vh", minHeight: "300px" }}
+            
             >
               {profiles.map((profile, index) =>
 

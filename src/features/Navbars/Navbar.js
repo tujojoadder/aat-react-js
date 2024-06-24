@@ -126,7 +126,7 @@ const Navbar = () => {
         </div>
 
         {/* Mid section */}
-        <div className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar">
+        <div  className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar">
           <div className="row d-flex justify-content-between align-items-center">
             <Routes>
               <Route path="/" element={<Home />} />
