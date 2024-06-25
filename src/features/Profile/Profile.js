@@ -7,7 +7,7 @@ import ImagePost from "../home/Components/ImagePost/ImagePost";
 import ImageContainer from "../ImageContainer/ImageContainer";
 export default function Profile() {
   return (
-    <div class="header__wrapper m-0 p-0 mt-sm-5 mt-md-0" >
+    <div class="header__wrapper m-0 p-0 " >
       <header></header>
       <div class="cols__container">
         <div class="left__col">
