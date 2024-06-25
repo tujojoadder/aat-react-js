@@ -21,7 +21,7 @@ const Navbar = () => {
     }}
 >
       {/* xs NAV BAR */}
-      <nav className="bg-light xs-nav fixed-bottom d-sm-none">
+      <nav className="bg-light xs-nav fixed-top d-sm-none">
         <div className="container-fluid">
           <div className="row h-50">
             <div className="row">

@@ -12,7 +12,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 export default function Home() {
   return (
     
-    <div className="p-0 m-0  border" style={{ width: "100%",backgroundColor:'#f8f9fa' }}>
+    <div className="p-0 m-0 mb-3 border" style={{ width: "100%",backgroundColor:'#f8f9fa' }}>
 
    {/*    Hadith Status */}
       <HadithStatus />
