@@ -62,3 +62,10 @@
   outline: none;
   border: none;
 }
+
+
+@media (max-width: 576px) {
+  .home-container {
+   margin-top: 60px !important;
+  }
+}
