@@ -27,7 +27,7 @@ const ImageContainer = () => {
 
   return (
     <div className="container py-4"style={{border:'none'}}>
-      <h2 className="text-center mb-4">Image Gallery</h2>
+   
       <div className="row">
         {[image, image1, image, image1, image, image1, image, image1].map((src, index) => (
           <div className="col-4 mb-4" key={index}>

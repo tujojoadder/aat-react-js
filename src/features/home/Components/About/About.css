@@ -1,0 +1,27 @@
+/* styles.css or App.css */
+.about-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+  }
+  
+  .about-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .about-item i {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .about-item span {
+    font-size: 16px;
+  }
+  
+  .about-item strong {
+    font-weight: bold;
+  }
+  
