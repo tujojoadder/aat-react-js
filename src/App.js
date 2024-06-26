@@ -14,6 +14,7 @@ import Homeleft from "./features/home/Homeleft";
 import HadithDay from "./features/home/Components/HadithDay/HadithDay";
 import Friends from "./features/Friends/Friends";
 import FriendRight from "./features/Friends/FriendRight";
+import FriendHome from "./features/Friends/FriendHome/FriendHome";
 function App() {
   return (
     <BrowserRouter>
@@ -24,7 +25,7 @@ function App() {
           <Route index exact element={<Home />} />
           <Route index exact element={<Homeleft />} />
 
-          <Route path="friends" exact element={<Friends />} />
+          <Route path="friends" exact element={<FriendHome />} />
           <Route path="friends" exact element={<FriendRight />} />
         </Route>
 

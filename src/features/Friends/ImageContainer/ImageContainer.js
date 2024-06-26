@@ -45,16 +45,16 @@ const ImageContainer = () => {
       </div>
 
       {/* Bootstrap Modal */}
-      <div className="modal fade" id="imageModal" tabIndex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered modal-lg">
-          <div className="modal-content">
+      <div className="modal fade"id="imageModal" tabIndex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered modal-lg " >
+          <div className="modal-content" style={{border:'none'}} >
             <div className="modal-body p-0">
               {modalImage && (
                 <img src={modalImage.src} className="img-fluid w-100 mt-5" alt={modalImage.alt} style={{ maxHeight: '75vh', objectFit: 'contain' }} />
               )}
             </div>
             <div className="modal-footer d-flex justify-content-center">
-              <button type="button" className="btn btn-outline-dark" onClick={closeModal}>
+              <button type="button" className="btn btn-outline-dark " onClick={closeModal}>
                 <i className="fas fa-times me-1"></i> Close
               </button>
             </div>

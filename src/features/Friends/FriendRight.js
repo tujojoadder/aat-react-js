@@ -2,7 +2,7 @@ import React from "react";
 import "./FriendRight.css";
 import SuggestedFriend from "../home/Components/SuggestedFriend/SuggestedFriend";
 import { Scrollbars } from "react-custom-scrollbars";
-import SmallScreenCard from "./SmallScreenCard/SmallScreenCard";
+import SmallScreenCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
 const FriendRight = () => {
   const scrollRef = React.useRef(null);
   const profiles = [

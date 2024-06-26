@@ -2,16 +2,14 @@ import React from "react";
 import { useMediaQuery } from "react-responsive";
 import "./.././../all.css";
 import "./.././../style.css";
-import Home from "../home/Home";
-import Homeleft from "../home/Homeleft";
-import SmallScreenCard from "./SmallScreenCard/SmallScreenCard";
-import LargeScreenCard from "./LargeScreenCard/LargeScreenCard";
-import Profile from "../Profile/Profile";
+import SmallScreenCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
+import LargeScreenCard from "./LargeScreenUnFriendUserCard/LargeScreenUnFriendUserCard";
+import SmallScreenFriendRequestCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
+import LargeScreenFriendRequestCard from "./LargeScreenUnFriendUserCard/LargeScreenUnFriendUserCard";
 
 export default function Friends() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
 
-  
   const profiles = [
     {
       name: "Mark Rockwell",
@@ -32,11 +30,30 @@ export default function Friends() {
       name: "John Smith",
       handle: "@john_smith",
       image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    }
-    
+    },
   ];
 
   return (
-   <Profile/>
+    <div className="container ">
+      <div className="row">
+        {profiles.map((profile, index) => (
+          isSmallScreen ? (
+            <SmallScreenFriendRequestCard
+              key={index}
+              name={profile.name}
+              handle={profile.handle}
+              image={profile.image}
+            />
+          ) : (
+            <LargeScreenFriendRequestCard
+              key={index}
+              name={profile.name}
+              handle={profile.handle}
+              image={profile.image}
+            />
+          )
+        ))}
+      </div>
+    </div>
   );
 }

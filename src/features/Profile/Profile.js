@@ -4,9 +4,10 @@ import image from "./logo.jpg";
 import TextPost from "../home/Components/TextPost/TextPost";
 import BothPost from "../home/Components/BothPost/BothPost";
 import ImagePost from "../home/Components/ImagePost/ImagePost";
-import ImageContainer from "../ImageContainer/ImageContainer";
+import ImageContainer from "../Friends/ImageContainer/ImageContainer";
 import About from "../home/Components/About/About";
 import ProfileFriend from "./ProfileFriends/ProfileFriend/ProfileFriend";
+import Friends from "../Friends/Friends";
 
 export default function Profile() {
   const [currentTab, setCurrentTab] = useState("More");
@@ -201,6 +202,7 @@ export default function Profile() {
           </div>
           {/* Friends Section */}
           <div id="friends" className="p-md-3 tab-pane fade">
+           
             <ProfileFriend />
             <ProfileFriend />
             <ProfileFriend />

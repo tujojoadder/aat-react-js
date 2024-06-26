@@ -8,6 +8,7 @@ import "./Navbar.css";
 import Home from "../home/Home";
 import Friends from "../Friends/Friends";
 import FriendRight from "../Friends/FriendRight";
+import FriendHome from "../Friends/FriendHome/FriendHome";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -130,7 +131,7 @@ const Navbar = () => {
           <div className="row d-flex justify-content-between align-items-center">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/friends" element={<Friends />} />
+              <Route path="/friends" element={<FriendHome />} />
             </Routes>
           </div>
         </div>

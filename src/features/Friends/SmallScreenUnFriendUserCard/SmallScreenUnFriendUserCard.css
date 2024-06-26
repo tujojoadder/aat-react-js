@@ -1,0 +1,67 @@
+.user-card-container {
+  border: 1px solid #e1e4e8;
+  padding: 10px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.profile-image img {
+  border: 2px solid #d1d5da;
+  border-radius: 50%;
+}
+
+.profile-info {
+  flex-grow: 1;
+}
+
+.profile-info p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-info .fw-bold {
+  font-weight: 700;
+}
+
+.profile-info .text-muted {
+  font-size: 0.95rem;
+  color: #657786;
+}
+
+.add-friend-button {
+  margin-left: auto;
+}
+
+.btn-add-friend, .btn-delete-friend {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.btn-add-friend {
+  color: #fff;
+  border-radius: 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  background-color: #007bff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-add-friend:hover {
+  background-color: #0056b3;
+}
+
+.btn-delete-friend {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background-color: #d8d8d8;
+}
+
+.btn-delete-friend:hover {
+  background-color: #d8d8d8; /* Maintain same color on hover */
+}
