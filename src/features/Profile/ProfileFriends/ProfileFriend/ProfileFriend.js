@@ -1,17 +1,19 @@
+
+
 import React from "react";
 import image from "./logo.jpg";
-import './SendFriendRequest.css'; // Import the custom CSS file
+import './ProfileFriend.css'; // Import the custom CSS file
 
-export default function SendFriendRequest(props) {
+export default function ProfileFriend(props) {
   return (
-    <div className="friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm bg-white rounded">
+    <div  className="friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm bg-white rounded">
       <div className="profile-image me-4">
         <img
           className="rounded-circle"
           src={image}
           alt="user"
-          height="45px"
-          width="45px"
+          height="60px"
+          width="60px"
         />
       </div>
       <div className="profile-info flex-grow-1">

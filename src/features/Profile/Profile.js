@@ -6,13 +6,14 @@ import BothPost from "../home/Components/BothPost/BothPost";
 import ImagePost from "../home/Components/ImagePost/ImagePost";
 import ImageContainer from "../ImageContainer/ImageContainer";
 import About from "../home/Components/About/About";
+import ProfileFriend from "./ProfileFriends/ProfileFriend/ProfileFriend";
 
 export default function Profile() {
   const [currentTab, setCurrentTab] = useState("More");
 
   const handleTabClick = (tabName) => {
     // Only change the dropdown text if the tab is from the dropdown menu
-    if (["Post", "Images", "About"].includes(tabName)) {
+    if (["Friends", "Follower", "Following", "About"].includes(tabName)) {
       setCurrentTab(tabName);
     }
   };
@@ -67,32 +68,25 @@ export default function Profile() {
       <div className="content-secssion">
         <ul className="nav nav-tabs mt-3">
           <li className="nav-item">
-            <a
-              className="nav-link active"
-              href="#post"
-              data-bs-toggle="tab"
-            >
+            <a className="nav-link active" href="#post" data-bs-toggle="tab">
               Post
             </a>
           </li>
           <li className="nav-item">
-            <a
-              className="nav-link"
-              href="#image"
-              data-bs-toggle="tab"
-            >
-              Images
+            <a className="nav-link" href="#image" data-bs-toggle="tab">
+              Photo
             </a>
           </li>
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              href="#about"
-              data-bs-toggle="tab"
-            >
-              About
-            </a>
-          </li>
+
+          {/*   Show on sm and md */}
+          <div class="d-none d-lg-block">
+            
+          </div>
+
+          {/*   Show on lg */}
+          <div className="d-lg-none">
+            
+          </div>
           {/* Dropdown */}
           <li className="nav-item dropdown">
             <a
@@ -108,21 +102,31 @@ export default function Profile() {
               <li>
                 <a
                   className="dropdown-item"
-                  href="#post"
+                  href="#friends"
                   data-bs-toggle="tab"
-                  onClick={() => handleTabClick("Post")}
+                  onClick={() => handleTabClick("Friends")}
                 >
-                  Post
+                  Friends
                 </a>
               </li>
               <li>
                 <a
                   className="dropdown-item"
-                  href="#image"
+                  href="#follower"
                   data-bs-toggle="tab"
-                  onClick={() => handleTabClick("Images")}
+                  onClick={() => handleTabClick("Follower")}
                 >
-                  Images
+                  Follower
+                </a>
+              </li>
+              <li>
+                <a
+                  className="dropdown-item"
+                  href="#following"
+                  data-bs-toggle="tab"
+                  onClick={() => handleTabClick("Following")}
+                >
+                  Following
                 </a>
               </li>
               <li>
@@ -147,27 +151,54 @@ export default function Profile() {
           >
             <TextPost />
             <BothPost />
-            <TextPost />
-            <BothPost />
-            <TextPost />
-            <BothPost />
-            <TextPost />
             <BothPost />
             <ImagePost />
             <ImagePost />
           </div>
 
+          {/*  Image Section */}
           <div
             id="image"
             className="image-container-secssion mb-md-4 px-md-3 pt-3 tab-pane fade"
           >
-            
             <ImageContainer />
           </div>
 
+          {/* About Section */}
           <div id="about" className="p-3 tab-pane fade">
-            <h4 className="ps-2">About</h4>
+            <h4 className="ps-2 ">About</h4>
             <About />
+          </div>
+          {/* Friends Section */}
+          <div id="friends" className="p-md-3 tab-pane fade">
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+          </div>
+
+          {/* Follower Section */}
+          <div id="follower" className="p-md-3 tab-pane fade">
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+          </div>
+          {/* Following Section */}
+          <div id="following" className="p-md-3 tab-pane fade">
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
           </div>
         </div>
       </div>
