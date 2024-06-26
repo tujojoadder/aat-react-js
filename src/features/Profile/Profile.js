@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import image from "./logo.jpg";
 import TextPost from "../home/Components/TextPost/TextPost";
@@ -12,11 +12,45 @@ export default function Profile() {
   const [currentTab, setCurrentTab] = useState("More");
 
   const handleTabClick = (tabName) => {
-    // Only change the dropdown text if the tab is from the dropdown menu
-    if (["Friends", "Follower", "Following", "About"].includes(tabName)) {
-      setCurrentTab(tabName);
+    // Check if the screen size is less than 992px (Bootstrap's large size threshold)
+    if (window.innerWidth < 992) {
+      if (["Friends", "Follower", "Following", "About"].includes(tabName)) {
+        setCurrentTab(tabName);
+      }
+    } else {
+      if (["Follower", "Following", "About"].includes(tabName)) {
+        setCurrentTab(tabName);
+      }
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Get current window width
+      const width = window.innerWidth;
+
+      // If the screen width is less than 992px and the currentTab is "More", reset it to "Friends"
+      if (width < 992 && currentTab === "More") {
+        setCurrentTab("Friends");
+      }
+
+      // If the screen width is 992px or more and the currentTab is "Friends", reset it to "More"
+      if (width >= 992 && currentTab === "Friends") {
+        setCurrentTab("More");
+      }
+    };
+
+    // Add event listener for resize
+    window.addEventListener("resize", handleResize);
+
+    // Call handleResize immediately to set the initial state
+    handleResize();
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [currentTab]);
 
   return (
     <div className="header__wrapper m-0 p-0">
@@ -77,16 +111,12 @@ export default function Profile() {
               Photo
             </a>
           </li>
+          <li className="nav-item d-none d-lg-block">
+            <a className="nav-link" href="#friends" data-bs-toggle="tab">
+              Friends
+            </a>
+          </li>
 
-          {/*   Show on sm and md */}
-          <div class="d-none d-lg-block">
-            
-          </div>
-
-          {/*   Show on lg */}
-          <div className="d-lg-none">
-            
-          </div>
           {/* Dropdown */}
           <li className="nav-item dropdown">
             <a
@@ -101,7 +131,7 @@ export default function Profile() {
             <ul className="dropdown-menu">
               <li>
                 <a
-                  className="dropdown-item"
+                  className="dropdown-item d-lg-none"
                   href="#friends"
                   data-bs-toggle="tab"
                   onClick={() => handleTabClick("Friends")}
@@ -156,7 +186,7 @@ export default function Profile() {
             <ImagePost />
           </div>
 
-          {/*  Image Section */}
+          {/* Image Section */}
           <div
             id="image"
             className="image-container-secssion mb-md-4 px-md-3 pt-3 tab-pane fade"
@@ -178,6 +208,10 @@ export default function Profile() {
             <ProfileFriend />
             <ProfileFriend />
             <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
           </div>
 
           {/* Follower Section */}
@@ -189,9 +223,15 @@ export default function Profile() {
             <ProfileFriend />
             <ProfileFriend />
             <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
           </div>
           {/* Following Section */}
           <div id="following" className="p-md-3 tab-pane fade">
+            <ProfileFriend />
+            <ProfileFriend />
+            <ProfileFriend />
             <ProfileFriend />
             <ProfileFriend />
             <ProfileFriend />
