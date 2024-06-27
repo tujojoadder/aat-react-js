@@ -15,6 +15,8 @@ import HadithDay from "./features/home/Components/HadithDay/HadithDay";
 import Friends from "./features/Friends/Friends";
 import FriendRight from "./features/Friends/FriendRight";
 import FriendHome from "./features/Friends/FriendHome/FriendHome";
+import FriendRightFriendRequest from "./features/Friends/FriendRightFriendRequest";
+import FriendRightFriendSuggestions from "./features/Friends/FriendRightFriendSuggestions";
 function App() {
   return (
     <BrowserRouter>
@@ -24,9 +26,20 @@ function App() {
         <Route path="/" exact element={<Navbar />}>
           <Route index exact element={<Home />} />
           <Route index exact element={<Homeleft />} />
-
+        {/* Home */}
           <Route path="friends" exact element={<FriendHome />} />
           <Route path="friends" exact element={<FriendRight />} />
+
+            {/* Friends */}
+            <Route path="friends" exact element={<FriendHome />} />
+          <Route path="friends" exact element={<FriendRight />} />
+
+          <Route path="friends/requests" exact element={<FriendHome />} />
+          <Route path="friends/requests" exact element={<FriendRightFriendRequest />} />
+
+          <Route path="friends/suggestions" exact element={<FriendHome />} />
+          <Route path="friends/suggestions" exact element={<FriendRightFriendSuggestions />} />
+      
         </Route>
 
         //public routes

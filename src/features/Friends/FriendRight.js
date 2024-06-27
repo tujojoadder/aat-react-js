@@ -1,64 +1,13 @@
 import React from "react";
 import "./FriendRight.css";
-import SuggestedFriend from "../home/Components/SuggestedFriend/SuggestedFriend";
-import { Scrollbars } from "react-custom-scrollbars";
-import SmallScreenCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
+import { NavLink, BrowserRouter, Route, Routes } from "react-router-dom";
+
 const FriendRight = () => {
-  const scrollRef = React.useRef(null);
-  const profiles = [
-    {
-      name: "Mark Rockwell",
-      handle: "@mark_rockwell",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "Jane Doe",
-      handle: "@jane_doe",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "John Smith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "John Smith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "John Smith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "John Smith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "John Smith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "John Smith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    }
-  ];
+  
   return (
     <div style={{ overflowX: "hidden" }}>
       <div
-        ref={scrollRef}
+       
         className="scroll-container w-100"
         style={{ overflowY: "hidden", position: "fixed " }}
       >
@@ -68,42 +17,63 @@ const FriendRight = () => {
         >
           <div className="menu-container" style={{ height: "100vh" }}>
             <div className="menu" style={{ height: "45vh",minHeight:'310px' }}>
-              <h2 className="menu-header text-left ps-3">Friends</h2>
-              <nav className="nav flex-column">
-                <a className="nav-link " href="#friend-requests">
-                  <i className="fas fa-user-friends"></i> Home
-                </a>
-                <a className="nav-link active" href="#friend-requests">
-                  <i className="fas fa-user-plus fa-fw"></i> Friend requests
-                </a>
-
-                <a className="nav-link" href="#suggestions">
-                  <i className="fas fa-lightbulb fa-fw"></i> Suggestions
-                </a>
-
-                <a className="nav-link" href="#suggestions">
-                  <i className="fa fa-user-plus" aria-hidden="true"></i> Sent
-                  requests
-                </a>
-                <a className="nav-link" href="#all-friends">
-                  <i className="fas fa-users fa-fw"></i> All friends
-                </a>
-              </nav>
-            </div>
-<h5 className="text-center">Friend Requests</h5>
-            <Scrollbars
-              style={{ width: "100%", height: "57vh", minHeight: "300px" }}
-            
-            >
-              {profiles.map((profile, index) =>
-
-            <div key={index} className="col-12 mb-2">
-              <SmallScreenCard name={profile.name} handle={profile.handle} image={profile.image}/>
-            </div>
           
-        )}
+              <h3 className="menu-header text-left ps-4 text-dark">Friends</h3>
+              <ul className="nav flex-column ">
+                <li className="nav-item">
+                  <NavLink
+                   end
+                    to="/friends"
+                    className="nav-link"
+                    activeClassName="active"
+                  >
+                    <i className="fas fa-user-friends me-2"></i> Home
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                   end
+                    to="/friends/requests"
+                    className="nav-link"
+                    activeClassName="active"
+                  >
+                    <i className="fas fa-user-plus fa-fw me-2"></i> Friend requests
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                   end
+                    to="/friends/suggestions"
+                    className="nav-link"
+                    activeClassName="active"
+                  >
+                    <i className="fas fa-lightbulb fa-fw me-2"></i> Suggestions
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                   end
+                    to="/friends/sent-requests"
+                    className="nav-link"
+                    activeClassName="active"
+                  >
+                    <i className="fa fa-user-plus me-2" aria-hidden="true"></i> Sent requests
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                   end
+                    to="/friends/all-friends"
+                    className="nav-link"
+                    activeClassName="active"
+                  >
+                    <i className="fas fa-users fa-fw me-2"></i> All friends
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+         
 
-            </Scrollbars>
           </div>
         </div>
       </div>

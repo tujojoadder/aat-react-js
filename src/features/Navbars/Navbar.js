@@ -9,6 +9,8 @@ import Home from "../home/Home";
 import Friends from "../Friends/Friends";
 import FriendRight from "../Friends/FriendRight";
 import FriendHome from "../Friends/FriendHome/FriendHome";
+import FriendRightFriendRequest from "../Friends/FriendRightFriendRequest";
+import FriendRightFriendSuggestions from "../Friends/FriendRightFriendSuggestions";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -141,6 +143,8 @@ const Navbar = () => {
           <Routes >
             <Route path="/" element={<Homeleft />} />
             <Route path="/friends" element={<FriendRight />} />
+            <Route path="/friends/requests" element={<FriendRightFriendRequest />} />
+            <Route path="/friends/suggestions" element={<FriendRightFriendSuggestions />} />
 
         {/*     <Route path="/page" element={<Home />} /> */}
           </Routes>

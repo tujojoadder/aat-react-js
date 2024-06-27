@@ -1,56 +1,62 @@
 /* SendFriendRequest.css */
+
 .friend-request-container {
-    border: 1px solid #e1e4e8;
-    padding: 10px;
-    max-width: 450px;
-  }
-  
-  .profile-image img {
-    border: 2px solid #d1d5da;
-  }
-  
-  .profile-info {
-    min-width: 0;
-  }
-  
-  .profile-info p {
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  .profile-info .text-muted {
-    font-size: 0.85rem;
-  }
-  
-  .btn-add-friend {
-    color: #fff;
-  
-    border: none;
-    border-radius: 25px;
-    padding: 6px 12px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    font-size: 0.875rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .btn-add-friend i {
-    margin-right: 5px;
-  }
-  
-  .btn-add-friend:hover {
-    background-color: #0d8de5;
-    color: #f0f8ff;
-  }
-  
-  .btn-add-friend:hover i {
-    color: #f0f8ff;
-  }
-  
-  .shadow-sm {
-    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
-  }
-  
+  border: 1px solid #e1e4e8;
+  padding: 10px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+  border-radius: 12px; /* Rounded corners */
+}
+
+.friend-request-container:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+  margin-right: 1rem; /* Adjust spacing between image and text */
+}
+
+.profile-image img {
+  border: 2px solid #d1d5da;
+  border-radius: 50%;
+}
+
+.profile-info {
+  flex-grow: 1;
+}
+
+.profile-info .fw-bold {
+  font-size: 1rem;
+}
+
+.profile-info .text-muted {
+  font-size: 0.95rem;
+  color: #657786;
+}
+
+.add-friend-button {
+  margin-left: auto; /* Push button to the right */
+}
+
+.btn-add-friend {
+  padding: 7px 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  background-color: #0d8de5; /* Blue color */
+  color: #ffffff; /* White text */
+  border: none;
+  outline: none; /* Remove outline */
+  box-shadow: none; /* Remove box shadow */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  border-radius: 8px; /* Rounded corners */
+  width: 65px; /* Fixed width */
+  margin: 3px;
+  text-align: center; /* Center align text */
+}
+
+.btn-add-friend:hover {
+  background-color: #0b6cb4; /* Darker shade of blue on hover */
+}
