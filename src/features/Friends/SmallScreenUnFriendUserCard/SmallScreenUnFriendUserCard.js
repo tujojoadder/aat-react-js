@@ -17,15 +17,19 @@ export default function SmallScreenUnFriendUserCard(props) {
         <p className="fw-bold mb-0 text-truncate">{props.name}</p>
         <p className="text-muted mb-0 text-truncate">{props.handle}</p>
       </div>
-
-      <div className="add-delete-button me-2">
+      
+<div className="add-delete-button me-2">
         <button className="btn-delete-friend" type="button">
           <i className="fa-solid fa-xmark"></i>
         </button>
       </div>
-
       <div className="add-friend-button">
-        <button className="btn-add-friend p-2"  style={{borderRadius:'50px'}}>
+        <button className=" btn-add-friend btn-primary" type="button"  style={{
+                backgroundColor: '#0d8de5',
+                outline: 'none',
+                boxShadow: 'none',
+                border:'none'
+              }}>
           Confirm
         </button>
       </div>

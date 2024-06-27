@@ -2,7 +2,6 @@ import React from 'react';
 
 export default function LargeScreenUnFriendUserCard(props) {
   const buttonText = props.type === 'friend_request' ? 'Confirm' : 'Add Friend';
-  const buttonText2 = props.type === 'friend_request' ? 'Delete' : 'Remove';
 
   return (
     <div className="col-xl-4 col-md-6 col-sm-12 mb-3">
@@ -14,7 +13,9 @@ export default function LargeScreenUnFriendUserCard(props) {
             <p className="small text-muted text-truncate text-center">{props.handle}</p>
             <div className="d-flex flex-column">
               <button className="btn btn-md btn-primary mb-2 w-100">{buttonText}</button>
-              <button className="btn btn-md w-100" style={{ backgroundColor: "#ebedf0" }}>{buttonText2}</button>
+              {props.type === 'friend_request' && (
+                <button className="btn btn-md w-100" style={{ backgroundColor: "#ebedf0" }}>Delete</button>
+              )}
             </div>
           </div>
         </div>
