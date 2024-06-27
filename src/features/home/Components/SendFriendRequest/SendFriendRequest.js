@@ -19,14 +19,28 @@ export default function SendFriendRequest(props) {
         <p className="text-muted mb-0 text-truncate">@turjojoadder</p>
       </div>
       <div className="add-friend-button">
-        <button className=" btn-add-friend btn-primary" type="button"  style={{
+
+      {/* //When you have requested */}
+      <button className=" btn-add-friend btn-primary" type="button"  style={{
+                backgroundColor: '#e4e6eb',
+                color:'black',
+                outline: 'none',
+                boxShadow: 'none',
+                border:'none',
+                fontSize:'14px',minWidth:'126px'
+              }}>
+         Cancel request
+        </button>
+
+      {/* //When you have not requested */}
+        {/* <button className=" btn-add-friend btn-primary" type="button"  style={{
                 backgroundColor: '#0d8de5',
                 outline: 'none',
                 boxShadow: 'none',
                 border:'none'
               }}>
           <i className="fas fa-user-plus"></i> Add
-        </button>
+        </button> */}
       </div>
     </div>
   );

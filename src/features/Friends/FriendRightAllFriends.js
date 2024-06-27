@@ -4,8 +4,9 @@ import { Scrollbars } from "react-custom-scrollbars";
 import { NavLink, BrowserRouter, Route, Routes } from "react-router-dom";
 import SmallScreenUnFriendUserCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
 import SendFriendRequest from "../home/Components/SendFriendRequest/SendFriendRequest";
+import AllFriendList from "./AllFriendList/AllFriendList";
 
-export default function FriendRightFriendSuggestions() {
+export default function FriendRightAllFriends() {
     const scrollRef = React.useRef(null);
     const profiles = [
       {
@@ -58,7 +59,7 @@ export default function FriendRightFriendSuggestions() {
       },
     ];
   return (
-    <div style={{ overflowX: "hidden" }}>
+<div style={{ overflowX: "hidden" }}>
     <div
       ref={scrollRef}
       className="scroll-container w-100"
@@ -126,26 +127,26 @@ export default function FriendRightFriendSuggestions() {
         </ul>
       </div>
 
-          <h5 className="ms-3">Friend Suggestion</h5>
+          <h5 className="ms-3">Friend lists</h5>
           <Scrollbars
-            style={{ width: "100%", height: "55vh", minHeight: "300px" }}
+            style={{ width: "100%", height: "57vh", minHeight: "300px" }}
           >
-            <div className="mb-5">
-            {profiles.map((profile, index) => (
+        <div className="mb-5">
+
+   
+          {profiles.map((profile, index) => (
                 <div key={index} className="col-12 mb-2">
-                  <SendFriendRequest
+                  <AllFriendList
                     name={profile.name}
                     handle={profile.handle}
                     image={profile.image}
                   />
                 </div>
               ))}
-            </div>
-          
+                   </div>
           </Scrollbars>
         </div>
       </div>
     </div>
-  </div>
-  )
+  </div>  )
 }

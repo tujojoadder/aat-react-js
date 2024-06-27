@@ -125,10 +125,11 @@ export default function FriendRightFriendRequest() {
           </ul>
         </div>
 
-            <h5 className="text-center">Friend Requests</h5>
+            <h5 className="ms-3">Friend Requests</h5>
             <Scrollbars
               style={{ width: "100%", height: "55vh", minHeight: "300px" }}
             >
+              <div className="mb-5">
               {profiles.map((profile, index) => (
                 <div key={index} className="col-12 mb-2">
                   <SmallScreenUnFriendUserCard
@@ -138,6 +139,7 @@ export default function FriendRightFriendRequest() {
                   />
                 </div>
               ))}
+              </div>
             </Scrollbars>
           </div>
         </div>

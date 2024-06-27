@@ -17,6 +17,8 @@ import FriendRight from "./features/Friends/FriendRight";
 import FriendHome from "./features/Friends/FriendHome/FriendHome";
 import FriendRightFriendRequest from "./features/Friends/FriendRightFriendRequest";
 import FriendRightFriendSuggestions from "./features/Friends/FriendRightFriendSuggestions";
+import FriendRightSentRequests from "./features/Friends/FriendRightSentRequests";
+import FriendRightAllFriends from "./features/Friends/FriendRightAllFriends";
 function App() {
   return (
     <BrowserRouter>
@@ -39,7 +41,18 @@ function App() {
 
           <Route path="friends/suggestions" exact element={<FriendHome />} />
           <Route path="friends/suggestions" exact element={<FriendRightFriendSuggestions />} />
+          
+          <Route path="friends/sent-requests" exact element={<FriendHome />} />
+          <Route path="friends/sent-requests" exact element={<FriendRightSentRequests />} />
+         
+          <Route path="friends/all-friends" exact element={<FriendHome />} />
+          <Route path="friends/all-friends" exact element={<FriendRightAllFriends />} />
       
+
+
+
+
+
         </Route>
 
         //public routes
