@@ -23,16 +23,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* Default background gradient */
-  background: linear-gradient(to right, #ffffff 50%, #f0f2f5 50%);
+  background: linear-gradient(to right, #ffffff 50%, #ffffff 50%);
 }
 
-/* Media query for medium devices and below */
-@media (max-width: 767px) {
-  body {
-        
-        background: linear-gradient(to right, #ffffff 20%, #f0f2f5 80%);
-  }
-}
+
 
 
 

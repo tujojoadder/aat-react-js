@@ -2,9 +2,10 @@
 
 /* SendFriendRequest.css */
 .friend-request-container {
-    border: 1px solid #e1e4e8;
+ 
     padding: 10px;
     max-width: 450px;
+    border: none;
   }
   
   .profile-image img {
@@ -55,5 +56,22 @@
   .shadow-sm {
     box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
   }
+
+
+
+
+
+
+
+
+  .friend-request-container.active {
+    background-color: #e5e5f4; /* Light blue background for active state */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow effect */
+    transform: scale(1.02); /* Slightly enlarge the active item */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  }
   
+  .friend-request-container {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  }
   

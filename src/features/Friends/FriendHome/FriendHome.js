@@ -30,7 +30,7 @@ export default function FriendHome() {
 
   return (
     <>
-      <div className="friend-home main  ">
+      <div className="friend-home main  border " style={{backgroundColor:'white'}}>
         {/* Friend Request Section */}
 
         

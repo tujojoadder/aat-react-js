@@ -19,6 +19,8 @@ import FriendRightFriendRequest from "./features/Friends/FriendRightFriendReques
 import FriendRightFriendSuggestions from "./features/Friends/FriendRightFriendSuggestions";
 import FriendRightSentRequests from "./features/Friends/FriendRightSentRequests";
 import FriendRightAllFriends from "./features/Friends/FriendRightAllFriends";
+import Profile from "./features/Profile/Profile";
+import NoUserSelected from "./features/Friends/NoUserSelected";
 function App() {
   return (
     <BrowserRouter>
@@ -36,17 +38,34 @@ function App() {
             <Route path="friends" exact element={<FriendHome />} />
           <Route path="friends" exact element={<FriendRight />} />
 
-          <Route path="friends/requests" exact element={<FriendHome />} />
-          <Route path="friends/requests" exact element={<FriendRightFriendRequest />} />
 
-          <Route path="friends/suggestions" exact element={<FriendHome />} />
-          <Route path="friends/suggestions" exact element={<FriendRightFriendSuggestions />} />
-          
-          <Route path="friends/sent-requests" exact element={<FriendHome />} />
-          <Route path="friends/sent-requests" exact element={<FriendRightSentRequests />} />
+
+          {/*  Friends---> requests */}
+          <Route path="friends/requests" exact element={<NoUserSelected />} />
+          <Route path="friends/requests" exact element={<FriendRightFriendRequest />} />
+          <Route path="friends/requests/:id" exact element={<Profile />} />
+          <Route path="friends/requests/:id" exact element={<FriendRightFriendRequest />} />
          
-          <Route path="friends/all-friends" exact element={<FriendHome />} />
+          
+        {/*  Friends---> suggestions */}
+          <Route path="friends/suggestions" exact element={<NoUserSelected />} />
+          <Route path="friends/suggestions" exact element={<FriendRightFriendSuggestions />} />
+          <Route path="friends/suggestions/:id" exact element={<Profile />} />
+          <Route path="friends/suggestions/:id" exact element={<FriendRightFriendSuggestions />} />
+         
+
+        {/*  Friends---> sent-requests */}
+          <Route path="friends/sent-requests" exact element={<NoUserSelected />} />
+          <Route path="friends/sent-requests" exact element={<FriendRightSentRequests />} />
+          <Route path="friends/sent-requests/:id" exact element={<NoUserSelected />} />
+          <Route path="friends/sent-requests/:id" exact element={<FriendRightSentRequests />} />
+         
+
+        {/*  Friends---> all friends */}
+          <Route path="friends/all-friends" exact element={<NoUserSelected />} />
           <Route path="friends/all-friends" exact element={<FriendRightAllFriends />} />
+          <Route path="friends/all-friends/:id" exact element={<Profile />} />
+          <Route path="friends/all-friends/:id" exact element={<FriendRightAllFriends />} />
       
 
 

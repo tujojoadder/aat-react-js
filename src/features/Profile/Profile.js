@@ -54,7 +54,7 @@ export default function Profile() {
   }, [currentTab]);
 
   return (
-    <div className="header__wrapper m-0 p-0">
+    <div className="header__wrapper m-0 p-0 border" >
       <header></header>
       <div className="cols__container">
         <div className="left__col">
@@ -89,7 +89,7 @@ export default function Profile() {
 
               {/* Follow Button */}
               <div
-                className="btn btn-md btn-info mx-1 d-flex align-items-center"
+                className="btn btn-md btn-info mx-1 me-3 d-flex align-items-center"
                 style={{ cursor: "pointer", minWidth: "70px" }}
               >
                 Follow

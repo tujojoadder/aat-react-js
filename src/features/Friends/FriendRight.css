@@ -11,7 +11,7 @@
     width:100%; /* Fixed width for sidebar */
     background-color: #ffffff; /* White background */
     border-radius: 10px; /* Rounded corners */
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Shadow effect */
+
     overflow-y: auto; /* Allow scrolling if content exceeds height */
     position: fixed; /* Fixed position */
     top: 0; /* Position from top */
@@ -35,11 +35,13 @@
     color: #333; /* Text color */
     text-decoration: none; /* Remove default underline */
     transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+   
   }
   
   .nav-link:hover {
     background-color: #f0f0f0; /* Light grey background on hover */
     color: #007bff; /* Primary color text on hover */
+    
   }
   
   .nav-link.active {

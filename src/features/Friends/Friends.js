@@ -34,7 +34,7 @@ export default function Friends() {
   ];
 
   return (
-    <div className="container ">
+    <div className="container " >
       <div className="row">
         {profiles.map((profile, index) => (
           isSmallScreen ? (

@@ -13,6 +13,8 @@ import FriendRightFriendRequest from "../Friends/FriendRightFriendRequest";
 import FriendRightFriendSuggestions from "../Friends/FriendRightFriendSuggestions";
 import FriendRightSentRequests from "../Friends/FriendRightSentRequests";
 import FriendRightAllFriends from "../Friends/FriendRightAllFriends";
+import Profile from "../Profile/Profile";
+import NoUserSelected from "../Friends/NoUserSelected";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -22,7 +24,6 @@ const Navbar = () => {
   <div className={isNotSm ? "container-sm  " : "ms-3 me-3"} 
     style={{
        
-        background: 'linear-gradient(to right, #ffffff 20%, #f0f2f5 80%)'
     }}
 >
       {/* xs NAV BAR */}
@@ -57,9 +58,9 @@ const Navbar = () => {
 
       <div className="row">
         {/* LEFT SIDE BAR */}
-        <div style={{backgroundColor:'#f0f2f5',height:'100vh',}} className="p-0  d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar  ">
+        <div style={{backgroundColor:'#fdfdfd',height:'100vh',}} className="p-0  d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar  ">
 
-          <div className="pe-2 pt-5 border-end   bg-body rounded" style={{width:'93%',height:'100vh'}}>
+          <div className="pe-2 pt-5    bg-body rounded" style={{width:'97%',height:'100vh'}}>
           <div className="  mb-3 d-flex align-items-center justify-content-center mydiv">
             <span>
               <i className="fa-brands fa-twitter display-5 text-info"></i>
@@ -131,12 +132,25 @@ const Navbar = () => {
         </div>
 
         {/* Mid section */}
-        <div  className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar">
-          <div className="row d-flex justify-content-between align-items-center">
+        <div  className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar ">
+          <div className="row  d-flex justify-content-between align-items-center">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/friends" element={<FriendHome />} />
-            </Routes>
+
+             {/*  <<---Friends-->> */}
+              <Route path="/friends/requests/" element={<NoUserSelected />} />
+              <Route path="/friends/suggestions/" element={<NoUserSelected />} />
+              <Route path="/friends/sent-requests/" element={<NoUserSelected />} />
+              <Route path="/friends/all-friends/" element={<NoUserSelected />} />
+
+
+              <Route path="/friends/requests/:id" element={<Profile />} />
+              <Route path="/friends/suggestions/:id" element={<Profile />} />
+              <Route path="/friends/sent-requests/:id" element={<Profile />} />
+              <Route path="/friends/all-friends/:id" element={<Profile />} />
+
+              </Routes>
           </div>
         </div>
 
@@ -144,11 +158,21 @@ const Navbar = () => {
         <div className=" col-lg-3 d-none d-lg-block w-25 h-25 right_side_bar">
           <Routes >
             <Route path="/" element={<Homeleft />} />
+
+             {/* Friends--->friends */}
             <Route path="/friends" element={<FriendRight />} />
+            {/* Friends--->requests */}
             <Route path="/friends/requests" element={<FriendRightFriendRequest />} />
+            <Route path="/friends/requests/:id" element={<FriendRightFriendRequest />} />
+            {/* Friends--->suggestions */}
             <Route path="/friends/suggestions" element={<FriendRightFriendSuggestions />} />
+            <Route path="/friends/suggestions/:id" element={<FriendRightFriendSuggestions />} />
+            {/* Friends--->sent-requests */}
             <Route path="/friends/sent-requests" element={<FriendRightSentRequests />} />
+            <Route path="/friends/sent-requests/:id" element={<FriendRightSentRequests />} />
+            {/* Friends--->sent-requests */}
             <Route path="/friends/all-friends" element={<FriendRightAllFriends />} />
+            <Route path="/friends/all-friends/:id" element={<FriendRightAllFriends />} />
 
         {/*     <Route path="/page" element={<Home />} /> */}
           </Routes>
