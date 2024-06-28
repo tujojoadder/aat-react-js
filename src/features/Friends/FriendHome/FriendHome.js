@@ -6,6 +6,7 @@ import LargeScreenCard from "../LargeScreenUnFriendUserCard/LargeScreenUnFriendU
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
 import LargeScreenUnFriendUserCard from "../LargeScreenUnFriendUserCard/LargeScreenUnFriendUserCard";
 import SmallScreenUnFriendUserCard from "../SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
+import AllFriendList from "../AllFriendList/AllFriendList";
 
 export default function FriendHome() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -14,38 +15,40 @@ export default function FriendHome() {
     {
       name: "Mark Rockwell",
       handle: "@mark_rockwell",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
     },
     {
       name: "Jane Doe",
       handle: "@jane_doe",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
     },
     {
       name: "John Smith",
       handle: "@john_smith",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    }
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
   ];
 
   return (
-    <>
-      <div className="friend-home main  border " style={{backgroundColor:'white'}}>
-        {/* Friend Request Section */}
-
-        
-        <div className="friend-request-section ">
-          <h4 className="p-2">Friend Requests</h4>
-         {/*  Only three record will retrive in inisial state */}
-          <div className="row">
-            {profiles.map((profile, index) => (
+    <div className="friend-home main border" style={{ backgroundColor: "white" }}>
+      {/* Friend Request Section */}
+      <div className="friend-request-section">
+        <h4 className="p-2">Friend Requests</h4>
+        <div className="row">
+          {profiles.length === 0 ? (
+            <div className="col-12 text-center">No records</div>
+          ) : (
+            profiles.map((profile, index) =>
               isSmallScreen ? (
                 <SmallScreenUnFriendUserCard
                   key={index}
                   name={profile.name}
                   handle={profile.handle}
                   image={profile.image}
-                  type='friend_request'
+                  type="friend_request"
                 />
               ) : (
                 <LargeScreenUnFriendUserCard
@@ -53,43 +56,44 @@ export default function FriendHome() {
                   name={profile.name}
                   handle={profile.handle}
                   image={profile.image}
-                   type='friend_request'
+                  type="friend_request"
                 />
               )
-            ))}
-          </div>
-
-          {/* See All Button */}
-          <div className="text-center mt-3">
-            <button 
-              className="btn btn-block"
-              style={{
-                backgroundColor: '#ebedf0',
-                outline: 'none',
-                boxShadow: 'none',
-                border:'none'
-              }}
-            >
-              See All
-            </button>
-          </div>
+            )
+          )}
         </div>
+        {profiles.length >= 3 && (
+          <div className="text-center mt-3">
+            <button
+              className="btn btn-block"
+              style={{
+                backgroundColor: "#ebedf0",
+                outline: "none",
+                boxShadow: "none",
+                border: "none",
+              }}
+            >
+              See All
+            </button>
+          </div>
+        )}
+      </div>
 
-
-
-      {/*   Friend Suggestion Section */}
-        <div className="friend-suggestion-section pb-5">
+      {/* Friend Suggestion Section */}
+      <div className="friend-suggestion-section">
         <h4 className="p-2 pt-3">People you may know</h4>
-         {/* 12 record will retrive in inisial state */}
-          <div className="row">
-            {profiles.map((profile, index) => (
+        <div className="row">
+          {profiles.length === 0 ? (
+            <div className="col-12 text-center">No records</div>
+          ) : (
+            profiles.map((profile, index) =>
               isSmallScreen ? (
                 <SmallScreenUnFriendUserCard
                   key={index}
                   name={profile.name}
                   handle={profile.handle}
                   image={profile.image}
-                  type='suggestion'
+                  type="suggestion"
                 />
               ) : (
                 <LargeScreenUnFriendUserCard
@@ -97,38 +101,65 @@ export default function FriendHome() {
                   name={profile.name}
                   handle={profile.handle}
                   image={profile.image}
-                   type='suggestion'
+                  type="suggestion"
                 />
               )
-            ))}
-          </div>
-
-          {/* See All Button */}
+            )
+          )}
+        </div>
+        {profiles.length >= 3 && (
           <div className="text-center mt-3">
-            <button 
+            <button
               className="btn btn-block"
               style={{
-                backgroundColor: '#ebedf0',
-                outline: 'none',
-                boxShadow: 'none',
-                border:'none'
+                backgroundColor: "#ebedf0",
+                outline: "none",
+                boxShadow: "none",
+                border: "none",
               }}
             >
               See All
             </button>
           </div>
-
-
-
-            </div>
-
-
-
-
-
-
-
+        )}
       </div>
-    </>
+
+      {/* All Friends Section */}
+      <div className="all-friends-section pb-4">
+        <h4 className="p-2 pt-3">All friends</h4>
+        <div className="row">
+          {profiles.length === 0 ? (
+            <div className="col-12 text-center">No records</div>
+          ) : (
+            profiles.map((profile, index) =>
+              isSmallScreen && (
+                <AllFriendList
+                  key={index}
+                  name={profile.name}
+                  handle={profile.handle}
+                  image={profile.image}
+                  type="suggestion"
+                />
+              )
+            )
+          )}
+        </div>
+        {profiles.length >= 3 && (
+          <div className="text-center mt-3">
+            <button
+              className="btn btn-block"
+              style={{
+                backgroundColor: "#ebedf0",
+                outline: "none",
+                boxShadow: "none",
+                border: "none",
+              }}
+            >
+              See All
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

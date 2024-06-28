@@ -101,6 +101,7 @@ code {
 /* Top margin for navbar */
 @media (max-width: 576px) {
   .main {
-   margin-top: 60px !important;
+   padding-top: 60px !important;
+   padding-bottom: 60px !important;
   }
 }

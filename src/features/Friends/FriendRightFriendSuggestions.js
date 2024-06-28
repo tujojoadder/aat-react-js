@@ -106,7 +106,7 @@ export default function FriendRightFriendSuggestions() {
                 </li>
               </ul>
             </div>
-            <h5 className="ms-3">Friend Suggestion</h5>
+            <h5 className="ms-3">Friend Suggestions</h5>
             <Scrollbars style={{ width: "100%", height: "55vh", minHeight: "300px" }}>
               <div className="mb-5">
                 {profiles.map((profile, index) => {
