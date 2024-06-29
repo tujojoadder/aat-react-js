@@ -4,8 +4,51 @@ import SendFriendRequest from "./Components/SendFriendRequest/SendFriendRequest"
 import SearchBox from "./Components/SearchBox/SearchBox";
 import HadithBox from "./Components/Hadithbox/HadithBox";
 import SuggestedFriend from "./Components/SuggestedFriend/SuggestedFriend";
-
+import { Scrollbars } from "react-custom-scrollbars";
 export default function Homeleft() {
+  const profiles = [
+    {
+      name: "Mark Rockwell",
+      handle: "@mark_rockwell",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "Jane Doe",
+      handle: "@jane_doe",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "John Smith",
+      handle: "@john_smith",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },{
+      name: "Jane Doe",
+      handle: "@jane_doe",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "John Smith",
+      handle: "@john_smith",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },{
+      name: "Jane Doe",
+      handle: "@jane_doe",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "John cena",
+      handle: "@john_smith",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+  ];
+
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const localStorageKey = "scrollPositionPage"; // Unique key for this component
@@ -57,7 +100,29 @@ export default function Homeleft() {
           {/* hadis box */}
           <HadithBox />
 
-          <SuggestedFriend />
+          {/* Suggestion */}
+
+          <h5 className="ms-3  mt-3">Friend Suggestions</h5>
+            <Scrollbars style={{ width: "100%", height: "27vh" }}>
+              <div className="mb-4">
+                {profiles.map((profile, index) => {
+
+                  return (
+                 
+                      <div className="col-12 mb-2">
+                        <SendFriendRequest
+                          name={profile.name}
+                          handle={profile.handle}
+                          image={profile.image}
+                          
+                        />
+                      </div>
+                   
+                  );
+                })}
+              </div>
+            </Scrollbars>
+          
         </div>
       </div>
    

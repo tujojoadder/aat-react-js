@@ -15,10 +15,8 @@ export default function NoUserSelected() {
     content: {
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center',
       flexDirection: 'column',
-      padding: '20px',
-      border: '1px solid #ddd',
-      borderRadius: '5px',
     },
     icon: {
       fontSize: '24px',
@@ -32,7 +30,7 @@ export default function NoUserSelected() {
   };
 
   return (
-    <div style={styles.container} className='border'> 
+    <div style={styles.container} className='border'>
       <div style={styles.content}>
         <i className="fas fa-info-circle" style={styles.icon}></i>
         <h5 style={styles.message}>Select people's names to preview their profile.</h5>

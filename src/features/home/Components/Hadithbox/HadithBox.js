@@ -3,7 +3,7 @@ import './HadithBox.css'; // Import the CSS file for styling
 
 const HadithBox = () => {
   return (
-    <div className="hadith-box shadow-sm  pb-2 p-2 mb-1 shadow-sm bg-white rounded">
+    <div className="hadith-box shadow-sm  pb-2 p-2 mb-1 shadow-sm bg-white rounded border">
       <div className="hadith-head">
         <button className="btn-copy">
           Hadithday <i className="fa-solid fa-plus"></i>

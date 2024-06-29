@@ -1,12 +1,9 @@
 import React from "react";
-import Friends from "../Friends";
 import { useMediaQuery } from "react-responsive";
-import SmallScreenCard from "../SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
-import LargeScreenCard from "../LargeScreenUnFriendUserCard/LargeScreenUnFriendUserCard";
-import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
-import LargeScreenUnFriendUserCard from "../LargeScreenUnFriendUserCard/LargeScreenUnFriendUserCard";
 import SmallScreenUnFriendUserCard from "../SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
+import LargeScreenUnFriendUserCard from "../LargeScreenUnFriendUserCard/LargeScreenUnFriendUserCard";
 import AllFriendList from "../AllFriendList/AllFriendList";
+import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
 
 export default function FriendHome() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -35,7 +32,7 @@ export default function FriendHome() {
   return (
     <div className="friend-home main border" style={{ backgroundColor: "white" }}>
       {/* Friend Request Section */}
-      <div className="friend-request-section">
+      <div className="friend-request-section ">
         <h4 className="p-2">Friend Requests</h4>
         <div className="row">
           {profiles.length === 0 ? (
@@ -65,7 +62,7 @@ export default function FriendHome() {
         {profiles.length >= 3 && (
           <div className="text-center mt-3">
             <button
-              className="btn btn-block"
+              className="btn btn-block "
               style={{
                 backgroundColor: "#ebedf0",
                 outline: "none",
@@ -80,7 +77,7 @@ export default function FriendHome() {
       </div>
 
       {/* Friend Suggestion Section */}
-      <div className="friend-suggestion-section">
+      <div className="friend-suggestion-section mb-md-5">
         <h4 className="p-2 pt-3">People you may know</h4>
         <div className="row">
           {profiles.length === 0 ? (
@@ -125,14 +122,14 @@ export default function FriendHome() {
       </div>
 
       {/* All Friends Section */}
-      <div className="all-friends-section pb-4">
-        <h4 className="p-2 pt-3">All friends</h4>
-        <div className="row">
-          {profiles.length === 0 ? (
-            <div className="col-12 text-center">No records</div>
-          ) : (
-            profiles.map((profile, index) =>
-              isSmallScreen && (
+      {isSmallScreen && (
+        <div className="all-friends-section pb-4">
+          <h4 className="p-2 pt-3">All friends</h4>
+          <div className="row">
+            {profiles.length === 0 ? (
+              <div className="col-12 text-center">No records</div>
+            ) : (
+              profiles.map((profile, index) => (
                 <AllFriendList
                   key={index}
                   name={profile.name}
@@ -140,26 +137,26 @@ export default function FriendHome() {
                   image={profile.image}
                   type="suggestion"
                 />
-              )
-            )
+              ))
+            )}
+          </div>
+          {profiles.length >= 3 && (
+            <div className="text-center mt-3">
+              <button
+                className="btn btn-block"
+                style={{
+                  backgroundColor: "#ebedf0",
+                  outline: "none",
+                  boxShadow: "none",
+                  border: "none",
+                }}
+              >
+                See All
+              </button>
+            </div>
           )}
         </div>
-        {profiles.length >= 3 && (
-          <div className="text-center mt-3">
-            <button
-              className="btn btn-block"
-              style={{
-                backgroundColor: "#ebedf0",
-                outline: "none",
-                boxShadow: "none",
-                border: "none",
-              }}
-            >
-              See All
-            </button>
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }

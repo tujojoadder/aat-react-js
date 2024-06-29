@@ -31,7 +31,7 @@ export default function FriendRightFriendSuggestions() {
       image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
     },
     {
-      name: "JaneDvoe",
+      name: "jon cena",
       handle: "@jane_doe",
       image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
     },
