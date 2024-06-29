@@ -647,12 +647,11 @@ ul {
   max-width: 45%;
   position: relative;
    /* Adjust max-width as per your design */
-  margin: 0 auto; /* Center modal vertically and leave space at top */
 }
 
 .modal-content {
   width: 100%;
-  margin-top: -2px;
+ 
 
   height: 100vh; /* Limit max height if needed */
   overflow-y: hidden; /* Allow modal content to scroll if it exceeds max-height */
@@ -667,7 +666,7 @@ body.modal-open {
 @media (max-width: 1450px) { /* Adjust breakpoint as needed */
   .modal-dialog {
     max-width: 70%;
-    height: 90%;
+    height: 100%;
   }
 }
 @media (max-width: 1200px) { /* Adjust breakpoint as needed */
@@ -684,4 +683,7 @@ body.modal-open {
 /* Hide Scroll bar */
 body {
   overflow: hidden; /* Hide scrollbars */
+}
+.modal {
+  --bs-modal-margin: 0px  !important;
 }
