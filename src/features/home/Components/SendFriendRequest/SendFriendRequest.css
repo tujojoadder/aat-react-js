@@ -2,7 +2,7 @@
 .friend-request-container {
   border: 1px solid #e1e4e8;
   padding: 10px;
-  max-width: 450px;
+  max-width: 100%;
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 

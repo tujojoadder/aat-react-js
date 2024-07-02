@@ -10,9 +10,10 @@ export default function SmallScreenUnFriendUserCard({
 }) {
   return (
     <div
-      className={`friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
+      className={`friend-request-container  d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
         isActive ? "active" : ""
       }`}
+      style={{maxWidth:'100%',overflowX:'hidden'}}
     >
       <div className="profile-image me-2">
         <img

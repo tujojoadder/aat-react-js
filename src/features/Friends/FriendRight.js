@@ -18,7 +18,7 @@ const FriendRight = () => {
           <div className="menu-container" style={{ height: "100vh",}} >
             <div className="menu" style={{ height: "45vh",minHeight:'310px' }}>
           
-              <h3 className="menu-header text-left ps-2 text-dark">Friends</h3>
+              <h3 className="menu-header text-left ps-5 text-dark ">Friends</h3>
               <ul className="nav flex-column ">
                 <li className="nav-item  w-100">
                   <NavLink

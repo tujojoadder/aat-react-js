@@ -1,8 +1,8 @@
-import React from "react";
-import image from "./logo1.jpg";
-export default function ImagePost() {
+import React from 'react'
+import image from "./logo.jpg";
+export default function ApprovalImagePost() {
   return (
-    <div class="posts ">
+<div class="posts ">
       <div class="user-pics">
         <img src={image} alt="user1" />
       </div>
@@ -25,22 +25,11 @@ export default function ImagePost() {
             alt="content1"
           />
         </div>
-        <div className="content-icons  px-2 ">
-          <i
-            className=" far fa-heart red  "
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            {" "}
-            109
-          </i>
-
-          <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
-
-          <i className="ps-md-3 far fa-comment blue "> 1.6k</i>
-          <i class="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
+        <div className="content-actions pe-3 d-flex justify-content-end">
+          <button className="btn btn-success me-2">Approve</button>
+          <button className="btn btn-danger">Remove</button>
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -12,7 +12,7 @@ export default function BothPost() {
             <h1 className="full-name m-0 p-0">Turjo Joadder </h1>
          <p className="user-name m-0 p-0">@eric_alvareeric</p>
           </div>
-          <p className="time ms-3" style={{ paddingTop: '18px' }}>  2hrs</p>
+          <p className="time me-4" style={{ paddingTop: '18px' }}>  2hrs</p>
         </div>
 
         <div class="user-content" style={{marginTop:'-10px'}}>

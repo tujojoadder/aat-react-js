@@ -9,7 +9,6 @@ import ResetPassword from "./features/ResetPassword/ResetPassword";
 import ForgotPassword from "./features/ResetPassword/ForgotPassword";
 import NotFound from "./features/404/NotFound";
 import Navbar from "./features/Navbars/Navbar";
-import Page from "./features/Page";
 import Homeleft from "./features/home/Homeleft";
 import HadithDay from "./features/home/Components/HadithDay/HadithDay";
 import Friends from "./features/Friends/Friends";
@@ -21,6 +20,13 @@ import FriendRightSentRequests from "./features/Friends/FriendRightSentRequests"
 import FriendRightAllFriends from "./features/Friends/FriendRightAllFriends";
 import Profile from "./features/Profile/Profile";
 import NoUserSelected from "./features/Friends/NoUserSelected";
+import GroupsHome from "./features/Groups/GroupsHome";
+import GroupsHomeRight from "./features/Groups/GroupsHomeRight";
+import GroupSuggestion from "./features/Groups/GroupSuggestion";
+import GroupProfile from "./features/Groups/GroupProfile/GroupProfile";
+import CreateGroup from "./features/Groups/CreateGroup/CreateGroup";
+import GroupsYourGroups from "./features/Groups/GroupsYourGroups";
+import GroupManage from "./features/Groups/GroupManage/GroupManage";
 function App() {
   return (
     <BrowserRouter>
@@ -67,6 +73,35 @@ function App() {
           <Route path="friends/all-friends/:id" exact element={<Profile />} />
           <Route path="friends/all-friends/:id" exact element={<FriendRightAllFriends />} />
       
+
+       {/* Groups */}
+       <Route path="groups" exact element={<GroupsHome />} />
+       <Route path="groups" exact element={<GroupsHomeRight />} />
+          
+
+        {/*  Groups---> profile */}
+        <Route path="groups/:id" exact element={<GroupProfile />} />
+        <Route path="groups/:id" exact element={<GroupsHomeRight />} />
+        <Route path="groups/mygroup/:id" exact element={<GroupProfile />} />
+        <Route path="groups/mygroup/:id" exact element={<GroupsHomeRight />} />
+        {/*  Groups---> suggestions */}
+        <Route path="groups/suggestions" exact element={<GroupsHome />} />
+        <Route path="groups/suggestions" exact element={<GroupsHomeRight />} />
+
+
+        {/*  Groups---> create group */}
+
+        <Route path="groups/create" exact element={<CreateGroup />} />
+        <Route path="groups/create" exact element={<GroupsHomeRight />} />
+         
+         
+        {/*  Groups---> your group */}
+        <Route path="groups/joinned" exact element={<GroupsYourGroups />} />
+        <Route path="groups/joineed" exact element={<GroupsHomeRight />} />
+         
+        {/*  Groups---> manage group */}
+        <Route path="groups/:id/manage" exact element={<GroupManage />} />
+        <Route path="groups/:id/manage" exact element={<GroupsHomeRight />} />
 
 
 

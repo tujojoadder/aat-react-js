@@ -1,18 +1,18 @@
-import React from "react";
-import "./AllFriendList.css";
 
-export default function AllFriendList({ name, handle, image, isActive }) {
+import React from "react";
+import "./JoinedGroups.css";
+
+export default function JoinedGroups({ name, handle, image, isActive }) {
   return (
     <div
       className={`friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm  rounded ${
         isActive ? "active" : ""
       }`}
-      style={{maxWidth:'100%'}}
     >
        
       <div className="profile-image me-2">
         <img
-          className="rounded-circle"
+          
           src={image}
           alt="user"
           height="55px"

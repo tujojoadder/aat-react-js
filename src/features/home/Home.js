@@ -13,7 +13,7 @@ import Friends from "../Friends/Friends";
 export default function Home() {
   return (
     
-    <div className="p-0 m-0   border home-container main" style={{ width: "100%",backgroundColor:'#f8f9fa' }}>
+    <div className="p-0 m-0    home-container main" style={{ width: "100%",backgroundColor:'#f8f9fa' }}>
 
    {/*    Hadith Status */}
       <HadithStatus />

@@ -4,6 +4,7 @@ import SmallScreenUnFriendUserCard from "../SmallScreenUnFriendUserCard/SmallScr
 import LargeScreenUnFriendUserCard from "../LargeScreenUnFriendUserCard/LargeScreenUnFriendUserCard";
 import AllFriendList from "../AllFriendList/AllFriendList";
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
+import FriendsTabs from "../FriendsTabs/FriendsTabs";
 
 export default function FriendHome() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -30,7 +31,16 @@ export default function FriendHome() {
   ];
 
   return (
-    <div className="friend-home main border" style={{ backgroundColor: "white" }}>
+
+    <>
+   
+    <div className="friend-home main border" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+     
+    <div className="d-block d-lg-none">
+        <FriendsTabs />
+      </div>
+
+
       {/* Friend Request Section */}
       <div className="friend-request-section ">
         <h4 className="p-2">Friend Requests</h4>
@@ -157,6 +167,7 @@ export default function FriendHome() {
           )}
         </div>
       )}
-    </div>
+    </div></>
+    
   );
 }

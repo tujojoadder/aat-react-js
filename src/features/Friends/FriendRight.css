@@ -47,6 +47,7 @@
   .nav-link.active {
     font-weight: bold; /* Bold font for active link */
     background-color: #f0f2f4; /* Active background color */
+    color: #007bff;
 
   }
   

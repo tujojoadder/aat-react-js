@@ -7,8 +7,9 @@ export default function SendFriendRequest({ name, handle, image, isActive }) {
       className={`friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
         isActive ? "active" : ""
       }`}
+      style={{maxWidth:'100%'}} 
     >
-      <div className="profile-image me-2">
+      <div className="profile-image me-2"  >
         <img
           className="rounded-circle"
           src={image}

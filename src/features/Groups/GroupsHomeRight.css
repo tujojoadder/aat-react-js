@@ -1,0 +1,100 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styling for the right-side bar */
+.groups_right_side_bar {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+}
+
+/* Styling for the menu header */
+.menu-header {
+  font-size: 1.8rem;
+  color: #007bff;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Styling for the navigation links */
+.nav-link {
+  display: block;
+  padding: 12px 20px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  border-left: 3px solid transparent;
+}
+
+.nav-link:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
+}
+
+.nav-link.active {
+  font-weight: bold;
+  background-color: #f0f2f4;
+  color: #007bff;
+  border-left: 3px solid #007bff;
+}
+
+/* Styling for the "Create New Group" link */
+.create-group-link {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.create-group-link:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+/* Additional styling for the sent requests section */
+.menu-container h5 {
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  color: #333;
+  margin-bottom: 0;
+  border-radius: 0 0 10px 10px;
+}
+
+/* Styling for the scrollbar container */
+.scroll-container {
+  padding: 10px;
+}
+
+.mb-5 {
+  margin-bottom: 5rem !important;
+}
+
+/* Adjust the font size for smaller screens */
+@media (max-width: 768px) {
+  .menu-header {
+      font-size: 1.5rem;
+  }
+
+  .nav-link {
+      padding: 10px 15px;
+  }
+}
+.nav-link.active {
+  font-weight: bold; /* Bold font for active link */
+  background-color: #f0f2f4; /* Active background color */
+  color: #007bff;
+
+}

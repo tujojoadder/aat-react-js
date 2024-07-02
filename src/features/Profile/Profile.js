@@ -100,7 +100,7 @@ export default function Profile() {
       </div>
 
       {/* Content section */}
-      <div className="content-secssion">
+      <div className="content-secssion mx-2">
         <ul className="nav nav-tabs mt-3">
           <li className="nav-item">
             <a className="nav-link active" href="#post" data-bs-toggle="tab">
@@ -201,7 +201,7 @@ export default function Profile() {
             <About />
           </div>
           {/* Friends Section */}
-          <div id="friends" className="p-md-3 tab-pane fade">
+          <div id="friends" className="tab-pane fade w-100">
            
             <ProfileFriend />
             <ProfileFriend />

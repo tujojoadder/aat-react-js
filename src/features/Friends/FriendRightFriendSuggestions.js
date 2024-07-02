@@ -51,8 +51,8 @@ export default function FriendRightFriendSuggestions() {
           className="col-lg-3 ms-1 p-0 m-0 friend_right_side_bar bg-body rounded"
         >
           <div className="menu-container" style={{ height: "100vh" }}>
-            <div className="menu" style={{ height: "45vh", minHeight: "310px" }}>
-              <h3 className="menu-header text-left ps-2 text-dark">Friends</h3>
+            <div className="menu mb-3" style={{ height: "45vh", minHeight: "310px" }}>
+              <h3 className="menu-header text-left ps-5 text-dark">Friends</h3>
               <ul className="nav flex-column">
                 <li className="nav-item w-100">
                   <NavLink

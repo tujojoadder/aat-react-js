@@ -1,0 +1,39 @@
+/* Existing styles */
+
+.vertical-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the items horizontally */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .vertical-menu a {
+    width: 100%; /* Full width for the anchor tag */
+    padding: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the text and icon within the anchor */
+    transition: background-color 0.3s, color 0.3s;
+    box-sizing: border-box; /* Ensures padding is included in the width calculation */
+  }
+  
+  .vertical-menu a i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .vertical-menu a:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
+  }
+  
+  .vertical-menu a.active {
+    background-color: #007bff;
+    color: white;
+  }
+  

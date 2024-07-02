@@ -6,7 +6,7 @@ import './ProfileFriend.css'; // Import the custom CSS file
 
 export default function ProfileFriend(props) {
   return (
-    <div  className="friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm bg-white rounded">
+    <div style={{maxWidth:'100%'}}  className="px-3 friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm bg-white rounded">
       <div className="profile-image me-4">
         <img
           className="rounded-circle"

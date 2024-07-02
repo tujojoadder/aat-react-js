@@ -1,12 +1,13 @@
 
+
 import React from "react";
-import "./FriendRight.css";
+import "./GroupProfileRight.css";
 import { Scrollbars } from "react-custom-scrollbars";
 import { NavLink,useLocation, BrowserRouter, Route, Routes } from "react-router-dom";
-import SmallScreenUnFriendUserCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
-import SendFriendRequest from "../home/Components/SendFriendRequest/SendFriendRequest";
+import GroupAbout from "../GroupAbout/GroupAbout";
 
-export default function FriendRightSentRequests() {
+
+export default function GroupProfileRight() {
     const scrollRef = React.useRef(null);
     const profiles = [
       {
@@ -68,37 +69,30 @@ export default function FriendRightSentRequests() {
     >
       <div
         style={{ overflow: "hidden" }}
-        className="col-lg-3 ms-1  p-0 m-0 friend_right_side_bar bg-body rounded"
+        className="col-lg-3 ms-1  p-0 m-0 groups_right_side_bar bg-body rounded"
       >
         <div className="menu-container" style={{ height: "100vh" }}>
-        <div className="menu mb-3" style={{ height: "45vh",minHeight:'310px' }}>
+        <div className="menu" style={{ height: "45vh",minHeight:'310px' }}>
         
-        <h3 className="menu-header text-left ps-5 text-dark">Friends</h3>
+        <h3 className="menu-header text-left ps-2 text-dark">Groups</h3>
         <ul className="nav flex-column ">
           <li className="nav-item w-100">
             <NavLink
              end
-              to="/friends"
+              to="/groups"
               className="nav-link"
               activeClassName="active"
             >
-              <i className="fas fa-user-friends me-2"></i> Home
+              <i className="fa-solid fa-book me-2"></i> Your feed
             </NavLink>
+          </li>
+          <li className="nav-item w-100">
+           
           </li>
           <li className="nav-item w-100">
             <NavLink
              end
-              to="/friends/requests"
-              className="nav-link"
-              activeClassName="active"
-            >
-              <i className="fas fa-user-plus fa-fw me-2"></i> Friend requests
-            </NavLink>
-          </li>
-          <li className="nav-item w-100">
-            <NavLink
-             end
-              to="/friends/suggestions"
+              to="/groups/suggestions"
               className="nav-link"
               activeClassName="active"
             >
@@ -106,52 +100,33 @@ export default function FriendRightSentRequests() {
             </NavLink>
           </li>
           <li className="nav-item w-100">
-            <NavLink
-             end
-              to="/friends/sent-requests"
-              className="nav-link"
-              activeClassName="active"
-            >
-              <i className="fa fa-user-plus me-2" aria-hidden="true"></i> Sent requests
-            </NavLink>
-          </li>
-          <li className="nav-item w-100">
-            <NavLink
-             end
-              to="/friends/all-friends"
-              className="nav-link"
-              activeClassName="active"
-            >
-              <i className="fas fa-users fa-fw me-2"></i> All friends
-            </NavLink>
-          </li>
+                                    <NavLink end to="/groups/joined" className="nav-link" activeClassName="active">
+                                        <i className="fas fa-lightbulb fa-fw me-2"></i> Your groups
+                                    </NavLink>
+                                </li>
+                              
+                                <li className="nav-item w-100">
+                                    <NavLink end to="/groups/create" className="nav-link create-group-link text-center mt-3 py-2"   activeClassName="active">
+                                        <i className="fa-solid fa-plus me-2 "></i> Create New Group
+                                    </NavLink>
+                                </li>
         </ul>
       </div>
 
-          <h5 className="ms-3">Sent Requests</h5>
+
+
+
+
+
+
+
+
+          <h5 className="ms-3">About</h5>
           <Scrollbars
             style={{ width: "100%", height: "55vh", minHeight: "300px" }}
           >
             <div className="mb-5">
-            {profiles.map((profile, index) => {
-                  const isActive = location.pathname === `/friends/sent-requests/${profile.name}`;
-                  return (
-                    <NavLink
-                      key={index}
-                      to={`/friends/sent-requests/${profile.name}`}
-                      className="text-decoration-none"
-                    >
-                      <div className="col-12 mb-2">
-                        <SendFriendRequest
-                          name={profile.name}
-                          handle={profile.handle}
-                          image={profile.image}
-                          isActive={isActive}
-                        />
-                      </div>
-                    </NavLink>
-                  );
-                })}
+           <GroupAbout/>
               </div>
           </Scrollbars>
         </div>
