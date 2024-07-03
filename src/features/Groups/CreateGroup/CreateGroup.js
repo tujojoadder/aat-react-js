@@ -12,9 +12,11 @@ export default function CreateGroup() {
   };
 
   return (
-    <div className="create-group-container">
-      <div className="form-header">
-        <h2>Create a New Group</h2>
+    <div className="create-group-container main pb-5">
+      <div className="form-header mt-3">
+        <h3>Create Group</h3>
+        
+        
       </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
