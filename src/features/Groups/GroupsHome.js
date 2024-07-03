@@ -32,7 +32,7 @@ export default function GroupsHome() {
 
   return (
     <div
-      className="friend-home main  "
+      className="friend-home main pt-2  "
       style={{
         backgroundColor: "white",
         marginBottom: "5vh",
