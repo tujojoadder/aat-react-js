@@ -9,8 +9,8 @@ export default function Comment() {
   const handleBlur = () => setIsFocused(false);
 
   return (
-    <div className="create-comment shadow-sm   bg-body rounded" >
-      <div className="post ">
+    <div style={{width:'100%'}} className="create-comment shadow-sm   bg-body rounded" >
+      
         <form action="">
           <div className="form-group-1 d-flex align-items-center py-md-3 " style={{ padding: '10px 15px', backgroundColor: '#f0f2f5', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', position: 'relative' }}>
             <img src={image} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} alt="profile-pic" />
@@ -49,6 +49,6 @@ export default function Comment() {
           </div>
         </form>
       </div>
-    </div>
+
   );
 }

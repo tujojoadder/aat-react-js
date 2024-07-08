@@ -12,9 +12,9 @@ export default function LargeScreenUnFriendUserCard(props) {
             <h6 className="mb-0 text-truncate ">{props.name}</h6>
             <p className="small text-muted text-truncate ">{props.handle}</p>
             <div className="d-flex flex-column">
-              <button className="btn btn-md btn-primary mb-2 w-100">{buttonText}</button>
+              <button className="btn btn-md btn-primary mb-2 py-2 w-100"><b>{buttonText}</b></button>
               {props.type === 'friend_request' && (
-                <button className="btn btn-md w-100" style={{ backgroundColor: "#ebedf0" }}>Delete</button>
+                <button className="btn py-2 btn-md w-100" style={{ backgroundColor: "#ebedf0" }}> <b>Delete</b> </button>
               )}
             </div>
           </div>

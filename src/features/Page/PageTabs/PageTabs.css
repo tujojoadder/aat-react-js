@@ -1,0 +1,36 @@
+.horizontal-pills-nav {
+    overflow-x: hidden; /* Hide the scrollbar */
+    white-space: nowrap;
+    position: relative; /* Ensure relative positioning */
+  }
+  
+  .horizontal-pills {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Enables smooth scrolling on iOS */
+    scrollbar-width: none; /* Firefox: Hide scrollbar */
+  }
+  
+  .horizontal-pills::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit browsers */
+  }
+  
+  .pill {
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .pill.active {
+    background-color: #3c4e4e;
+    color: #fff;
+  }
+  
+  

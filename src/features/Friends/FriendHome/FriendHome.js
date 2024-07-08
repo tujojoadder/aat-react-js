@@ -34,7 +34,7 @@ export default function FriendHome() {
 
     <>
    
-    <div className="friend-home main border" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+    <div className="friend-home main border mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
      
     <div className="d-block d-lg-none">
         <FriendsTabs />
@@ -72,7 +72,7 @@ export default function FriendHome() {
         {profiles.length >= 3 && (
           <div className="text-center mt-3">
             <button
-              className="btn btn-block "
+              className="btn btn-block py-2"
               style={{
                 backgroundColor: "#ebedf0",
                 outline: "none",
@@ -80,7 +80,7 @@ export default function FriendHome() {
                 border: "none",
               }}
             >
-              See All
+          <b>See All</b>    
             </button>
           </div>
         )}
@@ -117,7 +117,7 @@ export default function FriendHome() {
         {profiles.length >= 3 && (
           <div className="text-center mt-3">
             <button
-              className="btn btn-block"
+              className="btn btn-block py-2"
               style={{
                 backgroundColor: "#ebedf0",
                 outline: "none",
@@ -125,7 +125,7 @@ export default function FriendHome() {
                 border: "none",
               }}
             >
-              See All
+           <b> See All</b>  
             </button>
           </div>
         )}
@@ -153,7 +153,7 @@ export default function FriendHome() {
           {profiles.length >= 3 && (
             <div className="text-center mt-3">
               <button
-                className="btn btn-block"
+                className="btn btn-block py-2"
                 style={{
                   backgroundColor: "#ebedf0",
                   outline: "none",
@@ -161,7 +161,7 @@ export default function FriendHome() {
                   border: "none",
                 }}
               >
-                See All
+              <b> See All</b> 
               </button>
             </div>
           )}

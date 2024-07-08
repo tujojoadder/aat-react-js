@@ -30,6 +30,14 @@ import GroupManage from "./features/Groups/GroupManage/GroupManage";
 import NoUserSelectedAllFriends from "./features/Friends/NoUserSelectedAllFriends";
 import NoUserSelectedSentRequest from "./features/Friends/NoUserSelectedSentRequest";
 import NoUserSelectedSuggestion from "./features/Friends/NoUserSelectedSuggestion";
+import PageHome from "./features/Page/PageHome";
+import PageProfile from "./features/Page/PageProfile/PageProfile";
+import PageManage from "./features/Page/PageManage/PageManage";
+import PageHomeRight from "./features/Page/PageHomeRight";
+import PageLiked from "./features/Page/PageLiked/PageLiked";
+import CreatePage from "./features/Page/CreatePage/CreatePage";
+import UpdatePage from "./features/Page/UpdatePage/UpdatePage";
+import CreatedPages from "./features/Page/CreatedPages/CreatedPages";
 function App() {
   return (
     <BrowserRouter>
@@ -107,6 +115,33 @@ function App() {
         <Route path="groups/:id/manage" exact element={<GroupsHomeRight />} />
 
 
+            {/* Page */}
+            <Route path="page" exact element={<PageHome />} />
+            <Route path="page" exact element={<PageHomeRight />} />
+ 
+        {/*  Page---> profile */}
+        <Route path="page/:id" exact element={<PageProfile/>} />
+        <Route path="page/:id" exact element={<PageHomeRight/>} />
+        <Route path="page/mypage/:id" exact element={<PageProfile />} />
+
+
+        {/*  Page---> manage */}
+        <Route path="page/:id/manage" exact element={<PageManage />} />
+
+        {/*  Page---> Liked */}
+        <Route path="page/liked" exact element={<PageLiked />} />
+        <Route path="page/liked" exact element={<PageHomeRight />} />
+         {/*  Page---> Created */}
+         <Route path="page/created" exact element={<CreatedPages />} />
+        <Route path="page/created" exact element={<PageHomeRight />} />
+ 
+
+        {/*  Page---> create page */}
+        <Route path="page/create" exact element={<CreatePage />} />
+        <Route path="page/create" exact element={<PageHomeRight />} />
+        {/*  Page---> update page */}
+        <Route path="page/update" exact element={<UpdatePage />} />
+ 
 
 
 

@@ -26,6 +26,15 @@ import GroupManage from "../Groups/GroupManage/GroupManage";
 import NoUserSelectedSuggestion from "../Friends/NoUserSelectedSuggestion";
 import NoUserSelectedSentRequest from "../Friends/NoUserSelectedSentRequest";
 import NoUserSelectedAllFriends from "../Friends/NoUserSelectedAllFriends";
+import PageHome from "../Page/PageHome";
+import PageProfile from "../Page/PageProfile/PageProfile";
+import PageManage from "../Page/PageManage/PageManage";
+import PageHomeRight from "../Page/PageHomeRight";
+import PageLiked from "../Page/PageLiked/PageLiked";
+import CreatePage from "../Page/CreatePage/CreatePage";
+import UpdatePage from "../Page/UpdatePage/UpdatePage";
+import PageProfileRight from "../Page/PageProfileRight/PageProfileRight";
+import CreatedPages from "../Page/CreatedPages/CreatedPages";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -34,7 +43,7 @@ const Navbar = () => {
     <Scrollbars style={{ width: "100%", height: "104vh", minHeight: "300px" }}>
       <div className={isNotSm ? "container-sm  " : "ms-3 me-3"} style={{}}>
         {/* xs NAV BAR */}
-        <nav className="bg-light xs-nav fixed-top d-sm-none">
+        <nav className="bg-light xs-nav fixed-top d-sm-none border-bottom">
           <div className="container-fluid">
             <div className="row h-50">
               <div className="row">
@@ -104,6 +113,17 @@ const Navbar = () => {
                   <p className="d-none d-lg-block fs-4 ps-2 text">Groups</p>
                 </div>
               </NavLink>
+              <NavLink to="/page" className="custom-link">
+                <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+                  <span>
+                  <i class="fa-solid fa-flag fs-2"></i>
+                  
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">Pages</p>
+                </div>
+              </NavLink>
+
+
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
                   <i className="fa-solid fa-envelope fs-2"></i>
@@ -173,6 +193,27 @@ const Navbar = () => {
                <Route path="groups/joined" exact element={<GroupsYourGroups />} />
                {/*  <<---Groups-->>manage group */}
                 <Route path="groups/:id/manage" exact element={<GroupManage />} />
+                
+
+
+               {/* <<---Page-->> */}
+               <Route path="/page" element={<PageHome />} />
+               {/*  Page---> profile */}
+               <Route path="page/:id" exact element={<PageProfile/>} />
+               <Route path="page/mypage/:id" exact element={<PageProfile />} />
+
+               {/*  Page---> manage */}
+               <Route path="page/:id/manage" exact element={<PageManage />} />
+               {/*  Page---> Liked */} 
+               <Route path="page/liked" exact element={<PageLiked />} />
+               {/*  Page---> create page */}
+               <Route path="page/create" exact element={<CreatePage />} />
+                {/*  Page---> Update page */}
+               <Route path="page/update" exact element={<UpdatePage />} />
+                  {/*  Page---> Created */}
+                  <Route path="page/created" exact element={<CreatedPages />} />
+
+
 
 
 
@@ -212,9 +253,19 @@ const Navbar = () => {
                <Route path="groups/joined" exact element={<GroupsHomeRight />} />
                {/*  <<---Groups-->>manage group */}
                <Route path="groups/:id/manage" exact element={<GroupsHomeRight />} />
+               {/*  <<---Page-->>home page */}
+               <Route path="page" exact element={<PageHomeRight />} />
+               {/*  Page---> Liked */}
+               <Route path="page/liked" exact element={<PageHomeRight />} />
+                {/*  Page---> my profile */}
+               <Route path="page/mypage/:id" exact element={<PageHomeRight />} />
+               <Route path="page/:id" exact element={<PageProfileRight/>} />
 
+               {/*  Page---> create page */}
+               <Route path="page/create" exact element={<PageHomeRight />} />
 
-
+                  {/*  Page---> Created */}
+                  <Route path="page/created" exact element={<PageHomeRight />} />
 
 
 

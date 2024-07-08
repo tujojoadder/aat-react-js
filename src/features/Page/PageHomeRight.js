@@ -1,10 +1,12 @@
+
 import React from "react";
-import "./GroupsHomeRight.css";
+import "./PageHomeRight.css";
 import { NavLink, useLocation, BrowserRouter, Route, Routes } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
-import JoinedGroups from "./JoinedGroups/JoinedGroups";
+import JoinedGroups from "../Groups/JoinedGroups/JoinedGroups";
+import MyPages from "./MyPages/MyPages";
 
-export default function GroupsHomeRight() {
+export default function PageHomeRight() {
     const scrollRef = React.useRef(null);
     const profiles = [
         {
@@ -16,11 +18,29 @@ export default function GroupsHomeRight() {
             name: "JaneDoe",
             handle: "@jane_doe",
             image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+        },{
+            name: "MarkRosckwell",
+            handle: "@mark_rockwell",
+            image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+        },
+        {
+            name: "JaneDcoe",
+            handle: "@jane_doe",
+            image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+        },{
+            name: "MarkRocskwell",
+            handle: "@mark_rockwell",
+            image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+        },
+        {
+            name: "JaneDoscse",
+            handle: "@jane_doe",
+            image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
         },
         // other profiles...
     ];
     const location = useLocation();
-    const isCreatePage = location.pathname === "/groups/create";
+    const isCreatePage = location.pathname === "/page/create";
 
     return (
         <div style={{ overflowX: "hidden" }}>
@@ -28,43 +48,47 @@ export default function GroupsHomeRight() {
                 <div className="col-lg-3 ms-1 p-0 m-0 groups_right_side_bar bg-body rounded">
                     <div className="menu-container" style={{ height: "100vh", overflow: 'hidden' }}>
                         <div className="menu " style={{ height: "45vh", minHeight: '310px' }}>
-                            <h3 className="menu-header text-left ps-5 text-dark">Groups</h3>
+                            <h3 className="menu-header text-left ps-5 text-dark">Pages</h3>
                             <ul className="nav flex-column">
                                 <li className="nav-item w-100">
-                                    <NavLink end to="/groups" className="nav-link" activeClassName="active">
-                                        <i className="fa-solid fa-book me-2"></i> Your feed
+                                    <NavLink end to="/page" className="nav-link" activeClassName="active">
+                                  <i className="fa-solid fa-compass me-2"></i> Discover
                                     </NavLink>
                                 </li>
                                 <li className="nav-item w-100">
-                                    <NavLink end to="/groups/suggestions" className="nav-link" activeClassName="active">
-                                        <i className="fas fa-lightbulb fa-fw me-2"></i> Suggestions
+                                    <NavLink end to="/page/liked" className="nav-link" activeClassName="active">
+                                    <i className="fa-solid fa-thumbs-up fa-fw me-2"></i> Liked Pages
                                     </NavLink>
                                 </li>
                                 <li className="nav-item w-100">
-                                    <NavLink end to="/groups/joined" className="nav-link" activeClassName="active">
-                                      <i className="fa-solid fa-users  me-2"></i> Your groups
+                                    <NavLink end to="/page/created" className="nav-link" activeClassName="active">
+                                    <i class="fa-solid fa-flag me-2"></i> Your Pages
                                     </NavLink>
                                 </li>
+                               
+
+
+
                                 {!isCreatePage && (
                                     <li className="nav-item w-100">
-                                        <NavLink end to="/groups/create" className="nav-link create-group-link text-center py-2 mt-3 " activeClassName="active">
-                                            <i className="fa-solid fa-plus me-2"></i> Create New Group
+                                        <NavLink end to="/page/create" className="nav-link create-group-link text-center py-2 mt-4 " activeClassName="active">
+                                            <i className="fa-solid fa-plus me-2"></i> Create New Page
                                         </NavLink>
                                     </li>
                                 )}
                             </ul>
                         </div>
 
-                        <h5 className="ms-3"> Groups you've joined
+                        <h5 className="ms-3"> Your pages
                         </h5>
                         <Scrollbars style={{ width: "100%", height: "55vh", minHeight: "300px" }}>
                             <div className="mb-5">
                                 {profiles.map((profile, index) => {
-                                    const isActive = location.pathname === `/groups/mygroup/${profile.name}`;
+                                    const isActive = location.pathname === `/page/mypage/${profile.name}`;
                                     return (
-                                        <NavLink key={index} to={`/groups/mygroup/${profile.name}`} className="text-decoration-none">
+                                        <NavLink key={index} to={`/page/mypage/${profile.name}`} className="text-decoration-none">
                                             <div className="col-12 mb-2">
-                                                <JoinedGroups
+                                                <MyPages
                                                     name={profile.name}
                                                     handle={profile.handle}
                                                     image={profile.image}

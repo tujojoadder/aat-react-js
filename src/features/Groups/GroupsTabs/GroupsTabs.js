@@ -37,7 +37,7 @@ const GroupsTabs = () => {
  
         >
           <button className='pill'>
-          <i class="fa-solid fa-plus"></i> Your groups
+          <i class="fa-solid fa-plus"></i> Create groups
           </button>
         </NavLink>
       </div>

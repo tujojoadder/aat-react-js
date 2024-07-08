@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import TextPost from "../home/Components/TextPost/TextPost";
-import BothPost from "../home/Components/BothPost/BothPost";
 import ImagePost from "../home/Components/ImagePost/ImagePost";
 import GroupsTabs from "./GroupsTabs/GroupsTabs";
 import {
@@ -10,6 +9,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import BPost from "../home/Components/BPost/BPost";
 
 export default function GroupsHome() {
   const [activeTab, setActiveTab] = useState("home"); // Example: 'home', 'profile', etc.
@@ -43,15 +43,15 @@ export default function GroupsHome() {
       <div className="d-block d-lg-none">
         <GroupsTabs />
       </div>
-      <TextPost />
-      <BothPost />
-      <ImagePost />
-      <TextPost />
-      <BothPost />
-      <TextPost />
-      <BothPost />
-      <TextPost />
-      <BothPost />
+  
+  <BPost/>
+  <ImagePost/>
+  <BPost/>
+  <ImagePost/>
+  <TextPost/>
+  <TextPost/>
+  <ImagePost/>
+  <TextPost/>
     </div>
   );
 }

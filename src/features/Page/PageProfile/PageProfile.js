@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
-import "./GroupProfile.css";
+import "./PageProfile.css";
 import image from "./logo.jpg";
 import TextPost from "../../home/Components/TextPost/TextPost";
+
 import ImagePost from "../../home/Components/ImagePost/ImagePost";
-import About from "../../home/Components/About/About";
 import ProfileFriend from "../../Profile/ProfileFriends/ProfileFriend/ProfileFriend";
 import ImageContainer from "../../Friends/ImageContainer/ImageContainer";
-import GroupAbout from "../GroupAbout/GroupAbout";
-import { NavLink, useLocation, BrowserRouter, Route, Routes } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import GroupAbout from "../../Groups/GroupAbout/GroupAbout";
+import { NavLink } from "react-router-dom";
+import About from "../../home/Components/About/About";
+import PageAbout from "../PageAbout/PageAbout";
 import BPost from "../../home/Components/BPost/BPost";
 
-export default function GroupProfile() {
+export default function PageProfile() {
   const [currentTab, setCurrentTab] = useState("More");
   const handleTabClick = (tabName) => {
     // Check if the screen size is less than 992px (Bootstrap's large size threshold)
     if (window.innerWidth < 992) {
-      if (["People", "About"].includes(tabName)) {
+      if (["Friends", "About"].includes(tabName)) {
         setCurrentTab(tabName);
       }
     } else {
@@ -31,13 +32,12 @@ export default function GroupProfile() {
       // Get current window width
       const width = window.innerWidth;
 
-      // If the screen width is less than 992px and the currentTab is "More", reset it to "Friends"
       if (width < 992 && currentTab === "More") {
         setCurrentTab("More");
       }
 
       // If the screen width is 992px or more and the currentTab is "Friends", reset it to "More"
-      if (width >= 992 && currentTab === "People") {
+      if (width >= 992 && currentTab === "Friends") {
         setCurrentTab("More");
       }
     };
@@ -59,58 +59,68 @@ export default function GroupProfile() {
       <header></header>
       <div className="cols__container">
         <div className="left__col mb-1">
-
-
-          
           <div className="img__container">
             <img src={image} alt="Anna Smith" />
             <span></span>
           </div>
-
-
           <h2>Anna Smith</h2>
           <p style={{ marginBottom: "7px", marginTop: "-2px" }}>
             anna@example.com
           </p>
-          <i className="fa-solid fa-eye"></i> <span className="" style={{ fontWeight: 'lighter' }}>Public</span>
-          <h7 style={{ marginBottom: "7px", marginTop: "-2px" }} className="ms-2">
-            117.2k members
-          </h7>
+
+          <h6
+            style={{ marginBottom: "7px", marginTop: "-2px" }}
+            className="ms-2"
+          >
+            117.2k Likes
+          </h6>
         </div>
         <div className="right__col">
           <nav>
             <div className="d-flex justify-content-center justify-content-sm-end">
-              
-              
-             {/*  Only for admin groups */}
-             <NavLink
-                      
-                      to='/groups/{id}/manage'
-                      className="text-decoration-none"
-                    >
-              <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center"
-                style={{ cursor: "pointer" }}
+
+           {/*  massage and Manage will stay for admin */}
+
+          {/*   Manage */}
+              <NavLink
+                to="/page/{id}/manage"
+                className="text-decoration-none"
               >
-               
-                <i class="fa-solid fa-pen"></i>
-                <span className="ms-1">Manage</span>
-                
-              </div>
+                <div
+                  className="btn btn-md btn-primary mx-1 d-flex align-items-center mt-1"
+                  style={{ cursor: "pointer" }}
+                >
+                  <i className="fa-solid fa-pen"></i>
+                  <span className="ms-1">Manage</span>
+                </div>
               </NavLink>
+
+              {/* Message Button */}
               <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center"
+                className="btn-sm btn-primary rounded-circle d-flex align-items-center justify-content-center mx-1 p-2"
+                style={{ cursor: "pointer", height: "35px", marginTop: "2px" }}
+              >
+                <i className="fa-solid fa-envelope fs-5"></i>
+              </div>
+              {/*   Like */}
+              <div
+                className="btn btn-md btn-primary mx-1 d-flex align-items-center px-3"
                 style={{ cursor: "pointer" }}
               >
-                <i className="fa-solid fa-users"></i>
-                <span className="ms-1">Join Group</span>
+                <i class="fa-solid fa-thumbs-up"></i>
+                <span className="ms-1">Like</span>
               </div>
+
+              {/*   Share */}
               <div
                 className="btn btn-md mx-1 me-3 d-flex align-items-center"
-                style={{ cursor: "pointer", minWidth: "70px", backgroundColor: '#e4e6eb' }}
+                style={{
+                  cursor: "pointer",
+                  minWidth: "70px",
+                  backgroundColor: "#e4e6eb",
+                }}
               >
-                <i className="fa-solid fa-share"></i>
-                &nbsp; Share
+                <i className="fa-solid fa-share"></i> &nbsp; Share
               </div>
             </div>
           </nav>
@@ -118,11 +128,11 @@ export default function GroupProfile() {
       </div>
 
       {/* Content section */}
-      <div className="content-secssion mx-2">
+      <div className="content-secssion mx-md-2">
         <ul className="nav nav-tabs mt-3">
           <li className="nav-item">
             <a className="nav-link active" href="#post" data-bs-toggle="tab">
-              Discussion
+              Posts
             </a>
           </li>
           <li className="nav-item">
@@ -132,7 +142,7 @@ export default function GroupProfile() {
           </li>
           <li className="nav-item d-none d-lg-block">
             <a className="nav-link" href="#friends" data-bs-toggle="tab">
-              People
+              Following
             </a>
           </li>
 
@@ -153,12 +163,11 @@ export default function GroupProfile() {
                   className="dropdown-item d-lg-none"
                   href="#friends"
                   data-bs-toggle="tab"
-                  onClick={() => handleTabClick("People")}
+                  onClick={() => handleTabClick("Friends")}
                 >
-                  People
+                  Following
                 </a>
               </li>
-              
               <li>
                 <a
                   className="dropdown-item"
@@ -179,13 +188,13 @@ export default function GroupProfile() {
             id="post"
             className="post-container-secssion mb-md-4 tab-pane fade show active"
           >
-          <BPost/>
-          <ImagePost/>
-          <TextPost/>
-          <BPost/>
-          <ImagePost/>
-          <ImagePost/>
-          <TextPost/>
+             <BPost/>
+            <TextPost/>
+            <ImagePost/>
+            <BPost/>
+            <ImagePost/>
+            <TextPost/>
+            <BPost/>
           </div>
 
           {/* Image Section */}
@@ -198,12 +207,11 @@ export default function GroupProfile() {
 
           {/* About Section */}
           <div id="about" className="p-3 tab-pane fade">
-            <h4 className="ps-2 ">About</h4>
-            <GroupAbout />
+            <h4 className="ps-3 pb-2 ">About</h4>
+            <PageAbout />
           </div>
-          {/* People Section */}
+          {/* Friends Section */}
           <div id="friends" className="tab-pane fade w-100">
-           
             <ProfileFriend />
             <ProfileFriend />
             <ProfileFriend />
@@ -216,8 +224,6 @@ export default function GroupProfile() {
             <ProfileFriend />
             <ProfileFriend />
           </div>
-
-         
         </div>
       </div>
     </div>

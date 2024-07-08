@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import image from "./logo1.jpg";
+import TextComment from "../TextComment/TextComment";
+import Comment from "../Comment/Comment/Comment";
+import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImage";
 export default function ImagePost() {
+  const [commentsHeight, setCommentsHeight] = useState("80vh"); // Default height for medium devices
+
+  // Function to update the height based on window width
+  const updateHeight = () => {
+    if (window.innerWidth < 576) {
+      setCommentsHeight("72vh"); // Small devices (sm) like mobile phones
+    } else {
+      setCommentsHeight("81vh"); // Medium devices (md) like tablets and desktops
+    }
+  };  
+
+  // Effect to update height when component mounts and on window resize
+  useEffect(() => {
+    updateHeight(); // Initial height update
+
+    // Event listener for window resize
+    window.addEventListener("resize", updateHeight);
+
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []); // Empty dependency array ensures effect runs only on mount and unmount
+
   return (
     <div class="posts ">
       <div class="user-pics">
@@ -29,7 +56,7 @@ export default function ImagePost() {
           <i
             className=" far fa-heart red  "
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+            data-bs-target="#imageModal"
           >
             {" "}
             109
@@ -39,6 +66,48 @@ export default function ImagePost() {
 
           <i className="ps-md-3 far fa-comment blue "> 1.6k</i>
           <i class="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
+        </div>
+      </div>
+      {/* Modal */}
+      <div
+        style={{ overflowY: "hidden" }}
+        className="modal fade "
+        id="imageModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog ">
+          <div className="modal-content ">
+            <div className="modal-header shadow-sm p-3 bg-body rounded">
+              <h5 className="modal-title fs-5" id="exampleModalLabel">
+               ii Comment
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body ">
+              <div
+                className="comments pb-4 px-md-4"
+                style={{ height: commentsHeight, overflowY: "scroll",overflowX:'hidden' }}
+              >
+               <CommentedImage/>
+                <TextComment />
+                <TextComment />
+                <TextComment />
+                <TextComment />
+                <TextComment />
+                <TextComment />
+              </div>
+              <div className="my-comment">
+                <Comment/>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

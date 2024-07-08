@@ -5,11 +5,12 @@ import "./.././../all.css";
 import "./.././../style.css";
 import CreatePost from "./Components/CreatePost/CreatePost";
 import TextPost from "./Components/TextPost/TextPost";
-import BothPost from "./Components/BothPost/BothPost";
+
 import ImagePost from "./Components/ImagePost/ImagePost";
 import HadithStatus from "./Components/HadithStatus/HadithStatus";
 import { Scrollbars } from 'react-custom-scrollbars';
 import Friends from "../Friends/Friends";
+import BPost from "./Components/BPost/BPost";
 export default function Home() {
   return (
     
@@ -25,17 +26,18 @@ export default function Home() {
         {/* Create post */}
         <CreatePost />
         {/* Text post */}
-        <TextPost />
-        {/* Both post */}
-        <BothPost />
-        {/* Image post */}
-        <ImagePost />
-        <BothPost />
-
-        <ImagePost />
-        <TextPost />
-        <TextPost />
-        <TextPost />
+          <TextPost/>
+          <ImagePost/>
+          <TextPost/>
+          <TextPost/>
+        {/*   ImagePost */}
+        <ImagePost/>
+        <BPost/>
+        <TextPost/>
+          <TextPost/>
+        {/*   ImagePost */}
+        <ImagePost/>
+        <BPost/>
       </div>
     </div>
   );

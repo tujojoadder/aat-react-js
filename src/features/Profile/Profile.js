@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import image from "./logo.jpg";
 import TextPost from "../home/Components/TextPost/TextPost";
-import BothPost from "../home/Components/BothPost/BothPost";
+
 import ImagePost from "../home/Components/ImagePost/ImagePost";
 import ImageContainer from "../Friends/ImageContainer/ImageContainer";
 import About from "../home/Components/About/About";
 import ProfileFriend from "./ProfileFriends/ProfileFriend/ProfileFriend";
-import Friends from "../Friends/Friends";
+import BPost from "../home/Components/BPost/BPost";
+
 
 export default function Profile() {
   const [currentTab, setCurrentTab] = useState("More");
-
   const handleTabClick = (tabName) => {
     // Check if the screen size is less than 992px (Bootstrap's large size threshold)
     if (window.innerWidth < 992) {
@@ -32,7 +32,7 @@ export default function Profile() {
 
       // If the screen width is less than 992px and the currentTab is "More", reset it to "Friends"
       if (width < 992 && currentTab === "More") {
-        setCurrentTab("Friends");
+        setCurrentTab("More");
       }
 
       // If the screen width is 992px or more and the currentTab is "Friends", reset it to "More"
@@ -104,12 +104,12 @@ export default function Profile() {
         <ul className="nav nav-tabs mt-3">
           <li className="nav-item">
             <a className="nav-link active" href="#post" data-bs-toggle="tab">
-              Post
+              Posts
             </a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#image" data-bs-toggle="tab">
-              Photo
+              Photos
             </a>
           </li>
           <li className="nav-item d-none d-lg-block">
@@ -180,11 +180,14 @@ export default function Profile() {
             id="post"
             className="post-container-secssion mb-md-4 tab-pane fade show active"
           >
-            <TextPost />
-            <BothPost />
-            <BothPost />
-            <ImagePost />
-            <ImagePost />
+            <TextPost/>
+            <BPost/>
+            <ImagePost/>
+            <BPost/>
+            <TextPost/>
+            <BPost/>
+            <ImagePost/>
+            <BPost/>
           </div>
 
           {/* Image Section */}

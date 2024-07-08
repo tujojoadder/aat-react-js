@@ -1,0 +1,43 @@
+.about-section,
+.contact-info,
+.basic-info {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #e4e6eb;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.about-item,
+.contact-info p,
+.basic-info p {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.contact-info h5,
+.basic-info h5 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #000;
+}
+
+.fa-map-marker-alt,
+.fa-envelope {
+  margin-right: 10px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+span {
+  color: #007bff;
+  cursor: pointer;
+}

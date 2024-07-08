@@ -1,8 +1,10 @@
-import React from 'react'
+
+import React, { useEffect, useState } from 'react'
 import image from "./logo.jpg";
-export default function BothPost() {
+
+export default function CommentedBothPosts() {
   return (
-    <div class="posts">
+    <div class="posts "  style={{borderBottom:'3px solid blue'}}>
       <div class="user-pics">
         <img src={image} alt="user1" />
       </div>
@@ -30,7 +32,7 @@ export default function BothPost() {
           <i
             className="far fa-heart red "
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+            data-bs-target="#BothPostModal"
           >
             {" "}
             109
@@ -43,6 +45,7 @@ export default function BothPost() {
           <i class="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
         </div>
       </div>
+       
     </div>
   )
 }
