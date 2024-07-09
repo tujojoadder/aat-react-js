@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, BrowserRouter, Route, Routes } from "react-router-dom";
+import { NavLink, BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { Scrollbars } from "react-custom-scrollbars";
 import Homeleft from "../home/Homeleft";
@@ -35,15 +35,22 @@ import CreatePage from "../Page/CreatePage/CreatePage";
 import UpdatePage from "../Page/UpdatePage/UpdatePage";
 import PageProfileRight from "../Page/PageProfileRight/PageProfileRight";
 import CreatedPages from "../Page/CreatedPages/CreatedPages";
+import MessageHome from "../Messages/MessageHome";
+import MessageHomeRight from "../Messages/MessageHomeRight";
+import NoUserSelectedToMessage from "../Messages/NoUserSelectedToMessage/NoUserSelectedToMessage";
+import MessageAnyOne from "../Messages/MessageAnyOne/MessageAnyOne";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
-
+  const location = useLocation();
+  const isMessagePage = location.pathname === "/message";
+  
   return (
     <Scrollbars style={{ width: "100%", height: "104vh", minHeight: "300px" }}>
       <div className={isNotSm ? "container-sm  " : "ms-3 me-3"} style={{}}>
         {/* xs NAV BAR */}
-        <nav className="bg-light xs-nav fixed-top d-sm-none border-bottom">
+        {!isMessagePage && (
+        <nav className={`bg-light xs-nav fixed-bottom d-sm-none border-bottom`}>
           <div className="container-fluid">
             <div className="row h-50">
               <div className="row">
@@ -71,7 +78,7 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
-
+ )}
         <div className="row">
           {/* LEFT SIDE BAR */}
           <div
@@ -123,13 +130,14 @@ const Navbar = () => {
                 </div>
               </NavLink>
 
-
+              <NavLink to="/message" className="custom-link">
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
                   <i className="fa-solid fa-envelope fs-2"></i>
                 </span>
                 <p className="d-none d-lg-block fs-4 ps-2 text">Messages</p>
               </div>
+              </NavLink>
 
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
@@ -213,6 +221,11 @@ const Navbar = () => {
                   {/*  Page---> Created */}
                   <Route path="page/created" exact element={<CreatedPages />} />
 
+             {/*    Messages */}
+             <Route path="message" exact element={<MessageHome />} />
+   {/*  Meaage---> to anyone */}
+   <Route path="message/:id" exact element={<MessageAnyOne />} />
+
 
 
 
@@ -266,6 +279,11 @@ const Navbar = () => {
 
                   {/*  Page---> Created */}
                   <Route path="page/created" exact element={<PageHomeRight />} />
+                  {/*    Messages */}
+                  <Route path="message" exact element={<MessageHomeRight />} />
+
+   {/*  Meaage---> to anyone */}
+   <Route path="message/:id" exact element={<MessageHomeRight />} />
 
 
 

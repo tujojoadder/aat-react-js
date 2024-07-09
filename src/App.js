@@ -38,6 +38,10 @@ import PageLiked from "./features/Page/PageLiked/PageLiked";
 import CreatePage from "./features/Page/CreatePage/CreatePage";
 import UpdatePage from "./features/Page/UpdatePage/UpdatePage";
 import CreatedPages from "./features/Page/CreatedPages/CreatedPages";
+import MessageHome from "./features/Messages/MessageHome";
+import MessageHomeRight from "./features/Messages/MessageHomeRight";
+import NoUserSelectedToMessage from "./features/Messages/NoUserSelectedToMessage/NoUserSelectedToMessage";
+import MessageAnyOne from "./features/Messages/MessageAnyOne/MessageAnyOne";
 function App() {
   return (
     <BrowserRouter>
@@ -118,12 +122,11 @@ function App() {
             {/* Page */}
             <Route path="page" exact element={<PageHome />} />
             <Route path="page" exact element={<PageHomeRight />} />
- 
+        
         {/*  Page---> profile */}
         <Route path="page/:id" exact element={<PageProfile/>} />
         <Route path="page/:id" exact element={<PageHomeRight/>} />
         <Route path="page/mypage/:id" exact element={<PageProfile />} />
-
 
         {/*  Page---> manage */}
         <Route path="page/:id/manage" exact element={<PageManage />} />
@@ -142,6 +145,18 @@ function App() {
         {/*  Page---> update page */}
         <Route path="page/update" exact element={<UpdatePage />} />
  
+  {/*   Messages */}
+  <Route path="message" exact element={<NoUserSelectedToMessage />} />
+  <Route path="message" exact element={<MessageHomeRight />} />
+   {/*  Meaage---> to anyone */}
+  <Route path="message/:id" exact element={<MessageAnyOne />} />
+  <Route path="message/:id" exact element={<MessageHomeRight />} />
+
+
+
+
+
+
 
 
 

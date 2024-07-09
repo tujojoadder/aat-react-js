@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import image from "./logo.jpg";
-import '../../../../../style.css';
+import '../../../style.css';
 
-export default function Comment() {
+export default function SendMessage() {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => setIsFocused(true);
@@ -29,7 +30,7 @@ export default function Comment() {
                   boxShadow: 'none', // Remove default focus box shadow
                 }}
                 type="text"
-                placeholder="Write a comment..."
+                placeholder="Write a message..."
                 onFocus={handleFocus}
                 onBlur={handleBlur}
               />
