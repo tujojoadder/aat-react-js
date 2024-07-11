@@ -67,6 +67,7 @@ function App() {
           <Route path="friends/requests/:id" exact element={<Profile />} />
           <Route path="friends/requests/:id" exact element={<FriendRightFriendRequest />} />
          
+         
           
         {/*  Friends---> suggestions */}
           <Route path="friends/suggestions" exact element={<NoUserSelectedSuggestion />} />

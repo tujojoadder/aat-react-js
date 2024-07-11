@@ -43,7 +43,7 @@ import MessageAnyOne from "../Messages/MessageAnyOne/MessageAnyOne";
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
   const location = useLocation();
-  const isMessagePage = location.pathname === "/message";
+  const isMessagePage = location.pathname.startsWith("/message/");
   
   return (
     <Scrollbars style={{ width: "100%", height: "104vh", minHeight: "300px" }}>

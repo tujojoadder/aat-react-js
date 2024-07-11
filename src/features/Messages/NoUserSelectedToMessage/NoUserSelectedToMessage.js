@@ -15,6 +15,10 @@ export default function NoUserSelectedToMessage() {
       textAlign: 'center',
       color: '#555',
       fontFamily: 'Arial, sans-serif',
+      position:'fixed',
+      width:'42%',
+     
+      
     },
     content: {
       display: 'flex',

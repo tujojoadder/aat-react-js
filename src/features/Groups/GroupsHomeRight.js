@@ -40,15 +40,15 @@ export default function GroupsHomeRight() {
                                         <i className="fas fa-lightbulb fa-fw me-2"></i> Suggestions
                                     </NavLink>
                                 </li>
-                                <li className="nav-item w-100">
+                                <li className="nav-item w-100 mb-3">
                                     <NavLink end to="/groups/joined" className="nav-link" activeClassName="active">
                                       <i className="fa-solid fa-users  me-2"></i> Your groups
                                     </NavLink>
                                 </li>
                                 {!isCreatePage && (
                                     <li className="nav-item w-100">
-                                        <NavLink end to="/groups/create" className="nav-link create-group-link text-center py-2 mt-3 " activeClassName="active">
-                                            <i className="fa-solid fa-plus me-2"></i> Create New Group
+                                        <NavLink end to="/groups/create"  className="create-group-link text-center py-2  px-3" activeClassName="active ">
+                                            <i className="fa-solid fa-plus "></i> Create New Group
                                         </NavLink>
                                     </li>
                                 )}

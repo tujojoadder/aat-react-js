@@ -60,7 +60,7 @@ export default function PageHomeRight() {
                                     <i className="fa-solid fa-thumbs-up fa-fw me-2"></i> Liked Pages
                                     </NavLink>
                                 </li>
-                                <li className="nav-item w-100">
+                                <li className="nav-item w-100 mb-3">
                                     <NavLink end to="/page/created" className="nav-link" activeClassName="active">
                                     <i class="fa-solid fa-flag me-2"></i> Your Pages
                                     </NavLink>
@@ -71,7 +71,7 @@ export default function PageHomeRight() {
 
                                 {!isCreatePage && (
                                     <li className="nav-item w-100">
-                                        <NavLink end to="/page/create" className="nav-link create-group-link text-center py-2 mt-4 " activeClassName="active">
+                                        <NavLink end to="/page/create" className="px-3 create-group-link text-center py-2 mt-4 " activeClassName="active">
                                             <i className="fa-solid fa-plus me-2"></i> Create New Page
                                         </NavLink>
                                     </li>

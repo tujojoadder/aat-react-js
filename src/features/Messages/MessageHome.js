@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./MessageHome.css";
 import { Scrollbars } from "react-custom-scrollbars";
-import Comment from "../home/Components/Comment/Comment/Comment";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import SendMessage from "./SendMessages/SendMessage";
 import NoUserSelectedToMessage from "./NoUserSelectedToMessage/NoUserSelectedToMessage";
+import AllFriendList from "../Friends/AllFriendList/AllFriendList";
+import SearchBox from "../home/Components/SearchBox/SearchBox";
+
 export default function MessageHome() {
   const [commentsHeight, setCommentsHeight] = useState("80vh"); // Default height for medium devices
-  const [isSmallOrMedium, setIsSmallOrMedium] = useState(
-    window.innerWidth < 992
-  ); // Default check for small or medium devices
+  const [isSmallOrMedium, setIsSmallOrMedium] = useState(window.innerWidth < 992); // Default check for small or medium devices
 
   // Function to update the height based on window width
   const updateDimensions = () => {
@@ -35,20 +35,103 @@ export default function MessageHome() {
     };
   }, []); // Empty dependency array ensures effect runs only on mount and unmount
 
-  
+  const [isLargeDevice, setIsLargeDevice] = useState(window.innerWidth >= 992); // State to check if the device is large
 
-  const [isLargeDevice, setIsLargeDevice] = useState(false); // State to check if the device is large
-
+  // Effect to check if the window width is larger than 992px when the component mounts
   useEffect(() => {
-    // Check if the window width is larger than 992px when the component mounts
-    const initialCheck = window.innerWidth >= 992;
-    setIsLargeDevice(initialCheck);
+    setIsLargeDevice(window.innerWidth >= 992);
   }, []); // Empty dependency array ensures this runs only on mount
 
+  const scrollRef = React.useRef(null);
+  const profiles = [
+    {
+      name: "MarkRockwell",
+      handle: "@mark_rockwell",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "JaneDoe",
+      handle: "@jane_doe",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "JohnSmith",
+      handle: "@john_smith",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "MarkRockdwell",
+      handle: "@mark_rockwell",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "JanedDoe",
+      handle: "@jane_doe",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "JohnSmidth",
+      handle: "@john_smith",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "MarkRodckwell",
+      handle: "@mark_rockwell",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "JaneDdoe",
+      handle: "@jane_doe",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "JohnSmfith",
+      handle: "@john_smith",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "MarkRockwevll",
+      handle: "@mark_rockwell",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "JaneDvoe",
+      handle: "@jane_doe",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    {
+      name: "JohnSmvith",
+      handle: "@john_smith",
+      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+    },
+    // Add more profiles as needed
+  ];
 
+  const location = useLocation();
 
-  return isLargeDevice ?(<div><NoUserSelectedToMessage/></div>):(
-    
-  <div>hello</div>
+  return isLargeDevice ? (
+    <div><NoUserSelectedToMessage /></div>
+  ) : (
+    <div className="p-0 m-0 main">
+<SearchBox/>
+        <div className="mb-5">
+          {profiles.map((profile, index) => {
+            const isActive = location.pathname === `/message/${profile.name}`;
+            return (
+              <NavLink key={index} to={`/message/${profile.name}`} className="text-decoration-none">
+                <div className="col-12 mb-2 m-0 p-0">
+                  <AllFriendList
+                    name={profile.name}
+                    handle={profile.handle}
+                    image={profile.image}
+                    isActive={isActive}
+                  />
+                </div>
+              </NavLink>
+            );
+          })}
+        </div>
+ 
+    </div>
   );
 }
