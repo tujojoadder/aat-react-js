@@ -42,6 +42,7 @@ import MessageHome from "./features/Messages/MessageHome";
 import MessageHomeRight from "./features/Messages/MessageHomeRight";
 import NoUserSelectedToMessage from "./features/Messages/NoUserSelectedToMessage/NoUserSelectedToMessage";
 import MessageAnyOne from "./features/Messages/MessageAnyOne/MessageAnyOne";
+import QuizHome from "./features/Quiz/QuizHome";
 function App() {
   return (
     <BrowserRouter>
@@ -155,6 +156,8 @@ function App() {
 
 
 
+  {/*   Quiz */}
+  <Route path="quiz" exact element={<QuizHome />} />
 
 
 

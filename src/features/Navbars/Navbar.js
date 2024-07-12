@@ -39,6 +39,7 @@ import MessageHome from "../Messages/MessageHome";
 import MessageHomeRight from "../Messages/MessageHomeRight";
 import NoUserSelectedToMessage from "../Messages/NoUserSelectedToMessage/NoUserSelectedToMessage";
 import MessageAnyOne from "../Messages/MessageAnyOne/MessageAnyOne";
+import QuizHome from "../Quiz/QuizHome";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -139,12 +140,17 @@ const Navbar = () => {
               </div>
               </NavLink>
 
+
+              <NavLink to="/quiz" className="custom-link">
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
-                  <i className="fa-solid fa-bookmark fs-2"></i>
-                </span>
-                <p className="d-none d-lg-block fs-4 ps-2 text">Bookmarks</p>
+                    <i className="fa-solid fa-hourglass-half fs-2"></i>
+                 </span>
+                <p className="d-none d-lg-block fs-4 ps-2 text">Quiz</p>
               </div>
+             </NavLink>
+
+
 
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
@@ -226,7 +232,8 @@ const Navbar = () => {
    {/*  Meaage---> to anyone */}
    <Route path="message/:id" exact element={<MessageAnyOne />} />
 
-
+{/* Quiz */}
+<Route path="quiz" exact element={<QuizHome />} />
 
 
 
