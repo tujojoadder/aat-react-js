@@ -43,6 +43,9 @@ import MessageHomeRight from "./features/Messages/MessageHomeRight";
 import NoUserSelectedToMessage from "./features/Messages/NoUserSelectedToMessage/NoUserSelectedToMessage";
 import MessageAnyOne from "./features/Messages/MessageAnyOne/MessageAnyOne";
 import QuizHome from "./features/Quiz/QuizHome";
+import IChannelHome from "./features/IChannels/IChannelHome";
+import IChannelHomeRight from "./features/IChannels/IChannelHomeRight";
+
 function App() {
   return (
     <BrowserRouter>
@@ -159,6 +162,9 @@ function App() {
   {/*   Quiz */}
   <Route path="quiz" exact element={<QuizHome />} />
 
+  {/* iChannel */}
+  <Route path="ichannel" exact element={<IChannelHome/>} />
+  <Route path="ichannel" exact element={<IChannelHomeRight/>} />
 
 
 

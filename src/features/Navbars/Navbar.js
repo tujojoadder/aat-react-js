@@ -154,9 +154,9 @@ const Navbar = () => {
 
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
-                  <i className="fa-solid fa-file-lines fs-2"></i>
+                <i class="fa-solid fa-mosque  fs-2"></i>
                 </span>
-                <p className="d-none d-lg-block fs-4 ps-2 text">Lists</p>
+                <p className="d-none d-lg-block fs-4 ps-2 text">iChanel</p>
               </div>
 
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">

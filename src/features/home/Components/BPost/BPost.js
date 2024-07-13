@@ -47,7 +47,7 @@ export default function BPost() {
             2hrs
           </p>
         </div>
-
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet minima itaque, expedita possimus laborum, nam, cumque non in iste quo aliquam rerum cum inventore fugit et ratione dignissimos ducimus laudantium.</p>
         <div class="user-content  " style={{ marginTop: "-5px" }}>
           <img
             style={{ Width: "100%", maxHeight: "65vh" }}

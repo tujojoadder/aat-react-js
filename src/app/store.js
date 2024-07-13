@@ -5,13 +5,16 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { userAuthApi } from '../services/userAuthApi'
 import { userChatApi } from '../services/userChatApi'
-import  loginSlice  from '../features/Login/LoginSlice'
 import { userLoginApi } from '../services/userLoginApi'
 
+import  loginSlice  from '../features/Login/LoginSlice'
+import quizSlice  from '../features/Quiz/QuizSlice'
 
 export const store = configureStore({
   reducer: {
+    
    login:loginSlice,
+   quiz:quizSlice,
     // Add the generated reducer as a specific top-level slice
     [userAuthApi.reducerPath]: userAuthApi.reducer,
     [userChatApi.reducerPath]: userChatApi.reducer,
