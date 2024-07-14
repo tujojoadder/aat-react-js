@@ -22,7 +22,7 @@ export default function CreatePage() {
   };
 
   return (
-    <div className="create-page-container main pb-5">
+    <div className="create-page-container main pb-5" style={{marginBottom:'20vh'}}>
       <div className="form-header mt-3">
         <h3>Create a Page</h3>
       </div>

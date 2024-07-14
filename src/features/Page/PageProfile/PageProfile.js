@@ -78,14 +78,10 @@ export default function PageProfile() {
         <div className="right__col">
           <nav>
             <div className="d-flex justify-content-center justify-content-sm-end">
+              {/*  massage and Manage will stay for admin */}
 
-           {/*  massage and Manage will stay for admin */}
-
-          {/*   Manage */}
-              <NavLink
-                to="/page/{id}/manage"
-                className="text-decoration-none"
-              >
+              {/*   Manage */}
+              <NavLink to="/page/{id}/manage" className="text-decoration-none">
                 <div
                   className="btn btn-md btn-primary mx-1 d-flex align-items-center mt-1"
                   style={{ cursor: "pointer" }}
@@ -188,13 +184,13 @@ export default function PageProfile() {
             id="post"
             className="post-container-secssion mb-md-4 tab-pane fade show active"
           >
-             <BPost/>
-            <TextPost/>
-            <ImagePost/>
-            <BPost/>
-            <ImagePost/>
-            <TextPost/>
-            <BPost/>
+            <BPost />
+            <TextPost />
+            <ImagePost />
+            <BPost />
+            <ImagePost />
+            <TextPost />
+            <BPost />
           </div>
 
           {/* Image Section */}

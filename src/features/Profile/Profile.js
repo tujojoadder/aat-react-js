@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import image from "./logo.jpg";
 import TextPost from "../home/Components/TextPost/TextPost";
+import { NavLink } from "react-router-dom";
 
 import ImagePost from "../home/Components/ImagePost/ImagePost";
 import ImageContainer from "../Friends/ImageContainer/ImageContainer";
 import About from "../home/Components/About/About";
 import ProfileFriend from "./ProfileFriends/ProfileFriend/ProfileFriend";
 import BPost from "../home/Components/BPost/BPost";
-
 
 export default function Profile() {
   const [currentTab, setCurrentTab] = useState("More");
@@ -70,29 +70,42 @@ export default function Profile() {
         <div className="right__col">
           <nav>
             <div className="d-flex justify-content-center justify-content-sm-end">
+              {/*  massage and Manage will stay for admin */}
+
+              {/*   Manage */}
+              <NavLink to="/profile/manage" className="text-decoration-none">
+                <div
+                  className="btn btn-md btn-primary mx-1 d-flex align-items-center mt-1"
+                  style={{ cursor: "pointer" }}
+                >
+                  <i className="fa-solid fa-pen"></i>
+                  <span className="ms-1">Manage</span>
+                </div>
+              </NavLink>
+
               {/* Message Button */}
               <div
-                className="btn-sm btn-primary rounded-circle d-flex align-items-center justify-content-center mx-1"
+                className="btn-sm btn-primary rounded-circle d-flex align-items-center justify-content-center mx-1 p-2"
                 style={{ cursor: "pointer", height: "35px", marginTop: "2px" }}
               >
-                <i className="fa-solid fa-message text-white"></i>
+                <i className="fa-solid fa-envelope fs-5"></i>
               </div>
-
-              {/* Add Friend Button */}
+              {/*   Add friend */}
               <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center"
+                className="btn btn-md btn-primary mx-1 d-flex align-items-center px-2"
                 style={{ cursor: "pointer" }}
               >
-                <i className="fa-solid fa-user-plus text-white"></i>
-                <span className="ms-1">Add Friend</span>
+               <i className="fa-solid fa-user-plus text-white"></i>
+                <span className="ms-1">Add friend</span>
               </div>
 
-              {/* Follow Button */}
+              {/*   Follow */}
               <div
-                className="btn btn-md btn-info mx-1 me-3 d-flex align-items-center"
-                style={{ cursor: "pointer", minWidth: "70px" }}
+                className="btn btn-md btn-primary mx-1 d-flex align-items-center px-2 me-3"
+                style={{ cursor: "pointer" }}
               >
-                Follow
+
+                <span className="ms-1">Follow</span>
               </div>
             </div>
           </nav>

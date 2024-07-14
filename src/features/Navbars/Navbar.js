@@ -172,7 +172,7 @@ const Navbar = () => {
 
 
 
-            <NavLink to="/manageprofile" className="custom-link">
+            <NavLink to="/profile" className="custom-link">
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
                   <i className="fa-solid fa-user fs-2"></i>
@@ -201,6 +201,7 @@ const Navbar = () => {
                 {/*  <<---Friends-->> */}
                 <Route path="/friends/requests/" element={<NoUserSelected />} />
                 <Route path="/friends/suggestions/" element={<NoUserSelectedSuggestion />} />
+          
                 <Route path="/friends/sent-requests/" element={<NoUserSelectedSentRequest />} />
                 <Route path="/friends/all-friends/" element={<NoUserSelectedAllFriends />}
                 />
@@ -209,8 +210,11 @@ const Navbar = () => {
                 <Route path="/friends/suggestions/:id" element={<Profile />} />
                 <Route path="/friends/sent-requests/:id" element={<Profile />} />
                 <Route path="/friends/all-friends/:id" element={<Profile />} />
-        {/* Manage Profile */}
-        <Route path="manageprofile" exact element={<ProfileManage />} />
+        {/*Profile */}
+        <Route path="profile" exact element={<Profile />} />
+        <Route path="profile" exact element={<Homeleft />} />
+        {/* Profile --->manage */}
+        <Route path="profile/manage" exact element={<ProfileManage />} />
 
 
 
@@ -293,9 +297,16 @@ const Navbar = () => {
               {/* Friends--->sent-requests */}
               <Route path="/friends/sent-requests" element={<FriendRightSentRequests />} />
               <Route path="/friends/sent-requests/:id" element={<FriendRightSentRequests />} />
-              {/* Friends--->sent-requests */}
+              {/* Friends--->all-friends */}
               <Route path="/friends/all-friends" element={<FriendRightAllFriends />} />
               <Route path="/friends/all-friends/:id" element={<FriendRightAllFriends />}/>
+              {/* Profile */}
+              <Route path="/profile" element={<Homeleft />} />
+
+
+              
+              
+              
               {/* Groups */}
               <Route path="/groups" element={<GroupsHomeRight />} />
                {/* Groups--->profile */}

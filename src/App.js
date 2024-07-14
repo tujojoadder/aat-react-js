@@ -99,9 +99,11 @@ function App() {
           <Route path="friends/all-friends/:id" exact element={<Profile />} />
           <Route path="friends/all-friends/:id" exact element={<FriendRightAllFriends />} />
       
-        {/* Manage Profile */}
-        <Route path="manageprofile" exact element={<ProfileManage />} />
-
+        {/* Profile */}
+        <Route path="profile" exact element={<Profile />} />
+        <Route path="profile" exact element={<Homeleft />} />
+        {/* Profile --->manage */}
+        <Route path="profile/manage" exact element={<ProfileManage />} />
 
 
        {/* Groups */}

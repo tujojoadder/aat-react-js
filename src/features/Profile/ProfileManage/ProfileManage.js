@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import './ProfileManage.css';
 
@@ -8,15 +7,14 @@ export default function ProfileManage() {
   const [userInfo, setUserInfo] = useState({
     name: '',
     email: '',
-    bio: ''
+    bio: '',
+    location: '',
+    relationshipStatus: '',
+    gender: '',
+    birthdate: '',
+    work: '',
+    education: ''
   });
-
-  const handleImageChange = (e, setImage) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
-    }
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,27 +37,26 @@ export default function ProfileManage() {
         <div className="row mb-4">
           <div className="col-md-6">
             <label htmlFor="profileImage" className="form-label">Profile Photo</label>
-            <input type="file" className="form-control" id="profileImage" onChange={(e) => handleImageChange(e, setProfileImage)} />
-            {profileImage && <img src={profileImage} alt="Profile Preview" className="img-thumbnail mt-2" />}
+            <select className="form-select" id="profileImage" onChange={(e) => setProfileImage(e.target.value)}>
+              <option value="">Select Profile Photo</option>
+              <option value="photo1.jpg">Photo 1</option>
+              <option value="photo2.jpg">Photo 2</option>
+              <option value="photo3.jpg">Photo 3</option>
+            </select>
+            {profileImage && <img src={`/images/${profileImage}`} alt="Profile Preview" className="img-thumbnail mt-2" />}
           </div>
           <div className="col-md-6">
             <label htmlFor="coverImage" className="form-label">Cover Photo</label>
-            <input type="file" className="form-control" id="coverImage" onChange={(e) => handleImageChange(e, setCoverImage)} />
-            {coverImage && <img src={coverImage} alt="Cover Preview" className="img-thumbnail mt-2" />}
+            <select className="form-select" id="coverImage" onChange={(e) => setCoverImage(e.target.value)}>
+              <option value="">Select Cover Photo</option>
+              <option value="cover1.jpg">Cover 1</option>
+              <option value="cover2.jpg">Cover 2</option>
+              <option value="cover3.jpg">Cover 3</option>
+            </select>
+            {coverImage && <img src={`/images/${coverImage}`} alt="Cover Preview" className="img-thumbnail mt-2" />}
           </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
-          <input type="text" className="form-control" id="name" name="name" value={userInfo.name} onChange={handleInputChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email</label>
-          <input type="email" className="form-control" id="email" name="email" value={userInfo.email} onChange={handleInputChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="bio" className="form-label">Bio</label>
-          <textarea className="form-control" id="bio" name="bio" rows="3" value={userInfo.bio} onChange={handleInputChange}></textarea>
-        </div>
+        
         <button type="submit" className="btn btn-primary">Update Profile</button>
       </form>
     </div>

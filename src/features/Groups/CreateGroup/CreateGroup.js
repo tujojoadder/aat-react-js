@@ -12,7 +12,7 @@ export default function CreateGroup() {
   };
 
   return (
-    <div className="create-group-container main pb-5">
+    <div className="create-group-container main " style={{marginBottom:'20vh'}}>
       <div className="form-header mt-3">
         <h3>Create Group</h3>
         
