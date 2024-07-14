@@ -112,14 +112,20 @@ code {
   margin-bottom: 7px;
   margin-top: 10px;
   border: 1px solid #ddd;
-padding-right: 5px;
-padding-left: 0px;
-padding-top: 10px;
-padding-bottom: 10px;
+  padding-left: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 8px;
   background-color: #f9f9f9;
-
+  padding-right: 25px; /* Default for large devices */
 }
+
+@media (max-width: 767px) { /* Adjust breakpoint as needed for small devices */
+  .posts {
+    padding-right: 5px;
+  }
+}
+
 
 .user-pics img {
   width: 50px;

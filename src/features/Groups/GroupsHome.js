@@ -12,27 +12,10 @@ import {
 import BPost from "../home/Components/BPost/BPost";
 
 export default function GroupsHome() {
-  const [activeTab, setActiveTab] = useState("home"); // Example: 'home', 'profile', etc.
-
-  const tabs = [
-    { id: "home", label: "Home" },
-    { id: "profile", label: "Profile" },
-    { id: "messages", label: "Messages" },
-    { id: "notifications", label: "Notifications" },
-    { id: "home", label: "Home" },
-    { id: "profile", label: "Profile" },
-    { id: "messages", label: "Messages" },
-    { id: "notifications", label: "Notifications" },
-    { id: "home", label: "Home" },
-    { id: "profile", label: "Profile" },
-    { id: "messages", label: "Messages" },
-    { id: "notifications", label: "Notifications" },
-    // Add more tabs as needed
-  ];
 
   return (
     <div
-      className="friend-home main pt-2  "
+      className="friend-home main   "
       style={{
         backgroundColor: "white",
         marginBottom: "5vh",

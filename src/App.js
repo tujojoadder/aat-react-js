@@ -37,7 +37,6 @@ import PageHomeRight from "./features/Page/PageHomeRight";
 import PageLiked from "./features/Page/PageLiked/PageLiked";
 import CreatePage from "./features/Page/CreatePage/CreatePage";
 import UpdatePage from "./features/Page/UpdatePage/UpdatePage";
-import CreatedPages from "./features/Page/CreatedPages/CreatedPages";
 import MessageHome from "./features/Messages/MessageHome";
 import MessageHomeRight from "./features/Messages/MessageHomeRight";
 import NoUserSelectedToMessage from "./features/Messages/NoUserSelectedToMessage/NoUserSelectedToMessage";
@@ -45,6 +44,13 @@ import MessageAnyOne from "./features/Messages/MessageAnyOne/MessageAnyOne";
 import QuizHome from "./features/Quiz/QuizHome";
 import IChannelHome from "./features/IChannels/IChannelHome";
 import IChannelHomeRight from "./features/IChannels/IChannelHomeRight";
+import IChannelFollowing from "./features/IChannels/IChannelFollowing/IChannelFollowing";
+import YourPage from "./features/Page/YourPage/YourPage";
+import YourIChannels from "./features/IChannels/YourIChannels/YourIChannels";
+import IChannelProfile from "./features/IChannels/IChannelProfile/IChannelProfile";
+import CreateIChannel from "./features/IChannels/CreateIChannel/CreateIChannel";
+import IChannelsManage from "./features/IChannels/IChannelsManage/IChannelsManage";
+import ProfileManage from "./features/Profile/ProfileManage/ProfileManage";
 
 function App() {
   return (
@@ -93,6 +99,10 @@ function App() {
           <Route path="friends/all-friends/:id" exact element={<Profile />} />
           <Route path="friends/all-friends/:id" exact element={<FriendRightAllFriends />} />
       
+        {/* Manage Profile */}
+        <Route path="manageprofile" exact element={<ProfileManage />} />
+
+
 
        {/* Groups */}
        <Route path="groups" exact element={<GroupsHome />} />
@@ -140,7 +150,7 @@ function App() {
         <Route path="page/liked" exact element={<PageLiked />} />
         <Route path="page/liked" exact element={<PageHomeRight />} />
          {/*  Page---> Created */}
-         <Route path="page/created" exact element={<CreatedPages />} />
+         <Route path="page/created" exact element={<YourPage />} />
         <Route path="page/created" exact element={<PageHomeRight />} />
  
 
@@ -165,6 +175,25 @@ function App() {
   {/* iChannel */}
   <Route path="ichannel" exact element={<IChannelHome/>} />
   <Route path="ichannel" exact element={<IChannelHomeRight/>} />
+{/*  iChannel---> following */}
+<Route path="ichannel/following" exact element={<IChannelFollowing />} />
+<Route path="ichannel/following" exact element={<IChannelHomeRight />} />
+
+         {/*  iChannel---> Created */}
+         <Route path="ichannel/created" exact element={<YourIChannels />} />
+        <Route path="ichannel/created" exact element={<IChannelHomeRight />} />
+ 
+        {/*  iChannel---> profile */}
+        <Route path="ichannel/:id" exact element={<IChannelProfile/>} />
+        <Route path="ichannel/:id" exact element={<IChannelHomeRight/>} />
+
+         {/*  iChannel---> Create */}
+         <Route path="ichannel/create" exact element={<CreateIChannel />} />
+        <Route path="ichannel/create" exact element={<IChannelHomeRight />} />
+        
+          {/*  iChannel---> manage */}
+          <Route path="ichannel/:id/manage" exact element={<IChannelsManage />} />
+
 
 
 

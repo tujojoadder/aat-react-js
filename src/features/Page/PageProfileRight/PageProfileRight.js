@@ -51,7 +51,7 @@ export default function PageProfileRight() {
                             <h3 className="menu-header text-left ps-5 text-dark">Pages</h3>
                             <ul className="nav flex-column">
                                 <li className="nav-item w-100">
-                                    <NavLink end to="/pages" className="nav-link" activeClassName="active">
+                                    <NavLink end to="/page" className="nav-link" activeClassName="active">
                                   <i className="fa-solid fa-compass me-2"></i> Discover
                                     </NavLink>
                                 </li>

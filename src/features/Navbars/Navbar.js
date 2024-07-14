@@ -34,12 +34,20 @@ import PageLiked from "../Page/PageLiked/PageLiked";
 import CreatePage from "../Page/CreatePage/CreatePage";
 import UpdatePage from "../Page/UpdatePage/UpdatePage";
 import PageProfileRight from "../Page/PageProfileRight/PageProfileRight";
-import CreatedPages from "../Page/CreatedPages/CreatedPages";
 import MessageHome from "../Messages/MessageHome";
 import MessageHomeRight from "../Messages/MessageHomeRight";
 import NoUserSelectedToMessage from "../Messages/NoUserSelectedToMessage/NoUserSelectedToMessage";
 import MessageAnyOne from "../Messages/MessageAnyOne/MessageAnyOne";
 import QuizHome from "../Quiz/QuizHome";
+import IChannelHome from "../IChannels/IChannelHome";
+import IChannelHomeRight from "../IChannels/IChannelHomeRight";
+import IChannelFollowing from "../IChannels/IChannelFollowing/IChannelFollowing";
+import YourPage from "../Page/YourPage/YourPage";
+import YourIChannels from "../IChannels/YourIChannels/YourIChannels";
+import IChannelProfile from "../IChannels/IChannelProfile/IChannelProfile";
+import CreateIChannel from "../IChannels/CreateIChannel/CreateIChannel";
+import IChannelsManage from "../IChannels/IChannelsManage/IChannelsManage";
+import ProfileManage from "../Profile/ProfileManage/ProfileManage";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -152,19 +160,27 @@ const Navbar = () => {
 
 
 
+             <NavLink to="/ichannel" className="custom-link">
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
                 <i class="fa-solid fa-mosque  fs-2"></i>
                 </span>
                 <p className="d-none d-lg-block fs-4 ps-2 text">iChanel</p>
               </div>
+</NavLink>
 
+
+
+
+            <NavLink to="/manageprofile" className="custom-link">
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
                   <i className="fa-solid fa-user fs-2"></i>
                 </span>
                 <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
               </div>
+            </NavLink>
+
 
               <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                 <span>
@@ -193,6 +209,11 @@ const Navbar = () => {
                 <Route path="/friends/suggestions/:id" element={<Profile />} />
                 <Route path="/friends/sent-requests/:id" element={<Profile />} />
                 <Route path="/friends/all-friends/:id" element={<Profile />} />
+        {/* Manage Profile */}
+        <Route path="manageprofile" exact element={<ProfileManage />} />
+
+
+
 
                 {/* Grouos */}
                 <Route path="/groups" element={<GroupsHome />} />
@@ -224,16 +245,31 @@ const Navbar = () => {
                <Route path="page/create" exact element={<CreatePage />} />
                 {/*  Page---> Update page */}
                <Route path="page/update" exact element={<UpdatePage />} />
-                  {/*  Page---> Created */}
-                  <Route path="page/created" exact element={<CreatedPages />} />
+               {/*  Page---> Created */}
+              <Route path="page/created" exact element={<YourPage />} />
 
-             {/*    Messages */}
-             <Route path="message" exact element={<MessageHome />} />
-   {/*  Meaage---> to anyone */}
-   <Route path="message/:id" exact element={<MessageAnyOne />} />
+              {/*    Messages */}
+              <Route path="message" exact element={<MessageHome />} />
+              {/*  Meaage---> to anyone */}
+              <Route path="message/:id" exact element={<MessageAnyOne />} />
 
-{/* Quiz */}
-<Route path="quiz" exact element={<QuizHome />} />
+              {/* Quiz */}
+             <Route path="quiz" exact element={<QuizHome />} />
+             {/* iChannel */}
+             <Route path="ichannel" exact element={<IChannelHome/>} />
+             {/*  iChannel---> following */}
+             <Route path="ichannel/following" exact element={<IChannelFollowing />} />
+             {/*  iChannel---> following */}
+             <Route path="ichannel/following" exact element={<IChannelFollowing />} />
+          {/*  iChannel---> created */}
+          <Route path="ichannel/created" exact element={<YourIChannels />} />
+        {/*  iChannel---> profile */}
+        <Route path="ichannel/:id" exact element={<IChannelProfile/>} />
+
+         {/*  iChannel---> Create */}
+         <Route path="ichannel/create" exact element={<CreateIChannel />} />
+          {/*  iChannel---> manage */}
+          <Route path="ichannel/:id/manage" exact element={<IChannelsManage />} />
 
 
 
@@ -284,13 +320,26 @@ const Navbar = () => {
                {/*  Page---> create page */}
                <Route path="page/create" exact element={<PageHomeRight />} />
 
-                  {/*  Page---> Created */}
-                  <Route path="page/created" exact element={<PageHomeRight />} />
-                  {/*    Messages */}
-                  <Route path="message" exact element={<MessageHomeRight />} />
+              {/*  Page---> Created */}
+              <Route path="page/created" exact element={<PageHomeRight />} />
+              {/*    Messages */}
+              <Route path="message" exact element={<MessageHomeRight />} />
+              {/*  Meaage---> to anyone */}
+              <Route path="message/:id" exact element={<MessageHomeRight />} />
+ 
+             {/* iChannel */}
+             <Route path="ichannel" exact element={<IChannelHomeRight/>} />
+             {/*  iChannel---> following */}
+             <Route path="ichannel/following" exact element={<IChannelHomeRight />} />
 
-   {/*  Meaage---> to anyone */}
-   <Route path="message/:id" exact element={<MessageHomeRight />} />
+         {/*  iChannel---> Created */}
+      <Route path="ichannel/created" exact element={<IChannelHomeRight />} />
+    {/*  iChannel---> profile */}
+    <Route path="ichannel/:id" exact element={<IChannelHomeRight/>} />
+         {/*  iChannel---> Create */}
+         <Route path="ichannel/create" exact element={<IChannelHomeRight />} />
+
+
 
 
 

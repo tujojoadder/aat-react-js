@@ -82,8 +82,9 @@ export default function FriendRightAllFriends() {
           className="col-lg-3 ms-1 p-0 m-0 friend_right_side_bar bg-body rounded"
         >
           <div className="menu-container" style={{ height: "100vh" }}>
-            
-            <h5 className="ms-3 py-3 mb-1 text-center mb-4">Message now</h5>
+          <h3 className="menu-header text-left ps-5 text-dark">Message now</h3>
+
+
             <Scrollbars
               style={{ width: "100%", height: "100vh", minHeight: "300px" }}
             >

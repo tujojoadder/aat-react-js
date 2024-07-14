@@ -1,0 +1,21 @@
+.profile-update-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-update-container h2 {
+    font-weight: 600;
+  }
+  
+  .profile-update-container .form-label {
+    font-weight: 500;
+  }
+  
+  .profile-update-container .img-thumbnail {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
+  
