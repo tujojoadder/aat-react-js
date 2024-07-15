@@ -89,107 +89,143 @@ const Navbar = () => {
         </nav>
  )}
         <div className="row">
-          {/* LEFT SIDE BAR */}
-          <div
-            style={{ backgroundColor: "#fdfdfd", height: "100vh" }}
-            className="p-0  d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar  "
-          >
-            <div
-              className="pe-2 pt-5    bg-body rounded"
-              style={{ width: "97%", height: "100vh" }}
-            >
-              <div className="  mb-3 d-flex align-items-center justify-content-center mydiv">
-                <span>
-                  <i className="fa-brands fa-twitter display-5 text-info"></i>
-                </span>
-              </div>
+         {/* LEFT SIDE BAR */}
+<div
+  style={{ backgroundColor: "#fdfdfd", height: "100vh" }}
+  className="p-0 d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar"
+>
+  <div
+    className="pe-2 pt-5 bg-body rounded pb-5"
+    style={{ width: "97%", height: "100vh", overflowY: "auto",overflowX:'hidden' }}
+  >
+    <div className="mb-3  d-flex align-items-center justify-content-center mydiv " style={{width:'60px',height:'60px',borderRadius:'50%',margin:'auto'}}>
+      <span>
+        <i className="fa-brands fa-twitter display-5 text-info"></i>
+      </span>
+    </div>
 
-              <NavLink to="/" className="custom-link">
-                <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
-                  <span>
-                    <i className="fa-solid fa-house fs-3"></i>
-                  </span>
-                  <p className="d-none d-lg-block fs-4 ps-2 text">Home</p>
-                </div>
-              </NavLink>
+    <NavLink to="/" className="custom-link">
+      <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
+        <span>
+          <i className="fa-solid fa-house fs-3"></i>
+        </span>
+        <p className="d-none d-lg-block fs-4 ps-2 text">Home</p>
+      </div>
+    </NavLink>
 
-              <NavLink to="/friends" className="custom-link">
-                <div className="d-flex align-items-center py-1 my-2 pl-5 custom-link mydiv">
-                  <span>
-                    <i className="fas fa-user-friends fs-2"></i>
-                  </span>
-                  <p className="d-none d-lg-block fs-4 ps-2 text">Friends</p>
-                </div>
-              </NavLink>
-              <NavLink to="/groups" className="custom-link">
-                <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-                  <span>
-                    <i class="fa-solid fa-users fs-2"></i>
-                  </span>
-                  <p className="d-none d-lg-block fs-4 ps-2 text">Groups</p>
-                </div>
-              </NavLink>
-              <NavLink to="/page" className="custom-link">
-                <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-                  <span>
-                  <i class="fa-solid fa-flag fs-2"></i>
-                  
-                  </span>
-                  <p className="d-none d-lg-block fs-4 ps-2 text">Pages</p>
-                </div>
-              </NavLink>
+    <NavLink to="/friends" className="custom-link">
+      <div className="d-flex align-items-center py-1 my-2 pl-5 custom-link mydiv">
+        <span>
+          <i className="fas fa-user-friends fs-2"></i>
+        </span>
+        <p className="d-none d-lg-block fs-4 ps-2 text">Friends</p>
+      </div>
+    </NavLink>
 
-              <NavLink to="/message" className="custom-link">
-              <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-                <span>
-                  <i className="fa-solid fa-envelope fs-2"></i>
-                </span>
-                <p className="d-none d-lg-block fs-4 ps-2 text">Messages</p>
-              </div>
-              </NavLink>
+    <NavLink to="/groups" className="custom-link">
+      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+        <span>
+          <i className="fa-solid fa-users fs-2"></i>
+        </span>
+        <p className="d-none d-lg-block fs-4 ps-2 text">Groups</p>
+      </div>
+    </NavLink>
+
+    <NavLink to="/page" className="custom-link">
+      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+        <span>
+          <i className="fa-solid fa-flag fs-2"></i>
+        </span>
+        <p className="d-none d-lg-block fs-4 ps-2 text">Pages</p>
+      </div>
+    </NavLink>
+
+    <NavLink to="/message" className="custom-link">
+      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+        <span>
+          <i className="fa-solid fa-envelope fs-2"></i>
+        </span>
+        <p className="d-none d-lg-block fs-4 ps-2 text">Messages</p>
+      </div>
+    </NavLink>
+
+    <NavLink to="/quiz" className="custom-link">
+      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+        <span>
+          <i className="fa-solid fa-hourglass-half fs-2"></i>
+        </span>
+        <p className="d-none d-lg-block fs-4 ps-2 text">Quiz</p>
+      </div>
+    </NavLink>
+
+    <NavLink to="/ichannel" className="custom-link">
+      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+        <span>
+          <i className="fa-solid fa-mosque fs-2"></i>
+        </span>
+        <p className="d-none d-lg-block fs-4 ps-2 text">iChanel</p>
+      </div>
+    </NavLink>
+
+    <NavLink to="/profile" className="custom-link">
+      <div className="d-flex align-items-center my-2 mb-3 py-1 pl-5 mydiv">
+        <span>
+          <i className="fa-solid fa-user fs-2"></i>
+        </span>
+        <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
+      </div>
+    </NavLink>
+
+    <button className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv"
+      style={{
+        background: "none",
+        padding: "0",
+        margin: "0",
+        border: "none",
+        outline: "none",
+        boxShadow: "none",
+        marginLeft: "15px",
+      
+        border: "solid 2px blue",
+        paddingLeft: "15px",
+        paddingRight: "15px",
+        borderRadius: "30px"
+      }}
+      onClick={() => {
+        const optionsDiv = document.getElementById('moreOptions');
+        optionsDiv.style.display = optionsDiv.style.display === 'none' ? 'block' : 'none';
+      }}
+    >
+      <i style={{ color: "#333a42" }} className="fa-solid fa-ellipsis-vertical fs-4 ms-1"></i>
+      <span className="d-none d-lg-inline" style={{ fontSize: "22px", color: "#333a42", paddingLeft: "5px" }}>More</span>
+    </button>
+
+    <div id="moreOptions" style={{ display: 'none', marginLeft: '15px', marginTop: '10px' }}>
+      <NavLink to="/terms" className="custom-link">
+        <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
+          <span>
+            <i className="fa-solid fa-file-alt fs-2"></i>
+          </span>
+          <p className="d-none d-lg-block fs-4 ps-2 text">Terms</p>
+        </div>
+      </NavLink>
+      <NavLink to="/police" className="custom-link">
+        <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
+          <span>
+            <i className="fa-solid fa-shield-alt fs-2"></i>
+          </span>
+          <p className="d-none d-lg-block fs-4 ps-2 text">Police</p>
+        </div>
+      </NavLink>
+    </div>
+  </div>
+</div>
 
 
-              <NavLink to="/quiz" className="custom-link">
-              <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-                <span>
-                    <i className="fa-solid fa-hourglass-half fs-2"></i>
-                 </span>
-                <p className="d-none d-lg-block fs-4 ps-2 text">Quiz</p>
-              </div>
-             </NavLink>
-
-
-
-             <NavLink to="/ichannel" className="custom-link">
-              <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-                <span>
-                <i class="fa-solid fa-mosque  fs-2"></i>
-                </span>
-                <p className="d-none d-lg-block fs-4 ps-2 text">iChanel</p>
-              </div>
-</NavLink>
 
 
 
 
-            <NavLink to="/profile" className="custom-link">
-              <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-                <span>
-                  <i className="fa-solid fa-user fs-2"></i>
-                </span>
-                <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
-              </div>
-            </NavLink>
-
-
-              <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-                <span>
-                  <i className="fa-solid fa-ellipsis fs-2"></i>
-                </span>
-                <p className="d-none d-lg-block fs-4 ps-2 text">More</p>
-              </div>
-            </div>
-          </div>
 
           {/* Mid section */}
           <div className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar ">
