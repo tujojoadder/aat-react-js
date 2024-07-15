@@ -36,7 +36,7 @@ export default function PageManage() {
   ];
 
   return (
-    <div className="header__wrapper m-0 p-0 border pb-4" style={{ minHeight: '100vh' }}>
+    <div className="header__wrapper friend-home main border mb-5 p-0 m-0" style={{ minHeight: '100vh' }}>
       <header></header>
       <div className="cols__container">
         <div className="left__col mb-1">
@@ -62,7 +62,7 @@ export default function PageManage() {
         </div>
       </div>
 
-      <div className="content-secssion">
+      <div className="content-secssion mx-2">
         <ul className="nav nav-tabs mt-3">
           <li className="nav-item">
             <a className="nav-link active" href="#options" data-bs-toggle="tab">

@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 export default function IChannelsManage() {
   return (
-    <div className="header__wrapper m-0 p-0 border pb-4" style={{ minHeight: '100vh' }}>
+    <div className="header__wrapper  main border mb-5 p-0 m-0 pb-4" style={{ minHeight: '100vh' }}>
       <header></header>
       <div className="cols__container">
         <div className="left__col mb-1">

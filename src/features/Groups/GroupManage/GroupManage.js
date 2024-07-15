@@ -57,7 +57,7 @@ export default function GroupManage() {
         </div>
       </div>
 
-      <div className="content-secssion">
+      <div className="content-secssion mx-2">
         <ul className="nav nav-tabs mt-3">
           <li className="nav-item">
             <a className="nav-link active" href="#post" data-bs-toggle="tab">
