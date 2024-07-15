@@ -48,6 +48,10 @@ export default function MessageAnyOne() {
   }, []); // Empty dependency array ensures this effect runs only once on mount
 
   return (
+
+        <div className="friend-home main  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+     
+
     <div
       className="chat   p-0 m-0 border-start border-end  "
       style={{
@@ -360,6 +364,7 @@ export default function MessageAnyOne() {
 
 
       </div>
+    </div>
     </div>
   );
 }

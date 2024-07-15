@@ -26,11 +26,14 @@
   }
   
   .letsgo-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
-    width: 100vw; /* Full viewport width */
+
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
   }

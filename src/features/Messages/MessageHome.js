@@ -104,15 +104,15 @@ export default function MessageHome() {
       handle: "@john_smith",
       image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
     },
-    // Add more profiles as needed
+    // Add more profileQuis as needed
   ];
 
   const location = useLocation();
 
   return isLargeDevice ? (
-    <div><NoUserSelectedToMessage /></div>
+    <div className="message-home main  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}><NoUserSelectedToMessage /></div>
   ) : (
-    <div className="p-0 m-0 main">
+    <div className="p-0 m-0 main border ">
 <SearchBox/>
         <div className="mb-5">
           {profiles.map((profile, index) => {

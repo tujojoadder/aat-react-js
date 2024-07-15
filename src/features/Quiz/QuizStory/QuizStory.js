@@ -12,7 +12,7 @@ export default function QuizStory() {
     };
 
   return (
-    <div className="story-container pt-sm-0 mt-md-2 p-2 main">
+    <div className="story-container pt-sm-0 mt-md-4 p-2 main">
       <div className="story-card shadow">
         <div className="story-header">
           <h3 className="story-title">Story Title</h3>

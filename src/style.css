@@ -614,7 +614,7 @@ ul {
 
 /* Customize scrollbar */
 ::-webkit-scrollbar {
-  width: 5px; /* Adjust the width of the scrollbar */
+  width: 5px !important; /* Adjust the width of the scrollbar */
   position: absolute;
   
 }

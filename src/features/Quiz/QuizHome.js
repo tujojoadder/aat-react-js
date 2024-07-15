@@ -10,18 +10,24 @@ export default function QuizHome() {
 
   return (
     <>
-      {storySeen ? (
-        <QuizStory />
-      ) : quesSeen ? (
-        <QuizQuestion />
-      ) :reward ?(
-        <RewardSection/>
-      ) :(
-        <LetsGo />
-      )}
 
+<div className="friend-home main  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+     
+{storySeen ? (
+  <QuizStory />
+) : quesSeen ? (
+  <QuizQuestion />
+) :reward ?(
+  <RewardSection/>
+) :(
+  <LetsGo />
+)}
+     
 
-     {/*  <RewardSection  /> */}
+     </div>
     </>
   );
 }
+
+
+

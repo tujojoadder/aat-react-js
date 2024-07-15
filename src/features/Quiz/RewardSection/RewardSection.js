@@ -7,7 +7,7 @@ const RewardSection = () => {
 
 
   return (
-    <div className="reward-container main border-start m-0 p-0">
+    <div className="reward-container main  m-0 p-0">
  
      <WrongAns/>
    {/*   <CorrectAns/> */}

@@ -55,7 +55,7 @@ const Navbar = () => {
   const isMessagePage = location.pathname.startsWith("/message/");
   
   return (
-    <Scrollbars style={{ width: "100%", height: "104vh", minHeight: "300px" }}>
+    <div style={{ width: "100%", height: "100vh", minHeight: "300px",overflowX:'hidden' }}>
       <div className={isNotSm ? "container-sm  " : "ms-3 me-3"} style={{}}>
         {/* xs NAV BAR */}
         {!isMessagePage && (
@@ -361,7 +361,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </Scrollbars>
+    </div>
   );
 };
 

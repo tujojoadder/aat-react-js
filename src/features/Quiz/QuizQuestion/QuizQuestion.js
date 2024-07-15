@@ -14,7 +14,7 @@ export default function QuizQuestion() {
 
 
   return (
-    <div className="quiz-container  p-2 pt-sm-0 mt-md-2 main">
+    <div className="quiz-container  p-2 pt-sm-0 mt-md-4 main">
     <div className="quiz-card shadow">
       <div className="quiz-header">
         <h3 className="quiz-title">Quiz Question</h3>
