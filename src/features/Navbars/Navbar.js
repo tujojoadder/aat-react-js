@@ -56,7 +56,7 @@ const Navbar = () => {
   
   return (
     <div style={{ width: "100%", height: "100vh", minHeight: "300px",overflowX:'hidden' }}>
-      <div className={isNotSm ? "container-sm  " : "ms-3 me-3"} style={{}}>
+      <div className={isNotSm ? "container-sm  " : "ps-2 pe-2"} style={{}}>
         {/* xs NAV BAR */}
         {!isMessagePage && (
         <nav className={`bg-light xs-nav fixed-bottom d-sm-none border-bottom`}>
