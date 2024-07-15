@@ -31,7 +31,8 @@ export default function ProfileManage() {
   };
 
   return (
-    <div className="profile-update-container container mt-5">
+    <div className="friend-home main  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+    <div className="profile-update-container container mt-5 ">
       <h2 className="text-center mb-4">Update Profile</h2>
       <form onSubmit={handleSubmit}>
         <div className="row mb-4">
@@ -59,6 +60,7 @@ export default function ProfileManage() {
         
         <button type="submit" className="btn btn-primary">Update Profile</button>
       </form>
+    </div>
     </div>
   );
 }

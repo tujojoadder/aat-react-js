@@ -20,7 +20,7 @@ export default function Home() {
       <HadithStatus />
     
       <div className="center-flex-container flex-item">
-        <div className="home py-2" style={{ marginTop:'-1vh' }}>
+        <div className="home py-2 " style={{ marginTop:'-1vh' }}>
           <h1>Home</h1>
         </div>
         {/* Create post */}
