@@ -11,7 +11,6 @@ export default function NoUserSelected() {
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
-      backgroundColor: '#f9f9f9',
       textAlign: 'center',
       color: '#555',
       fontFamily: 'Arial, sans-serif',
@@ -153,12 +152,12 @@ export default function NoUserSelected() {
               );
             })}
           </div>
-\        
+        
       </div>
 
       {/* Content for large devices */}
-      <div className="d-none d-lg-block">
-        <div style={styles.container} className="border">
+      <div className="d-none d-lg-block border-start border-end" style={{height:'101vh'}}>
+        <div style={styles.container} >
           <div style={styles.content}>
             <i className="fas fa-info-circle" style={styles.icon}></i>
             <h5 style={styles.message}>Select people's names to preview their profile.</h5>

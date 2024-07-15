@@ -5,7 +5,7 @@ import { NavLink, BrowserRouter, Route, Routes } from "react-router-dom";
 const FriendRight = () => {
   
   return (
-    <div style={{ overflowX: "hidden" }}>
+    <div style={{ overflowX: "hidden", }}>
       <div
        
         className="scroll-container w-100"

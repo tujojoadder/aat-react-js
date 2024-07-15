@@ -11,7 +11,6 @@ export default function NoUserSelectedToMessage() {
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
-      backgroundColor: '#f9f9f9',
       textAlign: 'center',
       color: '#555',
       fontFamily: 'Arial, sans-serif',

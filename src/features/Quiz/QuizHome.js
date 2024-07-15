@@ -11,7 +11,7 @@ export default function QuizHome() {
   return (
     <>
 
-<div className="friend-home main  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+<div className="friend-home main border-start mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
      
 {storySeen ? (
   <QuizStory />
