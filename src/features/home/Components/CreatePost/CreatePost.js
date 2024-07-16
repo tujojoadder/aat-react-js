@@ -31,15 +31,15 @@ export default function CreatePost() {
     <div className="create-post">
     <div className="post">
       <form action="">
-        <div className="form-group-1">
-          <img src={image} alt="profile-pics" />
+        <div className="form-group-1 ">
+          
           <input type="text" placeholder="What's happening?" />
         </div>
 
         <div className="d-flex bd-highlight mb-3">
-          <div className="pt-2 bd-highlight">
+          <div className="pt-2 bd-highlight ">
             {" "}
-            <div className="post-icons">
+            <div className="post-icons ">
               <i
                 className="far fa-image"
                 onClick={handleUploadClick} // Trigger file upload on icon click
