@@ -197,3 +197,10 @@ max-width: 100%;
 .user-content{
   padding-right: 0px;
 }
+
+
+.btn{
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+}
