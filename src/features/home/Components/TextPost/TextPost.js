@@ -53,6 +53,8 @@ const TextPost = () => {
     setIsModalOpen(false);
   };
 
+
+/* Text */
   const [isExpanded, setIsExpanded] = useState(false);
   const fullText = "এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) প্রতি ওয়াহী প্রেরণ করেছিলাম।’’ (সূরাহ্ আন-নিসা ৪/১৬৩) ১.এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যে "; // Shortened for brevity
   const previewText = fullText.substring(0, 175);
@@ -67,7 +69,7 @@ const TextPost = () => {
         <img src={image} alt="user3" />
       </div>
       <div className="user-content-text-box">
-        <div className="user-names-text" style={{ marginTop: "2px" }}>
+        <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
           <div className="name-column">
             <h1 className="full-name-text m-0 p-0">Mohammad </h1>
             <p className="user-name-text m-0 p-0">@eric_alvareeric</p>

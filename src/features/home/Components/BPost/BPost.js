@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import image from "./logo.jpg";
 import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImage";
@@ -7,53 +6,61 @@ import Comment from "../Comment/Comment/Comment";
 import CommentedBothPosts from "../../../CommentedMedia/CommentedBothposts/CommentedBothPosts";
 
 export default function BPost() {
+  /* comment width */
+  const [isSmall, setIsSmall] = useState(window.innerWidth <= 650);
+  const [isMid, setIsMid] = useState(
+    window.innerWidth > 650 && window.innerWidth <= 1200
+  );
+  const [isLg, setIsLg] = useState(
+    window.innerWidth > 1200 && window.innerWidth <= 1450
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
- /* comment width */
- const [isSmall, setIsSmall] = useState(window.innerWidth <= 650);
- const [isMid, setIsMid] = useState(
-   window.innerWidth > 650 && window.innerWidth <= 1200
- );
- const [isLg, setIsLg] = useState(
-   window.innerWidth > 1200 && window.innerWidth <= 1450
- );
- const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef(null);
 
- const modalRef = useRef(null);
+  const updateWidth = () => {
+    setIsSmall(window.innerWidth <= 650);
+    setIsMid(window.innerWidth > 650 && window.innerWidth <= 1200);
+    setIsLg(window.innerWidth > 1200 && window.innerWidth <= 1450);
+  };
 
- const updateWidth = () => {
-   setIsSmall(window.innerWidth <= 650);
-   setIsMid(window.innerWidth > 650 && window.innerWidth <= 1200);
-   setIsLg(window.innerWidth > 1200 && window.innerWidth <= 1450);
- };
+  useEffect(() => {
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => {
+      window.removeEventListener("resize", updateWidth);
+    };
+  }, []);
 
- useEffect(() => {
-   updateWidth();
-   window.addEventListener("resize", updateWidth);
-   return () => {
-     window.removeEventListener("resize", updateWidth);
-   };
- }, []);
+  useEffect(() => {
+    const modalElement = modalRef.current;
+    if (modalElement) {
+      modalElement.addEventListener("shown.bs.modal", handleModalShow);
+      modalElement.addEventListener("hidden.bs.modal", handleModalHide);
+      return () => {
+        modalElement.removeEventListener("shown.bs.modal", handleModalShow);
+        modalElement.removeEventListener("hidden.bs.modal", handleModalHide);
+      };
+    }
+  }, []);
 
- useEffect(() => {
-   const modalElement = modalRef.current;
-   if (modalElement) {
-     modalElement.addEventListener("shown.bs.modal", handleModalShow);
-     modalElement.addEventListener("hidden.bs.modal", handleModalHide);
-     return () => {
-       modalElement.removeEventListener("shown.bs.modal", handleModalShow);
-       modalElement.removeEventListener("hidden.bs.modal", handleModalHide);
-     };
-   }
- }, []);
+  const handleModalShow = () => {
+    setIsModalOpen(true);
+  };
 
- const handleModalShow = () => {
-   setIsModalOpen(true);
- };
+  const handleModalHide = () => {
+    setIsModalOpen(false);
+  };
 
- const handleModalHide = () => {
-   setIsModalOpen(false);
- };
+  /* Text */
+  const [isExpanded, setIsExpanded] = useState(false);
+  const fullText =
+    "এ vdvdvdvdv dv      sgdththt thtrrthre মর্মে আল্লাহ্ তা’আলার বাণীঃ  ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) প্রতি ওয়াহী প্রেরণ করেছিলাম।’’ (সূরাহ্ আন-নিসা ৪/১৬৩) ১.এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যে "; // Shortened for brevity
+  const previewText = fullText.substring(0, 175);
 
+  const toggleText = () => {
+    setIsExpanded(!isExpanded);
+  };
   return (
     <div class="posts ">
       <div class="user-pics">
@@ -61,17 +68,28 @@ export default function BPost() {
       </div>
       <div class="user-content-box ">
         <div className="user-names" style={{ marginTop: "2px" }}>
-          <div className="name-column">
+          <div className="name-column p-0 m-0">
             <h1 className="full-name m-0 p-0">Turjo Joadder </h1>
             <p className="user-name m-0 p-0">@eric_alvareeric</p>
           </div>
-          <p className="time me-4" style={{ marginTop: "18px" }}>
+          <p className="time me-4 mt-2" >
             {" "}
             2hrs
           </p>
         </div>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet minima itaque, expedita possimus laborum, nam, cumque non in iste quo aliquam rerum cum inventore fugit et ratione dignissimos ducimus laudantium.</p>
-        <div class="user-content  " style={{ marginTop: "-5px" }}>
+        <p style={{ margin: "0px" }} className="pb-2">
+
+        {isExpanded ? fullText : previewText}
+            {fullText.length > 175 && (
+              <span
+                onClick={toggleText}
+                style={{ color: "blue", cursor: "pointer" }}
+              >
+                {isExpanded ? " See less" : "... See more"}
+              </span>
+            )}
+        </p>
+        <div class="user-content  " >
           <img
             style={{ Width: "100%", maxHeight: "65vh" }}
             src={image}
@@ -119,7 +137,7 @@ export default function BPost() {
               ></button>
             </div>
             <div className="modal-body ">
-            {isModalOpen && (
+              {isModalOpen && (
                 <>
                   <div
                     className="comments px-md-4 "

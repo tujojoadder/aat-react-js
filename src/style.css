@@ -143,9 +143,8 @@ ul {
 }
 
 .user-name {
-  color: #39393a;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 1.1rem;
+  font-size: 14px;
+  color: #777;
 }
 
 /* Main Container */
@@ -266,14 +265,10 @@ ul {
   margin: 0rem 1rem;
 }
 .posts {
-  display: flex;
-  flex-flow: row;
-  justify-content: left;
   font-size: 17px;
-  width: 100%;
-  line-height: 1.75rem;
-  padding-top: 0.5rem;
-  border-bottom: 1px solid rgb(230, 236, 240);
+  line-height: 1.5;
+  padding-right: -10px;
+max-width: 100%;
 }
 
 .full-name:hover {
@@ -302,6 +297,7 @@ ul {
 .user-content-box .user-names {
   display: flex;
   flex-flow: row nowrap;
+  padding: 0;margin: 0;
 }
 .user-names .full-name {
   padding-right: 10px;
