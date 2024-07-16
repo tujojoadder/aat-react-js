@@ -6,6 +6,7 @@ import PageSmallScreenCard from "../../Page/PageSmallScreenCard/PageSmallScreenC
 import PageLargeScreenCard from "../../Page/PageLargeScreenCard/PageLargeScreenCard";
 import IChannelSmallScreenCard from "../IChannelSmallScreenCard/IChannelSmallScreenCard";
 import IChannelLargeScreenCard from "../IChannelLargeScreenCard/IChannelLargeScreenCard";
+import IChannelTabs from "../IChannelTabs/IChannelTabs";
 
 export default function IChannelFollowing() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -103,8 +104,11 @@ export default function IChannelFollowing() {
      /* <<<--- Scroll Needed --->>> */
 
     <div className="friend-home main border-left border-right " style={{ backgroundColor: "white",marginLeft:'0px',padding:'0px'}}>
-   <div className="d-block d-lg-none">
-   {/*      <PageTabs/> */}
+
+
+ {/*  IChnnels tabs */}
+<div className="d-block d-lg-none">
+       <IChannelTabs/>
       </div>
       {/* Friend Request Section */}
       <div className="friend-request-section mb-5 mx-2 ">
@@ -121,7 +125,7 @@ export default function IChannelFollowing() {
                   name={profile.name}
                   handle={profile.handle}
                   image={profile.image}
-                  type='discover'
+                  type='following'
                 
                 />
                
@@ -133,7 +137,7 @@ export default function IChannelFollowing() {
                   name={profile.name}
                   handle={profile.handle}
                   image={profile.image}
-                  type='discover'
+                  type='following'
                 />
              
               )

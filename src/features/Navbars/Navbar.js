@@ -98,7 +98,7 @@ const Navbar = () => {
     className="pe-2 pt-5 bg-body rounded pb-5"
     style={{ width: "97%", height: "100vh", overflowY: "auto",overflowX:'hidden' }}
   >
-    <div className="mb-3  d-flex align-items-center justify-content-center mydiv " style={{width:'60px',height:'60px',borderRadius:'50%',margin:'auto'}}>
+    <div className="mb-4 mt-3  d-flex align-items-center justify-content-center mydiv " style={{width:'60px',height:'60px',borderRadius:'50%',margin:'auto'}}>
       <span>
         <i className="fa-brands fa-twitter display-5 text-info"></i>
       </span>

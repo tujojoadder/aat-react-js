@@ -11,6 +11,7 @@ import {
   Routes,
 } from "react-router-dom";
 import BPost from "../home/Components/BPost/BPost";
+import IChannelTabs from "./IChannelTabs/IChannelTabs";
 
 export default function IChannelHome() {
 
@@ -25,7 +26,7 @@ export default function IChannelHome() {
       }}
     >
       <div className="d-block d-lg-none">
-       
+       <IChannelTabs/>
       </div>
   
   <BPost/>
