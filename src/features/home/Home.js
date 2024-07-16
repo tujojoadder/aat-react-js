@@ -27,6 +27,8 @@ export default function Home() {
         <CreatePost />
         {/* Text post */}
           <TextPost/>
+<BPost/>
+
           <ImagePost/>
           <TextPost/>
           <TextPost/>

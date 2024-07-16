@@ -3,6 +3,15 @@ import React, { useEffect, useState } from 'react'
 import image from "./logo.jpg";
 
 export default function CommentedBothPosts() {
+
+  /* Text */
+const [isExpanded, setIsExpanded] = useState(false);
+const fullText =" এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) প্রতি ওয়াহী প্রেরণ করেছিলাম।’’ (সূরাহ্ আন-নিসা ৪/১৬৩) ১.এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যে";
+const previewText = fullText.substring(0, 175);
+
+const toggleText = () => {
+  setIsExpanded(!isExpanded);
+};
   return (
     <div class="posts "  style={{borderBottom:'3px solid blue'}}>
       <div class="user-pics">
@@ -19,8 +28,15 @@ export default function CommentedBothPosts() {
 
         <div class="user-content" style={{marginTop:'-10px'}}>
           <p style={{marginBottom:'5px'}}>
-            Eat. Code, Sleep. repeat! <a href="#">#CodeNewbie</a>{" "}
-            <a href="#">#100DaysOfCode</a>
+          {isExpanded ? fullText : previewText}
+          {fullText.length > 175 && (
+            <span
+              onClick={toggleText}
+              style={{ color: "blue", cursor: "pointer" }}
+            >
+              {isExpanded ? " See less" : "... See more"}
+            </span>
+          )} 
           </p>
           <img
             style={{ Width: "100%", maxHeight: "65vh" }}

@@ -4,6 +4,19 @@ import "./TextComment.css";
 import ReplyComment from "../ReplyComment/ReplyComment";
 
 export default function TextComment() {
+/* Text */
+const [isExpanded, setIsExpanded] = useState(false);
+const fullText ="Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente iste praesentium atque aperiam deserunt ipsam delectus, animi similique obcaecati repellendus. Quae aperiam dolorum corrupti voluptatibus a consectetur repellendus provident aliqui";
+const previewText = fullText.substring(0, 175);
+
+const toggleText = () => {
+  setIsExpanded(!isExpanded);
+};
+
+
+
+
+
   // State to manage the visibility of the reply input box
   const [showReplyInput, setShowReplyInput] = useState(false);
   // State to manage the input text
@@ -49,10 +62,15 @@ export default function TextComment() {
 
         <div className="user-content-text">
           <p style={{ margin: "0px" }}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci
-            tenetur, laboriosam sed temporibus qui corporis sequi quos vel
-            officia perferendis fuga odit facere ullam, expedita assumenda illum
-            voluptas commodi. Impedit?
+          {isExpanded ? fullText : previewText}
+          {fullText.length > 175 && (
+            <span
+              onClick={toggleText}
+              style={{ color: "blue", cursor: "pointer" }}
+            >
+              {isExpanded ? " See less" : "... See more"}
+            </span>
+          )} 
           </p>
         </div>
 

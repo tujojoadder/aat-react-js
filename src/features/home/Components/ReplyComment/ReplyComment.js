@@ -3,6 +3,21 @@ import image from "./logo.jpg";
 import "./ReplyComment.css";
 
 export default function TextComment() {
+/* Text */
+const [isExpanded, setIsExpanded] = useState(false);
+const fullText =" এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) প্রতি ওয়াহী প্রেরণ করেছিলাম।’’ (সূরাহ্ আন-নিসা ৪/১৬৩) ১.এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যে";
+const previewText = fullText.substring(0, 175);
+
+const toggleText = () => {
+  setIsExpanded(!isExpanded);
+};
+
+
+
+
+
+
+
   // State to manage the visibility of the reply input box
   const [showReplyInput, setShowReplyInput] = useState(false);
   // State to manage the input text
@@ -42,11 +57,15 @@ export default function TextComment() {
 
       <div className="user-content-text ms-2">
         <p style={{ margin: "0px" }}>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci
-          tenetur, laboriosam sed temporibus qui corporis sequi quos vel officia
-          perferendis fuga odit facere ullam, expedita assumenda illum voluptas
-          commodi. Impedit?
-        </p>
+        {isExpanded ? fullText : previewText}
+          {fullText.length > 175 && (
+            <span
+              onClick={toggleText}
+              style={{ color: "blue", cursor: "pointer" }}
+            >
+              {isExpanded ? " See less" : "... See more"}
+            </span>
+          )}        </p>
       </div>
 
       <div className="content-icons-text pt-1 pb-2 pe-3 ps-2 d-flex align-items-center" style={{ padding: "0px" }}>

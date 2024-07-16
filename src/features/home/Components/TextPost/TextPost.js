@@ -8,6 +8,23 @@ import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImag
 import CommentedText from "../../../CommentedMedia/CommentedText/CommentedText";
 
 const TextPost = () => {
+
+/* Text */
+const [isExpanded, setIsExpanded] = useState(false);
+const fullText =" এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) প্রতি ওয়াহী প্রেরণ করেছিলাম।’’ (সূরাহ্ আন-নিসা ৪/১৬৩) ১.এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যে";
+const previewText = fullText.substring(0, 175);
+
+const toggleText = () => {
+  setIsExpanded(!isExpanded);
+};
+
+
+
+
+
+
+
+
   const [commentsHeight, setCommentsHeight] = useState("80vh"); // Default height for medium devices
 
   // Function to update the height based on window width
@@ -49,8 +66,16 @@ const TextPost = () => {
 
         <div className="user-content">
           <p style={{margin:'0px'}}>
-           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur, laboriosam sed temporibus qui corporis sequi quos vel officia perferendis fuga odit facere ullam, expedita assumenda illum voluptas commodi. Impedit?
-          </p>
+          {isExpanded ? fullText : previewText}
+          {fullText.length > 175 && (
+            <span
+              onClick={toggleText}
+              style={{ color: "blue", cursor: "pointer" }}
+            >
+              {isExpanded ? " See less" : "... See more"}
+            </span>
+          )} 
+           </p>
         </div>
 
         <div className="content-icons  pe-3">

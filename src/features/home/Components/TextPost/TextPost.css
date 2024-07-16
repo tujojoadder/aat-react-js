@@ -19,9 +19,10 @@
   }
   
   .user-name-text {
-    font-size: 1.05rem;
-    font-weight: 400;
-    color: rgb(101, 119, 134);
+    padding-right: 10px !important;
+    font-size: 1.05rem !important;
+    font-weight: 400 !important;
+    color: rgb(101, 119, 134) !important;
   }
   
   .time-text {
