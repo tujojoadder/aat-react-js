@@ -4,51 +4,54 @@ import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
 import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImage";
 export default function ImagePost() {
-  /* comment width */
-  const [isSmall, setIsSmall] = useState(window.innerWidth <= 650);
-  const [isMid, setIsMid] = useState(
-    window.innerWidth > 650 && window.innerWidth <= 1200
-  );
-  const [isLg, setIsLg] = useState(
-    window.innerWidth > 1200 && window.innerWidth <= 1450
-  );
-  const [isModalOpen, setIsModalOpen] = useState(false);
+ /* comment width */
+ const [isXSmall, setIsXSmall] = useState( window.innerWidth <= 650);
+ const [isSmall, setIsSmall] = useState( window.innerWidth > 650 && window.innerWidth <= 950);
+ const [isMid, setIsMid] = useState(
+   window.innerWidth > 950 && window.innerWidth <= 1200
+ );
+ const [isLg, setIsLg] = useState(
+   window.innerWidth > 1200 
+ );
+ const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const modalRef = useRef(null);
+ const modalRef = useRef(null);
 
-  const updateWidth = () => {
-    setIsSmall(window.innerWidth <= 650);
-    setIsMid(window.innerWidth > 650 && window.innerWidth <= 1200);
-    setIsLg(window.innerWidth > 1200 && window.innerWidth <= 1450);
-  };
+ const updateWidth = () => {
+   setIsXSmall( window.innerWidth <= 650);
+   setIsSmall( window.innerWidth > 650 && window.innerWidth <= 950);
+   setIsMid( window.innerWidth > 950 && window.innerWidth <= 1200);
+   setIsLg( window.innerWidth > 1200 );
+ };
 
-  useEffect(() => {
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => {
-      window.removeEventListener("resize", updateWidth);
-    };
-  }, []);
+ useEffect(() => {
+   updateWidth();
+   window.addEventListener("resize", updateWidth);
+   return () => {
+     window.removeEventListener("resize", updateWidth);
+   };
+ }, []);
 
-  useEffect(() => {
-    const modalElement = modalRef.current;
-    if (modalElement) {
-      modalElement.addEventListener("shown.bs.modal", handleModalShow);
-      modalElement.addEventListener("hidden.bs.modal", handleModalHide);
-      return () => {
-        modalElement.removeEventListener("shown.bs.modal", handleModalShow);
-        modalElement.removeEventListener("hidden.bs.modal", handleModalHide);
-      };
-    }
-  }, []);
+ useEffect(() => {
+   const modalElement = modalRef.current;
+   if (modalElement) {
+     modalElement.addEventListener("shown.bs.modal", handleModalShow);
+     modalElement.addEventListener("hidden.bs.modal", handleModalHide);
+     return () => {
+       modalElement.removeEventListener("shown.bs.modal", handleModalShow);
+       modalElement.removeEventListener("hidden.bs.modal", handleModalHide);
+     };
+   }
+ }, []);
 
-  const handleModalShow = () => {
-    setIsModalOpen(true);
-  };
+ const handleModalShow = () => {
+   setIsModalOpen(true);
+ };
 
-  const handleModalHide = () => {
-    setIsModalOpen(false);
-  };
+ const handleModalHide = () => {
+   setIsModalOpen(false);
+ };
+
 
   return (
     <div class="posts ">
@@ -136,13 +139,13 @@ export default function ImagePost() {
                     style={{
                       position: "fixed",
                       bottom: "0px",
-                      width: isSmall
-                        ? "100%"
+                      width:isXSmall?'100%': isSmall
+                        ? "74.8%"
                         : isMid
-                        ? "69.8%"
+                        ? "59.8%"
                         : isLg
-                        ? "69.9%"
-                        : "44.9%",
+                        ? "49.9%"
+                        : "49.9%",
                     }}
                   >
                     <Comment />

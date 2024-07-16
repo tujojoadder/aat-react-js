@@ -7,21 +7,23 @@ import CommentedBothPosts from "../../../CommentedMedia/CommentedBothposts/Comme
 
 export default function BPost() {
   /* comment width */
-  const [isSmall, setIsSmall] = useState(window.innerWidth <= 650);
+  const [isXSmall, setIsXSmall] = useState( window.innerWidth <= 650);
+  const [isSmall, setIsSmall] = useState( window.innerWidth > 650 && window.innerWidth <= 950);
   const [isMid, setIsMid] = useState(
-    window.innerWidth > 650 && window.innerWidth <= 1200
+    window.innerWidth > 950 && window.innerWidth <= 1200
   );
   const [isLg, setIsLg] = useState(
-    window.innerWidth > 1200 && window.innerWidth <= 1450
+    window.innerWidth > 1200 
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const modalRef = useRef(null);
 
   const updateWidth = () => {
-    setIsSmall(window.innerWidth <= 650);
-    setIsMid(window.innerWidth > 650 && window.innerWidth <= 1200);
-    setIsLg(window.innerWidth > 1200 && window.innerWidth <= 1450);
+    setIsXSmall( window.innerWidth <= 650);
+    setIsSmall( window.innerWidth > 650 && window.innerWidth <= 950);
+    setIsMid( window.innerWidth > 950 && window.innerWidth <= 1200);
+    setIsLg( window.innerWidth > 1200);
   };
 
   useEffect(() => {
@@ -163,13 +165,13 @@ export default function BPost() {
                     style={{
                       position: "fixed",
                       bottom: "0px",
-                      width: isSmall
-                        ? "100%"
+                      width:isXSmall?'100%': isSmall
+                        ? "74.8%"
                         : isMid
-                        ? "69.8%"
+                        ? "59.8%"
                         : isLg
-                        ? "69.9%"
-                        : "44.9%",
+                        ? "49.9%"
+                        : "49.9%",
                     }}
                   >
                     <Comment />
