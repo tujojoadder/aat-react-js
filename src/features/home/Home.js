@@ -19,8 +19,8 @@ export default function Home() {
    {/*    Hadith Status */}
       <HadithStatus />
     
-      <div className="center-flex-container flex-item">
-        <div className="home py-2 " style={{ marginTop:'-1vh' }}>
+      <div className="center-flex-container flex-item ">
+        <div className="home py-2 border " style={{ marginTop:'-1vh' }}>
           <h1>Home</h1>
         </div>
         {/* Create post */}

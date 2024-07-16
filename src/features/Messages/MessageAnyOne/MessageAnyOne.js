@@ -61,8 +61,9 @@ export default function MessageAnyOne() {
         style={{
           height: "0vh",
           position: "fixed",
+          
           width: isExtraSmall
-            ? "100%"
+            ? "101%"
             : isSmall
             ? "70%"
             : isMedium
@@ -71,7 +72,7 @@ export default function MessageAnyOne() {
         }}
       >
         <div className="ms-card m-0 p-0  pt-4 pb-4">
-          <Scrollbars
+          <Scrollbars 
             style={{
               width: "100%",
               backgroundColor: "#e9ecef",
@@ -300,14 +301,16 @@ export default function MessageAnyOne() {
               <div className="mb-5 pb-1"></div>
             </div>
           </Scrollbars>
-          {/* Fotter */}
+
+
+          {/* Message width */}
           <div
             className="card-footer p-0 m-0 "
             style={{
               position: "fixed",
               bottom: "0px",
               width: isExtraSmall
-                ? "100%"
+                ? "101%"
                 : isSmall
                 ? "70%"
                 : isMedium
@@ -318,7 +321,7 @@ export default function MessageAnyOne() {
             <SendMessage />
           </div>
 
-          {/* Header */}
+          {/* Header width */}
 
           <div
             className="card-footer p-0 m-0 "
@@ -326,11 +329,11 @@ export default function MessageAnyOne() {
               position: "fixed",
               top: "0px",
               width: isExtraSmall
-                ? "100%"
+                ? "101%"
                 : isSmall
                 ? "70%"
                 : isMedium
-                ? "65%"
+                ? "66%"
                 : "42%",
             }}
           >
@@ -364,6 +367,7 @@ export default function MessageAnyOne() {
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     </div>

@@ -34,7 +34,7 @@ const toggleText = () => {
   };
 
   return (
-    <div className="">
+    <div className="mt-2">
       <div class="d-flex bd-highlight ">
         <div class="bd-highlight me-1">
           <img

@@ -1,32 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import image from "./logo1.jpg";
 import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
 import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImage";
 export default function ImagePost() {
-  const [commentsHeight, setCommentsHeight] = useState("80vh"); // Default height for medium devices
+  /* comment width */
+  const [isSmall, setIsSmall] = useState(window.innerWidth <= 650);
+  const [isMid, setIsMid] = useState(
+    window.innerWidth > 650 && window.innerWidth <= 1200
+  );
+  const [isLg, setIsLg] = useState(
+    window.innerWidth > 1200 && window.innerWidth <= 1450
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Function to update the height based on window width
-  const updateHeight = () => {
-    if (window.innerWidth < 576) {
-      setCommentsHeight("72vh"); // Small devices (sm) like mobile phones
-    } else {
-      setCommentsHeight("81vh"); // Medium devices (md) like tablets and desktops
-    }
-  };  
+  const modalRef = useRef(null);
 
-  // Effect to update height when component mounts and on window resize
+  const updateWidth = () => {
+    setIsSmall(window.innerWidth <= 650);
+    setIsMid(window.innerWidth > 650 && window.innerWidth <= 1200);
+    setIsLg(window.innerWidth > 1200 && window.innerWidth <= 1450);
+  };
+
   useEffect(() => {
-    updateHeight(); // Initial height update
-
-    // Event listener for window resize
-    window.addEventListener("resize", updateHeight);
-
-    // Cleanup function to remove event listener
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
     return () => {
-      window.removeEventListener("resize", updateHeight);
+      window.removeEventListener("resize", updateWidth);
     };
-  }, []); // Empty dependency array ensures effect runs only on mount and unmount
+  }, []);
+
+  useEffect(() => {
+    const modalElement = modalRef.current;
+    if (modalElement) {
+      modalElement.addEventListener("shown.bs.modal", handleModalShow);
+      modalElement.addEventListener("hidden.bs.modal", handleModalHide);
+      return () => {
+        modalElement.removeEventListener("shown.bs.modal", handleModalShow);
+        modalElement.removeEventListener("hidden.bs.modal", handleModalHide);
+      };
+    }
+  }, []);
+
+  const handleModalShow = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalHide = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div class="posts ">
@@ -45,7 +67,7 @@ export default function ImagePost() {
           </p>
         </div>
 
-        <div class="user-content  "  style={{marginTop:'-5px'}}>
+        <div class="user-content  " style={{ marginTop: "-5px" }}>
           <img
             style={{ Width: "100%", maxHeight: "65vh" }}
             src={image}
@@ -76,12 +98,13 @@ export default function ImagePost() {
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
+        ref={modalRef}
       >
         <div className="modal-dialog ">
           <div className="modal-content ">
             <div className="modal-header shadow-sm p-3 bg-body rounded">
               <h5 className="modal-title fs-5" id="exampleModalLabel">
-               ii Comment
+                ii Comment
               </h5>
               <button
                 type="button"
@@ -91,21 +114,41 @@ export default function ImagePost() {
               ></button>
             </div>
             <div className="modal-body ">
-              <div
-                className="comments pb-4 px-md-4"
-                style={{ height: commentsHeight, overflowY: "scroll",overflowX:'hidden' }}
-              >
-               <CommentedImage/>
-                <TextComment />
-                <TextComment />
-                <TextComment />
-                <TextComment />
-                <TextComment />
-                <TextComment />
-              </div>
-              <div className="my-comment">
-                <Comment/>
-              </div>
+            {isModalOpen && (
+                <>
+                  <div
+                    className="comments pb-4 px-md-4"
+                    style={{ height: '100vh', overflowY: "scroll", overflowX: 'hidden' }}
+                  >
+                    <CommentedImage />
+                    <TextComment />
+                    <TextComment />
+                    <TextComment />
+                    <TextComment />
+                    <TextComment />
+                    <TextComment />
+                  {/* Needed */}
+                  <div style={{ paddingBottom: "20vh" }}></div>
+                  </div>
+                  {/* Footer */}
+                  <div
+                    className="card-footer p-0 m-0"
+                    style={{
+                      position: "fixed",
+                      bottom: "0px",
+                      width: isSmall
+                        ? "100%"
+                        : isMid
+                        ? "69.8%"
+                        : isLg
+                        ? "69.9%"
+                        : "44.9%",
+                    }}
+                  >
+                    <Comment />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
