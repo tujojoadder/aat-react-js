@@ -1,39 +1,17 @@
 import React, { useState } from 'react';
 import image from "./logo.jpg";
 import image1 from "./logo1.png";
+import './ImageContainer.css'; // Ensure you create and import this CSS file
 
 const ImageContainer = () => {
   const [modalImage, setModalImage] = useState(null);
 
   const openModal = (src, alt) => {
     setModalImage({ src, alt });
-    const modal = document.getElementById('imageModal');
-    if (modal) {
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      document.body.classList.add('modal-open');
-
-      // Create and add backdrop
-      const backdrop = document.createElement('div');
-      backdrop.className = 'modal-backdrop fade show';
-      document.body.appendChild(backdrop);
-    }
   };
 
   const closeModal = () => {
     setModalImage(null);
-    const modal = document.getElementById('imageModal');
-    if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-
-      // Remove backdrop
-      const backdrop = document.querySelector('.modal-backdrop');
-      if (backdrop) {
-        document.body.removeChild(backdrop);
-      }
-    }
   };
 
   return (
@@ -54,29 +32,32 @@ const ImageContainer = () => {
         ))}
       </div>
 
-      {/* Bootstrap Modal */}
-      <div className="modal fade" id="imageModal" tabIndex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered modal-lg">
-          <div className="modal-content " style={{ border: 'none' }}>
-            <div className="modal-body p-0" style={{marginTop:'7vh'}}>
-              {modalImage && (
-                <>
-                  <img src={modalImage.src} className="img-fluid w-100" alt={modalImage.alt} style={{ maxHeight: '75vh', objectFit: 'contain' }} />
-                  <div className="d-flex justify-content-center mt-3">
-                    <button
-                      type="button"
-                      className="btn btn-outline-dark"
-                      onClick={closeModal}
-                    >
-                      <i className="fas fa-times me-1"></i> Close
-                    </button>
-                  </div>
-                </>
-              )}
+      {modalImage && (
+        <div className="modal show d-block" tabIndex="-1" role="dialog" onClick={closeModal}>
+          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div className="modal-content custom-modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-body p-0" style={{ marginTop: '7vh' }}>
+                <img
+                  src={modalImage.src}
+                  className="img-fluid w-100"
+                  alt={modalImage.alt}
+                  style={{ maxHeight: '75vh', objectFit: 'contain' }}
+                />
+                <div className="d-flex justify-content-center mt-3">
+                  <button
+                    type="button"
+                    className="btn btn-outline-dark custom-close-button"
+                    onClick={closeModal}
+                  >
+                    <i className="fas fa-times me-1"></i> Close
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+          <div className="modal-backdrop fade show"></div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
