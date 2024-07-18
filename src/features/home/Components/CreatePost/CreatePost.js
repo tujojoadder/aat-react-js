@@ -29,18 +29,19 @@ export default function CreatePost() {
 
   return (
     <div className="create-post">
-    <div className="post">
+    <div className="post  ">
       <form action="">
         <div className="form-group-1 ">
           
           <input type="text" placeholder="What's happening?" />
         </div>
 
-        <div className="d-flex bd-highlight mb-3">
-          <div className="pt-2 bd-highlight ">
+         <div className="d-flex bd-highlight mb-3" style={{marginLeft:'-5.5%'}}>
+          <div className="pt-2 bd-highlight " >
             {" "}
-            <div className="post-icons ">
+            <div className="post-icons me-2 ">
               <i
+              style={{color:'#1682e8'}}
                 className="far fa-image"
                 onClick={handleUploadClick} // Trigger file upload on icon click
               ></i>
@@ -58,25 +59,27 @@ export default function CreatePost() {
               className="form-select  px-2 custom-select"
               aria-label="Default select example"
               style={{
-                borderRadius: "100px",
-                color: "white",
-                backgroundImage: "none",
+              
+              
+              width:'110px',
                 appearance: "none",
                 paddingTop: "0px",
                 paddingBottom: "0px",
-                backgroundColor:'#4fa6f2'
+                border:'solid 2px #1682e8',
+                borderRadius:'30px',
+                color:'#1682e8'
               }}
               onChange={handleSelectChange} // Call function to remove focus on change
             >
-              <option value="public">&nbsp; Public</option>
-              <option value="private">&nbsp;Private</option>
-              <option value="only_me">Only Me</option>
+              <option value="public">&nbsp;   <i class="fas fa-user-friends"></i>Public</option>
+              <option value="private">&nbsp;   <i class="fas fa-user-friends"></i>Private</option>
+              <option value="only_me">  <i class="fas fa-user-friends"></i>Only Me</option>
             </select>
           </div>
 
           <div className="ms-auto  bd-highlight" >
         
-            <button className="btn btn-outline-primary p-2 px-4 mx-3" type="submit" style={{borderRadius:'70px',fontWeight:'bold'}}>
+            <button disabled className="btn btn-primary disable  px-4 py-2 mx-3 fs-7" type="submit" style={{borderRadius:'20px',fontWeight:'bold',fontSize:'16px',color:"#fffff"}}>
               Post
             </button>
           </div>
