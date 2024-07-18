@@ -9,8 +9,8 @@ const RewardSection = () => {
   return (
     <div className="reward-container main  m-0 p-0">
  
-     <WrongAns/>
-   {/*   <CorrectAns/> */}
+   {/*   <WrongAns/> */}
+     <CorrectAns/>
     </div>
   );
 };

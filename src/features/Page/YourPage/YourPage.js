@@ -8,6 +8,7 @@ import LargeScreenCard from "../../Groups/GroupsSuggestionCard/LargeScreenCard";
 import PageLargeScreenCard from "../PageLargeScreenCard/PageLargeScreenCard";
 import PageSmallScreenCard from "../PageSmallScreenCard/PageSmallScreenCard";
 import PageTabs from "../PageTabs/PageTabs";
+import YourPageBack from "../PageBack/YourPageBack/YourPageBack";
 
 export default function YourPage() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -106,11 +107,11 @@ export default function YourPage() {
 
     <div className="friend-home main border-left border-right " style={{ backgroundColor: "white",marginLeft:'0px',padding:'0px'}}>
    <div className="d-block d-lg-none">
-        <PageTabs/>
+       <YourPageBack/>
       </div>
       {/* Friend Request Section */}
       <div className="friend-request-section mb-5 mx-2 ">
-        <h5 className="p-2" >Pages You've Liked</h5>
+        <h5 className="p-2" >Your pages</h5>
         <div className="row">
           {profiles.length === 0 ? (
             <div className="col-12 text-center">No records</div>

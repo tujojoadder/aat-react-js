@@ -5,6 +5,9 @@ import LargeScreenUnFriendUserCard from "../LargeScreenUnFriendUserCard/LargeScr
 import AllFriendList from "../AllFriendList/AllFriendList";
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
 import FriendsTabs from "../FriendsTabs/FriendsTabs";
+import FriendRequestBack from "../FriendBack/FriendRequestBack/FriendRequestBack";
+import FriendHomeBack from "../FriendBack/FriendHomeBack/FriendHomeBack";
+import IChannelCreateBack from "../../IChannels/iChannelBack/iChannelCreateBack/IChannelCreateBack";
 
 export default function FriendHome() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -34,11 +37,15 @@ export default function FriendHome() {
 
     <>
    
-    <div className="friend-home main border mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+    <div className="friend-home main border mb-5 m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
      
     <div className="d-block d-lg-none">
+      
+     <FriendHomeBack/>
         <FriendsTabs />
       </div>
+
+<div className="body p-2">
 
 
       {/* Friend Request Section */}
@@ -87,6 +94,7 @@ export default function FriendHome() {
       </div>
 
       {/* Friend Suggestion Section */}
+      
       <div className="friend-suggestion-section mb-md-5">
         <h4 className="p-2 pt-3">People you may know</h4>
         <div className="row">
@@ -167,6 +175,7 @@ export default function FriendHome() {
           )}
         </div>
       )}
+      </div>
     </div></>
     
   );

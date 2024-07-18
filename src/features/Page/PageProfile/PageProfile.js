@@ -11,6 +11,7 @@ import { NavLink } from "react-router-dom";
 import About from "../../home/Components/About/About";
 import PageAbout from "../PageAbout/PageAbout";
 import BPost from "../../home/Components/BPost/BPost";
+import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
 
 export default function PageProfile() {
   const [currentTab, setCurrentTab] = useState("More");
@@ -56,6 +57,7 @@ export default function PageProfile() {
 
   return (
     <div className="header__wrapper m-0 p-0 border">
+      <ProfileHomeBack text="Page name" />
       <header></header>
       <div className="cols__container">
         <div className="left__col mb-1">

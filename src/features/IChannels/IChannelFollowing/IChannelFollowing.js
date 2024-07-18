@@ -7,6 +7,7 @@ import PageLargeScreenCard from "../../Page/PageLargeScreenCard/PageLargeScreenC
 import IChannelSmallScreenCard from "../IChannelSmallScreenCard/IChannelSmallScreenCard";
 import IChannelLargeScreenCard from "../IChannelLargeScreenCard/IChannelLargeScreenCard";
 import IChannelTabs from "../IChannelTabs/IChannelTabs";
+import ChannelFollowingBack from "../iChannelBack/ChannelFollowingBack/ChannelFollowingBack";
 
 export default function IChannelFollowing() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -108,11 +109,11 @@ export default function IChannelFollowing() {
 
  {/*  IChnnels tabs */}
 <div className="d-block d-lg-none">
-       <IChannelTabs/>
+ <ChannelFollowingBack/>
       </div>
       {/* Friend Request Section */}
       <div className="friend-request-section mb-5 mx-2 ">
-        <h5 className="p-2" >Following Channels</h5>
+        <h5 className="p-2" >Following channels</h5>
         <div className="row">
           {profiles.length === 0 ? (
             <div className="col-12 text-center">No records</div>

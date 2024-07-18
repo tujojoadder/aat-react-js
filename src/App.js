@@ -51,6 +51,7 @@ import IChannelProfile from "./features/IChannels/IChannelProfile/IChannelProfil
 import CreateIChannel from "./features/IChannels/CreateIChannel/CreateIChannel";
 import IChannelsManage from "./features/IChannels/IChannelsManage/IChannelsManage";
 import ProfileManage from "./features/Profile/ProfileManage/ProfileManage";
+import MobileMenu from "./features/MobileMenu/MobileMenu";
 
 function App() {
   return (
@@ -117,7 +118,7 @@ function App() {
         <Route path="groups/mygroup/:id" exact element={<GroupProfile />} />
         <Route path="groups/mygroup/:id" exact element={<GroupsHomeRight />} />
         {/*  Groups---> suggestions */}
-        <Route path="groups/suggestions" exact element={<GroupsHome />} />
+        <Route path="groups/suggestions" exact element={<GroupSuggestion />} />
         <Route path="groups/suggestions" exact element={<GroupsHomeRight />} />
 
 
@@ -196,7 +197,8 @@ function App() {
           {/*  iChannel---> manage */}
           <Route path="ichannel/:id/manage" exact element={<IChannelsManage />} />
 
-
+{/* Mobile Menu */}
+<Route path="menu" exact element={<MobileMenu />} />
 
 
 

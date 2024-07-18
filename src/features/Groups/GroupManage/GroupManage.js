@@ -5,6 +5,7 @@ import ApprovalTextPost from "../ApprovalPostCard/ApprovalTextPost";
 import ApprovalImagePost from "../ApprovalPostCard/ApprovalImagePost";
 import ApprovalBothPost from "../ApprovalPostCard/ApprovalBothPost";
 import GroupMembers from "../ApprovalPostCard/GroupMembers";
+import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
 
 export default function GroupManage() {
   const profiles = [
@@ -38,6 +39,7 @@ export default function GroupManage() {
 
   return (
     <div className="header__wrapper m-0 p-0 border pb-4" style={{ minHeight: '100vh' }}>
+      <ProfileHomeBack text="Group name"/>
       <header></header>
       <div className="cols__container">
         <div className="left__col mb-1">

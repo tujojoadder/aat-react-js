@@ -3,6 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { NavLink, useLocation } from 'react-router-dom';
 import SmallScreenUnFriendUserCard from './SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard';
 import FriendsTabs from './FriendsTabs/FriendsTabs';
+import FriendRequestBack from './FriendBack/FriendRequestBack/FriendRequestBack';
 
 export default function NoUserSelected() {
   const styles = {
@@ -128,11 +129,11 @@ export default function NoUserSelected() {
       <div className="d-block d-lg-none main px-0" style={{overflow:'hidden'}}>
         {/* FriendsTabs */}
         <div className="d-block d-lg-none">
-          <FriendsTabs />
+          <FriendRequestBack/>
+     
         </div>
        
-       
-        <h5 className="ms-3">Friend Requests</h5>
+
           <div className="mb-5">
             {profiles.map((profile, index) => {
               const isActive = location.pathname === `/friends/requests/${profile.name}`;

@@ -2,10 +2,12 @@ import React from "react";
 import "./IChannelsManage.css";
 import image from "./logo.jpg";
 import { NavLink } from "react-router-dom";
+import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
 
 export default function IChannelsManage() {
   return (
     <div className="header__wrapper  main border mb-5 p-0 m-0 pb-4" style={{ minHeight: '100vh' }}>
+      <ProfileHomeBack text="iChannel name"/>
       <header></header>
       <div className="cols__container">
         <div className="left__col mb-1">

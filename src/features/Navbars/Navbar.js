@@ -1,5 +1,11 @@
 import React from "react";
-import { NavLink, BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import {
+  NavLink,
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { Scrollbars } from "react-custom-scrollbars";
 import Homeleft from "../home/Homeleft";
@@ -48,184 +54,266 @@ import IChannelProfile from "../IChannels/IChannelProfile/IChannelProfile";
 import CreateIChannel from "../IChannels/CreateIChannel/CreateIChannel";
 import IChannelsManage from "../IChannels/IChannelsManage/IChannelsManage";
 import ProfileManage from "../Profile/ProfileManage/ProfileManage";
+import MobileMenu from "../MobileMenu/MobileMenu";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
   const location = useLocation();
-  const isMessagePage = location.pathname.startsWith("/message/");
-  
+  //for xs NAV BAR
+  const isHome = location.pathname === "/";
+  const isIchannel = location.pathname === "/ichannel";
+  const isQuiz = location.pathname === "/quiz";
+  const isNotification = location.pathname === "/notification";
+  const isMessage = location.pathname === "/message";
+
+
+
+
+  /* Hide Nav without head */
+  const pathsToHideNav = ["/message/", "/ichannel/", "/some-other-path/"];
+  const isInPathsToHideNav = pathsToHideNav.some(path => location.pathname.startsWith(path));
+
+  /* Hide Nav with head */
+  const pathsToHideNavHead = ["/friends", "/menu", "/groups","/page"];
+
+  const isInPathsToHideNavHead = pathsToHideNavHead.some(path => {
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  });
+
+
+
   return (
-    <div style={{ width: "100%", height: "100vh", minHeight: "300px",overflowX:'hidden' }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        minHeight: "300px",
+        overflowX: "hidden",
+      }}
+    >
       <div className={isNotSm ? "container-sm  " : "ps-2 pe-2"} style={{}}>
         {/* xs NAV BAR */}
-        {!isMessagePage && (
-        <nav className={`bg-light xs-nav fixed-bottom d-sm-none border-bottom`}>
-          <div className="container-fluid">
-            <div className="row h-50">
-              <div className="row">
-                <div className="col-3 text-center">
-                  <NavLink to="/" className="custom-link">
-                    <i className="fa-solid fa-house fs-3 py-3"></i>
-                  </NavLink>
+        {!isInPathsToHideNav && !isInPathsToHideNavHead && (
+  <nav className={`bg-light xs-nav fixed-bottom d-sm-none border-bottom`}>
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col text-center">
+          <NavLink to="/">
+            <i
+              className="fa-solid fa-house fs-2 py-3"
+              style={{ color: isHome ?"#2f00ff" : "#B7BAC0" }}
+            ></i>
+          </NavLink>
+        </div>
+        <div className="col text-center">
+          <NavLink to="/ichannel" className="custom-link">
+            <i   style={{ color: isIchannel ?"#2f00ff" : "#B7BAC0" }} className="fa-solid fa-mosque fs-2 py-3"></i>
+          </NavLink>
+        </div>
+        <div className="col text-center">
+          <NavLink to="/quiz" className="custom-link d-block">
+            <div
+              style={{
+               
+                borderRadius: "50%",
+                padding: "10px",
+                marginTop: "0.5vh",
+                display: "inline-block",
+                backgroundColor: isQuiz ? "#2f00ff" : "#B7BAC0"
+              }}
+            >
+             
+              <i className="fa-solid fa-book-open-reader fs-1 " style={{ color: "white", display: "block" }}></i>
+          
+            </div>
+          </NavLink>
+        </div>
+        <div className="col text-center">
+          <NavLink to="/page" className="custom-link">
+            <i className="fa-solid fa-bell fs-2 py-3"          style={{ color: isNotification ? "#2f00ff" : "#B7BAC0" }}></i>
+          </NavLink>
+        </div>
+        <div className="col text-center">
+          <NavLink to="/message" className="custom-link">
+            <i   
+           style={{ color: isMessage ? "#2f00ff" : "#B7BAC0" }}
+
+            
+            className="fa-solid fa-envelope fs-2 py-3"></i>
+          </NavLink>
+        </div>
+      </div>
+    </div>
+  </nav>
+)}
+
+
+        <div className="row">
+          {/* LEFT SIDE BAR */}
+          <div
+            style={{ backgroundColor: "#fdfdfd", height: "100vh" }}
+            className="p-0 d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar"
+          >
+            <div
+              className="pe-2 pt-5 bg-body rounded pb-5"
+              style={{
+                width: "97%",
+                height: "100vh",
+                overflowY: "auto",
+                overflowX: "hidden",
+              }}
+            >
+              <div
+                className="mb-4 mt-3  d-flex align-items-center justify-content-center mydiv "
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  borderRadius: "50%",
+                  margin: "auto",
+                }}
+              >
+                <span>
+                  <i className="fa-brands fa-twitter display-5 text-info"></i>
+                </span>
+              </div>
+
+              <NavLink to="/" className="custom-link">
+                <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
+                  <span>
+                    <i className="fa-solid fa-house fs-3"></i>
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">Home</p>
                 </div>
-                <div className="col-3 text-center">
-                  <NavLink to="/page" className="custom-link">
-                    <i className="fa-solid fa-magnifying-glass fs-2 py-3"></i>
-                  </NavLink>
+              </NavLink>
+
+              <NavLink to="/friends" className="custom-link">
+                <div className="d-flex align-items-center py-1 my-2 pl-5 custom-link mydiv">
+                  <span>
+                    <i className="fas fa-user-friends fs-2"></i>
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">Friends</p>
                 </div>
-                <div className="col-3 text-center">
-                  <NavLink to="/page" className="custom-link">
-                    <i className="fa-solid fa-bell fs-2 py-3"></i>
-                  </NavLink>
+              </NavLink>
+
+              <NavLink to="/groups" className="custom-link">
+                <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+                  <span>
+                    <i className="fa-solid fa-users fs-2"></i>
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">Groups</p>
                 </div>
-                <div className="col-3 text-center">
-                  <NavLink to="/page" className="custom-link">
-                    <i className="fa-solid fa-envelope fs-2 py-3"></i>
-                  </NavLink>
+              </NavLink>
+
+              <NavLink to="/page" className="custom-link">
+                <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+                  <span>
+                    <i className="fa-solid fa-flag fs-2"></i>
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">Pages</p>
                 </div>
+              </NavLink>
+
+              <NavLink to="/message" className="custom-link">
+                <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+                  <span>
+                    <i className="fa-solid fa-envelope fs-2"></i>
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">Messages</p>
+                </div>
+              </NavLink>
+
+              <NavLink to="/quiz" className="custom-link">
+                <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+                  <span>
+                    <i className="fa-solid fa-book-open-reader fs-2"></i>
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">Quiz</p>
+                </div>
+              </NavLink>
+
+              <NavLink to="/ichannel" className="custom-link">
+                <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
+                  <span>
+                    <i className="fa-solid fa-mosque fs-2"></i>
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">iChanel</p>
+                </div>
+              </NavLink>
+
+              <NavLink to="/profile" className="custom-link">
+                <div className="d-flex align-items-center my-2 mb-3 py-1 pl-5 mydiv">
+                  <span>
+                    <i className="fa-solid fa-user fs-2"></i>
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
+                </div>
+              </NavLink>
+
+              <button
+                className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv"
+                style={{
+                  background: "none",
+                  padding: "0",
+                  margin: "0",
+                  border: "none",
+                  outline: "none",
+                  boxShadow: "none",
+                  marginLeft: "15px",
+
+                  border: "solid 2px blue",
+                  paddingLeft: "15px",
+                  paddingRight: "15px",
+                  borderRadius: "30px",
+                }}
+                onClick={() => {
+                  const optionsDiv = document.getElementById("moreOptions");
+                  optionsDiv.style.display =
+                    optionsDiv.style.display === "none" ? "block" : "none";
+                }}
+              >
+                <i
+                  style={{ color: "#333a42" }}
+                  className="fa-solid fa-ellipsis-vertical fs-4 ms-1"
+                ></i>
+                <span
+                  className="d-none d-lg-inline"
+                  style={{
+                    fontSize: "22px",
+                    color: "#333a42",
+                    paddingLeft: "5px",
+                  }}
+                >
+                  More
+                </span>
+              </button>
+
+              <div
+                id="moreOptions"
+                style={{
+                  display: "none",
+                  marginLeft: "15px",
+                  marginTop: "10px",
+                }}
+              >
+                <NavLink to="/terms" className="custom-link">
+                  <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
+                    <span>
+                      <i className="fa-solid fa-file-alt fs-2"></i>
+                    </span>
+                    <p className="d-none d-lg-block fs-4 ps-2 text">Terms</p>
+                  </div>
+                </NavLink>
+                <NavLink to="/police" className="custom-link">
+                  <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
+                    <span>
+                      <i className="fa-solid fa-shield-alt fs-2"></i>
+                    </span>
+                    <p className="d-none d-lg-block fs-4 ps-2 text">Police</p>
+                  </div>
+                </NavLink>
               </div>
             </div>
           </div>
-        </nav>
- )}
-        <div className="row">
-         {/* LEFT SIDE BAR */}
-<div
-  style={{ backgroundColor: "#fdfdfd", height: "100vh" }}
-  className="p-0 d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar"
->
-  <div
-    className="pe-2 pt-5 bg-body rounded pb-5"
-    style={{ width: "97%", height: "100vh", overflowY: "auto",overflowX:'hidden' }}
-  >
-    <div className="mb-4 mt-3  d-flex align-items-center justify-content-center mydiv " style={{width:'60px',height:'60px',borderRadius:'50%',margin:'auto'}}>
-      <span>
-        <i className="fa-brands fa-twitter display-5 text-info"></i>
-      </span>
-    </div>
-
-    <NavLink to="/" className="custom-link">
-      <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
-        <span>
-          <i className="fa-solid fa-house fs-3"></i>
-        </span>
-        <p className="d-none d-lg-block fs-4 ps-2 text">Home</p>
-      </div>
-    </NavLink>
-
-    <NavLink to="/friends" className="custom-link">
-      <div className="d-flex align-items-center py-1 my-2 pl-5 custom-link mydiv">
-        <span>
-          <i className="fas fa-user-friends fs-2"></i>
-        </span>
-        <p className="d-none d-lg-block fs-4 ps-2 text">Friends</p>
-      </div>
-    </NavLink>
-
-    <NavLink to="/groups" className="custom-link">
-      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-        <span>
-          <i className="fa-solid fa-users fs-2"></i>
-        </span>
-        <p className="d-none d-lg-block fs-4 ps-2 text">Groups</p>
-      </div>
-    </NavLink>
-
-    <NavLink to="/page" className="custom-link">
-      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-        <span>
-          <i className="fa-solid fa-flag fs-2"></i>
-        </span>
-        <p className="d-none d-lg-block fs-4 ps-2 text">Pages</p>
-      </div>
-    </NavLink>
-
-    <NavLink to="/message" className="custom-link">
-      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-        <span>
-          <i className="fa-solid fa-envelope fs-2"></i>
-        </span>
-        <p className="d-none d-lg-block fs-4 ps-2 text">Messages</p>
-      </div>
-    </NavLink>
-
-    <NavLink to="/quiz" className="custom-link">
-      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-        <span>
-          <i className="fa-solid fa-hourglass-half fs-2"></i>
-        </span>
-        <p className="d-none d-lg-block fs-4 ps-2 text">Quiz</p>
-      </div>
-    </NavLink>
-
-    <NavLink to="/ichannel" className="custom-link">
-      <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
-        <span>
-          <i className="fa-solid fa-mosque fs-2"></i>
-        </span>
-        <p className="d-none d-lg-block fs-4 ps-2 text">iChanel</p>
-      </div>
-    </NavLink>
-
-    <NavLink to="/profile" className="custom-link">
-      <div className="d-flex align-items-center my-2 mb-3 py-1 pl-5 mydiv">
-        <span>
-          <i className="fa-solid fa-user fs-2"></i>
-        </span>
-        <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
-      </div>
-    </NavLink>
-
-    <button className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv"
-      style={{
-        background: "none",
-        padding: "0",
-        margin: "0",
-        border: "none",
-        outline: "none",
-        boxShadow: "none",
-        marginLeft: "15px",
-      
-        border: "solid 2px blue",
-        paddingLeft: "15px",
-        paddingRight: "15px",
-        borderRadius: "30px"
-      }}
-      onClick={() => {
-        const optionsDiv = document.getElementById('moreOptions');
-        optionsDiv.style.display = optionsDiv.style.display === 'none' ? 'block' : 'none';
-      }}
-    >
-      <i style={{ color: "#333a42" }} className="fa-solid fa-ellipsis-vertical fs-4 ms-1"></i>
-      <span className="d-none d-lg-inline" style={{ fontSize: "22px", color: "#333a42", paddingLeft: "5px" }}>More</span>
-    </button>
-
-    <div id="moreOptions" style={{ display: 'none', marginLeft: '15px', marginTop: '10px' }}>
-      <NavLink to="/terms" className="custom-link">
-        <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
-          <span>
-            <i className="fa-solid fa-file-alt fs-2"></i>
-          </span>
-          <p className="d-none d-lg-block fs-4 ps-2 text">Terms</p>
-        </div>
-      </NavLink>
-      <NavLink to="/police" className="custom-link">
-        <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
-          <span>
-            <i className="fa-solid fa-shield-alt fs-2"></i>
-          </span>
-          <p className="d-none d-lg-block fs-4 ps-2 text">Police</p>
-        </div>
-      </NavLink>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
 
           {/* Mid section */}
           <div className="col-12 col-sm-10 col-md-9 col-lg-6 main_bar ">
@@ -236,83 +324,128 @@ const Navbar = () => {
 
                 {/*  <<---Friends-->> */}
                 <Route path="/friends/requests/" element={<NoUserSelected />} />
-                <Route path="/friends/suggestions/" element={<NoUserSelectedSuggestion />} />
-          
-                <Route path="/friends/sent-requests/" element={<NoUserSelectedSentRequest />} />
-                <Route path="/friends/all-friends/" element={<NoUserSelectedAllFriends />}
+                <Route
+                  path="/friends/suggestions/"
+                  element={<NoUserSelectedSuggestion />}
+                />
+
+                <Route
+                  path="/friends/sent-requests/"
+                  element={<NoUserSelectedSentRequest />}
+                />
+                <Route
+                  path="/friends/all-friends/"
+                  element={<NoUserSelectedAllFriends />}
                 />
 
                 <Route path="/friends/requests/:id" element={<Profile />} />
                 <Route path="/friends/suggestions/:id" element={<Profile />} />
-                <Route path="/friends/sent-requests/:id" element={<Profile />} />
+                <Route
+                  path="/friends/sent-requests/:id"
+                  element={<Profile />}
+                />
                 <Route path="/friends/all-friends/:id" element={<Profile />} />
-        {/*Profile */}
-        <Route path="profile" exact element={<Profile />} />
-        <Route path="profile" exact element={<Homeleft />} />
-        {/* Profile --->manage */}
-        <Route path="profile/manage" exact element={<ProfileManage />} />
-
-
-
+                {/*Profile */}
+                <Route path="profile" exact element={<Profile />} />
+                <Route path="profile" exact element={<Homeleft />} />
+                {/* Profile --->manage */}
+                <Route
+                  path="profile/manage"
+                  exact
+                  element={<ProfileManage />}
+                />
 
                 {/* Grouos */}
                 <Route path="/groups" element={<GroupsHome />} />
-                 {/*  <<---Grouos-->>suggestions */}
-                <Route path="groups/suggestions" exact element={<GroupSuggestion />} />               
+                {/*  <<---Grouos-->>suggestions */}
+                <Route
+                  path="groups/suggestions"
+                  exact
+                  element={<GroupSuggestion />}
+                />
                 {/*  <<---Grouos-->>profile */}
                 <Route path="/groups/:id" element={<GroupProfile />} />
                 <Route path="/groups/mygroup/:id" element={<GroupProfile />} />
                 {/*  <<---Groups-->>create */}
                 <Route path="groups/create" exact element={<CreateGroup />} />
-               {/*  <<---Groups-->>your group */}
-               <Route path="groups/joined" exact element={<GroupsYourGroups />} />
-               {/*  <<---Groups-->>manage group */}
-                <Route path="groups/:id/manage" exact element={<GroupManage />} />
-                
+                {/*  <<---Groups-->>your group */}
+                <Route
+                  path="groups/joined"
+                  exact
+                  element={<GroupsYourGroups />}
+                />
+                {/*  <<---Groups-->>manage group */}
+                <Route
+                  path="groups/:id/manage"
+                  exact
+                  element={<GroupManage />}
+                />
 
+                {/* <<---Page-->> */}
+                <Route path="/page" element={<PageHome />} />
+                {/*  Page---> profile */}
+                <Route path="page/:id" exact element={<PageProfile />} />
+                <Route path="page/mypage/:id" exact element={<PageProfile />} />
 
-               {/* <<---Page-->> */}
-               <Route path="/page" element={<PageHome />} />
-               {/*  Page---> profile */}
-               <Route path="page/:id" exact element={<PageProfile/>} />
-               <Route path="page/mypage/:id" exact element={<PageProfile />} />
-
-               {/*  Page---> manage */}
-               <Route path="page/:id/manage" exact element={<PageManage />} />
-               {/*  Page---> Liked */} 
-               <Route path="page/liked" exact element={<PageLiked />} />
-               {/*  Page---> create page */}
-               <Route path="page/create" exact element={<CreatePage />} />
+                {/*  Page---> manage */}
+                <Route path="page/:id/manage" exact element={<PageManage />} />
+                {/*  Page---> Liked */}
+                <Route path="page/liked" exact element={<PageLiked />} />
+                {/*  Page---> create page */}
+                <Route path="page/create" exact element={<CreatePage />} />
                 {/*  Page---> Update page */}
-               <Route path="page/update" exact element={<UpdatePage />} />
-               {/*  Page---> Created */}
-              <Route path="page/created" exact element={<YourPage />} />
+                <Route path="page/update" exact element={<UpdatePage />} />
+                {/*  Page---> Created */}
+                <Route path="page/created" exact element={<YourPage />} />
 
-              {/*    Messages */}
-              <Route path="message" exact element={<MessageHome />} />
-              {/*  Meaage---> to anyone */}
-              <Route path="message/:id" exact element={<MessageAnyOne />} />
+                {/*    Messages */}
+                <Route path="message" exact element={<MessageHome />} />
+                {/*  Meaage---> to anyone */}
+                <Route path="message/:id" exact element={<MessageAnyOne />} />
 
-              {/* Quiz */}
-             <Route path="quiz" exact element={<QuizHome />} />
-             {/* iChannel */}
-             <Route path="ichannel" exact element={<IChannelHome/>} />
-             {/*  iChannel---> following */}
-             <Route path="ichannel/following" exact element={<IChannelFollowing />} />
-             {/*  iChannel---> following */}
-             <Route path="ichannel/following" exact element={<IChannelFollowing />} />
-          {/*  iChannel---> created */}
-          <Route path="ichannel/created" exact element={<YourIChannels />} />
-        {/*  iChannel---> profile */}
-        <Route path="ichannel/:id" exact element={<IChannelProfile/>} />
+                {/* Quiz */}
+                <Route path="quiz" exact element={<QuizHome />} />
+                {/* iChannel */}
+                <Route path="ichannel" exact element={<IChannelHome />} />
+                {/*  iChannel---> following */}
+                <Route
+                  path="ichannel/following"
+                  exact
+                  element={<IChannelFollowing />}
+                />
+                {/*  iChannel---> following */}
+                <Route
+                  path="ichannel/following"
+                  exact
+                  element={<IChannelFollowing />}
+                />
+                {/*  iChannel---> created */}
+                <Route
+                  path="ichannel/created"
+                  exact
+                  element={<YourIChannels />}
+                />
+                {/*  iChannel---> profile */}
+                <Route
+                  path="ichannel/:id"
+                  exact
+                  element={<IChannelProfile />}
+                />
 
-         {/*  iChannel---> Create */}
-         <Route path="ichannel/create" exact element={<CreateIChannel />} />
-          {/*  iChannel---> manage */}
-          <Route path="ichannel/:id/manage" exact element={<IChannelsManage />} />
-
-
-
+                {/*  iChannel---> Create */}
+                <Route
+                  path="ichannel/create"
+                  exact
+                  element={<CreateIChannel />}
+                />
+                {/*  iChannel---> manage */}
+                <Route
+                  path="ichannel/:id/manage"
+                  exact
+                  element={<IChannelsManage />}
+                />
+              {/* Mobile Menu */}
+              <Route path="menu" exact element={<MobileMenu />} />
 
               </Routes>
             </div>
@@ -325,47 +458,79 @@ const Navbar = () => {
               {/* Friends--->friends */}
               <Route path="/friends" element={<FriendRight />} />
               {/* Friends--->requests */}
-              <Route path="/friends/requests" element={<FriendRightFriendRequest />} />
-              <Route path="/friends/requests/:id" element={<FriendRightFriendRequest />} />
+              <Route
+                path="/friends/requests"
+                element={<FriendRightFriendRequest />}
+              />
+              <Route
+                path="/friends/requests/:id"
+                element={<FriendRightFriendRequest />}
+              />
               {/* Friends--->suggestions */}
-              <Route path="/friends/suggestions" element={<FriendRightFriendSuggestions />} />
-              <Route path="/friends/suggestions/:id" element={<FriendRightFriendSuggestions />} />
+              <Route
+                path="/friends/suggestions"
+                element={<FriendRightFriendSuggestions />}
+              />
+              <Route
+                path="/friends/suggestions/:id"
+                element={<FriendRightFriendSuggestions />}
+              />
               {/* Friends--->sent-requests */}
-              <Route path="/friends/sent-requests" element={<FriendRightSentRequests />} />
-              <Route path="/friends/sent-requests/:id" element={<FriendRightSentRequests />} />
+              <Route
+                path="/friends/sent-requests"
+                element={<FriendRightSentRequests />}
+              />
+              <Route
+                path="/friends/sent-requests/:id"
+                element={<FriendRightSentRequests />}
+              />
               {/* Friends--->all-friends */}
-              <Route path="/friends/all-friends" element={<FriendRightAllFriends />} />
-              <Route path="/friends/all-friends/:id" element={<FriendRightAllFriends />}/>
+              <Route
+                path="/friends/all-friends"
+                element={<FriendRightAllFriends />}
+              />
+              <Route
+                path="/friends/all-friends/:id"
+                element={<FriendRightAllFriends />}
+              />
               {/* Profile */}
               <Route path="/profile" element={<Homeleft />} />
 
-
-              
-              
-              
               {/* Groups */}
               <Route path="/groups" element={<GroupsHomeRight />} />
-               {/* Groups--->profile */}
-               <Route path="groups/:id" exact element={<GroupProfileRight />}/>
-              <Route path="groups/mygroup/:id" exact element={<GroupsHomeRight />}/>
+              {/* Groups--->profile */}
+              <Route path="groups/:id" exact element={<GroupProfileRight />} />
+              <Route
+                path="groups/mygroup/:id"
+                exact
+                element={<GroupsHomeRight />}
+              />
               {/* Groups--->suggestions */}
-              <Route path="groups/suggestions" exact element={<GroupsHomeRight />}/>
-                {/*  <<---Groups-->>create */}
-                <Route path="groups/create" exact element={<GroupsHomeRight />} />
-               {/*  <<---Groups-->>your group */}
-               <Route path="groups/joined" exact element={<GroupsHomeRight />} />
-               {/*  <<---Groups-->>manage group */}
-               <Route path="groups/:id/manage" exact element={<GroupsHomeRight />} />
-               {/*  <<---Page-->>home page */}
-               <Route path="page" exact element={<PageHomeRight />} />
-               {/*  Page---> Liked */}
-               <Route path="page/liked" exact element={<PageHomeRight />} />
-                {/*  Page---> my profile */}
-               <Route path="page/mypage/:id" exact element={<PageHomeRight />} />
-               <Route path="page/:id" exact element={<PageProfileRight/>} />
+              <Route
+                path="groups/suggestions"
+                exact
+                element={<GroupsHomeRight />}
+              />
+              {/*  <<---Groups-->>create */}
+              <Route path="groups/create" exact element={<GroupsHomeRight />} />
+              {/*  <<---Groups-->>your group */}
+              <Route path="groups/joined" exact element={<GroupsHomeRight />} />
+              {/*  <<---Groups-->>manage group */}
+              <Route
+                path="groups/:id/manage"
+                exact
+                element={<GroupsHomeRight />}
+              />
+              {/*  <<---Page-->>home page */}
+              <Route path="page" exact element={<PageHomeRight />} />
+              {/*  Page---> Liked */}
+              <Route path="page/liked" exact element={<PageHomeRight />} />
+              {/*  Page---> my profile */}
+              <Route path="page/mypage/:id" exact element={<PageHomeRight />} />
+              <Route path="page/:id" exact element={<PageProfileRight />} />
 
-               {/*  Page---> create page */}
-               <Route path="page/create" exact element={<PageHomeRight />} />
+              {/*  Page---> create page */}
+              <Route path="page/create" exact element={<PageHomeRight />} />
 
               {/*  Page---> Created */}
               <Route path="page/created" exact element={<PageHomeRight />} />
@@ -373,24 +538,34 @@ const Navbar = () => {
               <Route path="message" exact element={<MessageHomeRight />} />
               {/*  Meaage---> to anyone */}
               <Route path="message/:id" exact element={<MessageHomeRight />} />
- 
-             {/* iChannel */}
-             <Route path="ichannel" exact element={<IChannelHomeRight/>} />
-             {/*  iChannel---> following */}
-             <Route path="ichannel/following" exact element={<IChannelHomeRight />} />
 
-         {/*  iChannel---> Created */}
-      <Route path="ichannel/created" exact element={<IChannelHomeRight />} />
-    {/*  iChannel---> profile */}
-    <Route path="ichannel/:id" exact element={<IChannelHomeRight/>} />
-         {/*  iChannel---> Create */}
-         <Route path="ichannel/create" exact element={<IChannelHomeRight />} />
+              {/* iChannel */}
+              <Route path="ichannel" exact element={<IChannelHomeRight />} />
+              {/*  iChannel---> following */}
+              <Route
+                path="ichannel/following"
+                exact
+                element={<IChannelHomeRight />}
+              />
 
-
-
-
-
-
+              {/*  iChannel---> Created */}
+              <Route
+                path="ichannel/created"
+                exact
+                element={<IChannelHomeRight />}
+              />
+              {/*  iChannel---> profile */}
+              <Route
+                path="ichannel/:id"
+                exact
+                element={<IChannelHomeRight />}
+              />
+              {/*  iChannel---> Create */}
+              <Route
+                path="ichannel/create"
+                exact
+                element={<IChannelHomeRight />}
+              />
 
               {/*     <Route path="/page" element={<Home />} /> */}
             </Routes>

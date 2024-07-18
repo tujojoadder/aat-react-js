@@ -1,32 +1,7 @@
-@keyframes pulse {
-    0% {
-      transform: scale(1);
-      box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
-    }
-    70% {
-      transform: scale(1.05);
-      box-shadow: 0 0 10px 30px rgba(0, 123, 255, 0);
-    }
-    100% {
-      transform: scale(1);
-      box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
-    }
-  }
-  
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
+
   .letsgo-container {
     position: fixed;
+    
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -61,4 +36,10 @@
     transform: scale(1.1);
     box-shadow: 0 0 20px rgba(0, 114, 255, 0.5), 0 0 30px rgba(0, 114, 255, 0.5), 0 0 40px rgba(0, 114, 255, 0.5);
   }
-  
+
+
+
+  /* Specific Scrollbar Customization */
+.letsgo-container ::-webkit-scrollbar {
+  width: 0px !important; /* Specific width for the scrollbar */
+}

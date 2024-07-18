@@ -1,81 +1,55 @@
-.reward-card {
-    max-width: 400px;
-    width: 90%;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin: 20px auto; /* Center align and add spacing */
-  }
-  
-  .reward-header {
-    margin-bottom: 20px;
-  }
-  
-  .reward-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #007bff; /* Blue title */
-    margin-bottom: 10px;
-  }
-  
-  .points {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .points-label {
-    font-weight: 600;
-    margin-right: 5px;
-  }
-  
-  .points-value {
-    font-weight: 600;
-    color: #28a745; /* Green color for points */
-    margin-right: 5px;
-  }
-  
-  .correct-icon {
-    color: #28a745; /* Green color for correct answer */
-    margin-left: 5px;
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .back-button,
-  .claim-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 24px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .back-button:hover,
-  .claim-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .fa-chevron-left {
-    margin-right: 8px;
-  }
-  
-  .fa-chevron-right {
-    margin-left: 8px;
-  }
-  
+.quiz-reward-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  overflow-y: auto;
+  max-height: 100vh;
+  padding-bottom:130px; /* Adjust as needed */
+  padding-top: 2vh; /* Adjust as needed */
+}
+
+.reward-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.reward-body {
+  padding: 30px 10px;
+  text-align: center;
+}
+
+.reward-content {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.start-quiz-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.start-quiz-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}

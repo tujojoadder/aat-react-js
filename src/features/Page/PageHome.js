@@ -2,6 +2,7 @@ import { useMediaQuery } from "react-responsive";
 import PageLargeScreenCard from "./PageLargeScreenCard/PageLargeScreenCard";
 import PageSmallScreenCard from "./PageSmallScreenCard/PageSmallScreenCard";
 import PageTabs from "./PageTabs/PageTabs";
+import PageHomeBack from "./PageBack/PageHomeBack/PageHomeBack";
 
 export default function PageHome() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -42,6 +43,7 @@ export default function PageHome() {
     >
       {/* Page Tabs */}
       <div className="d-block d-lg-none">
+        <PageHomeBack/>
         <PageTabs />
       </div>
       {/* Friend Request Section */}

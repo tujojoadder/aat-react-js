@@ -9,6 +9,7 @@ import ImageContainer from "../Friends/ImageContainer/ImageContainer";
 import About from "../home/Components/About/About";
 import ProfileFriend from "./ProfileFriends/ProfileFriend/ProfileFriend";
 import BPost from "../home/Components/BPost/BPost";
+import ProfileHomeBack from "./ProfileHomeBack/ProfileHomeBack";
 
 export default function Profile() {
   const [currentTab, setCurrentTab] = useState("More");
@@ -55,6 +56,8 @@ export default function Profile() {
 
   return (
     <div className="header__wrapper m-0 p-0 border" >
+      <ProfileHomeBack text="Profile name"/>
+      
       <header></header>
       <div className="cols__container">
         <div className="left__col">

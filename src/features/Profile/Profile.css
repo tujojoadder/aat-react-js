@@ -242,3 +242,12 @@ a {
     margin-bottom: 12vh !important;
   }
 }
+
+
+/* view post rightside */
+
+@media (max-width: 575px) { /* Adjust breakpoint as needed */
+  .post-container-secssion {
+    margin-right: -1.5% !important;
+  }
+}

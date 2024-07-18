@@ -4,6 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { NavLink, useLocation } from 'react-router-dom';
 import SendFriendRequest from '../home/Components/SendFriendRequest/SendFriendRequest';
 import FriendsTabs from './FriendsTabs/FriendsTabs';
+import FriendSuggestionBack from './FriendBack/FriendSuggestionBack/FriendSuggestionBack';
 
 export default function NoUserSelectedSuggestion() {
   const styles = {
@@ -116,9 +117,10 @@ export default function NoUserSelectedSuggestion() {
       <div className="d-block d-lg-none main px-0 " >
  {/* FriendsTabs */}
  <div className="d-block d-lg-none">
-          <FriendsTabs />
+  <FriendSuggestionBack/>
+         
         </div>
-            <h5 className="ms-3">Friend Suggestions</h5>
+         
               <div className="mb-5 " >
                 {profiles.map((profile, index) => {
                   const isActive = location.pathname === `/friends/suggestions/${profile.name}`;

@@ -1,0 +1,5 @@
+@media (max-width: 575px) { /* Adjust breakpoint as needed */
+    .post-container-secssion {
+      margin-right: -1.5% !important;
+    }
+  }

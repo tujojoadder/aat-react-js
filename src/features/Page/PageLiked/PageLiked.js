@@ -9,6 +9,7 @@ import LargeScreenCard from "../../Groups/GroupsSuggestionCard/LargeScreenCard";
 import PageLargeScreenCard from "../PageLargeScreenCard/PageLargeScreenCard";
 import PageSmallScreenCard from "../PageSmallScreenCard/PageSmallScreenCard";
 import PageTabs from "../PageTabs/PageTabs";
+import PageLikedBack from "../PageBack/PageLikedBack/PageLikedBack";
 
 export default function PageLiked() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -107,7 +108,7 @@ export default function PageLiked() {
 
     <div className="friend-home main border-left border-right " style={{ backgroundColor: "white",marginLeft:'0px',padding:'0px'}}>
    <div className="d-block d-lg-none">
-        <PageTabs/>
+        <PageLikedBack/>
       </div>
       {/* Friend Request Section */}
       <div className="friend-request-section mb-5 mx-2 ">

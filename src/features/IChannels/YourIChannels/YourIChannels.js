@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is import
 import IChannelSmallScreenCard from "../IChannelSmallScreenCard/IChannelSmallScreenCard";
 import IChannelLargeScreenCard from "../IChannelLargeScreenCard/IChannelLargeScreenCard";
 import IChannelTabs from "../IChannelTabs/IChannelTabs";
+import YourChannelBack from "../iChannelBack/YourChannelBack/YourChannelBack";
 
 export default function YourIChannels() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -104,11 +105,11 @@ export default function YourIChannels() {
 
     <div className="friend-home main border-left border-right " style={{ backgroundColor: "white",marginLeft:'0px',padding:'0px'}}>
    <div className="d-block d-lg-none">
-       <IChannelTabs/>
+       <YourChannelBack/>
       </div>
       {/* Friend Request Section */}
       <div className="friend-request-section mb-5 mx-2 ">
-        <h5 className="p-2" >Channels You've Followed</h5>
+        <h5 className="p-2" >Channels You've created</h5>
         <div className="row">
           {profiles.length === 0 ? (
             <div className="col-12 text-center">No records</div>

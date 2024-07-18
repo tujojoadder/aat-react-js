@@ -4,6 +4,7 @@ import image from "./logo.jpg";
 import GroupMembers from "../../Groups/ApprovalPostCard/GroupMembers";
 import MakePageAdmin from "./MakePageAdmin";
 import { NavLink, BrowserRouter, Route, Routes } from "react-router-dom";
+import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
 
 export default function PageManage() {
   const profiles = [
@@ -37,6 +38,7 @@ export default function PageManage() {
 
   return (
     <div className="header__wrapper friend-home main border mb-5 p-0 m-0" style={{ minHeight: '100vh' }}>
+      <ProfileHomeBack text="Page name"/>
       <header></header>
       <div className="cols__container">
         <div className="left__col mb-1">

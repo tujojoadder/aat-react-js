@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CreateGroup.css';
+import GroupCreateBack from '../GroupBack/GroupCreateBack/GroupCreateBack';
 
 export default function CreateGroup() {
   const [groupName, setGroupName] = useState('');
@@ -12,12 +13,19 @@ export default function CreateGroup() {
   };
 
   return (
-    <div className="create-group-container main " style={{marginBottom:'20vh'}}>
-      <div className="form-header mt-3">
+
+    <div className="create-group main m-0 p-0 mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+    <div className='m-0 p-0'>
+      {/* Back button */}
+      <GroupCreateBack/>
+    <div className="create-group-container main p-3 pb-5 " >
+      
+      <div className="form-header mt-3 ">
         <h3>Create Group</h3>
         
         
       </div>
+      <div className="body">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="groupName">Group Name</label>
@@ -61,8 +69,10 @@ export default function CreateGroup() {
             <option value="private">Private</option>
           </select>
         </div>
-        <button type="submit" className="form-button">Create Group</button>
-      </form>
+        <button type="submit" className="form-button mb-5">Create Group</button>
+      </form></div>
+    </div>
+    </div>
     </div>
   );
 }

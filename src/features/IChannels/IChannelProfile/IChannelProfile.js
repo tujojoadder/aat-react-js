@@ -7,10 +7,12 @@ import ProfileFriend from "../../Profile/ProfileFriends/ProfileFriend/ProfileFri
 import ImageContainer from "../../Friends/ImageContainer/ImageContainer";
 import { NavLink } from "react-router-dom";
 import BPost from "../../home/Components/BPost/BPost";
+import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
 
 export default function IChannelProfile() {
   return (
     <div className="header__wrapper m-0 p-0 border">
+      <ProfileHomeBack text="iChannel name" />
       <header></header>
       <div className="cols__container">
         <div className="left__col mb-1">

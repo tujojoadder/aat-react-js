@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import './CreateIChannel.css';
+import IChannelCreateBack from '../iChannelBack/iChannelCreateBack/IChannelCreateBack';
 
 export default function CreateIChannel() {
   const [iChannel, setIChannel] = useState('');
@@ -12,15 +13,16 @@ export default function CreateIChannel() {
   };
 
   return (
-    <div className="create-group-container main pb-5 mt-3">
-      <div className="form-header mt-3">
-        <h3>Create iChannel</h3>
-        
-        
+
+    <div className=" main pb-5 m-0 p-0  mb-5  border-start" style={{height:'100vh'}}>
+      <IChannelCreateBack/>
+     <div className="body mt-5 pt-5 p-2">
+     <div className="form-header mt-3">
+        <h3>Create a iCahnnel</h3>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="iChannel">iChannel Name</label>
+
           <input
             type="text"
             id="iChannel"
@@ -33,6 +35,8 @@ export default function CreateIChannel() {
         
         <button type="submit" className="form-button">Create iChannel</button>
       </form>
+      </div>
     </div>
+  
   );
 }

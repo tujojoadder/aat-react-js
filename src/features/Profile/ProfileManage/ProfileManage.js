@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ProfileManage.css';
+import ProfileHomeBack from '../ProfileHomeBack/ProfileHomeBack';
 
 export default function ProfileManage() {
   const [profileImage, setProfileImage] = useState(null);
@@ -31,7 +32,8 @@ export default function ProfileManage() {
   };
 
   return (
-    <div className="friend-home main  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+    <div className="friend-home main p-0 m-0  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+      <ProfileHomeBack text="Profile name"/>
     <div className="profile-update-container container mt-5 ">
       <h2 className="text-center mb-4">Update Profile</h2>
       <form onSubmit={handleSubmit}>

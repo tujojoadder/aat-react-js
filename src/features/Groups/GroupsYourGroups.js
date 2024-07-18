@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is import
 import SmallScreenCard from "./GroupsSuggestionCard/SmallScreenCard";
 import LargeScreenCard from "./GroupsSuggestionCard/LargeScreenCard.js";
 import GroupsTabs from "./GroupsTabs/GroupsTabs.js";
+import YourGroupBack from "./GroupBack/YourGroupBack/YourGroupBack.js";
 
 export default function GroupsYourGroups() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -103,7 +104,7 @@ export default function GroupsYourGroups() {
     <div className="friend-home main border-left border-right px-0" style={{ backgroundColor: "white" }}>
 
 <div className="d-block d-lg-none">
-        <GroupsTabs />
+       <YourGroupBack/>
       </div>
       {/* Friend Request Section */}
       <div className="friend-request-section mb-5 px-2">

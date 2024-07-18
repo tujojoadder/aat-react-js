@@ -10,6 +10,7 @@ import GroupAbout from "../GroupAbout/GroupAbout";
 import { NavLink, useLocation, BrowserRouter, Route, Routes } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import BPost from "../../home/Components/BPost/BPost";
+import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
 
 export default function GroupProfile() {
   const [currentTab, setCurrentTab] = useState("More");
@@ -56,6 +57,7 @@ export default function GroupProfile() {
 
   return (
     <div className="header__wrapper m-0 p-0 border">
+      <ProfileHomeBack text="Group name" />
       <header></header>
       <div className="cols__container">
         <div className="left__col mb-1">
@@ -176,6 +178,7 @@ export default function GroupProfile() {
         <div className="tab-content">
           {/* Post Section */}
           <div
+        
             id="post"
             className="post-container-secssion mb-md-4 tab-pane fade show active"
           >

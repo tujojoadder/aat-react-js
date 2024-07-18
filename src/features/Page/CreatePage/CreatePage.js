@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CreatePage.css';
+import CreatePageback from '../PageBack/CreatePageback/CreatePageback';
 
 export default function CreatePage() {
   const [formData, setFormData] = useState({
@@ -22,7 +23,13 @@ export default function CreatePage() {
   };
 
   return (
-    <div className="create-page-container main pb-5" style={{marginBottom:'20vh'}}>
+    <div className="create-page m-0 p-0 main  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+
+    <div className='m-0 p-0'>
+{/* Back button */}
+<CreatePageback/>
+
+    <div className="create-page-containern p-3 main pb-5" >
       <div className="form-header mt-3">
         <h3>Create a Page</h3>
       </div>
@@ -68,8 +75,10 @@ export default function CreatePage() {
             required
           ></textarea>
         </div>
-        <button type="submit" className="form-button">Create Page</button>
+        <button  type="submit" className="form-button mb-5">Create Page</button>
       </form>
+    </div>
+    </div>
     </div>
   );
 }

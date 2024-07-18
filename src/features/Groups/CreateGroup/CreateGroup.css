@@ -5,18 +5,7 @@
     box-sizing: border-box;
   }
   
-  /* Styling for the form container */
-  .create-group-container {
-    
-    max-width: 500px;
-    margin:0 auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e1e1e1;
-  }
-  
+ 
   /* Styling for form elements */
   .form-group {
     margin-bottom: 1.5rem;

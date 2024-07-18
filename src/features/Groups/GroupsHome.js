@@ -10,6 +10,7 @@ import {
   Routes,
 } from "react-router-dom";
 import BPost from "../home/Components/BPost/BPost";
+import GroupHomeBack from "./GroupBack/GroupHomeBack/GroupHomeBack";
 
 export default function GroupsHome() {
 
@@ -24,6 +25,7 @@ export default function GroupsHome() {
       }}
     >
       <div className="d-block d-lg-none">
+        <GroupHomeBack/>
         <GroupsTabs />
       </div>
   
