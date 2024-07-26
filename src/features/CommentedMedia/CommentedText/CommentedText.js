@@ -52,7 +52,7 @@ const toggleText = () => {
           <i className="fa-regular fa-thumbs-down ps-md-3 ms-1"> 536</i>
 
           <i className="far fa-comment blue  ps-md-3 ms-1"> 1.6k</i>
-          <i class="fa-solid fa-chevron-up ps-md-3 me-2"></i>
+          <i className="fa-solid fa-chevron-up ps-md-3 me-2"></i>
         </div>
       </div>
 

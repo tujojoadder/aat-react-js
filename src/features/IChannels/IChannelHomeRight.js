@@ -63,7 +63,7 @@ export default function IChannelHomeRight() {
                                 </li>
                                 <li className="nav-item w-100 mb-3">
                                     <NavLink end to="/ichannel/created" className="nav-link" activeClassName="active">
-                                    <i class="fa-solid fa-mosque  "></i> Your Channels
+                                    <i className="fa-solid fa-mosque  "></i> Your Channels
                                     </NavLink>
                                 </li>
                                

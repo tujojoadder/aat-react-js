@@ -113,7 +113,7 @@ code {
   padding-left: 0px;
   padding-top: 10px;
   padding-bottom: 10px;
- 
+
   background-color: #f9f9f9;
   padding-right: 25px; /* Default for large devices */
 }
@@ -149,8 +149,9 @@ code {
 
 .user-content-text-box {
   flex-grow: 1;
-  padding-left: -10px;
+ 
   max-width: 100%;
+
 }
 
 .user-names-text {
@@ -192,10 +193,6 @@ max-width: 100%;
 .btn {
   padding: 5px 10px;
   font-size: 14px;
-}
-
-.user-content{
-  padding-right: 0px;
 }
 
 

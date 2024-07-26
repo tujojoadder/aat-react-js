@@ -62,7 +62,7 @@ export default function PageHomeRight() {
                                 </li>
                                 <li className="nav-item w-100 mb-3">
                                     <NavLink end to="/page/created" className="nav-link" activeClassName="active">
-                                    <i class="fa-solid fa-flag me-2"></i> Your Pages
+                                    <i className="fa-solid fa-flag me-2"></i> Your Pages
                                     </NavLink>
                                 </li>
                                

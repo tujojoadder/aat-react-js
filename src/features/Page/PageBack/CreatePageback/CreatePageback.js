@@ -7,7 +7,7 @@ const CreatePageback = () => {
 
   return (
     <div className="header-container d-sm-none">
-      <span className="company-name"><i class="fa-solid fa-arrow-left pe-2" onClick={() => navigate(-1)}></i> <span className=''>Create Pages</span></span>
+      <span className="company-name"><i className="fa-solid fa-arrow-left pe-2" onClick={() => navigate(-1)}></i> <span className=''>Create Pages</span></span>
 
     </div>
   );

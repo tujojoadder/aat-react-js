@@ -5,10 +5,9 @@ import "./.././../all.css";
 import "./.././../style.css";
 import CreatePost from "./Components/CreatePost/CreatePost";
 import TextPost from "./Components/TextPost/TextPost";
-
 import ImagePost from "./Components/ImagePost/ImagePost";
 import HadithStatus from "./Components/HadithStatus/HadithStatus";
-import { Scrollbars } from 'react-custom-scrollbars';
+import { Scrollbars } from "react-custom-scrollbars";
 import Friends from "../Friends/Friends";
 import BPost from "./Components/BPost/BPost";
 import HeaderComponent from "./Components/HeaderComponent/HeaderComponent";
@@ -16,37 +15,51 @@ import MobileMenu from "../MobileMenu/MobileMenu";
 import FriendRequestBack from "../Friends/FriendBack/FriendRequestBack/FriendRequestBack";
 import FriendSuggestionBack from "../Friends/FriendBack/FriendSuggestionBack/FriendSuggestionBack";
 import IChannelCreateBack from "../IChannels/iChannelBack/iChannelCreateBack/IChannelCreateBack";
+import HadithDay from "./Components/HadithDay/HadithDay";
+import Try from "./Components/Try/Try";
 export default function Home() {
-  return (
-    
-    <div className="p-0 m-0    home-container main" style={{ width: "100%",backgroundColor:'#f8f9fa' }}>
-{/* Header for mobile(sm) */}
 
-<HeaderComponent/>
-   {/*    Hadith Status */}
+  const array=useState(12);
+  const num=array[0];
+ const setNum=array[1];
+
+ const handleClick=()=>{
+  setNum(num+1);
+ }
+  return (
+    <div
+      className="p-0 m-0    home-container main"
+      style={{ width: "100%", backgroundColor: "#f8f9fa" }}
+    >
+
+      <Try/>
+
+      {/* Header for mobile(sm) */}
+      <HeaderComponent />
+      {/*    Hadith Status */}
       <HadithStatus />
-    
+
       <div className="center-flex-container flex-item ">
-      {/*   <div className="home py-2 border " style={{ marginTop:'-1vh' }}>
+        {/*   <div className="home py-2 border " style={{ marginTop:'-1vh' }}>
           <h1>Home</h1>
         </div> */}
         {/* Create post */}
         <CreatePost />
         {/* Text post */}
-          <TextPost/>
-<BPost/>
+        <TextPost />
+        <BPost />
 
-          <ImagePost/>
-          <TextPost/>
-          <TextPost/>
+        <ImagePost />
+        <TextPost />
+        <TextPost />
         {/*   ImagePost */}
-        <ImagePost/>
-        <BPost/>
-        <TextPost/>
-          <TextPost/>
+        <ImagePost />
+        <BPost />
+        <TextPost />
+        <TextPost />
         {/*   ImagePost */}
-        <ImagePost/>
-        <BPost/>
+        <ImagePost />
+        <BPost />
       </div>
     </div>
   );

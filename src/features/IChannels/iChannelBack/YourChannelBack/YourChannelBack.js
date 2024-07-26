@@ -7,7 +7,7 @@ const YourChannelBack = () => {
 
   return (
     <div className="header-container d-sm-none">
-      <span className="company-name"><i class="fa-solid fa-arrow-left pe-2" onClick={() => navigate(-1)}></i> <span className=''>Channels You've created</span></span>
+      <span className="company-name"><i className="fa-solid fa-arrow-left pe-2" onClick={() => navigate(-1)}></i> <span className=''>Channels You've created</span></span>
 
     </div>
   );

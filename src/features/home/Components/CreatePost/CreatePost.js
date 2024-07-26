@@ -28,7 +28,7 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="create-post">
+    <div className="create-post ">
     <div className="post  ">
       <form action="">
         <div className="form-group-1 ">
@@ -71,9 +71,9 @@ export default function CreatePost() {
               }}
               onChange={handleSelectChange} // Call function to remove focus on change
             >
-              <option value="public">&nbsp;   <i class="fas fa-user-friends"></i>Public</option>
-              <option value="private">&nbsp;   <i class="fas fa-user-friends"></i>Private</option>
-              <option value="only_me">  <i class="fas fa-user-friends"></i>Only Me</option>
+              <option value="public">&nbsp;   <i className="fas fa-user-friends"></i>Public</option>
+              <option value="private">&nbsp;   <i className="fas fa-user-friends"></i>Private</option>
+              <option value="only_me">  <i className="fas fa-user-friends"></i>Only Me</option>
             </select>
           </div>
 

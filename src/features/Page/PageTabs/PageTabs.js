@@ -38,7 +38,7 @@ const PageTabs = () => {
  
         >
           <button className='pill'>
-          <i class="fa-solid fa-plus"></i> Create Page
+          <i className="fa-solid fa-plus"></i> Create Page
           </button>
         </NavLink>
       </div>

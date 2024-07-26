@@ -75,7 +75,7 @@ class HtmlFormatter extends NormalizerFormatter
     {
         $title = htmlspecialchars($title, ENT_NOQUOTES, 'UTF-8');
 
-        return '<h1 style="background: '.$this->logLevels[$level].';color: #ffffff;padding: 5px;" class="monolog-output">'.$title.'</h1>';
+        return '<h1 style="background: '.$this->logLevels[$level].';color: #ffffff;padding: 5px;" className="monolog-output">'.$title.'</h1>';
     }
 
     /**
@@ -86,7 +86,7 @@ class HtmlFormatter extends NormalizerFormatter
     public function format(array $record): string
     {
         $output = $this->addTitle($record['level_name'], $record['level']);
-        $output .= '<table cellspacing="1" width="100%" class="monolog-output">';
+        $output .= '<table cellspacing="1" width="100%" className="monolog-output">';
 
         $output .= $this->addRow('Message', (string) $record['message']);
         $output .= $this->addRow('Time', $this->formatDate($record['datetime']));

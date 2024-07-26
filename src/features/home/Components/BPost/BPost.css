@@ -1,5 +1,5 @@
 
-  .user-contents-text-box {
+.user-contents-text-box {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -38,6 +38,7 @@
     color: rgb(48, 52, 56);
     font-weight: 400;
     line-height: 1.2;
+ 
   }
   
   .user-contents-text a {
@@ -76,3 +77,18 @@
     color: rgb(224, 36, 94);
   }
   
+
+  /* image */
+.bImageContainner{
+    padding-right: 11%;
+   
+   border-radius: 20px;
+  }
+
+  @media (max-width: 1200px) { /* Adjust breakpoint as needed */
+  .bImageContainner{
+        padding-right:0%;
+    }}
+  .bImage{
+       border-radius: 20px;
+     }

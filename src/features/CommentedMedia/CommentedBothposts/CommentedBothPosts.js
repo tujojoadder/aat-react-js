@@ -13,11 +13,11 @@ const toggleText = () => {
   setIsExpanded(!isExpanded);
 };
   return (
-    <div class="posts "  style={{borderBottom:'3px solid blue'}}>
-      <div class="user-pics">
+    <div className="posts "  style={{borderBottom:'3px solid blue'}}>
+      <div className="user-pics">
         <img src={image} alt="user1" />
       </div>
-      <div class="user-content-box">
+      <div className="user-content-box">
         <div className="user-names" style={{ marginTop: '2px' }}>
           <div className="name-column">
             <h1 className="full-name m-0 p-0">Turjo Joadder </h1>
@@ -26,7 +26,7 @@ const toggleText = () => {
           <p className="time me-4" style={{ paddingTop: '18px' }}>  2hrs</p>
         </div>
 
-        <div class="user-content" style={{marginTop:'-10px'}}>
+        <div className="user-content" style={{marginTop:'-10px'}}>
           <p style={{marginBottom:'5px'}}>
           {isExpanded ? fullText : previewText}
           {fullText.length > 175 && (

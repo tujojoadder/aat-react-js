@@ -35,22 +35,22 @@ const toggleText = () => {
 
   return (
     <div className="mt-2">
-      <div class="d-flex bd-highlight ">
-        <div class="bd-highlight me-1">
+      <div className="d-flex bd-highlight ">
+        <div className="bd-highlight me-1">
           <img
             style={{ height: "45px", width: "45px", borderRadius: "50%" }}
             src={image}
             alt="user3"
           />
         </div>
-        <div class=" bd-highlight">
+        <div className=" bd-highlight">
           {" "}
           <div className="name-column">
             <h1 className="full-name-text m-0 p-0">Mohammad</h1>
             <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
           </div>
         </div>
-        <div class="ms-auto bd-highlight">
+        <div className="ms-auto bd-highlight">
           <p className="time-text">2hrs</p>
         </div>
       </div>

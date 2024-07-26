@@ -47,7 +47,7 @@ export default function IChannelProfile() {
                 style={{ cursor: "pointer" }}
               >
                
-                <i class="fa-solid fa-pen"></i>
+                <i className="fa-solid fa-pen"></i>
                 <span className="ms-1">Manage</span>
                 
               </div>
@@ -56,7 +56,7 @@ export default function IChannelProfile() {
                 className="btn btn-md btn-primary mx-1 d-flex align-items-center"
                 style={{ cursor: "pointer" }}
               >
-               <i class="fa-solid fa-mosque  "></i> 
+               <i className="fa-solid fa-mosque  "></i> 
                 <span className="ms-1">Join Channel</span>
               </div>
               <div

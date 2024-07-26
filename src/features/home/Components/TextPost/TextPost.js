@@ -58,7 +58,7 @@ const TextPost = () => {
 
 /* Text */
   const [isExpanded, setIsExpanded] = useState(false);
-  const fullText = "এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) প্রতি ওয়াহী প্রেরণ করেছিলাম।’’ (সূরাহ্ আন-নিসা ৪/১৬৩) ১.এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যে "; // Shortened for brevity
+  const fullText = "বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতিল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যে "; // Shortened for brevity
   const previewText = fullText.substring(0, 175);
 
   const toggleText = () => {
@@ -70,7 +70,7 @@ const TextPost = () => {
       <div className="user-pics">
         <img src={image} alt="user3" />
       </div>
-      <div className="user-content-text-box">
+      <div className="user-contents-text-box">
         <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
           <div className="name-column">
             <h1 className="full-name-text m-0 p-0">Mohammad </h1>
@@ -81,7 +81,10 @@ const TextPost = () => {
           </p>
         </div>
 
-        <div className="user-content">
+
+
+
+        <div className="user-contents">
           <p style={{ margin: "0px" }}>
             {isExpanded ? fullText : previewText}
             {fullText.length > 175 && (
@@ -94,6 +97,11 @@ const TextPost = () => {
             )}
           </p>
         </div>
+
+
+
+
+
 
         <div className="content-icons pe-3">
           <i

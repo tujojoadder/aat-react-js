@@ -4,26 +4,26 @@ import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImag
 import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
 import CommentedBothPosts from "../../../CommentedMedia/CommentedBothposts/CommentedBothPosts";
-
+import "./BPost.css";
 export default function BPost() {
   /* comment width */
-  const [isXSmall, setIsXSmall] = useState( window.innerWidth <= 650);
-  const [isSmall, setIsSmall] = useState( window.innerWidth > 650 && window.innerWidth <= 950);
+  const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
+  const [isSmall, setIsSmall] = useState(
+    window.innerWidth > 650 && window.innerWidth <= 950
+  );
   const [isMid, setIsMid] = useState(
     window.innerWidth > 950 && window.innerWidth <= 1200
   );
-  const [isLg, setIsLg] = useState(
-    window.innerWidth > 1200 
-  );
+  const [isLg, setIsLg] = useState(window.innerWidth > 1200);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const modalRef = useRef(null);
 
   const updateWidth = () => {
-    setIsXSmall( window.innerWidth <= 650);
-    setIsSmall( window.innerWidth > 650 && window.innerWidth <= 950);
-    setIsMid( window.innerWidth > 950 && window.innerWidth <= 1200);
-    setIsLg( window.innerWidth > 1200);
+    setIsXSmall(window.innerWidth <= 650);
+    setIsSmall(window.innerWidth > 650 && window.innerWidth <= 950);
+    setIsMid(window.innerWidth > 950 && window.innerWidth <= 1200);
+    setIsLg(window.innerWidth > 1200);
   };
 
   useEffect(() => {
@@ -64,24 +64,24 @@ export default function BPost() {
     setIsExpanded(!isExpanded);
   };
   return (
-    <div class="posts ">
-      <div class="user-pics">
+    <div className="posts ">
+      <div className="user-pics">
         <img src={image} alt="user1" />
       </div>
-      <div class="user-content-box ">
-        <div className="user-names" style={{ marginTop: "2px" }}>
-          <div className="name-column p-0 m-0">
-            <h1 className="full-name m-0 p-0">Turjo Joadder </h1>
-            <p className="user-name m-0 p-0">@eric_alvareeric</p>
+      <div className="user-contents-text-box">
+        <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
+          <div className="name-column">
+            <h1 className="full-name-text m-0 p-0">Mohammad </h1>
+            <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
           </div>
-          <p className="time me-4 mt-2" >
-            {" "}
+          <p className="time-text ms-3" style={{ marginTop: "10px" }}>
             2hrs
           </p>
         </div>
-        <p style={{ margin: "0px" }} className="pb-2">
 
-        {isExpanded ? fullText : previewText}
+        <div className="user-contents pb-2">
+          <p style={{ margin: "0px" }}>
+            {isExpanded ? fullText : previewText}
             {fullText.length > 175 && (
               <span
                 onClick={toggleText}
@@ -90,14 +90,25 @@ export default function BPost() {
                 {isExpanded ? " See less" : "... See more"}
               </span>
             )}
-        </p>
-        <div class="user-content  " >
-          <img
-            style={{ Width: "100%", maxHeight: "65vh" }}
-            src={image}
-            alt="content1"
-          />
+          </p>
         </div>
+
+        <div className="user-contents  ">
+          <div className="bImageContainner">
+            <img
+              className="bImage"
+              style={{
+                Width: "100%",
+                height: "auto",
+                objectFit: "cover",
+                maxHeight: "500px",
+              }}
+              src={image}
+              alt="content1"
+            />
+          </div>
+        </div>
+
         <div className="content-icons  px-2 ">
           <i
             className=" far fa-heart red  "
@@ -111,7 +122,7 @@ export default function BPost() {
           <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
 
           <i className="ps-md-3 far fa-comment blue "> 1.6k</i>
-          <i class="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
+          <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
         </div>
       </div>
 
@@ -165,7 +176,9 @@ export default function BPost() {
                     style={{
                       position: "fixed",
                       bottom: "0px",
-                      width:isXSmall?'100%': isSmall
+                      width: isXSmall
+                        ? "100%"
+                        : isSmall
                         ? "74.8%"
                         : isMid
                         ? "59.8%"

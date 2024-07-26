@@ -105,7 +105,7 @@ export default function PageProfile() {
                 className="btn btn-md btn-primary mx-1 d-flex align-items-center px-3"
                 style={{ cursor: "pointer" }}
               >
-                <i class="fa-solid fa-thumbs-up"></i>
+                <i className="fa-solid fa-thumbs-up"></i>
                 <span className="ms-1">Like</span>
               </div>
 

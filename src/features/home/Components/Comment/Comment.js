@@ -36,7 +36,7 @@ export default function Comment() {
             />
             <button className="btn btn-primary" type="submit" style={{ borderRadius: '50%', padding: '10px', height: '50px', width: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background-color 0.3s ease' }}>
              
-            <i class="fa-regular fa-paper-plane"></i>             
+            <i className="fa-regular fa-paper-plane"></i>             
             </button>
           </div>
         </form>

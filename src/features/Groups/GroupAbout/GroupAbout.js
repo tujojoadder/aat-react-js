@@ -18,7 +18,7 @@ export default function GroupAbout() {
          
          {/* Public group */}
          {/*  <div className="about-item">  
-            <i class="fa-solid fa-lock" style={{ fontSize: "1rem" }}></i>
+            <i className="fa-solid fa-lock" style={{ fontSize: "1rem" }}></i>
             <strong>Private Group</strong> 
           </div> */}
 

@@ -95,7 +95,7 @@ export default function GroupProfile() {
                 style={{ cursor: "pointer" }}
               >
                
-                <i class="fa-solid fa-pen"></i>
+                <i className="fa-solid fa-pen"></i>
                 <span className="ms-1">Manage</span>
                 
               </div>

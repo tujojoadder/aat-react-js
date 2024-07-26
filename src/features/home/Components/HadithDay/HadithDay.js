@@ -13,7 +13,7 @@ export default function HadithDay() {
   return (
     <div
       className={isNotSm ? "container-sm" : " "}
-    
+   
     >
       <div className="row "   style={{ overflowX: "hidden" }}>
         {/* Previous button taking first 3 columns */}

@@ -39,7 +39,7 @@ const IChannelTabs = () => {
  
         >
           <button className='pill'>
-          <i class="fa-solid fa-plus"></i> Create Channel
+          <i className="fa-solid fa-plus"></i> Create Channel
           </button>
         </NavLink>
       </div>
