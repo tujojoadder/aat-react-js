@@ -1,0 +1,35 @@
+.user-details-container:hover{
+background-color: #ffffff !important;
+}
+.user-details-user-name:hover{
+    color: black !important;
+}
+.user-details-user-name{
+    color: black !important;
+}
+.user-details-container{
+    cursor: text !important;
+}
+.logout-option {
+    top: 80%; /* Position below the icon */
+    left: -10%; /* Position to the left of the icon */
+    transform: translateX(-100%); /* Adjust for proper alignment */
+    white-space: nowrap; /* Prevent wrapping of the text */
+  }
+  
+  @media (max-width: 992px) { /* Adjust breakpoint as needed */
+    .logout-option {
+
+        left: -50%; /* Position to the left of the icon */
+top: 150%;
+      }
+  }
+
+
+
+  .logout-icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+    
+  }

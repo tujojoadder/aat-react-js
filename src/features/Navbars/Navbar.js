@@ -55,9 +55,15 @@ import CreateIChannel from "../IChannels/CreateIChannel/CreateIChannel";
 import IChannelsManage from "../IChannels/IChannelsManage/IChannelsManage";
 import ProfileManage from "../Profile/ProfileManage/ProfileManage";
 import MobileMenu from "../MobileMenu/MobileMenu";
+import MyPages from "../Page/MyPages/MyPages";
+import UserDetails from "./UserDetails/UserDetails";
 
 const Navbar = () => {
+
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
+ /*  for mt of left side bar */
+ const isBig = useMediaQuery({ minHeight: 1650 }); // Bootstrap's sm breakpoint is 576px
+
   const location = useLocation();
   //for xs NAV BAR
   const isHome = location.pathname === "/";
@@ -66,21 +72,20 @@ const Navbar = () => {
   const isNotification = location.pathname === "/notification";
   const isMessage = location.pathname === "/message";
 
-
-
-
   /* Hide Nav without head */
   const pathsToHideNav = ["/message/", "/ichannel/", "/some-other-path/"];
-  const isInPathsToHideNav = pathsToHideNav.some(path => location.pathname.startsWith(path));
+  const isInPathsToHideNav = pathsToHideNav.some((path) =>
+    location.pathname.startsWith(path)
+  );
 
   /* Hide Nav with head */
-  const pathsToHideNavHead = ["/friends", "/menu", "/groups","/page"];
+  const pathsToHideNavHead = ["/friends", "/menu", "/groups", "/page"];
 
-  const isInPathsToHideNavHead = pathsToHideNavHead.some(path => {
-    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  const isInPathsToHideNavHead = pathsToHideNavHead.some((path) => {
+    return (
+      location.pathname === path || location.pathname.startsWith(`${path}/`)
+    );
   });
-
-
 
   return (
     <div
@@ -94,59 +99,65 @@ const Navbar = () => {
       <div className={isNotSm ? "container-sm  " : "ps-2 pe-2"} style={{}}>
         {/* xs NAV BAR */}
         {!isInPathsToHideNav && !isInPathsToHideNavHead && (
-  <nav className={`bg-light xs-nav fixed-bottom d-sm-none border-bottom`}>
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col text-center">
-          <NavLink to="/">
-            <i
-              className="fa-solid fa-house fs-2 py-3"
-              style={{ color: isHome ?"#2f00ff" : "#B7BAC0" }}
-            ></i>
-          </NavLink>
-        </div>
-        <div className="col text-center">
-          <NavLink to="/ichannel" className="custom-link">
-            <i   style={{ color: isIchannel ?"#2f00ff" : "#B7BAC0" }} className="fa-solid fa-mosque fs-2 py-3"></i>
-          </NavLink>
-        </div>
-        <div className="col text-center">
-          <NavLink to="/quiz" className="custom-link d-block">
-            <div
-              style={{
-               
-                borderRadius: "50%",
-                padding: "10px",
-                marginTop: "0.5vh",
-                display: "inline-block",
-                backgroundColor: isQuiz ? "#2f00ff" : "#B7BAC0"
-              }}
-            >
-             
-              <i className="fa-solid fa-book-open-reader fs-1 " style={{ color: "white", display: "block" }}></i>
-          
+          <nav
+            className={`bg-light xs-nav fixed-bottom d-sm-none border-bottom`}
+          >
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col text-center">
+                  <NavLink to="/">
+                    <i
+                      className="fa-solid fa-house fs-2 py-3"
+                      style={{ color: isHome ? "#2f00ff" : "#B7BAC0" }}
+                    ></i>
+                  </NavLink>
+                </div>
+                <div className="col text-center">
+                  <NavLink to="/ichannel" className="custom-link">
+                    <i
+                      style={{ color: isIchannel ? "#2f00ff" : "#B7BAC0" }}
+                      className="fa-solid fa-mosque fs-2 py-3"
+                    ></i>
+                  </NavLink>
+                </div>
+                <div className="col text-center">
+                  <NavLink to="/quiz" className="custom-link d-block">
+                    <div
+                      style={{
+                        borderRadius: "50%",
+                        padding: "10px",
+                        marginTop: "0.5vh",
+                        display: "inline-block",
+                        backgroundColor: isQuiz ? "#2f00ff" : "#B7BAC0",
+                      }}
+                    >
+                      <i
+                        className="fa-solid fa-book-open-reader fs-1 "
+                        style={{ color: "white", display: "block" }}
+                      ></i>
+                    </div>
+                  </NavLink>
+                </div>
+                <div className="col text-center">
+                  <NavLink to="/page" className="custom-link">
+                    <i
+                      className="fa-solid fa-bell fs-2 py-3"
+                      style={{ color: isNotification ? "#2f00ff" : "#B7BAC0" }}
+                    ></i>
+                  </NavLink>
+                </div>
+                <div className="col text-center">
+                  <NavLink to="/message" className="custom-link">
+                    <i
+                      style={{ color: isMessage ? "#2f00ff" : "#B7BAC0" }}
+                      className="fa-solid fa-envelope fs-2 py-3"
+                    ></i>
+                  </NavLink>
+                </div>
+              </div>
             </div>
-          </NavLink>
-        </div>
-        <div className="col text-center">
-          <NavLink to="/page" className="custom-link">
-            <i className="fa-solid fa-bell fs-2 py-3"          style={{ color: isNotification ? "#2f00ff" : "#B7BAC0" }}></i>
-          </NavLink>
-        </div>
-        <div className="col text-center">
-          <NavLink to="/message" className="custom-link">
-            <i   
-           style={{ color: isMessage ? "#2f00ff" : "#B7BAC0" }}
-
-            
-            className="fa-solid fa-envelope fs-2 py-3"></i>
-          </NavLink>
-        </div>
-      </div>
-    </div>
-  </nav>
-)}
-
+          </nav>
+        )}
 
         <div className="row">
           {/* LEFT SIDE BAR */}
@@ -155,7 +166,7 @@ const Navbar = () => {
             className="p-0 d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar"
           >
             <div
-              className="pe-2 pt-5 bg-body rounded pb-5"
+              className="pe-2  bg-body rounded "
               style={{
                 width: "97%",
                 height: "100vh",
@@ -164,16 +175,20 @@ const Navbar = () => {
               }}
             >
               <div
-                className="mb-4 mt-3  d-flex align-items-center justify-content-center mydiv "
+                className="mb-3   d-flex align-items-center justify-content-center mydiv "
                 style={{
                   width: "60px",
                   height: "60px",
                   borderRadius: "50%",
                   margin: "auto",
+                  marginTop:'6vh',
+                  paddingBottom:'4vh',
+                 backgroundColor:'white'
                 }}
               >
                 <span>
-                  <i className="fa-brands fa-twitter display-5 text-info"></i>
+            
+                  <i className="fa-brands fa-paypal " style={{color:'#5f9ffc',backgroundColor:'white',fontSize:'3rem' }}></i>
                 </span>
               </div>
 
@@ -250,7 +265,7 @@ const Navbar = () => {
               </NavLink>
 
               <button
-                className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv"
+                className="d-flex align-items-center pt-1 pl-5 my-2 custom-link mydiv"
                 style={{
                   background: "none",
                   padding: "0",
@@ -280,7 +295,8 @@ const Navbar = () => {
                   style={{
                     fontSize: "22px",
                     color: "#333a42",
-                    paddingLeft: "5px",
+                    paddingLeft: "7px",
+                    paddingBottom:'4px'
                   }}
                 >
                   More
@@ -312,6 +328,21 @@ const Navbar = () => {
                   </div>
                 </NavLink>
               </div>
+
+              {/* Account details */}
+
+              <UserDetails
+              
+                user_name="@mark_rockwell"
+                user_email="mdturjo@gmail.com"
+                image="https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg"
+              />
+
+
+
+
+
+              
             </div>
           </div>
 
@@ -444,9 +475,8 @@ const Navbar = () => {
                   exact
                   element={<IChannelsManage />}
                 />
-              {/* Mobile Menu */}
-              <Route path="menu" exact element={<MobileMenu />} />
-
+                {/* Mobile Menu */}
+                <Route path="menu" exact element={<MobileMenu />} />
               </Routes>
             </div>
           </div>

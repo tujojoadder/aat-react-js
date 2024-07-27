@@ -98,5 +98,14 @@ input:focus {
 }
 
 
+.the-icon:hover{
+  background-color: red !important;
+ 
+}
+.the-iconic{
+  color: red !important;
+}
+
+
 
 

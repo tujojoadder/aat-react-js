@@ -3,56 +3,55 @@ import image from "./logo.jpg";
 import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
 import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImage";
-import './ImagePost.css';
+import "./ImagePost.css";
 export default function ImagePost() {
- /* comment width */
- const [isXSmall, setIsXSmall] = useState( window.innerWidth <= 650);
- const [isSmall, setIsSmall] = useState( window.innerWidth > 650 && window.innerWidth <= 950);
- const [isMid, setIsMid] = useState(
-   window.innerWidth > 950 && window.innerWidth <= 1200
- );
- const [isLg, setIsLg] = useState(
-   window.innerWidth > 1200 
- );
- const [isModalOpen, setIsModalOpen] = useState(false);
+  /* comment width */
+  const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
+  const [isSmall, setIsSmall] = useState(
+    window.innerWidth > 650 && window.innerWidth <= 950
+  );
+  const [isMid, setIsMid] = useState(
+    window.innerWidth > 950 && window.innerWidth <= 1200
+  );
+  const [isLg, setIsLg] = useState(window.innerWidth > 1200);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
- const modalRef = useRef(null);
+  const modalRef = useRef(null);
 
- const updateWidth = () => {
-   setIsXSmall( window.innerWidth <= 650);
-   setIsSmall( window.innerWidth > 650 && window.innerWidth <= 950);
-   setIsMid( window.innerWidth > 950 && window.innerWidth <= 1200);
-   setIsLg( window.innerWidth > 1200 );
- };
+  const updateWidth = () => {
+    setIsXSmall(window.innerWidth <= 650);
+    setIsSmall(window.innerWidth > 650 && window.innerWidth <= 950);
+    setIsMid(window.innerWidth > 950 && window.innerWidth <= 1200);
+    setIsLg(window.innerWidth > 1200);
+  };
 
- useEffect(() => {
-   updateWidth();
-   window.addEventListener("resize", updateWidth);
-   return () => {
-     window.removeEventListener("resize", updateWidth);
-   };
- }, []);
+  useEffect(() => {
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => {
+      window.removeEventListener("resize", updateWidth);
+    };
+  }, []);
 
- useEffect(() => {
-   const modalElement = modalRef.current;
-   if (modalElement) {
-     modalElement.addEventListener("shown.bs.modal", handleModalShow);
-     modalElement.addEventListener("hidden.bs.modal", handleModalHide);
-     return () => {
-       modalElement.removeEventListener("shown.bs.modal", handleModalShow);
-       modalElement.removeEventListener("hidden.bs.modal", handleModalHide);
-     };
-   }
- }, []);
+  useEffect(() => {
+    const modalElement = modalRef.current;
+    if (modalElement) {
+      modalElement.addEventListener("shown.bs.modal", handleModalShow);
+      modalElement.addEventListener("hidden.bs.modal", handleModalHide);
+      return () => {
+        modalElement.removeEventListener("shown.bs.modal", handleModalShow);
+        modalElement.removeEventListener("hidden.bs.modal", handleModalHide);
+      };
+    }
+  }, []);
 
- const handleModalShow = () => {
-   setIsModalOpen(true);
- };
+  const handleModalShow = () => {
+    setIsModalOpen(true);
+  };
 
- const handleModalHide = () => {
-   setIsModalOpen(false);
- };
-
+  const handleModalHide = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="posts ">
@@ -60,7 +59,7 @@ export default function ImagePost() {
         <img src={image} alt="user1" />
       </div>
       <div className="user-contents-image-box">
-      <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
+        <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
           <div className="name-column">
             <h1 className="full-name-text m-0 p-0">Mohammad </h1>
             <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
@@ -69,9 +68,6 @@ export default function ImagePost() {
             2hrs
           </p>
         </div>
-
-
-
 
         <div className="user-contents  ">
           <div className="bImageContainner">
@@ -128,11 +124,15 @@ export default function ImagePost() {
               ></button>
             </div>
             <div className="modal-body ">
-            {isModalOpen && (
+              {isModalOpen && (
                 <>
                   <div
                     className="comments pb-4 px-md-4"
-                    style={{ height: '100vh', overflowY: "scroll", overflowX: 'hidden' }}
+                    style={{
+                      height: "100vh",
+                      overflowY: "scroll",
+                      overflowX: "hidden",
+                    }}
                   >
                     <CommentedImage />
                     <TextComment />
@@ -141,8 +141,8 @@ export default function ImagePost() {
                     <TextComment />
                     <TextComment />
                     <TextComment />
-                  {/* Needed */}
-                  <div style={{ paddingBottom: "20vh" }}></div>
+                    {/* Needed */}
+                    <div style={{ paddingBottom: "20vh" }}></div>
                   </div>
                   {/* Footer */}
                   <div
@@ -150,7 +150,9 @@ export default function ImagePost() {
                     style={{
                       position: "fixed",
                       bottom: "0px",
-                      width:isXSmall?'100%': isSmall
+                      width: isXSmall
+                        ? "100%"
+                        : isSmall
                         ? "74.8%"
                         : isMid
                         ? "59.8%"

@@ -32,7 +32,7 @@ export default function Home() {
       style={{ width: "100%", backgroundColor: "#f8f9fa" }}
     >
 
-      <Try/>
+
 
       {/* Header for mobile(sm) */}
       <HeaderComponent />

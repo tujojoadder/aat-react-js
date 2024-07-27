@@ -257,7 +257,7 @@ try{
                       <label htmlFor="gender">Gender:</label>
                       <select
                         name="gender"
-                        className="form-control"
+                        className="form-control py-0"
                         value={formData.gender}
                         onChange={handleChange}
                         required
@@ -274,7 +274,7 @@ try{
                         <div className="col-4">
                           <select
                             name="birthdate_year"
-                            className="form-control"
+                            className="form-control py-0"
                             value={formData.birthdate_year}
                             onChange={handleChange}
                             required
@@ -295,7 +295,7 @@ try{
                         <div className="col-4">
                           <select
                             name="birthdate_month"
-                            className="form-control"
+                            className="form-control py-0"
                             value={formData.birthdate_month}
                             onChange={handleChange}
                             required
@@ -317,7 +317,7 @@ try{
                         <div className="col-4">
                           <select
                             name="birthdate_day"
-                            className="form-control"
+                            className="form-control py-0"
                             value={formData.birthdate_day}
                             onChange={handleChange}
                             required
