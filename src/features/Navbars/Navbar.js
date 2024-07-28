@@ -275,7 +275,7 @@ const Navbar = () => {
                   boxShadow: "none",
                   marginLeft: "15px",
 
-                  border: "solid 2px blue",
+                  border: "solid 2px black",
                   paddingLeft: "15px",
                   paddingRight: "15px",
                   borderRadius: "30px",
