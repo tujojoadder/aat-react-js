@@ -6,8 +6,14 @@ import {
   useConfirmPasswordMutation,
   useResetPasswordMutation,
 } from "../../services/userLoginApi";
+import { useDispatch } from "react-redux";
+import { setToastError } from "../home/HomeSlice";
+import { handleApiError } from "../ErrorHelper/ErrorHelper";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ResetPassword() {
+  const dispatch = useDispatch();
   const { token } = useParams();
   const navigate = useNavigate();
 
@@ -19,16 +25,23 @@ export default function ResetPassword() {
   //handle form submition
   const handleSubmission = async (e) => {
     e.preventDefault();
-    const res = await confirmPassword(formData);
-    if (res.data) {
-      if (res.data && res.data.message=='sucess') {
-        navigate('/');
-      } else {
-        $("#message").text(res.data.message);
-        
+    try {
+      const res = await confirmPassword(formData);
+      if (res.data) {
+        if (res.data && res.data.message == "sucess") {
+          toast.success("Password changed successfully");
+          
+          setTimeout(() => {
+            window.location = "/login";
+          }, 1500);
+        } else {
+          dispatch(setToastError({ toastError: res.data.message }));
+        }
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
       }
-    } else if (res.error.status) {
-        $("#message").text(res.error.data.error);
+    } catch (error) {
+      handleApiError(error, dispatch);
     }
   };
 
@@ -60,9 +73,8 @@ export default function ResetPassword() {
             email: response.data.email,
           }));
           setIsTokenValid(true);
-         
         } else {
-          $("#message").text("Token validation time over");
+          dispatch(setToastError("Token validation time over"));
         }
       });
     }
@@ -117,7 +129,9 @@ export default function ResetPassword() {
                     <button
                       type="submit"
                       className="btn btn-lg btn-primary w-100 fs-6"
-                     
+                      disabled={
+                        confirmPasswordSuccess || confirmPasswordLoadding
+                      }
                     >
                       Reset Password
                     </button>
@@ -129,7 +143,6 @@ export default function ResetPassword() {
           </div>
         </div>
       )}
-     
     </div>
   );
 }

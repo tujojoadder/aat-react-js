@@ -9,16 +9,19 @@ import { userLoginApi } from '../services/userLoginApi'
 
 import  loginSlice  from '../features/Login/LoginSlice'
 import quizSlice  from '../features/Quiz/QuizSlice'
+import  homeSlice from '../features/home/HomeSlice'
 
 export const store = configureStore({
   reducer: {
     
    login:loginSlice,
    quiz:quizSlice,
+   home:homeSlice,
     // Add the generated reducer as a specific top-level slice
     [userAuthApi.reducerPath]: userAuthApi.reducer,
     [userChatApi.reducerPath]: userChatApi.reducer,
     [userLoginApi.reducerPath]: userLoginApi.reducer,
+
   },
 
   middleware: (getDefaultMiddleware) =>

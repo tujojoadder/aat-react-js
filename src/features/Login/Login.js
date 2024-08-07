@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import $ from "jquery";
 import googleLogo from "./images/google.png"; // Import the image
@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { change } from "./LoginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import {
   useAdditionalInformationMutation,
@@ -15,6 +18,15 @@ import {
   useUserLoginMutation,
 } from "../../services/userLoginApi";
 import Spinner from "./Spinner/Spinner";
+import {
+  setProfile_picture,
+  setUser_fname,
+  setUser_lname,
+  setEmail,
+  setIdentifier,
+  setToastError,
+} from "../home/HomeSlice";
+import { handleApiError } from "../ErrorHelper/ErrorHelper";
 export default function Login() {
   //navigate
   const navigate = useNavigate();
@@ -24,6 +36,7 @@ export default function Login() {
   const dispatch = useDispatch();
 
   //
+  
 
   //Mutation
 
@@ -44,96 +57,107 @@ export default function Login() {
   const [login, { isSuccess: loginSucess, isLoading: loginLoading }] =
     useLoginMutation();
 
-  //functions 
+  //functions
 
   //function for submit the form
-  // Handle handleCridential
+  // Handle handleCridential google
   const handleCridential = async (credentialResponse) => {
     const { credential } = credentialResponse;
     const res = await googleHandle({ token: credential });
-try{
-    if (res.data) {
-      //if user has account
-      if (res.data.message == "have account") {
-        //set cookie
-        Cookies.set("userToken", res.data.token, { expires: 7 });
-        navigate("/");
-      } else {
-        //if user does not have account
+    try {
+      if (res.data) {
+        //if user has account
+        if (res.data.message == "have account") {
+          //set cookie
+          Cookies.set("userToken", res.data.token, { expires: 7 });
+         toast.success('Login Successful')
+            window.location = "/";
+        
+         
+        } else {
+          //if user does not have account
 
-        //set email
-        dispatch(change({ email: res.data.email }));
+          //set email
+          dispatch(change({ email: res.data.email }));
+        }
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
+
+
       }
-    } else if (res.error) {
-      $("#loginError").text('Server problem plz try latter');
-    }} catch (error) {
-      // Handle network or unexpected errors
-      $("#loginError").text('Server problem plz try latter');
+    } catch (error) {
+      handleApiError(error, dispatch);
+
     }
-  
   };
 
   //handle form submition
   const handleSubmission = async (e) => {
     e.preventDefault();
-    try{
-     
-     
+    try {
       const res = await additionalinformation({ formData, email });
       if (res.data) {
         Cookies.set("userToken", res.data.token, { expires: 7 });
-        navigate("/");
+
+        dispatch(
+          setProfile_picture({ profile_picture: res.data.data.profile_picture })
+        );
+        dispatch(setUser_fname({ user_fname: res.data.data.user_fname }));
+        dispatch(setUser_lname({ user_lname: res.data.data.user_lname }));
+        dispatch(setEmail({ email: res.data.data.email }));
+        dispatch(setIdentifier({ identifier: res.data.data.identifier }));
+        window.location = "/";
         //error message handaling
-      } else if (res.error.status == 422) {
-
-        $("#submitError").text(res.error.data.error);
-      }else{
-        $("#submitError").text('Server problem please try again');
-      }
-    }catch (error) {
-  
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
+      
+      } 
+    } catch (error) {
       // Handle network or unexpected errors
-      $("#submitError").text('An error occurred while processing your request.');
+      handleApiError(error, dispatch);
+
     }
-   
   };
-
-
-
 
   //handle normal login form submition
   const handleLogdataSubmit = async (e) => {
-
-    
     e.preventDefault();
-try{
-    const res = await login(loginformData);
-    if (res.data) {
-      if (res.data.message == "passwordInvalid") {
-        $("#loginError").text("Password Invalid");
-      } else if (res.data.message == "noEmail") {
-        $("#loginError").text("No email found");
-      } else {
-        // when success
-        Cookies.set("userToken", res.data.token, { expires: 7 });
-        navigate("/");
+    try {
+      const res = await login(loginformData);
+      if (res.data) {
+        if (res.data.message == "passwordInvalid") {
+         
+          dispatch(setToastError({ toastError: "Password Invalid" }));
+
+          
+        } else if (res.data.message == "noEmail") {
+         
+
+          dispatch(setToastError({ toastError: "No email found" }));
+        } else {
+          Cookies.set("userToken", res.data.token, { expires: 7 });
+
+          dispatch(
+            setProfile_picture({
+              profile_picture: res.data.data.profile_picture,
+            })
+          );
+          dispatch(setUser_fname({ user_fname: res.data.data.user_fname }));
+          dispatch(setUser_lname({ user_lname: res.data.data.user_lname }));
+          dispatch(setEmail({ email: res.data.data.email }));
+          dispatch(setIdentifier({ identifier: res.data.data.identifier }));
+          window.location = "/";
+        }
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
+
       }
-    } else if (res.error) {
-      $("#loginError").text(res.error.data.error);
-    }} catch (error) {
-     
-      $("#loginError").text('Server Problem please try later');
+    } catch (error) {
+
+      handleApiError(error, dispatch);
+
     }
   };
-
-
-
-
-
-
-
-
-
 
   //addition form data
 
@@ -196,6 +220,17 @@ try{
     let { name, value } = e.target;
     setloginFormData({ ...loginformData, [name]: value });
   };
+
+
+
+  useEffect(() => {
+    if (additionalinformationSuccess) {
+
+      toast.success("Login successfuly!");
+  
+    }
+  }, [additionalinformationSuccess]);
+  
 
   return (
     <div className="full-body">
@@ -332,16 +367,14 @@ try{
                     </div>
 
                     <div className="text-center ">
-                      <button className="mt-1 btn btn-lg btn-primary text-light w-50 fs-6">
+                      <button
+                        className="mt-1 btn btn-lg btn-primary text-light w-50 fs-6"
+                        disabled={additionalinformationLoadding || additionalinformationSuccess}
+                      >
                         <b>Submit</b>
                       </button>
                     </div>
                   </form>
-
-                  <p
-                    className="mt-2 text-danger text-center"
-                    id="submitError"
-                  ></p>
                 </div>
               </div>
             ) : (
@@ -393,12 +426,12 @@ try{
                       <div className="forgot">
                         <small>
                           <div>
-                            <p
-                              className="link-like"
-                              onClick={() => navigate("/forgotpassword")}
-                            >
-                              Forgot Password?
-                            </p>
+                          <p
+  className="link-like"
+  onClick={() => window.location.href = "/forgotpassword"}
+>
+  Forgot Password?
+</p>
                           </div>{" "}
                         </small>
                       </div>
@@ -406,7 +439,7 @@ try{
                     <div className="input-group mb-3">
                       <button
                         className="btn btn-lg btn-primary w-100 fs-6"
-                        disabled={googleHandleLoadding || loginLoading}
+                        disabled={ loginLoading || isSuccess}
                       >
                         Login
                       </button>
@@ -420,19 +453,16 @@ try{
                     <GoogleLogin
                       size="large" // Setting the button size
                       onSuccess={(credentialResponse) => {
-                  
                         handleCridential(credentialResponse);
                       }}
                       onError={() => {
-                        $("#loginError").text('Server problem plz try latter ');
+
+                        dispatch(setToastError("Server Problem please try later"));
+
                       }}
                     />
                   </div>
 
-                  <p
-                    className="mt-2 text-danger text-center"
-                    id="loginError"
-                  ></p>
                 </div>
               </div>
             )}

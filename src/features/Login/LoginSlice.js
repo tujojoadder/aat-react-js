@@ -1,3 +1,6 @@
+
+//email for login
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

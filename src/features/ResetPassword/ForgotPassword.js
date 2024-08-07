@@ -4,32 +4,35 @@ import $ from "jquery";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useForgotPasswordMutation } from "../../services/userLoginApi";
+import { setToastError } from "../home/HomeSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { handleApiError } from "../ErrorHelper/ErrorHelper";
 
 export default function ForgotPassword() {
+  const dispatch = useDispatch();
+
   //Email sate
   const [email, setemail] = useState("");
 
-
   //mutation
-  const [forgotPassword, { isSuccess,isLoading }] = useForgotPasswordMutation();
+  const [forgotPassword, { isSuccess, isLoading }] =
+    useForgotPasswordMutation();
 
   const handleSubmission = async (e) => {
     e.preventDefault();
     try {
-      const res = await forgotPassword({email});
+      const res = await forgotPassword({ email });
       if (res.data) {
-        $("#resetMessage").text(res.data.message);
-      } else {
-        // Ensure res.error and res.error.data are defined before accessing them
-        const errorMessage = res.error && res.error.data ? res.error.data.error : 'An unknown error occurred';
-        $("#resetMessage").text(errorMessage);
+        toast.success("We've sent a link to your mail");
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
       }
     } catch (error) {
       // Handle network or unexpected errors
-      $("#resetMessage").text('Server problem please try later');
+      handleApiError(error, dispatch);
     }
   };
-  
 
   return (
     <div className="full-body">
@@ -47,7 +50,9 @@ export default function ForgotPassword() {
             <div className="row align-items-center">
               <div className="header-text ">
                 <h2 className="text-center">Forgot Password</h2>
-                <p className="text-center">Reset Password link sent your email</p>
+                <p className="text-center">
+                  Reset Password link sent your email
+                </p>
               </div>
 
               <form onSubmit={handleSubmission}>
@@ -64,7 +69,11 @@ export default function ForgotPassword() {
                 </div>
 
                 <div className="input-group mb-3">
-                  <button type="submit" disabled={isLoading} className="btn btn-lg btn-primary w-100 fs-6">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="btn btn-lg btn-primary w-100 fs-6"
+                  >
                     Reset Password
                   </button>
                 </div>

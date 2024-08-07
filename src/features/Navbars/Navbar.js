@@ -59,10 +59,9 @@ import MyPages from "../Page/MyPages/MyPages";
 import UserDetails from "./UserDetails/UserDetails";
 
 const Navbar = () => {
-
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
- /*  for mt of left side bar */
- const isBig = useMediaQuery({ minHeight: 1650 }); // Bootstrap's sm breakpoint is 576px
+  /*  for mt of left side bar */
+  const isBig = useMediaQuery({ minHeight: 1650 }); // Bootstrap's sm breakpoint is 576px
 
   const location = useLocation();
   //for xs NAV BAR
@@ -174,21 +173,27 @@ const Navbar = () => {
                 overflowX: "hidden",
               }}
             >
-              <div
+             {} <div
                 className="mb-3   d-flex align-items-center justify-content-center mydiv "
                 style={{
                   width: "60px",
                   height: "60px",
                   borderRadius: "50%",
                   margin: "auto",
-                  marginTop:'6vh',
-                  paddingBottom:'4vh',
-                 backgroundColor:'white'
+                  marginTop: "6vh",
+                  paddingBottom: "4vh",
+                  backgroundColor: "white",
                 }}
               >
                 <span>
-            
-                  <i className="fa-brands fa-paypal " style={{color:'#5f9ffc',backgroundColor:'white',fontSize:'3rem' }}></i>
+                  <i
+                    className="fa-brands fa-paypal "
+                    style={{
+                      color: "#5f9ffc",
+                      backgroundColor: "white",
+                      fontSize: "3rem",
+                    }}
+                  ></i>
                 </span>
               </div>
 
@@ -274,7 +279,6 @@ const Navbar = () => {
                   outline: "none",
                   boxShadow: "none",
                   marginLeft: "15px",
-
                   border: "solid 2px black",
                   paddingLeft: "15px",
                   paddingRight: "15px",
@@ -296,7 +300,7 @@ const Navbar = () => {
                     fontSize: "22px",
                     color: "#333a42",
                     paddingLeft: "7px",
-                    paddingBottom:'4px'
+                    paddingBottom: "4px",
                   }}
                 >
                   More
@@ -331,18 +335,7 @@ const Navbar = () => {
 
               {/* Account details */}
 
-              <UserDetails
-              
-                user_name="@mark_rockwell"
-                user_email="mdturjo@gmail.com"
-                image="https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg"
-              />
-
-
-
-
-
-              
+              <UserDetails />
             </div>
           </div>
 

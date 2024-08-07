@@ -11,8 +11,8 @@ background-color: #ffffff !important;
     cursor: text !important;
 }
 .logout-option {
-    top: 80%; /* Position below the icon */
-    left: -10%; /* Position to the left of the icon */
+    top: 20%; /* Position below the icon */
+    left: 20%; /* Position to the left of the icon */
     transform: translateX(-100%); /* Adjust for proper alignment */
     white-space: nowrap; /* Prevent wrapping of the text */
   }

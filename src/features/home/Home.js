@@ -17,22 +17,17 @@ import FriendSuggestionBack from "../Friends/FriendBack/FriendSuggestionBack/Fri
 import IChannelCreateBack from "../IChannels/iChannelBack/iChannelCreateBack/IChannelCreateBack";
 import HadithDay from "./Components/HadithDay/HadithDay";
 import Try from "./Components/Try/Try";
+import { useSelector } from "react-redux";
+
+
+
 export default function Home() {
-
-  const array=useState(12);
-  const num=array[0];
- const setNum=array[1];
-
- const handleClick=()=>{
-  setNum(num+1);
- }
+  
   return (
     <div
       className="p-0 m-0    home-container main"
       style={{ width: "100%", backgroundColor: "#f8f9fa" }}
     >
-
-
 
       {/* Header for mobile(sm) */}
       <HeaderComponent />

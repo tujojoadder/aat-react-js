@@ -1,6 +1,10 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-const userToken=localStorage.getItem('userToken');
+import Cookies from 'js-cookie';
+
+// Retrieve the token from cookies
+const userToken = Cookies.get('userToken');
+
 // Define a service using a base URL and expected endpoints
 
 export const userAuthApi = createApi({
@@ -9,26 +13,11 @@ export const userAuthApi = createApi({
     endpoints: (builder) => ({
 
 
-
-      registerUser: builder.mutation({
-        query: (user) => {
-          return {
-            url: "register",
-            method: "POST",
-            body: user,
-            headers: {
-        
-                'Authorization': `Bearer ${userToken}`, 
-            },
-          };
-        },
-      }),
-  
-  
-      getLoggedUser: builder.query({
+   /*    get user details */
+      getUserDetails: builder.query({
         query: (token) => {
           return {
-            url: "/profile",
+            url: "/userdetails",
             method: "GET",
             headers: {
               "authorization": `Bearer ${userToken}`,
@@ -36,10 +25,20 @@ export const userAuthApi = createApi({
           };
         },
       }),
+      logOutUser: builder.mutation({
+        query: () => ({
+          url: "/logout",
+          method: "POST",
+          headers: {
+            "authorization": `Bearer ${userToken}`,
+          },
+        }),
+      }),
+
       
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetLoggedUserQuery,useRegisterUserMutation } = userAuthApi
+export const { useGetUserDetailsQuery,useLogOutUserMutation } = userAuthApi
