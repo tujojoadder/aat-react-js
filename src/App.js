@@ -56,14 +56,27 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setToastError } from "./features/home/HomeSlice";
+import { setToastError, setToastSuccess } from "./features/home/HomeSlice";
 
 function App() {
   const dispatch = useDispatch();
   const toastError = useSelector((state) => state.home.toastError);
+  const toastSuccess = useSelector((state) => state.home.toastSuccess);
   useEffect(() => {
-    if (toastError) {
+    if (toastError ) {
       toast.error(toastError, {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+    if (toastSuccess ) {
+      toast.success(toastSuccess, {
         position: "bottom-center",
         autoClose: 2000,
         hideProgressBar: true,
@@ -76,7 +89,8 @@ function App() {
     }
    /*  Clean toastError */
     dispatch(setToastError({ toastError: "" }));
-  }, [toastError]);
+    dispatch(setToastSuccess({ toastSuccess: "" }));
+  }, [toastError,toastSuccess]);
   return (
     <BrowserRouter>
       <ConfirmModal />

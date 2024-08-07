@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./ConfirmModal.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setShow_Modal, setToastError } from "../home/HomeSlice";
+import { setShow_Modal, setToastError, setToastSuccess } from "../home/HomeSlice";
 import { useLogOutUserMutation } from "../../services/userAuthApi";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,8 @@ const ConfirmModal = () => {
     if (isSuccess) {
       // Clear the token cookie and navigate to the login page or home page
       Cookies.remove('userToken');
-      toast.success("Logged out successfully!");
+      dispatch(setToastSuccess({ toastSuccess: "Logged out successfully!" }));
+     
       navigate('/login'); // Replace with your desired route
       dispatch(setShow_Modal({ show_modal: false }));
     }

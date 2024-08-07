@@ -25,6 +25,7 @@ import {
   setEmail,
   setIdentifier,
   setToastError,
+  setToastSuccess
 } from "../home/HomeSlice";
 import { handleApiError } from "../ErrorHelper/ErrorHelper";
 export default function Login() {
@@ -70,7 +71,7 @@ export default function Login() {
         if (res.data.message == "have account") {
           //set cookie
           Cookies.set("userToken", res.data.token, { expires: 7 });
-         toast.success('Login Successful')
+          dispatch(setToastSuccess({ toastSuccess: "Login Successfully" }));
             window.location = "/";
         
          
@@ -106,6 +107,8 @@ export default function Login() {
         dispatch(setUser_lname({ user_lname: res.data.data.user_lname }));
         dispatch(setEmail({ email: res.data.data.email }));
         dispatch(setIdentifier({ identifier: res.data.data.identifier }));
+
+        dispatch(setToastSuccess({ toastSuccess: "Login Successfully" }));
         window.location = "/";
         //error message handaling
       } else if (res.error) {
@@ -146,7 +149,9 @@ export default function Login() {
           dispatch(setUser_lname({ user_lname: res.data.data.user_lname }));
           dispatch(setEmail({ email: res.data.data.email }));
           dispatch(setIdentifier({ identifier: res.data.data.identifier }));
-          window.location = "/";
+
+          dispatch(setToastSuccess({ toastSuccess: "Login Successfully" }));          window.location = "/";
+ 
         }
       } else if (res.error) {
         handleApiError(res.error, dispatch);
@@ -223,13 +228,6 @@ export default function Login() {
 
 
 
-  useEffect(() => {
-    if (additionalinformationSuccess) {
-
-      toast.success("Login successfuly!");
-  
-    }
-  }, [additionalinformationSuccess]);
   
 
   return (

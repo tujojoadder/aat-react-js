@@ -19,6 +19,7 @@ token:'',
 
 /* Toast Messsage */
   toastError:'',
+  toastSuccess:''
   
 };
 
@@ -82,12 +83,17 @@ setToastError: (state, action) => {
   const { toastError } = action.payload;
   state.toastError = toastError;
 },
+setToastSuccess: (state, action) => {
+  const { toastSuccess } = action.payload;
+  state.toastSuccess = toastSuccess;
+},
+
 
 
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setProfile_picture,setUser_fname,setUser_lname,setEmail,setIdentifier,setModalMessage,setShow_Modal,setToken,setToastError } = homeSlice.actions;
+export const { setProfile_picture,setUser_fname,setUser_lname,setEmail,setIdentifier,setModalMessage,setShow_Modal,setToken,setToastError,setToastSuccess} = homeSlice.actions;
 
 export default homeSlice.reducer;

@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 
 
 export default function Home() {
-  
+  const name = useSelector((state) => state.home.toastSuccess);
   return (
     <div
       className="p-0 m-0    home-container main"
@@ -40,6 +40,10 @@ export default function Home() {
         </div> */}
         {/* Create post */}
         <CreatePost />
+
+
+
+        {name}
         {/* Text post */}
         <TextPost />
         <BPost />
