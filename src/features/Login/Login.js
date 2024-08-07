@@ -224,7 +224,7 @@ export default function Login() {
   const handleLogdataChange = (e) => {
     let { name, value } = e.target;
     setloginFormData({ ...loginformData, [name]: value });
-  };
+  }; 
 
 
 
