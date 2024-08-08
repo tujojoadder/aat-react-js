@@ -7,19 +7,20 @@ const userToken = Cookies.get('userToken');
 
 export const userLoginApi = createApi({
     reducerPath: "userLoginApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api" }),
-    prepareHeaders: (headers) => {
-      if (userToken) {
-        headers.set('authorization', `Bearer ${userToken}`)
-      }
-      return headers
-    },
+    baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api",
+      prepareHeaders: (headers) => {
+        if (userToken) {
+          headers.set('authorization', `Bearer ${userToken}`)
+        }
+        return headers
+      },
+
+
+     }),
+ 
     
     
     endpoints: (builder) => ({
-
-
-
       userLogin: builder.mutation({
         query: (user) => {
           return {
