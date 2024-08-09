@@ -1,11 +1,11 @@
 .hadith-box {
   margin-bottom: 1rem;
   margin-left: 0.5rem;
-  font-family: 'Arial', sans-serif;
+  padding-left: 0px;
   border-radius: 10px;
-  
   overflow: hidden;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
 }
 
 .hadith-head {
@@ -18,50 +18,82 @@
   border-top-right-radius: 10px;
   height: 8vh;
   min-height: 50px;
-  border-bottom: 1px solid blueviolet;
+  border-bottom: 2px solid blueviolet;
 }
 
-.btn-copy {
-  background-color: #353d45;
+.btn-add {
+  background-color:#1c3c61;
   color: #fff;
   border: none;
-  padding: 6px 12px;
-  border-radius: 15px;
+  padding: 6px 10px;
+  padding-left: 13px;
+border-top-right-radius: 15px;
+border-bottom-right-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.btn-copy i {
-  margin-left: 5px;
+.btn-add i {
+  margin-right: 5px;
 }
 
-.btn-copy:hover {
-  background-color: #2a2f35;
+.btn-add:hover {
+  background-color:  #425363;
 }
+
+.hadith-type {
+  font-size: 1rem; /* Slightly larger font for emphasis */
+  font-weight: 600; /* Slightly lighter weight for a cleaner look */
+  color: #2c3e50; /* Muted dark blue for a sophisticated tone */
+  text-align: center;
+  flex-grow: 1;
+  margin-left: 15px;
+  padding: 0.25rem 0; /* Add some padding for better vertical alignment */
+  letter-spacing: 0.5px; /* Add subtle letter spacing */
+}
+
 
 .btn-new {
-  background-color: #353d45;
+  background-color: #1c3c61;
   color: #fff;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .btn-new:hover {
-  background-color: #2a2f35;
+  background-color:  #425363;
+}
+
+.btn-new.loading {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .card-body {
   height: 49vh;
   min-height: 300px;
   overflow-y: auto;
-  background-color: #ffffff;
+  background-color: #f9f9f9;
   padding: 1rem;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -79,7 +111,10 @@
 }
 
 .card-text {
-  font-size: 1rem;
-  color: #495057;
-  line-height: 1.6;
+  font-size: 1.04rem; 
+  line-height: 1.6; 
+  text-align: left; /* This aligns the text to both left and right */
+  position: relative;
+  font-family: 'Arial', sans-serif;
+  padding: 0 10px;
 }

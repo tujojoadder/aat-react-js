@@ -3,13 +3,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { userAuthApi } from '../services/userAuthApi'
-import { userChatApi } from '../services/userChatApi'
-import { userLoginApi } from '../services/userLoginApi'
 
 import  loginSlice  from '../features/Login/LoginSlice'
 import quizSlice  from '../features/Quiz/QuizSlice'
 import  homeSlice from '../features/home/HomeSlice'
+import { userAuthApi } from '../services/userAuthApi'
+import { userChatApi } from '../services/userChatApi'
+import { userLoginApi } from '../services/userLoginApi'
+import { hadithApi } from '../services/hadithApi'
 
 export const store = configureStore({
   reducer: {
@@ -21,11 +22,12 @@ export const store = configureStore({
     [userAuthApi.reducerPath]: userAuthApi.reducer,
     [userChatApi.reducerPath]: userChatApi.reducer,
     [userLoginApi.reducerPath]: userLoginApi.reducer,
+    [hadithApi.reducerPath]: hadithApi.reducer,
 
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(userAuthApi.middleware,userChatApi.middleware,userLoginApi.middleware),
+    getDefaultMiddleware().concat(userAuthApi.middleware,userChatApi.middleware,userLoginApi.middleware,hadithApi.middleware),
 })
 
 setupListeners(store.dispatch)

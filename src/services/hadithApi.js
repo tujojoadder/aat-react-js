@@ -20,23 +20,30 @@ export const hadithApi = createApi({
     endpoints: (builder) => ({
 
 
-   /*    get user details */
-      getUserDetails: builder.query({
-        query: (token) => {
+   /*    get random hadith for hadithbox */
+      getRandomHadith: builder.query({
+        query: () => {
           return {
-            url: "/userdetails",
+            url: "/get-random-hadith",
             method: "GET",
             
           };
         },
       }),
-      logOutUser: builder.mutation({
-        query: () => ({
-          url: "/logout",
-          method: "POST",
-          
-        }),
-      }),
+      
+
+
+      // setDayhadith
+      setDayhadith: builder.mutation({
+    query: (data) => {
+      return {
+        url: "setdayhadith",
+        method: "POST",
+        body: data,
+      };
+    },
+  }),
+
 
       
     }),
@@ -44,4 +51,4 @@ export const hadithApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserDetailsQuery,useLogOutUserMutation } = hadithApi
+export const { useGetRandomHadithQuery,useSetDayhadithMutation } = hadithApi

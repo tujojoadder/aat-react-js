@@ -1,29 +1,46 @@
-import React from 'react';
-import './HadithBox.css'; // Import the CSS file for styling
+import React from "react";
+import { useGetRandomHadithQuery, useSetDayhadithMutation } from "../../../../services/hadithApi";
+import "./HadithBox.css";
+import { useMediaQuery } from "react-responsive";
 
 const HadithBox = () => {
+  const { data: hadith, isFetching, isError, refetch } = useGetRandomHadithQuery();
+  const isLg = useMediaQuery({ query: "(min-width: 1400px)" });
+
+  let content;
+
+  if (isFetching) {
+    content = <p>Loading...</p>;
+  } else if (isError || !hadith || !hadith.data) {
+    content = <p>No Hadith available</p>;
+  } else {
+    content = <p>{hadith.data.hadith}</p>;
+  }
+
   return (
-    <div className="hadith-box shadow-sm  pb-2 p-2 mb-1 shadow-sm bg-white rounded border">
-      <div className="hadith-head">
-        <button className="btn-copy">
-          Hadithday <i className="fa-solid fa-plus"></i>
+    <div className="hadith-box shadow-sm mb-2 mb-1 shadow-lg bg-white rounded border">
+      <div className="hadith-head ms-0 ps-0">
+        <button className="btn-add">
+          <i className="fa-solid fa-plus"></i>
+          {isLg ? "Add Day" : ""}
         </button>
-        <div className="btn-new">
+        <div className="hadith-type" style={{ marginRight: "0.02rem" }}>
+          <i
+            style={{ marginRight: "0.2rem" }}
+            className="fa-solid fa-book-open-reader fs-4"
+          ></i>
+          <span>{hadith && hadith.data ? hadith.data.book : "Hadith Type"}</span>
+        </div>
+        <div
+          className={`btn-new ${isFetching ? "loading" : ""}`}
+          onClick={() => refetch()}
+        >
           <i className="fa-solid fa-rotate"></i>
         </div>
       </div>
-      <div className="card-body px-4 pt-1">
+      <div className="card-body px-3 pt-2">
         <div className="card-content">
-          <p className="card-text">
-            এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী
-            প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) প্রতি ওয়াহী
-            প্রেরণ করেছিলাম।’’ (সূরাহ্ আন-নিসা ৪/১৬৩) ১.এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী
-            প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী
-            প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী
-            প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী
-            প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী
-            প্রেরণ করেছি যে
-          </p>
+          <p className="card-text">{content}</p>
         </div>
       </div>
     </div>
