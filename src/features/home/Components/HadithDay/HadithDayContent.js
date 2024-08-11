@@ -46,10 +46,9 @@ const [
 const likeClickHandle = async (e) => {
 
   try {
-    
     const res = await LikeDayHadithMutation({day_hadith_id:day_hadith_id});
     if (res.data) {
-        
+        setIsHeartClicked(!isHeartClicked);
       dispatch(setToastSuccess({ toastSuccess: "Love sended" }));
     } else if (res.error) {
       handleApiError(res.error, dispatch);
@@ -136,7 +135,7 @@ const likeClickHandle = async (e) => {
               <h6 className="card-title">
                 <div>
                   {hadith ? (
-                    <p>{hadith}</p>
+                    <p>{day_hadith_id}{hadith}</p>
                   ) : (
                     <p>No Hadith found</p>
                   )}
