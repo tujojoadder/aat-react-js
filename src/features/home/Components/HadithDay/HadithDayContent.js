@@ -49,7 +49,8 @@ const likeClickHandle = async (e) => {
     const res = await LikeDayHadithMutation({day_hadith_id:day_hadith_id});
     if (res.data) {
         setIsHeartClicked(!isHeartClicked);
-      dispatch(setToastSuccess({ toastSuccess: "Love sended" }));
+        console.log(res.data.message);
+      dispatch(setToastSuccess({ toastSuccess: res.data.message }));
     } else if (res.error) {
       handleApiError(res.error, dispatch);
     }
@@ -135,7 +136,7 @@ const likeClickHandle = async (e) => {
               <h6 className="card-title">
                 <div>
                   {hadith ? (
-                    <p>{day_hadith_id}{hadith}</p>
+                    <p>{hadith}</p>
                   ) : (
                     <p>No Hadith found</p>
                   )}
@@ -143,7 +144,7 @@ const likeClickHandle = async (e) => {
               </h6>
 
               {/* Love React */}
-              <div className="d-flex justify-content-end align-items-start mb-4 me-4">
+              <div className="d-flex justify-content-end align-items-start mb-4 me-4" style={{cursor:'pointer'}}>
                 <i
                   className={`fa-heart fs-3 ${isHeartClicked ? 'fas red-heart' : 'far'}`}
                   onClick={likeClickHandle}
