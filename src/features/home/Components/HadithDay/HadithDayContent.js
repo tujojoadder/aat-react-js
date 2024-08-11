@@ -1,63 +1,177 @@
-import React from "react";
-import image from "./logo.jpg";
-import image1 from "./logo1.png";
-import image2 from "./logo2.png";
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import "./HadithDayContent.css"; // Import the custom CSS
+import { useLikeDayHadithMutation } from "../../../../services/hadithApi";
+import { handleApiError } from "../../../handleApiError/handleApiError";
+import { useDispatch } from "react-redux";
+import { setToastSuccess } from "../../HomeSlice";
 
-export default function HadithDayContent() {
+export default function HadithDayContent({ hadith, serialNumber, handlePrev, handleNext, isPrevDisabled, isNextDisabled,day_hadith_id }) {
+  const [prevButtonMargin, setPrevButtonMargin] = useState("0");
+  const [nextButtonMargin, setNextButtonMargin] = useState("0");
+  const [isHeartClicked, setIsHeartClicked] = useState(false); // State for heart icon
+
+  const isExtraSmall = useMediaQuery({ query: '(max-width: 576px)' });
+  const isSmall = useMediaQuery({ query: '(min-width: 577px) and (max-width: 788px)' });
+  const isMedium = useMediaQuery({ query: '(min-width: 789px) and (max-width: 991px)' });
+  const isLarge = useMediaQuery({ query: '(min-width: 992px)' });
+  const dispatch = useDispatch();
+  
+
+  useEffect(() => {
+    if (isLarge) {
+      setPrevButtonMargin("26%");
+      setNextButtonMargin("26%");
+    } else if (isMedium) {
+      setPrevButtonMargin("10%");
+      setNextButtonMargin("10%");
+    } else {
+      setPrevButtonMargin("0");
+      setNextButtonMargin("0");
+    }
+  }, [isExtraSmall, isSmall, isMedium, isLarge]);
+
+
+const [
+  LikeDayHadithMutation,
+  {
+    isSuccess: LikeDayHadithMutationSucess,
+    isLoading: LikeDayHadithMutationLoading,
+    isError: LikeDayHadithMutationError
+  },
+] = useLikeDayHadithMutation();
+  
+
+const likeClickHandle = async (e) => {
+
+  try {
+    
+    const res = await LikeDayHadithMutation({day_hadith_id:day_hadith_id});
+    if (res.data) {
+        
+      dispatch(setToastSuccess({ toastSuccess: "Love sended" }));
+    } else if (res.error) {
+      handleApiError(res.error, dispatch);
+    }
+  } catch (error) {
+    handleApiError(error, dispatch);
+  }
+};
+
   return (
-    <div className="haddis ">
-      <div className="ps-4 posts shadow-sm p-2 m-0 bg-body rounded border">
-        <div
-          className="d-flex justify-content-between"
-          style={{ height: "9vh", paddingTop: "1vh" }}
-        >
-          <div className="user-pics">
-            <img src={image} alt="user3" />
-          </div>
-        </div>
-        <div className="user-content-box pt-2">
-          <div className="user-names py-2">
-            <h1 className="full-name">Olivia Brent</h1>
-          </div>
-        </div>
-      </div>
+    <div className="row justify-content-center" style={{ backgroundColor: '#bababa' }}>
+      <NavLink to="/" className="d-none d-lg-block">
+        <i
+          style={{ width: '40px', height: '40px' }}
+          className="fa-solid fa-arrow-left text-dark fs-2 text-decoration-none fixed-top ms-5 mt-3">
+        </i>
+      </NavLink>
 
       <div
-        className="card-body custom-scroll bg-opacity-10 bg-light"
-        style={{ height: "93vh" }}
+        className="col-12 col-lg-6"
+        style={{
+          backgroundColor: "#bababa",
+          width: isExtraSmall
+            ? "100%"
+            : isSmall
+            ? "100%"
+            : isMedium
+            ? "100%"
+            : "49.2%",
+        }}
       >
-        <div className="pl-4 pr-3 py-4">
-          <h6 className="card-title">
-            এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী
-            প্রেরণ এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ
-            ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) মুসলিম
-            ২৩/৪৫ (৫৪, ২৫২৯, ৩৮৯৮, ৫০৭০, ৬৬৮৯, ৬৯৫৩; মুসলিম ২৩/৪৫ হাঃ ১৯০৭,
-            আহমাদ ১৬৮) ( আধুনিক প্রকাশনী- ১, ইসলামিক ফাউন্ডেশন ১) এ মর্মে
-            আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ
-            করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) মুসলিম ২৩/৪৫ (৫৪,
-            ২৫২৯, ৩৮৯৮, ৫০৭০, ৬৬৮৯, ৬৯৫৩; মুসলিম ২৩/৪৫ হাঃ ১৯০৭, আহমাদ ১৬৮) (
-            আধুনিক প্রকাশনী- ১, ইসলামিক ফাউন্ডেশন ১) এ মর্মে আল্লাহ্ তা’আলার
-            বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও
-            তাঁর পরবর্তী নবীদের (নবীদের) মুসলিম ২৩/৪৫ (৫৪, ২৫২৯, ৩৮৯৮, ৫০৭০,
-            ৬৬৮৯, ৬৯৫৩; মুসলিম ২৩/৪৫ হাঃ ১৯০৭, আহমাদ ১৬৮) ( আধুনিক প্রকাশনী- ১,
-            ইসলামিক ফাউন্ডেশন ১) এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি
-            আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের
-            (নবীদের) মুসলিম ২৩/৪৫ (৫৪, ২৫২৯, ৩৮৯৮, ৫০৭০, ৬৬৮৯, ৬৯৫৩; মুসলিম
-            ২৩/৪৫ হাঃ ১৯০৭, আহমাদ ১৬৮) ( আধুনিক প্রকাশনী- ১, ইসলামিক ফাউন্ডেশন
-              ৬৬৮৯, ৬৯৫৩; মুসলিম ২৩/৪৫ হাঃ ১৯০৭, আহমাদ ১৬৮) ( আধুনিক প্রকাশনী- ১,
-            ইসলামিক ফাউন্ডেশন ১) এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি
-            আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের
-            (নবীদের) মুসলিম ২৩/৪৫ (৫৪, ২৫২৯, ৩৮৯৮, ৫০৭০, ৬৬৮৯, ৬৯৫৩; মুসলিম
-            ২৩/৪৫ হাঃ ১৯০৭, আহমাদ ১৬৮) ( আধুনিক প্রকাশনী- ১, ইসলামিক ফাউন্ডেশন
-
-          </h6>
+        <div className="haddis p-0">
           
-        <div className="content-icons  mb-4"> {/* Use text-end for right alignment */}
-          <i className="far fa-heart red fs-3"></i> {/* Use fs-3 for larger icon size */}
-        </div>
-        </div>
+          {/* The head */}
+          <div
+            className="card-footer p-0 m-0 border"
+            style={{
+              position: "fixed",
+              top: "0",
+              width: isExtraSmall
+                ? "100%"
+                : isSmall
+                ? "100%"
+                : isMedium
+                ? "100%"
+                : "48.5%",
+              zIndex: "1000",
+            }}
+          >
+            <div
+              className="posts m-0 py-2 p-0"
+              style={{
+                borderRadius: "0px",
+                backgroundColor: "#ffffff",
+                border: "none",
+                minHeight: "65px",
+                borderBottom:'2px solid black'
+              }}
+            >
+              <NavLink to={`/`} className="text-decoration-none">
+                <i className="fa-solid fa-arrow-left text-dark fs-4 p-3 pe-1 d-lg-none "></i>
+              </NavLink>
 
-        <div className="d-flex justify-content-end"></div>
+              <div className="user-pics">
+                <img
+                  src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                  className="rounded-circle user_img_msg"
+                  alt="user3"
+                />
+              </div>
+              <div className="user-content-text-box">
+                <div className="user-names-text" style={{ marginTop: "2px" }}>
+                  <div className="name-column">
+                    <h1 className="full-name-text m-0 p-0">Mohammad</h1>
+                    <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="card-body bg-info custom-scroll bg-opacity-10 mt-5" style={{ paddingBottom: "70px", height: '100vh', backgroundColor: '#ffffff' }}>
+            <div className="pl-4 pr-3 py-4 pt-5 pb-5 mb-2">
+              <h6 className="card-title">
+                <div>
+                  {hadith ? (
+                    <p>{hadith}</p>
+                  ) : (
+                    <p>No Hadith found</p>
+                  )}
+                </div>
+              </h6>
+
+              {/* Love React */}
+              <div className="d-flex justify-content-end align-items-start mb-4 me-4">
+                <i
+                  className={`fa-heart fs-3 ${isHeartClicked ? 'fas red-heart' : 'far'}`}
+                  onClick={likeClickHandle}
+                ></i>
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="fixed-bottom py-3 d-flex justify-content-between align-items-center" style={{ paddingLeft: prevButtonMargin, paddingRight: nextButtonMargin }}>
+            <button
+              className="btn btn-primary hadith-nav-button ms-3"
+              onClick={handlePrev}
+              disabled={isPrevDisabled}
+            >
+              <i className="fa fa-chevron-left"></i> Previous
+            </button>
+            <button
+              className="btn btn-primary hadith-nav-button me-3"
+              onClick={handleNext}
+              disabled={isNextDisabled}
+            >
+              Next <i className="fa fa-chevron-right"></i>
+            </button>
+          </div>
+
+        </div>
       </div>
     </div>
   );

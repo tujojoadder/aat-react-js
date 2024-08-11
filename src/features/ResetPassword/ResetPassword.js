@@ -8,7 +8,7 @@ import {
 } from "../../services/userLoginApi";
 import { useDispatch } from "react-redux";
 import { setToastError } from "../home/HomeSlice";
-import { handleApiError } from "../ErrorHelper/ErrorHelper";
+import { handleApiError } from "../handleApiError/handleApiError";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

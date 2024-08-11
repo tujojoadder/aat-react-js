@@ -98,7 +98,7 @@ function App() {
         position="bottom-center"
         autoClose={2000}
         hideProgressBar
-        limit={3}
+        limit={1}
         newestOnTop={false}
         closeOnClick
         rtl={false}

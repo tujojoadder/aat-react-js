@@ -1,0 +1,38 @@
+.haddis {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hadith-nav-button {
+    border-radius: 50px;
+    width: 120px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .hadith-nav-button:disabled {
+    background-color: #d3d3d3;
+  }
+  
+  .hadith-nav-button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  .navigation-buttons {
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .navigation-buttons {
+      display: none;
+    }
+  }
+  

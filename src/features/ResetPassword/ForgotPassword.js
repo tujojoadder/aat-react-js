@@ -7,7 +7,7 @@ import { useForgotPasswordMutation } from "../../services/userLoginApi";
 import { setToastError } from "../home/HomeSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { handleApiError } from "../ErrorHelper/ErrorHelper";
+import { handleApiError } from "../handleApiError/handleApiError";
 
 export default function ForgotPassword() {
   const dispatch = useDispatch();

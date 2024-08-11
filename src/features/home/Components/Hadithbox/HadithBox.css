@@ -18,17 +18,16 @@
   border-top-right-radius: 10px;
   height: 8vh;
   min-height: 50px;
-  border-bottom: 2px solid blueviolet;
+  border-bottom: 1.6px solid #4d7492;
 }
-
 .btn-add {
-  background-color:#1c3c61;
+  background-color:#274a65;
   color: #fff;
   border: none;
   padding: 6px 10px;
   padding-left: 13px;
-border-top-right-radius: 15px;
-border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   font-weight: bold;
@@ -43,7 +42,49 @@ border-bottom-right-radius: 15px;
 }
 
 .btn-add:hover {
-  background-color:  #425363;
+  background-color: #425363;
+}
+
+.btn-add.loading {
+  background-color: #2a2d2f; /* Darker shade during loading */
+  cursor: not-allowed;
+}
+
+.btn-add.loading i {
+  margin-right: 0;
+}
+
+.btn-add.success {
+  background-color: #4caf50; /* Green color for success */
+}
+
+.btn-add.success i {
+  margin-right: 5px;
+}
+
+/* Optionally, add a pulse effect */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn-add.success {
+  animation: pulse 0.5s;
+}
+
+.btn-add i {
+  margin-right: 5px;
+}
+
+.btn-add:hover {
+  background-color: #425363;
 }
 
 .hadith-type {
@@ -57,9 +98,8 @@ border-bottom-right-radius: 15px;
   letter-spacing: 0.5px; /* Add subtle letter spacing */
 }
 
-
 .btn-new {
-  background-color: #1c3c61;
+  background-color: #274a65;
   color: #fff;
   width: 35px;
   height: 35px;
@@ -73,7 +113,7 @@ border-bottom-right-radius: 15px;
 }
 
 .btn-new:hover {
-  background-color:  #425363;
+  background-color: #425363;
 }
 
 .btn-new.loading {

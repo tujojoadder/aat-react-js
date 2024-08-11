@@ -19,7 +19,10 @@ token:'',
 
 /* Toast Messsage */
   toastError:'',
-  toastSuccess:''
+  toastSuccess:'',
+
+  /* Hadith */
+  allDayHadith: [], 
   
 };
 
@@ -88,12 +91,16 @@ setToastSuccess: (state, action) => {
   state.toastSuccess = toastSuccess;
 },
 
+/* <--- Hadith ---> */
+setAllDayHadith: (state, action) => {
+  state.allDayHadith = action.payload;
+},
 
 
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setProfile_picture,setUser_fname,setUser_lname,setEmail,setIdentifier,setModalMessage,setShow_Modal,setToken,setToastError,setToastSuccess} = homeSlice.actions;
+export const { setProfile_picture,setUser_fname,setUser_lname,setEmail,setIdentifier,setModalMessage,setShow_Modal,setToken,setToastError,setToastSuccess,setAllDayHadith} = homeSlice.actions;
 
 export default homeSlice.reducer;

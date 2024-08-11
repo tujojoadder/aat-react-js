@@ -2,7 +2,7 @@
 
 import { setToastError } from "../home/HomeSlice";
 
-export const handleApiError = (error, dispatch) => {
+ export const handleApiError = (error, dispatch) => {
  
 
   if (error?.status) {

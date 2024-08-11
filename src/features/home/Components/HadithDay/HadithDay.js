@@ -1,93 +1,52 @@
-import React from "react";
-import image from "./logo.jpg";
-import image1 from "./logo1.png";
-import image2 from "./logo2.png";
-import "./HadithDay";
-import HadithBox from "../Hadithbox/HadithBox";
-import HadithDayContent from "./HadithDayContent";
-import { useMediaQuery } from "react-responsive";
+import React, { useState, useEffect } from 'react';
+import HadithDayContent from './HadithDayContent';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import './HadithDay.css';
 
 export default function HadithDay() {
-  const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const location = useLocation();
+  const allDayHadith = useSelector((state) => state.home.allDayHadith);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state && location.state.serialNumber) {
+      const index = allDayHadith.findIndex(hadith => hadith.serialNumber === location.state.serialNumber);
+      /* findIndex return -1 when no maatch  */
+      if (index !== -1) {
+        setCurrentIndex(index);
+      }
+    }
+  }, [location.state, allDayHadith]);
+
+  const handlePrev = () => {
+    setCurrentIndex(prevIndex => Math.max(prevIndex - 1, 0));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex(prevIndex => Math.min(prevIndex + 1, allDayHadith.length - 1));
+  };
+
+  const handleBack = () => {
+    navigate(-1); // Go back to the previous page
+  };
 
   return (
-    <div
-      className={isNotSm ? "container-sm" : " "}
-   
-    >
-      <div className="row "   style={{ overflowX: "hidden" }}>
-        {/* Previous button taking first 3 columns */}
-        <div className="col-lg-3 col-md-2 d-none d-md-block   d-flex align-items-center justify-content-center">
-          <button
-            className=" carousel-dark carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExample"
-            data-bs-slide="prev"
-          >
-            <span
-              className="carousel-control-prev-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-        </div>
-
-        {/* Carousel taking middle 6 columns */}
-        <div className="col-lg-6 col-md-8 m-0 p-0" >
-          <div id="carouselExample" className="carousel slide">
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <HadithDayContent />
-              </div>
-              <div className="carousel-item">
-              <HadithDayContent />              </div>
-              <div className="carousel-item">
-                <HadithDayContent />
-              </div>
-            </div>
-
-            <button
-              className="d-md-none pre carousel-dark carousel-control-prev  "
-              type="button"
-              data-bs-target="#carouselExample"
-              data-bs-slide="prev"
-            >
-              <span
-                className="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-              className=" d-md-none next carousel-dark carousel-control-next  d-xl-none"
-              type="button"
-              data-bs-target="#carouselExample"
-              data-bs-slide="next"
-            >
-              <span
-                className="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Next button taking last 3 columns */}
-        <div className=" col-lg-3 col-md-2 d-none d-md-block  d-flex align-items-center justify-content-center">
-          <button
-            className=" carousel-dark carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExample"
-            data-bs-slide="next"
-          >
-            <span
-              className="carousel-control-next-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Next</span>
-          </button>
-        </div>
+    <div className="hadith-day-container" style={{overflowX:'hidden'}}>
+      <div className="hadith-day-content">
+        {allDayHadith.length > 0 && (
+          <HadithDayContent
+            hadith={allDayHadith[currentIndex].day_hadith.hadith.hadith}
+            serialNumber={allDayHadith[currentIndex].serialNumber}
+            day_hadith_id={allDayHadith[currentIndex].day_hadith.day_hadith_id}
+            handlePrev={handlePrev}
+            handleNext={handleNext}
+            isLiked={allDayHadith[currentIndex].isLiked} // Pass isLiked here
+            isPrevDisabled={currentIndex === 0}
+            isNextDisabled={currentIndex === allDayHadith.length - 1}
+          />
+        )}
       </div>
     </div>
   );

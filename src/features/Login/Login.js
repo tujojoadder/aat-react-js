@@ -27,7 +27,7 @@ import {
   setToastError,
   setToastSuccess
 } from "../home/HomeSlice";
-import { handleApiError } from "../ErrorHelper/ErrorHelper";
+import { handleApiError } from "../handleApiError/handleApiError";
 export default function Login() {
   //navigate
   const navigate = useNavigate();
@@ -62,6 +62,8 @@ export default function Login() {
 
   //function for submit the form
   // Handle handleCridential google
+
+  
   const handleCridential = async (credentialResponse) => {
     const { credential } = credentialResponse;
     const res = await googleHandle({ token: credential });
@@ -470,6 +472,7 @@ export default function Login() {
     </div>
   );
 }
+
 
 
 
