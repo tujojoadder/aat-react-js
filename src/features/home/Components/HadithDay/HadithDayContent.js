@@ -7,10 +7,10 @@ import { handleApiError } from "../../../handleApiError/handleApiError";
 import { useDispatch } from "react-redux";
 import { setToastSuccess } from "../../HomeSlice";
 
-export default function HadithDayContent({ hadith, serialNumber, handlePrev, handleNext, isPrevDisabled, isNextDisabled,day_hadith_id }) {
+export default function HadithDayContent({ hadith, serialNumber, handlePrev, handleNext, isPrevDisabled, isNextDisabled, day_hadith_id, isLiked }) {
   const [prevButtonMargin, setPrevButtonMargin] = useState("0");
   const [nextButtonMargin, setNextButtonMargin] = useState("0");
-  const [isHeartClicked, setIsHeartClicked] = useState(false); // State for heart icon
+  const [isHeartClicked, setIsHeartClicked] = useState(isLiked); // Initialize based on isLiked prop
 
   const isExtraSmall = useMediaQuery({ query: '(max-width: 576px)' });
   const isSmall = useMediaQuery({ query: '(min-width: 577px) and (max-width: 788px)' });
@@ -32,32 +32,35 @@ export default function HadithDayContent({ hadith, serialNumber, handlePrev, han
     }
   }, [isExtraSmall, isSmall, isMedium, isLarge]);
 
+  // Sync isHeartClicked state with isLiked prop
+  useEffect(() => {
+    setIsHeartClicked(isLiked);
+  }, [isLiked]);
 
-const [
-  LikeDayHadithMutation,
-  {
-    isSuccess: LikeDayHadithMutationSucess,
-    isLoading: LikeDayHadithMutationLoading,
-    isError: LikeDayHadithMutationError
-  },
-] = useLikeDayHadithMutation();
+  const [
+    LikeDayHadithMutation,
+    {
+      isSuccess: LikeDayHadithMutationSucess,
+      isLoading: LikeDayHadithMutationLoading,
+      isError: LikeDayHadithMutationError
+    },
+  ] = useLikeDayHadithMutation();
   
 
-const likeClickHandle = async (e) => {
-
-  try {
-    const res = await LikeDayHadithMutation({day_hadith_id:day_hadith_id});
-    if (res.data) {
+  const likeClickHandle = async (e) => {
+    try {
+      const res = await LikeDayHadithMutation({ day_hadith_id });
+      if (res.data) {
         setIsHeartClicked(!isHeartClicked);
         console.log(res.data.message);
-      dispatch(setToastSuccess({ toastSuccess: res.data.message }));
-    } else if (res.error) {
-      handleApiError(res.error, dispatch);
+        dispatch(setToastSuccess({ toastSuccess: res.data.message }));
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
+      }
+    } catch (error) {
+      handleApiError(error, dispatch);
     }
-  } catch (error) {
-    handleApiError(error, dispatch);
-  }
-};
+  };
 
   return (
     <div className="row justify-content-center" style={{ backgroundColor: '#bababa' }}>

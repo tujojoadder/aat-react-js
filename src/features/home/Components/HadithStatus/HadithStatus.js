@@ -51,6 +51,7 @@ export default function HadithStatus() {
 
   useEffect(() => {
     if (GetDayHadithsQuerySucess) {
+      
       console.log(GetDayHadithsQuery.data);
      
       const dataWithSerialNumbers = GetDayHadithsQuery.data.map((item, index) => ({

@@ -30,10 +30,10 @@
   
   @keyframes glowEffect {
     0% {
-      filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+      filter: drop-shadow(0 0 2px rgba(255, 0, 0, 0.5));
     }
     100% {
-      filter: drop-shadow(0 0 5px rgba(255, 0, 0, 1));
+      filter: drop-shadow(0 0 2px rgba(255, 0, 0, 1));
     }
   }
   

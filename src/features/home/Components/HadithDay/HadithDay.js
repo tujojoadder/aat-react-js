@@ -37,12 +37,14 @@ export default function HadithDay() {
       <div className="hadith-day-content">
         {allDayHadith.length > 0 && (
           <HadithDayContent
+
+          isLiked={allDayHadith[currentIndex].day_hadith.isLiked}
             hadith={allDayHadith[currentIndex].day_hadith.hadith.hadith}
             serialNumber={allDayHadith[currentIndex].serialNumber}
             day_hadith_id={allDayHadith[currentIndex].day_hadith.day_hadith_id}
             handlePrev={handlePrev}
             handleNext={handleNext}
-            isLiked={allDayHadith[currentIndex].isLiked} // Pass isLiked here
+
             isPrevDisabled={currentIndex === 0}
             isNextDisabled={currentIndex === allDayHadith.length - 1}
           />
