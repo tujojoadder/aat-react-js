@@ -195,10 +195,12 @@ export default function HadithDayContent({
               className="btn btn-primary hadith-nav-button ms-3"
               onClick={handlePrev}
               disabled={isPrevDisabled}
+              style={{borderRadius:'50px'}}
             >
               <i className="fa fa-chevron-left"></i> Previous
             </button>
-            <button
+            <button 
+            style={{borderRadius:'50px'}}
               className="btn btn-primary hadith-nav-button me-3"
               onClick={handleNext}
               disabled={isNextDisabled}
