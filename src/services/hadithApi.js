@@ -64,10 +64,28 @@ export const hadithApi = createApi({
             };
           },
         }),
+
+/* Day hadith Details  */
+dayHadithDetails: builder.mutation({
+        query: () => {
+          return {
+            url: "/dayhadithdetails",
+            method: "POST",
+           
+          };
+        },
+      }),
+
+
+
+
+
+
+
       
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetRandomHadithQuery,useSetDayhadithMutation,useGetDayHadithsQuery,useLikeDayHadithMutation} = hadithApi
+export const { useDayHadithDetailsMutation,useGetRandomHadithQuery,useSetDayhadithMutation,useGetDayHadithsQuery,useLikeDayHadithMutation} = hadithApi
