@@ -95,12 +95,18 @@ setToastSuccess: (state, action) => {
 setAllDayHadith: (state, action) => {
   state.allDayHadith = action.payload;
 },
+    /* <--- Update isLiked status for a specific Hadith ---> */
+ /* Update isLiked for specific index */
+ setIsLiked: (state, action) => {
+  const { index } = action.payload;
+  state.allDayHadith[index].day_hadith.isLiked = true;
+},
 
 
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setProfile_picture,setUser_fname,setUser_lname,setEmail,setIdentifier,setModalMessage,setShow_Modal,setToken,setToastError,setToastSuccess,setAllDayHadith} = homeSlice.actions;
+export const { setIsLiked,setProfile_picture,setUser_fname,setUser_lname,setEmail,setIdentifier,setModalMessage,setShow_Modal,setToken,setToastError,setToastSuccess,setAllDayHadith} = homeSlice.actions;
 
 export default homeSlice.reducer;

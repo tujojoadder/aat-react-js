@@ -10,15 +10,22 @@ export default function HadithDay() {
   const allDayHadith = useSelector((state) => state.home.allDayHadith);
   const navigate = useNavigate();
 
+  // Navigate to home if allDayHadith is not set or empty
   useEffect(() => {
-    if (location.state && location.state.serialNumber) {
+    if (!allDayHadith || allDayHadith.length === 0) {
+      navigate('/');
+    }
+  }, [allDayHadith, navigate]);
+
+  // Set currentIndex based on location.state.serialNumber
+  useEffect(() => {
+    if (location.state && location.state.serialNumber && allDayHadith.length > 0) {
       const index = allDayHadith.findIndex(hadith => hadith.serialNumber === location.state.serialNumber);
-      /* findIndex return -1 when no maatch  */
       if (index !== -1) {
         setCurrentIndex(index);
       }
     }
-  }, [location.state, allDayHadith]);
+  }, [location.state]);
 
   const handlePrev = () => {
     setCurrentIndex(prevIndex => Math.max(prevIndex - 1, 0));
@@ -33,18 +40,17 @@ export default function HadithDay() {
   };
 
   return (
-    <div className="hadith-day-container" style={{overflowX:'hidden'}}>
+    <div className="hadith-day-container" style={{ overflowX: 'hidden' }}>
       <div className="hadith-day-content">
         {allDayHadith.length > 0 && (
           <HadithDayContent
-
-          isLiked={allDayHadith[currentIndex].day_hadith.isLiked}
+            index={currentIndex} // Pass the current index
+            isLiked={allDayHadith[currentIndex].day_hadith.isLiked}
             hadith={allDayHadith[currentIndex].day_hadith.hadith.hadith}
             serialNumber={allDayHadith[currentIndex].serialNumber}
             day_hadith_id={allDayHadith[currentIndex].day_hadith.day_hadith_id}
             handlePrev={handlePrev}
             handleNext={handleNext}
-
             isPrevDisabled={currentIndex === 0}
             isNextDisabled={currentIndex === allDayHadith.length - 1}
           />
