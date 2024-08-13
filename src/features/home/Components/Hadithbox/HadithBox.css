@@ -17,7 +17,7 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   height: 8vh;
-  min-height: 50px;
+  min-height: 55px;
   border-bottom: 1.6px solid #4d7492;
 }
 
@@ -182,4 +182,18 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+.hadith-box.dayHadithPage {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.hadith-head.dayHadithHead {
+  height: 10vh;
+}
+
+.card-body.dayHadithBody {
+  height: 90vh;
 }

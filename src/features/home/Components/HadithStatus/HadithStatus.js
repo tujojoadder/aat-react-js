@@ -45,7 +45,7 @@ export default function HadithStatus() {
 
     if (wrapperRef.current) {
       const { scrollWidth, clientWidth } = wrapperRef.current;
-      setShowNext(scrollWidth+100 > clientWidth); // Enable the next button if content is wider than the container
+      setShowNext(scrollWidth + 100 > clientWidth); // Enable the next button if content is wider than the container
     }
   }, [allDayHadith]);
 
@@ -81,6 +81,21 @@ export default function HadithStatus() {
     isLoading || GetDayHadithsQueryError ? '' : 'border-bottom border-start border-end'
   }`;
 
+  // Create the array with the first item having type='create'
+  const hadithItems = [
+    <HadithIteam key="create-item" type="create" />, // Special item with type='create'
+    ...allDayHadith.map((user) => (
+      <HadithIteam
+        key={user.user_id}
+        user_fname={user.user_fname || 'N/A'} // Provide default values
+        user_lname={user.user_lname || 'N/A'}
+        hadith={user.day_hadith.hadith.hadith || 'No hadith available'}
+        day_hadth_id={user.day_hadith.day_hadith_id || 'unknown'}
+        serialNumber={user.serialNumber || 0}
+      />
+    ))
+  ];
+
   return (
     <div
       className={containerClasses}
@@ -106,20 +121,7 @@ export default function HadithStatus() {
             <i className="fa fa-angle-left" aria-hidden="true"></i>
           </button>
           <div ref={wrapperRef} className="wrapper ml-2 my-2 flex-grow-1" onScroll={handleScroll}>
-            {allDayHadith.length > 0 ? (
-              allDayHadith.map((user) => (
-                <HadithIteam
-                  key={user.user_id}
-                  user_fname={user.user_fname}
-                  user_lname={user.user_lname}
-                  hadith={user.day_hadith.hadith.hadith}
-                  day_hadth_id={user.day_hadith.day_hadith_id}
-                  serialNumber={user.serialNumber}
-                />
-              ))
-            ) : (
-              <p>No users found</p>
-            )}
+            {hadithItems}
           </div>
           <button
             className="btn scroll-button right me-1"

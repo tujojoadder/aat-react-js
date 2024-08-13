@@ -57,6 +57,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setToastError, setToastSuccess } from "./features/home/HomeSlice";
+import HadithBox from "./features/home/Components/Hadithbox/HadithBox";
+import SetHadith from "./features/home/Components/SetHadith/SetHadith";
 
 function App() {
   const dispatch = useDispatch();
@@ -318,11 +320,15 @@ function App() {
               element={<IChannelsManage />}
             />
 
+
+
             {/* Mobile Menu */}
             <Route path="menu" exact element={<MobileMenu />} />
+
+   
           </Route>
 
-          {/* Public routes */}
+          {/* private route without navbar  */}
           <Route path="/" exact element={<Home />} />
           <Route path="/day" exact element={<HadithDay />} />
           <Route path="/login" exact element={<Login />} />
@@ -333,6 +339,12 @@ function App() {
             exact
             element={<ResetPassword />}
           />
+         {/* hadithBox */}
+         <Route path="dayhadith" exact element={<SetHadith />} />
+
+
+
+
           <Route path="*" exact element={<NotFound />} />
         </Routes>
       </UserDetailsChecker>

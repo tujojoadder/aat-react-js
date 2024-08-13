@@ -57,6 +57,7 @@ import ProfileManage from "../Profile/ProfileManage/ProfileManage";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import MyPages from "../Page/MyPages/MyPages";
 import UserDetails from "./UserDetails/UserDetails";
+import HadithBox from "../home/Components/Hadithbox/HadithBox";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px

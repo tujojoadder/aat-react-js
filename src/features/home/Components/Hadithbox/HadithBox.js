@@ -11,6 +11,7 @@ import Spinner from "../../../Spinner/Spinner";
 
 const HadithBox = () => {
   const { data: hadith, isFetching, isError, refetch } = useGetRandomHadithQuery();
+  const isMid = useMediaQuery({ query: "(max-width: 992px)" });
   const isLg = useMediaQuery({ query: "(min-width: 1400px)" });
   const dispatch = useDispatch();
   const [buttonClass, setButtonClass] = useState('');
@@ -62,7 +63,7 @@ const HadithBox = () => {
     if (showJoinedGroups && DayHadithDetailsMutationSucess) {
       content = (
         <div className="mb-3">
-          <p className="text-center mb-0 border-bottom pb-1">
+          <p className="text-left mb-0 ps-2  ">
             <b> You have {likeDetails.length} <i className='fa-heart fs-4 fas red-heart'></i></b>
           </p>
           {likeDetails.map((like, index) => {
@@ -70,7 +71,7 @@ const HadithBox = () => {
             const isActive = location.pathname === `/groups/mygroup/${user.user_fname}_${user.user_lname}`;
             return (
               <NavLink key={index} to={`/groups/mygroup/${user.user_fname}_${user.user_lname}`} className="text-decoration-none">
-                <div className="col-12 mb-2">
+                <div className="col-12 mb-2 p-0">
                   <WhoLikeHadithDay
                     name={`${user.user_fname} ${user.user_lname}`}
                     handle={`@${user.identifier}`}
@@ -107,9 +108,17 @@ const HadithBox = () => {
     }
   };
 
+  const isDayHadithPage = location.pathname === '/dayHadith';
+  const hadithBoxStyle = {
+    height: isMid ? '100vh' : '',
+  };
+
   return (
-    <div className="hadith-box shadow-sm mb-2 mb-1 shadow-lg bg-white rounded border">
-      <div className="hadith-head ms-0 ps-0">
+    <div className={isDayHadithPage?'p-0': 'm-0'} style={{height:isDayHadithPage?'100vh':''}}>
+{/*      <div className="   m-0 p-0" style={{ backgroundColor: "white",Height:'100vh' }}>
+ */}     
+    <div className={`hadith-box shadow-sm mb-2 mb-1 shadow-lg bg-white rounded border ${isDayHadithPage ? 'dayHadithPage' : ''}`} style={hadithBoxStyle}>
+      <div className={`hadith-head ms-0 ps-0 ${isDayHadithPage ? 'dayHadithHead' : ''}`}>
         <button
           className={`btn-add ${buttonClass} ${setDayHadithLoading ? 'loading' : ''}`}
           onClick={handleAddButtonClick}
@@ -120,7 +129,7 @@ const HadithBox = () => {
           ) : (
             <i className="fa-solid fa-plus"></i>
           )}
-          {isLg ? "Add Day" : ""}
+          {isLg ? "Add Day":isDayHadithPage?"Add Day":""}
         </button>
 
         <div className="hadith-info">
@@ -144,11 +153,12 @@ const HadithBox = () => {
           <i className="fa-solid fa-rotate"></i>
         </div>
       </div>
-      <div className={`card-body p-0 pt-2 ${showJoinedGroups ? 'card-body-white' : 'card-body-light'}`}>
+      <div className={`card-body p-0 pt-2   ${showJoinedGroups ? 'card-body-white  px-0' : 'card-body-light px-2' } ${isDayHadithPage ? 'dayHadithBody m-0 p-3 ' : 'p-3'}`}>
         <div className="card-content">
-          <p className={`card-text ${showJoinedGroups ? 'px-0' : 'py-2 px-3'}`}>{content}</p>
+         <p className={`card-text ${showJoinedGroups ? 'px-0' : 'py-2 px-2 pt-1 '}`}>{content}</p>
         </div>
       </div>
+    </div>
     </div>
   );
 };
