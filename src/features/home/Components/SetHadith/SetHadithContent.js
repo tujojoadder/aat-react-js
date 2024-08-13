@@ -191,7 +191,7 @@ export default function SetHadithContent() {
                   <div
                     className="d-flex justify-content-end align-items-start"
                     onClick={handleHeartClick}
-                  >
+                  >  
                     <i
                       style={{ cursor: "pointer" }}
                       className={`fa-heart fs-4 fas heart ${
