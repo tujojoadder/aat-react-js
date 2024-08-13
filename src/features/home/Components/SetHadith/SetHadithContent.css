@@ -1,0 +1,24 @@
+/* SetHadithContent.css */
+.btn-add .text {
+    display: inline;
+  }
+  
+  @media (max-width: 385px) {
+    .btn-add .text {
+      display: none;
+    }
+    .btn-add  {
+        
+        border-radius: 50%;
+        padding-right: 10px;
+     
+      }
+  }
+  
+  @media (max-width: 300px) {
+    .btn-add  {
+      display: none;
+    }
+    
+  }
+  

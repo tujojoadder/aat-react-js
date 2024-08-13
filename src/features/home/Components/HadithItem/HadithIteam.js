@@ -15,7 +15,7 @@ const HadithIteam = ({ type, user_fname, user_lname, hadith, serialNumber, day_h
     if (typeof text !== 'string') {
       return ''; // Handle case where text might not be a string
     }
-    return text.length > 17 ? `${text.substring(0, 13)}...` : text;
+    return text.length > 25 ? `${text.substring(0, 25)}...` : text;
   };
 
   // Handle click event to navigate to /day with the hadith data
@@ -30,38 +30,47 @@ const HadithIteam = ({ type, user_fname, user_lname, hadith, serialNumber, day_h
   if (type === 'create') {
     return (
       <div
-      className="item"
-      style={{
-        cursor: 'pointer',
-        padding: '20px',
-        border: '1px solid #e0e0e0',
-        borderRadius: '10px',
-        transition: 'box-shadow 0.3s, transform 0.3s',
-        backgroundColor: '#f9f9f9',
-      }}
-      onClick={handleSetHadith}
-  
-    >
-      <div className="user-div d-flex align-items-center justify-content-center">
-        <div className="text-center">
-          <div className="icon mb-2">
-            <i className="fas fa-edit" style={{ fontSize: '2.5rem', color: '#274a65' }}></i>
+        className="item"
+        style={{
+          cursor: 'pointer',
+          padding: '20px',
+          border: '1px solid #e0e0e0',
+          borderRadius: '15px',
+          background: 'linear-gradient(135deg, #f9f9f9 0%, #e8eff3 100%)',
+        }}
+        onClick={handleSetHadith}
+ 
+      >
+        <div className="user-div d-flex align-items-center justify-content-center">
+          <div className="text-center">
+            <div className="icon mb-2">
+              <i
+                className="fas fa-edit"
+                style={{
+                  fontSize: '2rem',
+                  color: '#274a65',
+                  transition: 'color 0.3s',
+                }}
+              ></i>
+            </div>
+            <p
+              className="m-0"
+              style={{
+                fontWeight: '700',
+                fontSize: '0.8rem',
+                color: '#333',
+                letterSpacing: '0.5px',
+                textTransform: 'uppercase',
+              }}
+            >
+              Set Your 
+            </p>
+            <h5>Day Hadith</h5>
           </div>
-          <p
-            className="m-0"
-            style={{
-              fontWeight: '600',
-              fontSize: '1rem',
-              color: '#555',
-            }}
-          >
-            Set Your Day Hadith
-          </p>
         </div>
       </div>
-    </div>
-
     );
+    
   }
 
 

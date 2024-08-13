@@ -89,7 +89,7 @@ export default function HadithDayContent({
 
   return (
     <div className="row justify-content-center" style={{ backgroundColor: "#bababa" }}>
-      <NavLink to={`/`} className="d-none d-lg-block">
+      <NavLink to={`/`} className="d-none d-lg-block ">
         <i
           style={{ width: "40px", height: "40px" }}
           className="fa-solid fa-arrow-left text-dark fs-2 text-decoration-none fixed-top ms-5 mt-3"
@@ -109,10 +109,11 @@ export default function HadithDayContent({
             : "49.2%"
         }}
       >
-        <div className="haddis p-0">
+        <div className="haddis p-0" >  
           <div
-            className="card-footer p-0 m-0 border"
+            className="card-footer p-0 m-0 "
             style={{
+              
               position: "fixed",
               top: "0",
               width: isExtraSmall
@@ -128,11 +129,13 @@ export default function HadithDayContent({
             <div
               className="posts m-0 py-2 p-0"
               style={{
-                borderRadius: "0px",
+                borderTopLeftRadius: "10px",
+                borderTopRightRadius: "10px",
                 backgroundColor: "#ffffff",
                 border: "none",
                 minHeight: "65px",
                 borderBottom: "2px solid black"
+
               }}
             >
               <NavLink to={`/`} className="text-decoration-none">
@@ -146,7 +149,7 @@ export default function HadithDayContent({
                   alt="user3"
                 />
               </div>
-              <div className="user-content-text-box">
+              <div className="user-content-text-box" >
                 <div className="user-names-text" style={{ marginTop: "2px" }}>
                   <div className="name-column">
                     <h1 className="full-name-text m-0 p-0">Mohammad</h1>

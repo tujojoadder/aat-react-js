@@ -471,6 +471,7 @@ const Navbar = () => {
                 />
                 {/* Mobile Menu */}
                 <Route path="menu" exact element={<MobileMenu />} />
+
               </Routes>
             </div>
           </div>
