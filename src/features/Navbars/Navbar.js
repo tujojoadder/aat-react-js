@@ -96,11 +96,12 @@ const Navbar = () => {
         overflowX: "hidden",
       }}
     >
-      <div className={isNotSm ? "container-sm  " : "ps-2 pe-2"} style={{}}>
+      <div className={isNotSm ? "container-sm  " : "ps-2 pe-2"} >
         {/* xs NAV BAR */}
         {!isInPathsToHideNav && !isInPathsToHideNavHead && (
           <nav
             className={`bg-light xs-nav fixed-bottom d-sm-none border-bottom`}
+            style={{minWidth:'270px'}}
           >
             <div className="container-fluid">
               <div className="row">
