@@ -24,13 +24,18 @@ export default function HadithDayContent({
   const [prevButtonMargin, setPrevButtonMargin] = useState("0");
   const [nextButtonMargin, setNextButtonMargin] = useState("0");
   const [isHeartClicked, setIsHeartClicked] = useState(isLiked);
+  // Truncate functions to handle long texts
+  const truncateName = (userFname, userLname) => {
+    const fullName = `${userFname || ''} ${userLname || ''}`.trim();
+    return fullName.length > 20 ? `${fullName.substring(0, 20)}...` : fullName;
+  };
 
   const isExtraSmall = useMediaQuery({ query: "(max-width: 576px)" });
   const isSmall = useMediaQuery({
-    query: "(min-width: 577px) and (max-width: 788px)"
+    query: "(min-width: 577px) and (max-width: 788px)",
   });
   const isMedium = useMediaQuery({
-    query: "(min-width: 789px) and (max-width: 991px)"
+    query: "(min-width: 789px) and (max-width: 991px)",
   });
   const isLarge = useMediaQuery({ query: "(min-width: 992px)" });
   const dispatch = useDispatch();
@@ -57,8 +62,8 @@ export default function HadithDayContent({
     {
       isSuccess: LikeDayHadithMutationSucess,
       isLoading: LikeDayHadithMutationLoading,
-      isError: LikeDayHadithMutationError
-    }
+      isError: LikeDayHadithMutationError,
+    },
   ] = useLikeDayHadithMutation();
 
   const likeClickHandle = async (e) => {
@@ -68,14 +73,13 @@ export default function HadithDayContent({
 
     try {
       const res = await LikeDayHadithMutation({ day_hadith_id });
-      
+
       if (res.data) {
         dispatch(setIsLiked({ index }));
 
-        if (res.data.message=='Love sended') {
+        if (res.data.message == "Love sended") {
           dispatch(setToastSuccess({ toastSuccess: res.data.message }));
         }
-
       } else if (res.error) {
         handleApiError(res.error, dispatch);
       }
@@ -84,14 +88,11 @@ export default function HadithDayContent({
     }
   };
 
-
-
-
-
-  
-
   return (
-    <div className="row justify-content-center" style={{ backgroundColor: "#bababa" }}>
+    <div
+      className="row justify-content-center"
+      style={{ backgroundColor: "#bababa" }}
+    >
       <NavLink to={`/`} className="d-none d-lg-block ">
         <i
           style={{ width: "40px", height: "40px" }}
@@ -109,14 +110,13 @@ export default function HadithDayContent({
             ? "100%"
             : isMedium
             ? "100%"
-            : "49.2%"
+            : "49.2%",
         }}
       >
-        <div className="haddis p-0" >  
+        <div className="haddis p-0">
           <div
             className="card-footer p-0 m-0 "
             style={{
-              
               position: "fixed",
               top: "0",
               width: isExtraSmall
@@ -126,18 +126,16 @@ export default function HadithDayContent({
                 : isMedium
                 ? "100%"
                 : "48.5%",
-              zIndex: "1000"
+              zIndex: "1000",
             }}
           >
             <div
               className="posts m-0 py-2 p-0"
               style={{
-              
                 backgroundColor: "#ffffff",
                 border: "none",
                 minHeight: "65px",
-                borderBottom: "2px solid black"
-
+                borderBottom: "2px solid black",
               }}
             >
               <NavLink to={`/`} className="text-decoration-none">
@@ -146,15 +144,20 @@ export default function HadithDayContent({
 
               <div className="user-pics">
                 <img
-   src={`http://127.0.0.1:8000/${profile_picture}`}                  className="rounded-circle user_img_msg"
+                  src={`http://127.0.0.1:8000/${profile_picture}`}
+       s           className="rounded-circle user_img_msg"
                   alt="user3"
                 />
               </div>
-              <div className="user-content-text-box" >
+              <div className="user-content-text-box">
                 <div className="user-names-text" style={{ marginTop: "2px" }}>
                   <div className="name-column">
-                    <h1 className="full-name-text m-0 p-0 text-truncate">{userFname} {userLname}</h1>
-                    <p className="user-name-text m-0 p-0 text-truncate">@{Identifier}</p>
+                    <h1 className="full-name-text m-0 p-0  ">
+                     { truncateName(userFname,userLname)}
+                    </h1>
+                    <p className="user-name-text m-0 p-0  text-truncate ">
+                      @{Identifier}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -166,14 +169,12 @@ export default function HadithDayContent({
             style={{
               paddingBottom: "70px",
               height: "100vh",
-              backgroundColor: "#ffffff"
+              backgroundColor: "#ffffff",
             }}
           >
             <div className="pl-4 pr-3 py-4 pt-5 pb-5 mb-2">
               <h6 className="card-title">
-                <div>
-                  {hadith ? <p>{hadith}</p> : <p>No Hadith found</p>}
-                </div>
+                <div>{hadith ? <p>{hadith}</p> : <p>No Hadith found</p>}</div>
               </h6>
 
               <div
@@ -181,7 +182,9 @@ export default function HadithDayContent({
                 style={{ cursor: "pointer" }}
               >
                 <i
-                  className={`fa-heart fs-3 ${isHeartClicked ? "fas red-heart" : "far"}`}
+                  className={`fa-heart fs-3 ${
+                    isHeartClicked ? "fas red-heart" : "far"
+                  }`}
                   onClick={likeClickHandle}
                 ></i>
               </div>
@@ -192,27 +195,26 @@ export default function HadithDayContent({
             className="fixed-bottom py-3 d-flex justify-content-between align-items-center"
             style={{
               paddingLeft: prevButtonMargin,
-              paddingRight: nextButtonMargin
+              paddingRight: nextButtonMargin,
             }}
           >
             <button
               className="btn btn-primary hadith-nav-button ms-3"
               onClick={handlePrev}
               disabled={isPrevDisabled}
-              style={{borderRadius:'50px'}}
+              style={{ borderRadius: "50px" }}
             >
               <i className="fa fa-chevron-left"></i> Previous
             </button>
-            <button 
-            style={{borderRadius:'50px'}}
+            <button
+              style={{ borderRadius: "50px" }}
               className="btn btn-primary hadith-nav-button me-3"
               onClick={handleNext}
               disabled={isNextDisabled}
             >
               Next <i className="fa fa-chevron-right"></i>
             </button>
-         
-        </div>
+          </div>
         </div>
       </div>
     </div>
