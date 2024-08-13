@@ -7,6 +7,7 @@ import './HadithDay.css';
 export default function HadithDay() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const location = useLocation();
+  //Retrive all data hadith from redux state
   const allDayHadith = useSelector((state) => state.home.allDayHadith);
   const navigate = useNavigate();
 
@@ -19,6 +20,7 @@ export default function HadithDay() {
 
   // Set currentIndex based on location.state.serialNumber
   useEffect(() => {
+
     if (location.state && location.state.serialNumber && allDayHadith.length > 0) {
       const index = allDayHadith.findIndex(hadith => hadith.serialNumber === location.state.serialNumber);
       if (index !== -1) {
@@ -42,12 +44,16 @@ export default function HadithDay() {
   return (
     <div className="hadith-day-container" style={{ overflowX: 'hidden' }}>
       <div className="hadith-day-content">
+        {/* //we will passing data depending on current Index Number */}
         {allDayHadith.length > 0 && (
           <HadithDayContent
             index={currentIndex} // Pass the current index
+            userFname={allDayHadith[currentIndex].user_fname}
+            userLname={allDayHadith[currentIndex].user_lname}
+            Identifier={allDayHadith[currentIndex].identifier}
+            profile_picture={allDayHadith[currentIndex].profile_picture}
             isLiked={allDayHadith[currentIndex].day_hadith.isLiked}
-            hadith={allDayHadith[currentIndex].day_hadith.hadith.hadith}
-            serialNumber={allDayHadith[currentIndex].serialNumber}
+            hadith={allDayHadith[currentIndex].day_hadith.hadith.hadith}         
             day_hadith_id={allDayHadith[currentIndex].day_hadith.day_hadith_id}
             handlePrev={handlePrev}
             handleNext={handleNext}

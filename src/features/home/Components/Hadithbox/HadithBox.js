@@ -102,8 +102,6 @@ const HadithBox = () => {
       }
     } catch (error) {
       handleApiError(error, dispatch);
-    } finally {
-      setButtonDisabled(false);
     }
   };
 

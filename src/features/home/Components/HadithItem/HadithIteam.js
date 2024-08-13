@@ -2,7 +2,7 @@ import React from 'react';
 import image from './logo.jpg'; // Make sure this path is correct
 import { useNavigate } from 'react-router-dom';
 
-const HadithIteam = ({ type, user_fname, user_lname, hadith, serialNumber, day_hadth_id }) => {
+const HadithIteam = ({ type, user_fname, user_lname, hadith, serialNumber, day_hadth_id,profile_picture }) => {
   const navigate = useNavigate();
 
   // Truncate functions to handle long texts
@@ -81,7 +81,7 @@ const HadithIteam = ({ type, user_fname, user_lname, hadith, serialNumber, day_h
         <div className="d-flex flex-column bd-highlight">
           <div className="mt-2 mb-1 bd-highlight">
             <img
-              src={image}
+             src={`http://127.0.0.1:8000/${profile_picture}`}
               style={{
                 width: '50px',
                 height: '50px',

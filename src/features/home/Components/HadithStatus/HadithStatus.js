@@ -13,8 +13,7 @@ export default function HadithStatus() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const allDayHadith = useSelector((state) => state.home.allDayHadith);
-
+/*  Get all user day hadiths  */
   const {
     data: GetDayHadithsQuery,
     isSuccess: GetDayHadithsQuerySuccess,
@@ -22,6 +21,9 @@ export default function HadithStatus() {
     isError: GetDayHadithsQueryError,
     refetch
   } = useGetDayHadithsQuery();
+
+ /*  after the retriving we set that data as redux stats now we are accessing */
+  const allDayHadith = useSelector((state) => state.home.allDayHadith);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -36,6 +38,8 @@ export default function HadithStatus() {
         ...item,
         serialNumber: index + 1,
       }));
+console.log(dataWithSerialNumbers);
+      // setting retrival data as redux with serial numbers
       dispatch(setAllDayHadith(dataWithSerialNumbers));
     }
   }, [GetDayHadithsQuerySuccess, GetDayHadithsQuery, dispatch]);
@@ -89,6 +93,7 @@ export default function HadithStatus() {
         key={user.user_id}
         user_fname={user.user_fname || 'N/A'} // Provide default values
         user_lname={user.user_lname || 'N/A'}
+        profile_picture={user.profile_picture || 'N/A'   }
         hadith={user.day_hadith.hadith.hadith || 'No hadith available'}
         day_hadth_id={user.day_hadith.day_hadith_id || 'unknown'}
         serialNumber={user.serialNumber || 0}

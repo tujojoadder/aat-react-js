@@ -20,7 +20,7 @@ export default function SetHadithContent() {
     isError,
     refetch,
   } = useGetRandomHadithQuery();
-  const naviagte=useNavigate();
+  const naviagte = useNavigate();
   const isLg = useMediaQuery({ query: "(min-width: 1400px)" });
   const dispatch = useDispatch();
   const [buttonClass, setButtonClass] = useState("");
@@ -133,13 +133,11 @@ export default function SetHadithContent() {
       }
     } catch (error) {
       handleApiError(error, dispatch);
-    } finally {
-      setButtonDisabled(false);
     }
   };
 
   function goBack() {
-    naviagte('/');
+    naviagte("/");
   }
 
   const isExtraSmall = useMediaQuery({ query: "(max-width: 576px)" });
@@ -161,14 +159,17 @@ export default function SetHadithContent() {
       </NavLink>
 
       <div className="col-12 col-lg-6">
-        <div className="hadiths p-0" >
+        <div className="hadiths p-0">
           <div className="card-footer">
             <div className="">
-         
-              <div className="hadith-head " style={{ width: "100%" }}>
+              <div className="hadith-head " style={{ width: "100%", borderRadius:'0'}}>
                 {/* Back for sm and md  */}
 
-                <i onClick={goBack} style={{cursor:'pointer'}} className="fa-solid p-1 ms-0  fa-arrow-left fs-4 d-block d-lg-none"></i>
+                <i
+                  onClick={goBack}
+                  style={{ cursor: "pointer" }}
+                  className="fa-solid p-1 ms-0  fa-arrow-left fs-4 d-block d-lg-none"
+                ></i>
 
                 <button
                   style={{ borderRadius: "50px" }}
@@ -192,7 +193,7 @@ export default function SetHadithContent() {
                     onClick={handleHeartClick}
                   >
                     <i
-                    style={{cursor:'pointer'}}
+                      style={{ cursor: "pointer" }}
                       className={`fa-heart fs-4 fas heart ${
                         showJoinedGroups ? "liked" : ""
                       }`}
@@ -218,20 +219,21 @@ export default function SetHadithContent() {
             </div>
           </div>
 
-          <div    style={{height:'100vh'}}          className={ ` ard-body card-body-content ${
-                showJoinedGroups ? "card-body-white" : "card-body-light"
-              }`}>
-           
-              <div className="card-content">
-                <p
-                  className={`card-text ${
-                    showJoinedGroups ? "px-0" : "py-2 px-3"
-                  }`}
-                >
-                  {content}
-                </p>
-              </div>
-          
+          <div
+            style={{ height: "100vh" }}
+            className={` ard-body card-body-content ${
+              showJoinedGroups ? "card-body-white" : "card-body-light"
+            }`}
+          >
+            <div className="card-content">
+              <p
+                className={`card-text ${
+                  showJoinedGroups ? "px-0" : "py-2 px-3"
+                }`}
+              >
+                {content}
+              </p>
+            </div>
           </div>
         </div>
       </div>

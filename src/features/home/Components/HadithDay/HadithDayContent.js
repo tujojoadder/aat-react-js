@@ -9,14 +9,17 @@ import { setIsLiked, setToastSuccess } from "../../HomeSlice";
 
 export default function HadithDayContent({
   index,
+  userFname,
+  userLname,
+  Identifier,
+  profile_picture,
+  isLiked,
   hadith,
-  serialNumber,
+  day_hadith_id,
   handlePrev,
   handleNext,
   isPrevDisabled,
   isNextDisabled,
-  day_hadith_id,
-  isLiked
 }) {
   const [prevButtonMargin, setPrevButtonMargin] = useState("0");
   const [nextButtonMargin, setNextButtonMargin] = useState("0");
@@ -129,8 +132,7 @@ export default function HadithDayContent({
             <div
               className="posts m-0 py-2 p-0"
               style={{
-                borderTopLeftRadius: "10px",
-                borderTopRightRadius: "10px",
+              
                 backgroundColor: "#ffffff",
                 border: "none",
                 minHeight: "65px",
@@ -144,16 +146,15 @@ export default function HadithDayContent({
 
               <div className="user-pics">
                 <img
-                  src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                  className="rounded-circle user_img_msg"
+   src={`http://127.0.0.1:8000/${profile_picture}`}                  className="rounded-circle user_img_msg"
                   alt="user3"
                 />
               </div>
               <div className="user-content-text-box" >
                 <div className="user-names-text" style={{ marginTop: "2px" }}>
                   <div className="name-column">
-                    <h1 className="full-name-text m-0 p-0">Mohammad</h1>
-                    <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
+                    <h1 className="full-name-text m-0 p-0 text-truncate">{userFname} {userLname}</h1>
+                    <p className="user-name-text m-0 p-0 text-truncate">@{Identifier}</p>
                   </div>
                 </div>
               </div>
