@@ -18,16 +18,38 @@ import IChannelCreateBack from "../IChannels/iChannelBack/iChannelCreateBack/ICh
 import HadithDay from "./Components/HadithDay/HadithDay";
 import Try from "./Components/Try/Try";
 import { useSelector } from "react-redux";
+import { useGetPostsQuery } from "../../services/hadithApi";
 
 
 
 export default function Home() {
+  const [page, setPage] = useState(1);
+
+  const { data, isFetching, isError, isSuccess } = useGetPostsQuery(page);
+if (isSuccess) {
+  console.log(data.data);
+ 
+}
+
+
   const name = useSelector((state) => state.home.toastSuccess);
   return (
     <div
       className="p-0 m-0    home-container main"
       style={{ width: "100%", backgroundColor: "#f8f9fa" }}
     >
+   <button onClick={() => setPage(page + 1)} isLoading={isFetching}>
+        Next
+      </button>
+
+      {data?.data?.map(({ post_id }) => (
+        <div key={post_id}>
+         <p> {post_id}</p>
+        </div>
+      ))}
+
+
+
 
       {/* Header for mobile(sm) */}
       <HeaderComponent />
