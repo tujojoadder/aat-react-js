@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import HadithIteam from "./Components/HadithItem/HadithIteam";
 import "./.././../all.css";
@@ -20,50 +20,56 @@ import Try from "./Components/Try/Try";
 import { useSelector } from "react-redux";
 import { useGetPostsQuery } from "../../services/hadithApi";
 
-
-
 export default function Home() {
   const [page, setPage] = useState(1);
+  const [allPosts, setAllPosts] = useState([]);
 
-  const { data, isFetching, isError, isSuccess } = useGetPostsQuery(page);
-if (isSuccess) {
-  console.log(data.data);
- 
-}
+  // Fetch the posts based on the current page
+  const { data, isFetching, isSuccess } = useGetPostsQuery(page, {
+    selectFromResult: ({ data, isSuccess }) => ({
+      data: data?.data,
+      isSuccess,
+    }),
+  });
 
+  useEffect(() => {
+    if (isSuccess && data) {
+      const newPosts = data.filter(
+        (newPost) => !allPosts.some((post) => post.post_id === newPost.post_id)
+      );
+
+      if (newPosts.length) {
+        setAllPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      }
+    }
+  }, [data, isSuccess]);
 
   const name = useSelector((state) => state.home.toastSuccess);
+
+
   return (
     <div
-      className="p-0 m-0    home-container main"
+      className="p-0 m-0 home-container main"
       style={{ width: "100%", backgroundColor: "#f8f9fa" }}
     >
-   <button onClick={() => setPage(page + 1)} isLoading={isFetching}>
+      <button onClick={() => setPage(page + 1)} disabled={isFetching}>
         Next
       </button>
 
-      {data?.data?.map(({ post_id }) => (
+      {allPosts.map(({ post_id }) => (
         <div key={post_id}>
-         <p> {post_id}</p>
+          <p>{post_id}</p>
         </div>
       ))}
-
-
-
 
       {/* Header for mobile(sm) */}
       <HeaderComponent />
       {/*    Hadith Status */}
       <HadithStatus />
 
-      <div className="center-flex-container flex-item ">
-        {/*   <div className="home py-2 border " style={{ marginTop:'-1vh' }}>
-          <h1>Home</h1>
-        </div> */}
+      <div className="center-flex-container flex-item">
         {/* Create post */}
         <CreatePost />
-
-
 
         {name}
         {/* Text post */}
@@ -73,12 +79,6 @@ if (isSuccess) {
         <ImagePost />
         <TextPost />
         <TextPost />
-        {/*   ImagePost */}
-        <ImagePost />
-        <BPost />
-        <TextPost />
-        <TextPost />
-        {/*   ImagePost */}
         <ImagePost />
         <BPost />
       </div>
