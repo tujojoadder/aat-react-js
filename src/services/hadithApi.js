@@ -78,9 +78,7 @@ dayHadithDetails: builder.mutation({
 
 
 
-      getPosts: builder.query({
-        query: (page = 1) => `getposts?page=${page}`, // Using the '/getpost' route
-      }),
+    
 
 
 
@@ -90,4 +88,4 @@ dayHadithDetails: builder.mutation({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPostsQuery,useDayHadithDetailsMutation,useGetRandomHadithQuery,useSetDayhadithMutation,useGetDayHadithsQuery,useLikeDayHadithMutation} = hadithApi
+export const { useDayHadithDetailsMutation,useGetRandomHadithQuery,useSetDayhadithMutation,useGetDayHadithsQuery,useLikeDayHadithMutation} = hadithApi

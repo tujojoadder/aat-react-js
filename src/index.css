@@ -96,7 +96,7 @@ code {
 @media (max-width: 576px) {
   .main {
   
-   padding-bottom: 120px !important;
+   margin-bottom: 100px !important;
   }
 }
 
