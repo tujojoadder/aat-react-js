@@ -4,6 +4,7 @@ import { setAllDayHadith } from '../../HomeSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import HadithIteam from '../HadithItem/HadithIteam';
+import HadithStatusSkeletonLoader from './HadithStatusSkeletonLoader/HadithStatusSkeletonLoader';
 
 export default function HadithStatus() {
   const wrapperRef = useRef(null);
@@ -13,7 +14,7 @@ export default function HadithStatus() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-/*  Get all user day hadiths  */
+  /*  Get all user day hadiths  */
   const {
     data: GetDayHadithsQuery,
     isSuccess: GetDayHadithsQuerySuccess,
@@ -22,7 +23,7 @@ export default function HadithStatus() {
     refetch
   } = useGetDayHadithsQuery();
 
- /*  after the retriving we set that data as redux stats now we are accessing */
+  /*  After the retrieval we set that data as redux stats now we are accessing */
   const allDayHadith = useSelector((state) => state.home.allDayHadith);
 
   useEffect(() => {
@@ -38,8 +39,7 @@ export default function HadithStatus() {
         ...item,
         serialNumber: index + 1,
       }));
-console.log(dataWithSerialNumbers);
-      // setting retrival data as redux with serial numbers
+      // Setting retrieval data as redux with serial numbers
       dispatch(setAllDayHadith(dataWithSerialNumbers));
     }
   }, [GetDayHadithsQuerySuccess, GetDayHadithsQuery, dispatch]);
@@ -82,7 +82,7 @@ console.log(dataWithSerialNumbers);
   }, []);
 
   const containerClasses = `pt-2 pb-3 d-flex align-items-center position-relative wrapper-container ${
-    isLoading || GetDayHadithsQueryError ? '' : 'border-bottom border-start border-end'
+    isLoading || GetDayHadithsQueryError ? '' : ' border-bottom'
   }`;
 
   // Create the array with the first item having type='create'
@@ -110,11 +110,7 @@ console.log(dataWithSerialNumbers);
       }}
     >
       {isLoading ? (
-        <div className="spinner-container d-flex justify-content-center align-items-center" style={{ height: '50px', width: '100%' }}>
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
+        <HadithStatusSkeletonLoader />
       ) : (
         <>
           <button

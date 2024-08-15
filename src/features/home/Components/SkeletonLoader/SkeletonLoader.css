@@ -1,0 +1,79 @@
+.skeleton-post {
+    display: flex;
+    align-items: flex-start;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #f0f2f5;
+    margin-bottom: 20px;
+  }
+  
+  /* User Picture */
+  .skeleton-user-pic {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 16px;
+  }
+  
+  /* Content Box */
+  .skeleton-contents-box {
+    flex-grow: 1;
+  }
+  
+  /* Name and Time */
+  .skeleton-user-names {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .skeleton-name, .skeleton-username, .skeleton-time {
+    height: 12px;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+  }
+  
+  .skeleton-name {
+    width: 120px;
+    margin-right: 10px;
+  }
+  
+  .skeleton-username {
+    width: 80px;
+    margin-right: 10px;
+  }
+  
+  .skeleton-time {
+    width: 50px;
+  }
+  
+  /* Text Content */
+  .skeleton-text-content {
+    margin-bottom: 16px;
+  }
+  
+  .skeleton-line {
+    height: 12px;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    margin-bottom: 8px;
+  }
+  
+  .skeleton-line.short {
+    width: 70%;
+  }
+  
+  /* Icons */
+  .skeleton-icons {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .skeleton-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+  }
+  

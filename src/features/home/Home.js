@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import CreatePost from "./Components/CreatePost/CreatePost";
+
 import TextPost from "./Components/TextPost/TextPost";
 import ImagePost from "./Components/ImagePost/ImagePost";
 import BPost from "./Components/BPost/BPost";
 import HadithStatus from "./Components/HadithStatus/HadithStatus";
-import Spinner from "../Login/Spinner/Spinner";
 import HeaderComponent from "./Components/HeaderComponent/HeaderComponent";
 import { useInView } from "react-intersection-observer";
 import { useGetPostsQuery } from "../../services/postApi";
-import InsideSpinner from "../InsideSpinner/InsideSpinner";
+import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
+import CreatePostSkeleton from "./Components/CreatePost/CreatePostSkeleton/CreatePostSkeleton";
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -46,30 +47,26 @@ export default function Home() {
   }, [inView, isFetching, isError, hasMorePosts, isSuccess]);
 
   return (
-    <div
-      className="p-0 m-0 home-container main"
-      style={{ width: "100%", backgroundColor: "#f8f9fa" }}
-    >
+    <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
       <HeaderComponent />
       <HadithStatus />
       <div className="center-flex-container flex-item">
-        <CreatePost />
-
-        <div>
+        {isFetching ? <CreatePostSkeleton /> : <CreatePost />} {/* Conditionally render the skeleton */}
+        
+        <div className="post-wrapper">
           {allPosts.map((post) => (
-            <div key={post.post_id}>
-              {/* Conditionally render based on the presence of text_post and image_post */}
+            <div key={post.post_id} className="post-container">
               {post.text_post && !post.image_post && <TextPost post={post} />}
+              {/* Uncomment when image post components are ready */}
               {!post.text_post && post.image_post && <ImagePost post={post} />}
               {post.text_post && post.image_post && <BPost post={post} />}
             </div>
           ))}
 
-          <div ref={ref} style={{minHeight:'25px',backgroundColor:'#ffffff'}} className="loading-trigger ">
-            {isFetching && (<InsideSpinner/>) }
+          <div ref={ref} className="loading-trigger">
+            {isFetching && <SkeletonLoader />}
           </div>
         </div>
-
       </div>
     </div>
   );

@@ -66,7 +66,7 @@ const TextPost = () => {
   };
 
   return (
-    <div className="posts">
+    <div className="posts mx-2">
       <div className="user-pics">
         <img src={image} alt="user3" />
       </div>
