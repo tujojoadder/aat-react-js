@@ -15,7 +15,7 @@ export default function ImagePostSkeleton() {
           <Skeleton height={10} width={60} style={{ marginTop: '10px' }} />
         </div>
         <div className="user-contents">
-          <Skeleton height={500} width="100%" />
+          <Skeleton height={350} width="100%" />
         </div>
         <div className="content-icons px-2">
           <Skeleton height={20} width={40} />

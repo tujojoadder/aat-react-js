@@ -98,3 +98,11 @@
   .bImage{
        border-radius: 20px;
      }
+     .image-post {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    
+    .image-post.fade-in {
+      opacity: 1;
+    }

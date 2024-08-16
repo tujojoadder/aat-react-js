@@ -65,12 +65,10 @@ export default function Home() {
       <div className="center-flex-container flex-item">
         <CreatePost />
         <div className="post-wrapper">
-        <div ref={ref} className="loading-trigger" style={{ minHeight: '20px' }}>
-           
           {allPosts.map((post) => (
             <div key={post.post_id} className="post-container">
-              {loadingPosts.has(post.post_id) && !post.image_post && <TextPostSkeleton />}
-              {loadingPosts.has(post.post_id) && post.image_post && <ImagePostSkeleton />}
+              {isFetching &&  loadingPosts.has(post.post_id) && !post.image_post && <TextPostSkeleton />}
+              {isFetching && loadingPosts.has(post.post_id) && post.image_post && <ImagePostSkeleton />}
               
               {!loadingPosts.has(post.post_id) && post.text_post && !post.image_post && (
                 <TextPost post={post} onLoad={() => handlePostLoaded(post.post_id)} />
@@ -81,8 +79,13 @@ export default function Home() {
             </div>
           ))}
 
-        
-          </div>
+
+          {/* Trigger for loading more posts */}
+          {hasMorePosts && (
+            <div ref={ref} className="loading-trigger" >
+              {isFetching && <InsideSpinner />}
+            </div>
+          )}
         </div>
       </div>
     </div>
