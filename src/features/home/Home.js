@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import CreatePost from "./Components/CreatePost/CreatePost";
-
 import TextPost from "./Components/TextPost/TextPost";
-import ImagePost from "./Components/ImagePost/ImagePost";
-import BPost from "./Components/BPost/BPost";
 import HadithStatus from "./Components/HadithStatus/HadithStatus";
 import HeaderComponent from "./Components/HeaderComponent/HeaderComponent";
 import { useInView } from "react-intersection-observer";
 import { useGetPostsQuery } from "../../services/postApi";
-import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
-import CreatePostSkeleton from "./Components/CreatePost/CreatePostSkeleton/CreatePostSkeleton";
 import InsideSpinner from "../InsideSpinner/InsideSpinner";
+import TextPostSkeleton from "./Components/TextPost/TextPostSkeleton/TextPostSkeleton";
+import ImagePost from "./Components/ImagePost/ImagePost";
+import ImagePostSkeleton from "./Components/ImagePost/ImagePostSkeleton/ImagePostSkeleton";
 
 export default function Home() {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
+  const [isInitialFetch, setIsInitialFetch] = useState(true);
+  const [loadingPosts, setLoadingPosts] = useState(new Set()); // Track loading state
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -34,10 +34,12 @@ export default function Home() {
           (newPost) => !allPosts.some((post) => post.post_id === newPost.post_id)
         );
         if (newPosts.length > 0) {
-          console.log(newPosts);
           setAllPosts((prevPosts) => [...prevPosts, ...newPosts]);
+          // Set all new posts as loading initially
+          setLoadingPosts(new Set(newPosts.map(post => post.post_id)));
         }
       }
+      setIsInitialFetch(false);
     }
   }, [data, isSuccess]);
 
@@ -47,25 +49,39 @@ export default function Home() {
     }
   }, [inView, isFetching, isError, hasMorePosts, isSuccess]);
 
+  // Mark a post as loaded
+  const handlePostLoaded = (postId) => {
+    setLoadingPosts(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(postId);
+      return newSet;
+    });
+  };
+
   return (
-    <div className="friend-home main border-left border-right  mb-1 m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
-         <HeaderComponent />
+    <div className="friend-home main border-left border-right mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: "100vh" }}>
+      <HeaderComponent />
       <HadithStatus />
       <div className="center-flex-container flex-item">
         <CreatePost />
-        
         <div className="post-wrapper">
+        <div ref={ref} className="loading-trigger" style={{ minHeight: '20px' }}>
+           
           {allPosts.map((post) => (
             <div key={post.post_id} className="post-container">
-              {post.text_post && !post.image_post && <TextPost post={post} />}
-              {/* Uncomment when image post components are ready */}
-              {!post.text_post && post.image_post && <ImagePost post={post} />}
-              {post.text_post && post.image_post && <BPost post={post} />}
+              {loadingPosts.has(post.post_id) && !post.image_post && <TextPostSkeleton />}
+              {loadingPosts.has(post.post_id) && post.image_post && <ImagePostSkeleton />}
+              
+              {!loadingPosts.has(post.post_id) && post.text_post && !post.image_post && (
+                <TextPost post={post} onLoad={() => handlePostLoaded(post.post_id)} />
+              )}
+              {!loadingPosts.has(post.post_id) && !post.text_post && post.image_post && (
+                <ImagePost post={post} onLoad={() => handlePostLoaded(post.post_id)} />
+              )}
             </div>
           ))}
 
-          <div ref={ref} className="loading-trigger">
-            {isFetching && <InsideSpinner/>}
+        
           </div>
         </div>
       </div>

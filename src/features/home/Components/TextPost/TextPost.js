@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import image from "./logo.jpg";
 import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
@@ -72,8 +71,8 @@ const TextPost = ({ post }) => {
             <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
             <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3 text-truncate" style={{ marginTop: "10px", maxWidth:'150px' }}>
- {formatPostDate(post.created_at)}
+          <p className="time-text ms-3 text-truncate" style={{ marginTop: "10px", maxWidth: '150px' }}>
+            {formatPostDate(post.created_at)}
           </p>
         </div>
 
@@ -97,8 +96,7 @@ const TextPost = ({ post }) => {
             data-bs-toggle="modal"
             data-bs-target="#textModal"
           >
-            {" "}
-            109
+            {" "} 109
           </i>
           <i className="fa-regular fa-thumbs-down ps-md-3 ms-1"> 536</i>
           <i className="far fa-comment blue ps-md-3 ms-1"> 1.6k</i>
@@ -115,11 +113,11 @@ const TextPost = ({ post }) => {
         aria-hidden="true"
         ref={modalRef}
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-xl modal-dialog-scrollable">
           <div className="modal-content">
-            <div className="modal-header shadow-sm p-3 bg-body rounded">
-              <h5 className="modal-title fs-5" id="exampleModalLabel">
-                Comment
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                {post.author.user_fname} {post.author.user_lname}
               </h5>
               <button
                 type="button"
@@ -129,39 +127,21 @@ const TextPost = ({ post }) => {
               ></button>
             </div>
             <div className="modal-body">
-              {isModalOpen && (
-                <>
-                  <div
-                    className="comments px-md-4"
-                    style={{
-                      height: "100vh",
-                      overflowY: "scroll",
-                      overflowX: "hidden",
-                    }}
-                  >
-                    <CommentedText />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    {/* Needed */}
-                    <div style={{ paddingBottom: "20vh" }}></div>
-                  </div>
-                  {/* Footer */}
-                  <div
-                    className="card-footer p-0 m-0"
-                    style={{
-                      position: "fixed",
-                      bottom: "0px",
-                      width: isXSmall ? '100%' : isSmall ? "74.8%" : isMid ? "59.8%" : isLg ? "49.9%" : "49.9%",
-                    }}
-                  >
-                    <Comment />
-                  </div>
-                </>
-              )}
+              <TextComment post={post} />
+              <CommentedText />
+              <SendMessage />
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" className="btn btn-primary">
+                Save changes
+              </button>
             </div>
           </div>
         </div>

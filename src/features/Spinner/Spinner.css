@@ -2,15 +2,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px; /* Adjust as needed */
+    height: 20px; /* Adjust as needed */
   }
   
   .spinner {
     border: 5px solid #f3f3f3; /* Light grey */
     border-top: 5px solid #3a5a73; /* Blue */
     border-radius: 50%;
-    width: 40px; /* Adjust size */
-    height: 40px; /* Adjust size */
+    width: 19px; /* Adjust size */
+    height: 19px; /* Adjust size */
     animation: spin 1s linear infinite;
   }
   
