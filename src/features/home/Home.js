@@ -58,8 +58,8 @@ export default function Home() {
             <div key={post.post_id} className="post-container">
               {post.text_post && !post.image_post && <TextPost post={post} />}
               {/* Uncomment when image post components are ready */}
-              {!post.text_post && post.image_post && <ImagePost post={post} />}
-              {post.text_post && post.image_post && <BPost post={post} />}
+{/*               {!post.text_post && post.image_post && <ImagePost post={post} />}
+              {post.text_post && post.image_post && <BPost post={post} />} */}
             </div>
           ))}
 

@@ -5,7 +5,7 @@ import './SkeletonLoader.css';
 const SkeletonLoader = () => {
   return (
 
-    <><div className="skeleton-post mx-2" style={{height:'30vh', minHeight:'200px'}} >
+    <><div className="skeleton-post mx-2" style={{height:'20vh', minHeight:'150px'}} >
       {/* User Picture */}
       <div className="skeleton-user-pic"></div>
 

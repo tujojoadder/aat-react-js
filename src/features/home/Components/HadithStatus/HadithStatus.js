@@ -82,7 +82,7 @@ export default function HadithStatus() {
   }, []);
 
   const containerClasses = `pt-2 pb-3 d-flex align-items-center position-relative wrapper-container ${
-    isLoading || GetDayHadithsQueryError ? '' : ' border-bottom'
+    isLoading || GetDayHadithsQueryError ? '' : 'border-bottom border-start border-end'
   }`;
 
   // Create the array with the first item having type='create'

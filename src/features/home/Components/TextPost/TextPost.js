@@ -1,30 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
+
 import image from "./logo.jpg";
 import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
 import "./TextPost.css";
 import CommentedText from "../../../CommentedMedia/CommentedText/CommentedText";
 import SendMessage from "../../../Messages/SendMessages/SendMessage";
+import { formatPostDate } from "../../../../utils/dateUtils";
 
-const TextPost = () => {
-  /* comment width */
-  const [isXSmall, setIsXSmall] = useState( window.innerWidth <= 650);
-  const [isSmall, setIsSmall] = useState( window.innerWidth > 650 && window.innerWidth <= 950);
-  const [isMid, setIsMid] = useState(
-    window.innerWidth > 950 && window.innerWidth <= 1200
-  );
-  const [isLg, setIsLg] = useState(
-    window.innerWidth > 1200 
-  );
+const TextPost = ({ post }) => {
+  const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
+  const [isSmall, setIsSmall] = useState(window.innerWidth > 650 && window.innerWidth <= 950);
+  const [isMid, setIsMid] = useState(window.innerWidth > 950 && window.innerWidth <= 1200);
+  const [isLg, setIsLg] = useState(window.innerWidth > 1200);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const modalRef = useRef(null);
 
   const updateWidth = () => {
-    setIsXSmall( window.innerWidth <= 650);
-    setIsSmall( window.innerWidth > 650 && window.innerWidth <= 950);
-    setIsMid( window.innerWidth > 950 && window.innerWidth <= 1200);
-    setIsLg( window.innerWidth > 1200 );
+    setIsXSmall(window.innerWidth <= 650);
+    setIsSmall(window.innerWidth > 650 && window.innerWidth <= 950);
+    setIsMid(window.innerWidth > 950 && window.innerWidth <= 1200);
+    setIsLg(window.innerWidth > 1200);
   };
 
   useEffect(() => {
@@ -55,10 +52,9 @@ const TextPost = () => {
     setIsModalOpen(false);
   };
 
-
-/* Text */
+  /* Text */
   const [isExpanded, setIsExpanded] = useState(false);
-  const fullText = "আসওয়াদ (রহ.) হতে বর্ণিত। তিনি বলেনঃ ইবনু যুবায়র (রাযি.) আমাকে বললেন, ’আয়িশাহ (রাযি.) তোমাকে অনেক হাদীস গোপনে বলতেন। বল তো কা’বা সম্পর্কে তোমাকে কী বলেছেন? আমি বললাম, তিনি আমাকে বলেছেন, নবী সাল্লাল্লাহু আলাইহি ওয়াসাল্লাম বলেছেনঃ ’আয়িশাহ! তোমাদের কওম যদি (ইসলাম গ্রহণে) নতুন না হত, ইব্ন যুবায়র বলেনঃ কুফর থেকে; তবে আমি কা’বা ভেঙ্গে ফেলে তার দু’টি দরজা বানাতাম। এক দরজা দিয়ে লোক প্রবেশ করত আর এক দরজা দিয়ে বের হত। (পরবর্তীকালে মক্কার"; // Shortened for brevity
+  const fullText = post.text_post.post_text;
   const previewText = fullText.substring(0, 175);
 
   const toggleText = () => {
@@ -68,21 +64,18 @@ const TextPost = () => {
   return (
     <div className="posts mx-2">
       <div className="user-pics">
-        <img src={image} alt="user3" />
+        <img src={`http://127.0.0.1:8000/${post.author.profile_picture}`} alt="user3" />
       </div>
       <div className="user-contents-text-box">
         <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
           <div className="name-column">
-            <h1 className="full-name-text m-0 p-0">Mohammad </h1>
-            <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
+            <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
+            <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3" style={{ marginTop: "10px" }}>
-            2hrs
+          <p className="time-text ms-3 text-truncate" style={{ marginTop: "10px", maxWidth:'150px' }}>
+ {formatPostDate(post.created_at)}
           </p>
         </div>
-
-
-
 
         <div className="user-contents">
           <p style={{ margin: "0px" }}>
@@ -97,11 +90,6 @@ const TextPost = () => {
             )}
           </p>
         </div>
-
-
-
-
-
 
         <div className="content-icons pe-3">
           <i
@@ -144,7 +132,7 @@ const TextPost = () => {
               {isModalOpen && (
                 <>
                   <div
-                    className="comments px-md-4 "
+                    className="comments px-md-4"
                     style={{
                       height: "100vh",
                       overflowY: "scroll",
@@ -167,13 +155,7 @@ const TextPost = () => {
                     style={{
                       position: "fixed",
                       bottom: "0px",
-                      width:isXSmall?'100%': isSmall
-                        ? "74.8%"
-                        : isMid
-                        ? "59.8%"
-                        : isLg
-                        ? "49.9%"
-                        : "49.9%",
+                      width: isXSmall ? '100%' : isSmall ? "74.8%" : isMid ? "59.8%" : isLg ? "49.9%" : "49.9%",
                     }}
                   >
                     <Comment />
