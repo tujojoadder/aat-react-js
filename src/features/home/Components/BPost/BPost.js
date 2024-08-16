@@ -5,7 +5,9 @@ import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
 import CommentedBothPosts from "../../../CommentedMedia/CommentedBothposts/CommentedBothPosts";
 import "./BPost.css";
-export default function BPost() {
+import { formatPostDate } from "../../../../utils/dateUtils";
+
+export default function BPost({post}) {
   /* comment width */
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
@@ -56,26 +58,25 @@ export default function BPost() {
 
   /* Text */
   const [isExpanded, setIsExpanded] = useState(false);
-  const fullText =
-    "এ vdvdvdvdv dv      sgdththt thtrrthre মর্মে আল্লাহ্ তা’আলার বাণীঃ  ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) প্রতি ওয়াহী প্রেরণ করেছিলাম।’’ (সূরাহ্ আন-নিসা ৪/১৬৩) ১.এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যে "; // Shortened for brevity
+  const fullText =post.text_post.post_text;
   const previewText = fullText.substring(0, 175);
 
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };
   return (
-    <div className="posts ">
+    <div className="posts mx-2 ">
       <div className="user-pics">
-        <img src={image} alt="user1" />
+      <img src={`http://127.0.0.1:8000/${post.author.profile_picture}`} alt="user3" />
       </div>
       <div className="user-contents-text-box">
         <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
           <div className="name-column">
-            <h1 className="full-name-text m-0 p-0">Mohammad </h1>
-            <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
+          <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
+          <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3" style={{ marginTop: "10px" }}>
-            2hrs
+          <p className="time-text ms-3 text-truncate" style={{ marginTop: "10px", maxWidth:'150px' }}>
+ {formatPostDate(post.created_at)}
           </p>
         </div>
 
@@ -95,6 +96,7 @@ export default function BPost() {
 
         <div className="user-contents  ">
           <div className="bImageContainner">
+
             <img
               className="bImage"
               style={{
@@ -103,7 +105,8 @@ export default function BPost() {
                 objectFit: "cover",
                 maxHeight: "500px",
               }}
-              src={image}
+          src={`${post.image_post.post_url}`}
+
               alt="content1"
             />
           </div>

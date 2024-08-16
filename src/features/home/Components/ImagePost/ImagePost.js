@@ -4,7 +4,8 @@ import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
 import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImage";
 import "./ImagePost.css";
-export default function ImagePost() {
+import { formatPostDate } from "../../../../utils/dateUtils";
+export default function ImagePost({post}) {
   /* comment width */
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
@@ -54,24 +55,24 @@ export default function ImagePost() {
   };
 
   return (
-    <div className="posts ">
+    <div className="posts mx-2">
       <div className="user-pics">
-        <img src={image} alt="user1" />
+      <img src={`http://127.0.0.1:8000/${post.author.profile_picture}`} alt="user3" />
       </div>
       <div className="user-contents-image-box">
         <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
           <div className="name-column">
-            <h1 className="full-name-text m-0 p-0">Mohammad </h1>
-            <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
+          <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
+          <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3" style={{ marginTop: "10px" }}>
-            2hrs
+          <p className="time-text ms-3 text-truncate" style={{ marginTop: "10px", maxWidth:'150px' }}>
+ {formatPostDate(post.created_at)}
           </p>
         </div>
 
         <div className="user-contents  ">
           <div className="bImageContainner">
-            <img
+          <img
               className="bImage"
               style={{
                 Width: "100%",
@@ -79,7 +80,8 @@ export default function ImagePost() {
                 objectFit: "cover",
                 maxHeight: "500px",
               }}
-              src={image}
+          src={`${post.image_post.post_url}`}
+
               alt="content1"
             />
           </div>

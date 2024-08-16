@@ -109,9 +109,7 @@ export default function HadithStatus() {
         height: '200px',
       }}
     >
-      {isLoading ? (
-        <HadithStatusSkeletonLoader />
-      ) : (
+      
         <>
           <button
             className="btn scroll-button left ms-1"
@@ -133,7 +131,7 @@ export default function HadithStatus() {
             <i className="fa fa-angle-right" aria-hidden="true"></i>
           </button>
         </>
-      )}
+   
     </div>
   );
 }

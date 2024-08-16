@@ -11,6 +11,7 @@ import { useInView } from "react-intersection-observer";
 import { useGetPostsQuery } from "../../services/postApi";
 import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
 import CreatePostSkeleton from "./Components/CreatePost/CreatePostSkeleton/CreatePostSkeleton";
+import InsideSpinner from "../InsideSpinner/InsideSpinner";
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -47,24 +48,24 @@ export default function Home() {
   }, [inView, isFetching, isError, hasMorePosts, isSuccess]);
 
   return (
-    <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
-      <HeaderComponent />
+    <div className="friend-home main border-left border-right  mb-1 m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+         <HeaderComponent />
       <HadithStatus />
       <div className="center-flex-container flex-item">
-        {isFetching ? <CreatePostSkeleton /> : <CreatePost />} {/* Conditionally render the skeleton */}
+        <CreatePost />
         
         <div className="post-wrapper">
           {allPosts.map((post) => (
             <div key={post.post_id} className="post-container">
               {post.text_post && !post.image_post && <TextPost post={post} />}
               {/* Uncomment when image post components are ready */}
-{/*               {!post.text_post && post.image_post && <ImagePost post={post} />}
-              {post.text_post && post.image_post && <BPost post={post} />} */}
+              {!post.text_post && post.image_post && <ImagePost post={post} />}
+              {post.text_post && post.image_post && <BPost post={post} />}
             </div>
           ))}
 
           <div ref={ref} className="loading-trigger">
-            {isFetching && <SkeletonLoader />}
+            {isFetching && <InsideSpinner/>}
           </div>
         </div>
       </div>
