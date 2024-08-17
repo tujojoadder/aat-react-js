@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import CreatePost from "./Components/CreatePost/CreatePost";
+
 import TextPost from "./Components/TextPost/TextPost";
+import ImagePost from "./Components/ImagePost/ImagePost";
+import BPost from "./Components/BPost/BPost";
 import HadithStatus from "./Components/HadithStatus/HadithStatus";
 import HeaderComponent from "./Components/HeaderComponent/HeaderComponent";
 import { useInView } from "react-intersection-observer";
 import { useGetPostsQuery } from "../../services/postApi";
-import Spinner from "../Spinner/Spinner";
-import ImagePost from "./Components/ImagePost/ImagePost";
+import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
+import CreatePostSkeleton from "./Components/CreatePost/CreatePostSkeleton/CreatePostSkeleton";
+
 export default function Home() {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
-  const [loadingPosts, setLoadingPosts] = useState(new Set());
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -30,17 +33,12 @@ export default function Home() {
           (newPost) => !allPosts.some((post) => post.post_id === newPost.post_id)
         );
         if (newPosts.length > 0) {
+          console.log(newPosts);
           setAllPosts((prevPosts) => [...prevPosts, ...newPosts]);
-          setLoadingPosts(new Set(newPosts.map(post => post.post_id)));
         }
       }
-
-      // Check if we've reached the last page
-      if (page >= data.last_page) {
-        setHasMorePosts(false);
-      }
     }
-  }, [data, isSuccess, page]);
+  }, [data, isSuccess]);
 
   useEffect(() => {
     if (inView && !isFetching && !isError && hasMorePosts && isSuccess) {
@@ -48,38 +46,27 @@ export default function Home() {
     }
   }, [inView, isFetching, isError, hasMorePosts, isSuccess]);
 
-  const handlePostLoaded = (postId) => {
-    setLoadingPosts(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(postId);
-      return newSet;
-    });
-  };
-
   return (
-    <div className="friend-home main border-left border-right pb-1 mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: "100vh" }}>
+    <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
       <HeaderComponent />
       <HadithStatus />
       <div className="center-flex-container flex-item">
-        <CreatePost />
+        {isFetching ? <CreatePostSkeleton /> : <CreatePost />} {/* Conditionally render the skeleton */}
+        
         <div className="post-wrapper">
           {allPosts.map((post) => (
             <div key={post.post_id} className="post-container">
-              {!loadingPosts.has(post.post_id) && post.text_post && !post.image_post && (
-                <TextPost post={post} onLoad={() => handlePostLoaded(post.post_id)} />
-              )}
-              {!loadingPosts.has(post.post_id) && !post.text_post && post.image_post && (
-                <ImagePost post={post} onLoad={() => handlePostLoaded(post.post_id)} />
-              )}
+              {post.text_post && !post.image_post && <TextPost post={post} />}
+              {!post.text_post && post.image_post && <ImagePost post={post} />}
+              {/* Uncomment when image post components are ready */}
+{/*               {!post.text_post && post.image_post && <ImagePost post={post} />}
+              {post.text_post && post.image_post && <BPost post={post} />} */}
             </div>
           ))}
 
-          {/* Trigger for loading more posts */}
-          {hasMorePosts && (
-            <div ref={ref} className="loading-trigger">
-              <Spinner />
-            </div>
-          )}
+          <div ref={ref} className="loading-trigger">
+            {isFetching && <SkeletonLoader />}
+          </div>
         </div>
       </div>
     </div>
