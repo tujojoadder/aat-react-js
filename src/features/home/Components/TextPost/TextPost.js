@@ -67,11 +67,11 @@ const TextPost = ({ post }) => {
       </div>
       <div className="user-contents-text-box">
         <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
-          <div className="name-column">
+          <div className="name-column ">
             <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
             <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3 text-truncate" style={{ marginTop: "10px", maxWidth: '150px' }}>
+          <p className="time-text ms-3 " style={{ marginTop: "10px", maxWidth: '150px' }}>
             {formatPostDate(post.created_at)}
           </p>
         </div>

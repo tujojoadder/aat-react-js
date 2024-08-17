@@ -142,9 +142,9 @@ export default function CreatePost() {
             />
           </div>
 
-          <div className="d-flex align-items-center mb-3" style={{ marginLeft: '-5.5%', overflowX: 'auto' }}>
+          <div className="d-flex align-items-center mb-3 ms-md-4 ms-2 me-1" style={{ marginLeft: '-5.5%', overflowX: 'auto' }}>
             <div className="pt-2">
-              <div className="post-icons me-2">
+              <div className="post-icons me-md-2 p-0 ps-4 pe-1">
                 <i
                   style={{ color: '#1682e8', cursor: 'pointer', fontSize: '20px' }}
                   className="far fa-image"

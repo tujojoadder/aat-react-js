@@ -5,7 +5,8 @@ import Comment from "../Comment/Comment/Comment";
 import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImage";
 import "./ImagePost.css";
 import { formatPostDate } from "../../../../utils/dateUtils";
-export default function ImagePost({post}) {
+
+export default function ImagePost({ post }) {
   /* comment width */
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
@@ -16,6 +17,7 @@ export default function ImagePost({post}) {
   );
   const [isLg, setIsLg] = useState(window.innerWidth > 1200);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false); // State to track image load
 
   const modalRef = useRef(null);
 
@@ -54,25 +56,40 @@ export default function ImagePost({post}) {
     setIsModalOpen(false);
   };
 
+  const handleImageLoad = () => {
+    setIsImageLoaded(true);
+  };
+
   return (
     <div className="posts mx-2">
       <div className="user-pics">
-      <img src={`http://127.0.0.1:8000/${post.author.profile_picture}`} alt="user3" />
+        <img
+          src={`http://127.0.0.1:8000/${post.author.profile_picture}`}
+          alt="user3"
+        />
       </div>
       <div className="user-contents-image-box">
         <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
           <div className="name-column">
-          <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
-          <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
+            <h1 className="full-name-text m-0 p-0">
+              {post.author.user_fname} {post.author.user_lname}
+            </h1>
+            <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3 text-truncate" style={{ marginTop: "10px", maxWidth:'150px' }}>
- {formatPostDate(post.created_at)}
+          <p className="time-text ms-3" style={{ marginTop: "10px", maxWidth: '150px' }}>
+            {formatPostDate(post.created_at)}
           </p>
         </div>
 
-        <div className="user-contents  ">
-          <div className="bImageContainner">
-          <img
+        <div className="user-contents">
+          {!isImageLoaded && (
+            <div className="image-skeleton">
+              {/* Placeholder content before image loads */}
+              <div className="skeleton-box" style={{ height: "300px", width: "100%", backgroundColor: "#e0e0e0" }}></div>
+            </div>
+          )}
+          <div className="bImageContainner" style={{ display: isImageLoaded ? 'block' : 'none' }}>
+            <img
               className="bImage"
               style={{
                 Width: "100%",
@@ -80,15 +97,15 @@ export default function ImagePost({post}) {
                 objectFit: "cover",
                 maxHeight: "500px",
               }}
-          src={`${post.image_post.post_url}`}
-
+              src={`${post.image_post.post_url}`}
               alt="content1"
+              onLoad={handleImageLoad}
             />
           </div>
         </div>
         <div className="content-icons  px-2 ">
           <i
-            className=" far fa-heart red  "
+            className="far fa-heart red"
             data-bs-toggle="modal"
             data-bs-target="#imageModal"
           >
@@ -102,10 +119,11 @@ export default function ImagePost({post}) {
           <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
         </div>
       </div>
+
       {/* Modal */}
       <div
         style={{ overflowY: "hidden" }}
-        className="modal fade "
+        className="modal fade"
         id="imageModal"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"

@@ -6,17 +6,13 @@ import HadithStatus from "./Components/HadithStatus/HadithStatus";
 import HeaderComponent from "./Components/HeaderComponent/HeaderComponent";
 import { useInView } from "react-intersection-observer";
 import { useGetPostsQuery } from "../../services/postApi";
-import InsideSpinner from "../InsideSpinner/InsideSpinner";
-import TextPostSkeleton from "./Components/TextPost/TextPostSkeleton/TextPostSkeleton";
+import Spinner from "../Spinner/Spinner";
 import ImagePost from "./Components/ImagePost/ImagePost";
-import ImagePostSkeleton from "./Components/ImagePost/ImagePostSkeleton/ImagePostSkeleton";
-
 export default function Home() {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
-  const [isInitialFetch, setIsInitialFetch] = useState(true);
-  const [loadingPosts, setLoadingPosts] = useState(new Set()); // Track loading state
+  const [loadingPosts, setLoadingPosts] = useState(new Set());
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -35,13 +31,16 @@ export default function Home() {
         );
         if (newPosts.length > 0) {
           setAllPosts((prevPosts) => [...prevPosts, ...newPosts]);
-          // Set all new posts as loading initially
           setLoadingPosts(new Set(newPosts.map(post => post.post_id)));
         }
       }
-      setIsInitialFetch(false);
+
+      // Check if we've reached the last page
+      if (page >= data.last_page) {
+        setHasMorePosts(false);
+      }
     }
-  }, [data, isSuccess]);
+  }, [data, isSuccess, page]);
 
   useEffect(() => {
     if (inView && !isFetching && !isError && hasMorePosts && isSuccess) {
@@ -49,7 +48,6 @@ export default function Home() {
     }
   }, [inView, isFetching, isError, hasMorePosts, isSuccess]);
 
-  // Mark a post as loaded
   const handlePostLoaded = (postId) => {
     setLoadingPosts(prev => {
       const newSet = new Set(prev);
@@ -59,7 +57,7 @@ export default function Home() {
   };
 
   return (
-    <div className="friend-home main border-left border-right mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: "100vh" }}>
+    <div className="friend-home main border-left border-right pb-1 mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: "100vh" }}>
       <HeaderComponent />
       <HadithStatus />
       <div className="center-flex-container flex-item">
@@ -67,9 +65,6 @@ export default function Home() {
         <div className="post-wrapper">
           {allPosts.map((post) => (
             <div key={post.post_id} className="post-container">
-              {isFetching &&  loadingPosts.has(post.post_id) && !post.image_post && <TextPostSkeleton />}
-              {isFetching && loadingPosts.has(post.post_id) && post.image_post && <ImagePostSkeleton />}
-              
               {!loadingPosts.has(post.post_id) && post.text_post && !post.image_post && (
                 <TextPost post={post} onLoad={() => handlePostLoaded(post.post_id)} />
               )}
@@ -79,11 +74,10 @@ export default function Home() {
             </div>
           ))}
 
-
           {/* Trigger for loading more posts */}
           {hasMorePosts && (
-            <div ref={ref} className="loading-trigger" >
-              {isFetching && <InsideSpinner />}
+            <div ref={ref} className="loading-trigger">
+              <Spinner />
             </div>
           )}
         </div>

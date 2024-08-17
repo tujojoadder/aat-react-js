@@ -75,7 +75,7 @@ export default function BPost({post}) {
           <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
           <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3 text-truncate" style={{ marginTop: "10px", maxWidth:'150px' }}>
+          <p className="time-text ms-3" style={{ marginTop: "10px", maxWidth:'150px' }}>
  {formatPostDate(post.created_at)}
           </p>
         </div>
