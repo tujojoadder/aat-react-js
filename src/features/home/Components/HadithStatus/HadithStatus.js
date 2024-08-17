@@ -23,7 +23,7 @@ export default function HadithStatus() {
     refetch
   } = useGetDayHadithsQuery();
 
-  /*  After the retrieval we set that data as redux stats now we are accessing */
+  /*  After retrieving we set that data as redux state and now we are accessing it */
   const allDayHadith = useSelector((state) => state.home.allDayHadith);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function HadithStatus() {
         ...item,
         serialNumber: index + 1,
       }));
-      // Setting retrieval data as redux with serial numbers
+      // Setting retrieved data as redux state with serial numbers
       dispatch(setAllDayHadith(dataWithSerialNumbers));
     }
   }, [GetDayHadithsQuerySuccess, GetDayHadithsQuery, dispatch]);
@@ -93,7 +93,7 @@ export default function HadithStatus() {
         key={user.user_id}
         user_fname={user.user_fname || 'N/A'} // Provide default values
         user_lname={user.user_lname || 'N/A'}
-        profile_picture={user.profile_picture || 'N/A'   }
+        profile_picture={user.profile_picture || 'N/A'}
         hadith={user.day_hadith.hadith.hadith || 'No hadith available'}
         day_hadth_id={user.day_hadith.day_hadith_id || 'unknown'}
         serialNumber={user.serialNumber || 0}
@@ -107,9 +107,13 @@ export default function HadithStatus() {
       style={{
         backgroundColor: isLoading ? '#ffffff' : '#f8f9fa',
         height: '200px',
+        paddingTop:'3px',
+        marginTop:'5px'
       }}
     >
-      
+      {isLoading ? (
+        <HadithStatusSkeletonLoader /> // Display skeleton loader while loading
+      ) : (
         <>
           <button
             className="btn scroll-button left ms-1"
@@ -131,7 +135,7 @@ export default function HadithStatus() {
             <i className="fa fa-angle-right" aria-hidden="true"></i>
           </button>
         </>
-   
+      )}
     </div>
   );
 }

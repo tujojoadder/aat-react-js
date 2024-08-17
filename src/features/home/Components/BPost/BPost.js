@@ -6,8 +6,13 @@ import Comment from "../Comment/Comment/Comment";
 import CommentedBothPosts from "../../../CommentedMedia/CommentedBothposts/CommentedBothPosts";
 import "./BPost.css";
 import { formatPostDate } from "../../../../utils/dateUtils";
+import ImagePostSkeleton from "../ImagePost/ImagePostSkeleton/ImagePostSkeleton";
 
-export default function BPost({post}) {
+export default function BPost({ post }) {
+    /* Image load handling  */
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
+    const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false); // State to track profile picture load
+  
   /* comment width */
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
@@ -58,25 +63,62 @@ export default function BPost({post}) {
 
   /* Text */
   const [isExpanded, setIsExpanded] = useState(false);
-  const fullText =post.text_post.post_text;
+  const fullText = post.text_post.post_text;
   const previewText = fullText.substring(0, 175);
 
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };
+
+  /* handle image loaded or not  */
+  const handleImageLoad = () => {
+    setIsImageLoaded(true);
+  };
+
+  const handleProfilePicLoad = () => {
+    setIsProfilePicLoaded(true);
+  };
+  
   return (
     <div className="posts mx-2 ">
+         {!post ? (
+        <ImagePostSkeleton />
+      ) : (
+        <>
       <div className="user-pics">
-      <img src={`http://127.0.0.1:8000/${post.author.profile_picture}`} alt="user3" />
-      </div>
+            {!isProfilePicLoaded && (
+              <div className="profile-pic-skeleton">
+                <div
+                  className="skeleton-box ms-2 me-1"
+                  style={{
+                    height: "50px",
+                    width: "50px",
+                    borderRadius: "50%",
+                    backgroundColor: "#e5e5e5",
+                  }}
+                ></div>
+              </div>
+            )}
+            <img
+          src={`http://127.0.0.1:8000/${post.author.profile_picture}`}
+          alt="user-profile"
+              onLoad={handleProfilePicLoad}
+              style={{ display: isProfilePicLoaded ? "block" : "none" }}
+            />
+          </div>
       <div className="user-contents-text-box">
         <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
           <div className="name-column">
-          <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
-          <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
+            <h1 className="full-name-text m-0 p-0">
+              {post.author.user_fname} {post.author.user_lname}
+            </h1>
+            <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3" style={{ marginTop: "10px", maxWidth:'150px' }}>
- {formatPostDate(post.created_at)}
+          <p
+            className="time-text ms-3"
+            style={{ marginTop: "10px", maxWidth: "150px" }}
+          >
+            {formatPostDate(post.created_at)}
           </p>
         </div>
 
@@ -94,23 +136,38 @@ export default function BPost({post}) {
           </p>
         </div>
 
-        <div className="user-contents  ">
-          <div className="bImageContainner">
-
-            <img
-              className="bImage"
-              style={{
-                Width: "100%",
-                height: "auto",
-                objectFit: "cover",
-                maxHeight: "500px",
-              }}
-          src={`${post.image_post.post_url}`}
-
-              alt="content1"
-            />
-          </div>
-        </div>
+        <div className="user-contents">
+              {!isImageLoaded && (
+                <div className="image-skeleton">
+                  <div
+                    className="skeleton-box"
+                    style={{
+                      height: "300px",
+                      width: "100%",
+                      backgroundColor: "#e5e5e5",
+                      borderRadius: "15px",
+                    }}
+                  ></div>
+                </div>
+              )}
+              <div
+                className="bImageContainer"
+                style={{ display: isImageLoaded ? "block" : "none" }}
+              >
+                <img
+                  className="bImage"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "cover",
+                    maxHeight: "500px",
+                  }}
+                  src={`${post.image_post.post_url}`}
+                  alt="post-content"
+                  onLoad={handleImageLoad}
+                />
+              </div>
+            </div>
 
         <div className="content-icons  px-2 ">
           <i
@@ -198,6 +255,8 @@ export default function BPost({post}) {
           </div>
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 }

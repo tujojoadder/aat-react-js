@@ -26,28 +26,42 @@
     scroll-snap-align: start; /* Ensure proper snapping */
   }
   
-   /* Media query for small screens */
-   @media (max-width: 1400px) {
-    .wrapper .item {
-      /* Adjust width for small screens */
-      width: calc((100% - 30px) / 3); /* 30px for margins and paddings */
-    }
-  }
-    /* Media query for small screens */
-    @media (max-width: 700px) {
-        .wrapper .item {
-          /* Adjust width for small screens */
-          width: calc((100% - 20px) / 2); /* 30px for margins and paddings */
-        }
-      }
 
-          /* Media query for small screens */
-    @media (max-width: 350px) {
-        .wrapper .item {
-          /* Adjust width for small screens */
-          width: calc((100% - 10px) / 1); /* 30px for margins and paddings */
-        }
-      }
+
+
+
+  /* Default style for larger screens (576px to 768px) */
+.wrapper .item {
+  width: calc((100% - 30px) / 3); /* 3 columns */
+  margin: 5px;
+}
+
+/* Media query for screens wider than 768px (4 columns) */
+@media (min-width: 1200px) {
+  .wrapper .item {
+    width: calc((100% - 40px) / 4); /* 4 columns */
+  }
+}
+
+/* Media query for screen widths between 400px and 576px (3 columns) */
+@media (max-width: 576px) and (min-width: 400px) {
+  .wrapper .item {
+    width: calc((100% - 30px) / 3); /* 3 columns */
+  }
+}
+
+/* Media query for screen widths less than 400px (2 columns) */
+@media (max-width: 399px) {
+  .wrapper .item {
+    width: calc((100% - 20px) / 2); /* 2 columns */
+  }
+}
+
+
+
+
+
+
       .name{
         line-height: 0.9;
       }

@@ -11,6 +11,7 @@ import { useInView } from "react-intersection-observer";
 import { useGetPostsQuery } from "../../services/postApi";
 import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
 import CreatePostSkeleton from "./Components/CreatePost/CreatePostSkeleton/CreatePostSkeleton";
+import Spinner from "../Spinner/Spinner";
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -58,14 +59,15 @@ export default function Home() {
             <div key={post.post_id} className="post-container">
               {post.text_post && !post.image_post && <TextPost post={post} />}
               {!post.text_post && post.image_post && <ImagePost post={post} />}
+              {post.text_post && post.image_post && <BPost post={post} />}
               {/* Uncomment when image post components are ready */}
 {/*               {!post.text_post && post.image_post && <ImagePost post={post} />}
               {post.text_post && post.image_post && <BPost post={post} />} */}
             </div>
           ))}
 
-          <div ref={ref} className="loading-trigger">
-            {isFetching && <SkeletonLoader />}
+          <div ref={ref} className="loading-trigger" style={{minHeight:'30px'}}>
+            {isFetching && <Spinner/>}
           </div>
         </div>
       </div>

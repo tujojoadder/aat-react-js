@@ -20,11 +20,7 @@ const HadithStatusSkeletonLoader = () => {
         <div className="skeleton-text"></div>
         <div className="skeleton-text short"></div>
       </div>
-      <div className="skeleton-item">
-        <div className="skeleton-avatar"></div>
-        <div className="skeleton-text"></div>
-        <div className="skeleton-text short"></div>
-      </div>
+  
     </div>
   );
 };

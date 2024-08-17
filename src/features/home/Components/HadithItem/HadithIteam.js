@@ -8,7 +8,7 @@ const HadithIteam = ({ type, user_fname, user_lname, hadith, serialNumber, day_h
   // Truncate functions to handle long texts
   const truncateName = (fname, lname) => {
     const fullName = `${fname || ''} ${lname || ''}`.trim();
-    return fullName.length > 20 ? `${fullName.substring(0, 20)}...` : fullName;
+    return fullName.length > 10 ? `${fullName.substring(0, 8)}...` : fullName;
   };
 
   const truncateHadith = (text) => {
@@ -93,7 +93,7 @@ const HadithIteam = ({ type, user_fname, user_lname, hadith, serialNumber, day_h
           </div>
           <div className="px-1 bd-highlight name text-dark">
             <p style={{ lineHeight: '1.1' }} className="m-1">
-              <b>{truncateName(user_fname, user_lname)}</b>
+              <b>{truncateName(user_fname)}</b>
             </p>
           </div>
           <div style={{ color: 'black' }} className="bd-highlight px-1 pb-2">

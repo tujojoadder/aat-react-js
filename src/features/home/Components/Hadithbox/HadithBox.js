@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDayHadithDetailsMutation, useGetRandomHadithQuery, useSetDayhadithMutation } from "../../../../services/hadithApi";
+
 import "./HadithBox.css";
 import { useMediaQuery } from "react-responsive";
 import { handleApiError } from "../../../handleApiError/handleApiError";
@@ -8,8 +9,10 @@ import { setToastSuccess } from "../../HomeSlice";
 import { NavLink, useLocation } from "react-router-dom";
 import WhoLikeHadithDay from "./WhoLikeHadithDay/WhoLikeHadithDay";
 import Spinner from "../../../Spinner/Spinner";
+import HadithBoxSkeleton from "./HadithBoxSkeleton/HadithBoxSkeleton";
 
 const HadithBox = () => {
+  
   const { data: hadith, isFetching, isError, refetch } = useGetRandomHadithQuery();
   const isLg = useMediaQuery({ query: "(min-width: 1400px)" });
   const dispatch = useDispatch();
@@ -18,6 +21,7 @@ const HadithBox = () => {
   const [showJoinedGroups, setShowJoinedGroups] = useState(false); 
   const [likeDetails, setLikeDetails] = useState([]);
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true); // Manage loading state
 
   const [
     DayHadithDetailsMutation,
@@ -50,6 +54,18 @@ const HadithBox = () => {
       isError: setDayHadithError
     },
   ] = useSetDayhadithMutation();
+
+  useEffect(() => {
+    if (!isFetching && isLoading) {
+      setIsLoading(false); // Set loading to false once data is fetched
+    }
+  }, [isFetching]);
+
+  // Handle rendering logic
+  if (isLoading) {
+    // Show skeleton for the entire container during the initial load
+    return <HadithBoxSkeleton />;
+  }
 
   let content;
   if (DayHadithDetailsMutationLoading) {

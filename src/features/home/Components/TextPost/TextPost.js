@@ -6,11 +6,20 @@ import "./TextPost.css";
 import CommentedText from "../../../CommentedMedia/CommentedText/CommentedText";
 import SendMessage from "../../../Messages/SendMessages/SendMessage";
 import { formatPostDate } from "../../../../utils/dateUtils";
+import TextPostSkeleton from "./TextPostSkeleton/TextPostSkeleton";
 
 const TextPost = ({ post }) => {
+  /* Image load handling  */
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false); // State to track profile picture load
+
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
-  const [isSmall, setIsSmall] = useState(window.innerWidth > 650 && window.innerWidth <= 950);
-  const [isMid, setIsMid] = useState(window.innerWidth > 950 && window.innerWidth <= 1200);
+  const [isSmall, setIsSmall] = useState(
+    window.innerWidth > 650 && window.innerWidth <= 950
+  );
+  const [isMid, setIsMid] = useState(
+    window.innerWidth > 950 && window.innerWidth <= 1200
+  );
   const [isLg, setIsLg] = useState(window.innerWidth > 1200);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -60,18 +69,56 @@ const TextPost = ({ post }) => {
     setIsExpanded(!isExpanded);
   };
 
+  /* handle image loaded or not  */
+  const handleImageLoad = () => {
+    setIsImageLoaded(true);
+  };
+
+  const handleProfilePicLoad = () => {
+    setIsProfilePicLoaded(true);
+  };
+
   return (
     <div className="posts mx-2">
+
+{!post ? (
+        <TextPostSkeleton />
+      ) : (
+        <>
       <div className="user-pics">
-        <img src={`http://127.0.0.1:8000/${post.author.profile_picture}`} alt="user3" />
+        {!isProfilePicLoaded && (
+          <div className="profile-pic-skeleton">
+            <div
+              className="skeleton-box ms-2 me-1"
+              style={{
+                height: "50px",
+                width: "50px",
+                borderRadius: "50%",
+                backgroundColor: "#e5e5e5",
+              }}
+            ></div>
+          </div>
+        )}
+        <img
+          src={`http://127.0.0.1:8000/${post.author.profile_picture}`}
+          alt="user-profile"
+          onLoad={handleProfilePicLoad}
+          style={{ display: isProfilePicLoaded ? "block" : "none" }}
+        />
       </div>
+
       <div className="user-contents-text-box">
         <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
           <div className="name-column ">
-            <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
+            <h1 className="full-name-text m-0 p-0">
+              {post.author.user_fname} {post.author.user_lname}
+            </h1>
             <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3 " style={{ marginTop: "10px", maxWidth: '150px' }}>
+          <p
+            className="time-text ms-3 "
+            style={{ marginTop: "10px", maxWidth: "150px" }}
+          >
             {formatPostDate(post.created_at)}
           </p>
         </div>
@@ -96,7 +143,8 @@ const TextPost = ({ post }) => {
             data-bs-toggle="modal"
             data-bs-target="#textModal"
           >
-            {" "} 109
+            {" "}
+            109
           </i>
           <i className="fa-regular fa-thumbs-down ps-md-3 ms-1"> 536</i>
           <i className="far fa-comment blue ps-md-3 ms-1"> 1.6k</i>
@@ -146,6 +194,8 @@ const TextPost = ({ post }) => {
           </div>
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 };

@@ -1,10 +1,11 @@
 import React from "react";
 import "./SendFriendRequest.css";
+import myImage from './logo.jpg'; // Adjust the path as needed
 
 export default function SendFriendRequest({ name, handle, image, isActive }) {
   return (
     <div
-      className={`friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
+      className={`friend-request-container p-0  d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
         isActive ? "active" : ""
       }`}
       style={{maxWidth:'100%'}} 
@@ -12,7 +13,7 @@ export default function SendFriendRequest({ name, handle, image, isActive }) {
       <div className="profile-image me-2"  >
         <img
           className="rounded-circle"
-          src={image}
+          src={image} 
           alt="user"
           height="55px"
           width="55px"

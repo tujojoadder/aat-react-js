@@ -5,47 +5,49 @@ import SearchBox from "./Components/SearchBox/SearchBox";
 import HadithBox from "./Components/Hadithbox/HadithBox";
 import SuggestedFriend from "./Components/SuggestedFriend/SuggestedFriend";
 import { Scrollbars } from "react-custom-scrollbars";
+import myImage from './logo.jpg'; // Adjust the path as needed
+
 export default function Homeleft() {
   const profiles = [
     {
       name: "Mark Rockwell",
       handle: "@mark_rockwell",
       image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+       {myImage}
     },
     {
       name: "Jane Doe",
       handle: "@jane_doe",
       image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "John Smith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },{
-      name: "Jane Doe",
-      handle: "@jane_doe",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+      {myImage}
     },
     {
       name: "John Smith",
       handle: "@john_smith",
       image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+        "https://images.app.goo.gl/5N63q48UYsovMsd57",
     },{
       name: "Jane Doe",
       handle: "@jane_doe",
       image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+        "https://images.app.goo.gl/5N63q48UYsovMsd57",
+    },
+    {
+      name: "John Smith",
+      handle: "@john_smith",
+      image:
+        "https://images.app.goo.gl/5N63q48UYsovMsd57",
+    },{
+      name: "Jane Doe",
+      handle: "@jane_doe",
+      image:
+        "https://images.app.goo.gl/5N63q48UYsovMsd57",
     },
     {
       name: "John cena",
       handle: "@john_smith",
       image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+        "https://images.app.goo.gl/5N63q48UYsovMsd57",
     },
   ];
 
@@ -105,7 +107,7 @@ export default function Homeleft() {
 
           {/* Suggestion */}
 
-          <h5 className="ms-3  mt-3">Friend Suggestions</h5>
+          <h5 className="ms-1  mt-3 me-5">Friend Suggestions</h5>
             <Scrollbars style={{ width: "100%", height: "27vh" }}>
               <div className="mb-4">
                 {profiles.map((profile, index) => {

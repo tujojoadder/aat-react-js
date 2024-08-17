@@ -1,0 +1,20 @@
+.skeleton-loader {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+  }
+  
+  .skeleton-loader-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #ffffff;
+  }
+  
+  .skeleton-loader-body {
+    padding: 1rem;
+    background-color: #f9f9f9;
+  }
+  
