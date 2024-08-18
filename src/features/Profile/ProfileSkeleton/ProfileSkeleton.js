@@ -12,7 +12,7 @@ const ProfileSkeleton = () => {
 
     <div className="profile-skeleton">
       <div className="cover-photo-container">
-        <Skeleton height={250} width="100%" />
+        <Skeleton height="40vh" width="100%" />
         <div className="profile-pic-container">
           <Skeleton circle={true} height={120} width={120} />
         </div>
@@ -20,7 +20,7 @@ const ProfileSkeleton = () => {
      
      
       <div className="content">
-        <Skeleton height='80vh' width="100%" />
+        <Skeleton height='60vh' width="100%" />
       </div>
     </div>
     </div>

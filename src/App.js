@@ -59,6 +59,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToastError, setToastSuccess } from "./features/home/HomeSlice";
 import HadithBox from "./features/home/Components/Hadithbox/HadithBox";
 import SetHadith from "./features/home/Components/SetHadith/SetHadith";
+import MyProfile from "./features/Profile/MyProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -203,7 +204,7 @@ function App() {
             <Route path="profile/:id" exact element={<Homeleft />} />
 
             {/* view your own profile */}
-            <Route path="profile" exact element={<Profile />} />
+            <Route path="profile" exact element={<MyProfile />} />
             <Route path="profile" exact element={<Homeleft />} />
 
 

@@ -58,6 +58,7 @@ import MobileMenu from "../MobileMenu/MobileMenu";
 import MyPages from "../Page/MyPages/MyPages";
 import UserDetails from "./UserDetails/UserDetails";
 import HadithBox from "../home/Components/Hadithbox/HadithBox";
+import MyProfile from "../Profile/MyProfile";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -374,8 +375,7 @@ const Navbar = () => {
                 {/*Profile */}
                 
                    {/* view own profile */}
-            <Route path="profile" exact element={<Profile />} />
-            <Route path="profile" exact element={<Homeleft />} />
+            <Route path="profile" exact element={<MyProfile />} />
                 
                 
             {/* view others profile */}

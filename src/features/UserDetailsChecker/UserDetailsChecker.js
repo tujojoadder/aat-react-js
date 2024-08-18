@@ -6,6 +6,7 @@ import {
   setUser_lname,
   setEmail,
   setIdentifier,
+  setCover_photo
 } from "../../features/home/HomeSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetUserDetailsQuery } from "../../services/userAuthApi";
@@ -33,6 +34,7 @@ const UserDetailsChecker = ({ children }) => {
       dispatch(setUser_lname({ user_lname: userDetails.data.user_lname }));
       dispatch(setEmail({ email: userDetails.data.email }));
       dispatch(setIdentifier({ identifier: userDetails.data.identifier }));
+      dispatch(setCover_photo({ cover_photo: userDetails.data.cover_photo }));
       setIsLoading(false);
       if (location.pathname == '/login' ||
         location.pathname == '/forgotpassword' ||
