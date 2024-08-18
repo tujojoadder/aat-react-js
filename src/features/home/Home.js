@@ -51,9 +51,12 @@ export default function Home() {
     <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
       <HeaderComponent />
       <HadithStatus />
+           
       <div className="center-flex-container flex-item">
         {isFetching ? <CreatePostSkeleton /> : <CreatePost />} {/* Conditionally render the skeleton */}
-        
+        <div className="home py-2  " style={{ marginTop:'-1vh' }}>
+          <h1>Home</h1>
+        </div>
         <div className="post-wrapper">
           {allPosts.map((post) => (
             <div key={post.post_id} className="post-container">
