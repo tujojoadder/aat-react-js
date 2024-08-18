@@ -107,8 +107,8 @@ export default function HadithStatus() {
       style={{
         backgroundColor: isLoading ? '#ffffff' : '#f8f9fa',
         height: '200px',
-        paddingTop:'3px',
-        marginTop:'5px'
+        paddingTop:'5px',
+      
       }}
     >
       {isLoading ? (

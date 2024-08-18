@@ -1,64 +1,22 @@
 import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import SendFriendRequest from "./Components/SendFriendRequest/SendFriendRequest";
 import SearchBox from "./Components/SearchBox/SearchBox";
 import HadithBox from "./Components/Hadithbox/HadithBox";
-import SuggestedFriend from "./Components/SuggestedFriend/SuggestedFriend";
 import { Scrollbars } from "react-custom-scrollbars";
-import myImage from './logo.jpg'; // Adjust the path as needed
+import { useFriendSuggestionhomeQuery } from "../../services/friendsApi";
 
 export default function Homeleft() {
-  const profiles = [
-    {
-      name: "Mark Rockwell",
-      handle: "@mark_rockwell",
-      image:
-       {myImage}
-    },
-    {
-      name: "Jane Doe",
-      handle: "@jane_doe",
-      image:
-      {myImage}
-    },
-    {
-      name: "John Smith",
-      handle: "@john_smith",
-      image:
-        "https://images.app.goo.gl/5N63q48UYsovMsd57",
-    },{
-      name: "Jane Doe",
-      handle: "@jane_doe",
-      image:
-        "https://images.app.goo.gl/5N63q48UYsovMsd57",
-    },
-    {
-      name: "John Smith",
-      handle: "@john_smith",
-      image:
-        "https://images.app.goo.gl/5N63q48UYsovMsd57",
-    },{
-      name: "Jane Doe",
-      handle: "@jane_doe",
-      image:
-        "https://images.app.goo.gl/5N63q48UYsovMsd57",
-    },
-    {
-      name: "John cena",
-      handle: "@john_smith",
-      image:
-        "https://images.app.goo.gl/5N63q48UYsovMsd57",
-    },
-  ];
+  const { data: suggestion, isFetching, isError, refetch } = useFriendSuggestionhomeQuery();
 
+  const location = useLocation();
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const localStorageKey = "scrollPositionPage"; // Unique key for this component
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop =
-        parseInt(localStorage.getItem(localStorageKey)) || 0;
+      scrollRef.current.scrollTop = parseInt(localStorage.getItem(localStorageKey)) || 0;
     }
 
     return () => {
@@ -90,47 +48,44 @@ export default function Homeleft() {
 
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div
-        ref={scrollRef}
-        className="scroll-container w-100"
-        style={{ overflowY: "hidden", position: "fixed" }}
-      >
+      <div ref={scrollRef} className="scroll-container w-100" style={{ overflowY: "hidden", position: "fixed" }}>
         <div className="col-lg-3 p-0 m-0 right_side_bar">
-          
-
-          
-          {/* search box  */}
+          {/* Search box */}
           <SearchBox />
 
-          {/* hadis box */}
+          {/* Hadith box */}
           <HadithBox />
 
-          {/* Suggestion */}
-
-          <h5 className="ms-1  mt-3 me-5">Friend Suggestions</h5>
-            <Scrollbars style={{ width: "100%", height: "27vh" }}>
-              <div className="mb-4">
-                {profiles.map((profile, index) => {
-
+          {/* Friend Suggestion */}
+          <h5 className="ms-1 mt-3 me-5">Friend Suggestions</h5>
+          <Scrollbars style={{ width: "100%", height: "27vh" }}>
+            <div className="mb-4">
+              {isFetching ? (
+                <div>Loading...</div>
+              ) : isError ? (
+                <div>Error fetching suggestions</div>
+              ) : (
+                suggestion?.data?.map((profile, index) => {
+                  const isActive = location.pathname === `/profile/${profile.user_id}`;
                   return (
                  
                       <div className="col-12 mb-2">
                         <SendFriendRequest
-                          name={profile.name}
-                          handle={profile.handle}
-                          image={profile.image}
-                          
+                        user_id={`${profile.user_id}`}
+                          name={`${profile.user_fname} ${profile.user_lname}`}
+                          handle={`@${profile.identifier}`}
+                          image={profile.profile_picture || "default_image_url_here"}
+                          isActive={isActive}
                         />
                       </div>
                    
                   );
-                })}
-              </div>
-            </Scrollbars>
-          
+                })
+              )}
+            </div>
+          </Scrollbars>
         </div>
       </div>
-   
     </div>
   );
 }

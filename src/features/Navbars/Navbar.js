@@ -372,8 +372,15 @@ const Navbar = () => {
                 />
                 <Route path="/friends/all-friends/:id" element={<Profile />} />
                 {/*Profile */}
-                <Route path="profile" exact element={<Profile />} />
-                <Route path="profile" exact element={<Homeleft />} />
+                
+                   {/* view own profile */}
+            <Route path="profile" exact element={<Profile />} />
+            <Route path="profile" exact element={<Homeleft />} />
+                
+                
+            {/* view others profile */}
+            <Route path="profile/:id" exact element={<Profile />} />
+
                 {/* Profile --->manage */}
                 <Route
                   path="profile/manage"
@@ -521,6 +528,7 @@ const Navbar = () => {
               />
               {/* Profile */}
               <Route path="/profile" element={<Homeleft />} />
+              <Route path="profile/:id" exact element={<Homeleft />} />
 
               {/* Groups */}
               <Route path="/groups" element={<GroupsHomeRight />} />

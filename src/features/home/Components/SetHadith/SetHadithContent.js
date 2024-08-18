@@ -225,7 +225,7 @@ export default function SetHadithContent() {
               showJoinedGroups ? "card-body-white" : "card-body-light"
             }`}
           >
-            <div className="card-content">
+            <div className="card-content mb-5">
               <p
                 className={`card-text ${
                   showJoinedGroups ? "px-0" : "py-2 px-3"

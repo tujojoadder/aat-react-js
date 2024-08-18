@@ -1,0 +1,41 @@
+/* src/components/ProfileSkeleton/ProfileSkeleton.css */
+
+.profile-skeleton {
+  background-color: white;
+  min-height: 100vh;
+  padding: 0;
+  position: relative;
+}
+
+.cover-photo-container {
+  position: relative;
+  margin-bottom: 120px; /* Increased space for profile picture and additional margin */
+}
+
+.profile-pic-container {
+  position: absolute;
+  bottom: -60px; /* Position profile picture below cover photo */
+  left: 20px; /* Adjust as needed */
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #f0f0f0; /* Background color for loading state */
+}
+
+.profile-details {
+  margin-top: 60px; /* Space for profile picture */
+  margin-bottom: 20px; /* Space between details and navigation or tabs */
+}
+
+.profile-nav {
+  margin-bottom: 20px; /* Space below navigation */
+}
+
+.tabs {
+  margin-bottom: 20px; /* Space below tabs */
+}
+
+.content {
+  width: 100%;
+  margin-top: 40px; /* Margin between content and previous sections */
+}

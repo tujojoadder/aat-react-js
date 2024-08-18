@@ -197,8 +197,16 @@ function App() {
             />
 
             {/* Profile */}
+
+            {/* view others profile */}
+            <Route path="profile/:id" exact element={<Profile />} />
+            <Route path="profile/:id" exact element={<Homeleft />} />
+
+            {/* view your own profile */}
             <Route path="profile" exact element={<Profile />} />
             <Route path="profile" exact element={<Homeleft />} />
+
+
             {/* Profile --->manage */}
             <Route path="profile/manage" exact element={<ProfileManage />} />
 
