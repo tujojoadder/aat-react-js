@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import CreatePost from "./Components/CreatePost/CreatePost";
-
 import TextPost from "./Components/TextPost/TextPost";
 import ImagePost from "./Components/ImagePost/ImagePost";
 import BPost from "./Components/BPost/BPost";
 import HadithStatus from "./Components/HadithStatus/HadithStatus";
 import HeaderComponent from "./Components/HeaderComponent/HeaderComponent";
-import { useInView } from "react-intersection-observer";
-import { useGetPostsQuery } from "../../services/postApi";
-import SkeletonLoader from "./Components/SkeletonLoader/SkeletonLoader";
 import CreatePostSkeleton from "./Components/CreatePost/CreatePostSkeleton/CreatePostSkeleton";
 import Spinner from "../Spinner/Spinner";
+import { useInView } from "react-intersection-observer";
+import { useGetPostsQuery } from "../../services/postApi";
+
 
 export default function Home() {
+
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
-
+  //face new data
   const { ref, inView } = useInView({
     threshold: 0,
     triggerOnce: false,
   });
 
   const { data, isFetching, isError, isSuccess } = useGetPostsQuery(page);
-
+  
   useEffect(() => {
     if (isSuccess && data?.data) {
       if (data.data.length === 0) {
@@ -47,6 +47,18 @@ export default function Home() {
     }
   }, [inView, isFetching, isError, hasMorePosts, isSuccess]);
 
+
+
+
+
+
+
+
+
+
+
+
+  
   return (
     <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
       <HeaderComponent />
@@ -63,9 +75,7 @@ export default function Home() {
               {post.text_post && !post.image_post && <TextPost post={post} />}
               {!post.text_post && post.image_post && <ImagePost post={post} />}
               {post.text_post && post.image_post && <BPost post={post} />}
-              {/* Uncomment when image post components are ready */}
-{/*               {!post.text_post && post.image_post && <ImagePost post={post} />}
-              {post.text_post && post.image_post && <BPost post={post} />} */}
+
             </div>
           ))}
 

@@ -9,9 +9,60 @@ import ProfileFriend from "./ProfileFriends/ProfileFriend/ProfileFriend";
 import ProfileHomeBack from "./ProfileHomeBack/ProfileHomeBack";
 import { useGetUserDetailsQuery } from "../../services/friendsApi";
 import ProfileSkeleton from "./ProfileSkeleton/ProfileSkeleton";
+import { useGetSpecificUserPostQuery } from "../../services/profileApi";
+import { useInView } from "react-intersection-observer";
+import BPost from "../home/Components/BPost/BPost";
+import ImagePost from "../home/Components/ImagePost/ImagePost";
+import TextPost from "../home/Components/TextPost/TextPost";
+import Spinner from "../Spinner/Spinner";
 
 export default function Profile() {
+
   const { id } = useParams();
+
+const [page, setPage] = useState(1);
+const [allPosts, setAllPosts] = useState([]);
+const [hasMorePosts, setHasMorePosts] = useState(true);
+
+// Get reference and visibility state
+const { ref, inView } = useInView({
+  threshold: 0,
+  triggerOnce: false,
+});
+
+// Fetch data using dynamic query
+const { data: useGetSpecificUserPostQueryData, isFetching: useGetSpecificUserPostQueryIsFetching, isError: useGetSpecificUserPostQueryIsError, isSuccess: useGetSpecificUserPostQueryIsSuccess } = useGetSpecificUserPostQuery({page,id});
+
+// Effect to process fetched data
+useEffect(() => {
+  if (useGetSpecificUserPostQueryIsSuccess && useGetSpecificUserPostQueryData?.data) {
+    if (useGetSpecificUserPostQueryData.data.length === 0) {
+      setHasMorePosts(false);
+    } else {
+      const newPosts = useGetSpecificUserPostQueryData.data.filter(
+        (newPost) => !allPosts.some((post) => post.post_id === newPost.post_id)
+      );
+      if (newPosts.length > 0) {
+        console.log(newPosts);
+        setAllPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      }
+    }
+  }
+}, [useGetSpecificUserPostQueryData, useGetSpecificUserPostQueryIsSuccess]);
+
+// Effect to handle infinite scroll logic
+useEffect(() => {
+  if (inView && !useGetSpecificUserPostQueryIsFetching && !useGetSpecificUserPostQueryIsError && hasMorePosts && useGetSpecificUserPostQueryIsSuccess) {
+    setPage((prevPage) => prevPage + 1);
+  }
+}, [inView, useGetSpecificUserPostQueryIsFetching, useGetSpecificUserPostQueryIsError, hasMorePosts, useGetSpecificUserPostQueryIsSuccess]);
+
+
+
+
+
+
+  //getting profile top data (name ,images,identifire)
   const { data: profileData, isFetching, isError, refetch } = useGetUserDetailsQuery(id);
   const [currentTab, setCurrentTab] = useState("More");
 
@@ -65,6 +116,17 @@ export default function Profile() {
     backgroundPosition: 'center',
     minHeight: 'calc(100px + 15vw)'
   };
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: '100vh' }}>
@@ -125,7 +187,21 @@ export default function Profile() {
           </ul>
           <div className="tab-content">
             <div id="post" className="post-container-secssion mb-md-4 tab-pane fade show active">
-            {/*   <TextPost /> */}
+           
+            <div className="post-wrapper">
+{allPosts.map((post) => (
+  <div key={post.post_id} className="post-container">
+    {post.text_post && !post.image_post && <TextPost post={post} />}
+    {!post.text_post && post.image_post && <ImagePost post={post} />}
+    {post.text_post && post.image_post && <BPost post={post} />}
+  </div>
+))}
+
+<div ref={ref} className="loading-trigger" style={{minHeight:'30px'}}>
+            {useGetSpecificUserPostQueryIsFetching && <Spinner/>}
+          </div>
+        </div>
+
             </div>
             <div id="image" className="image-container-secssion mb-md-4 px-md-3 pt-3 tab-pane fade">
               <ImageContainer />
