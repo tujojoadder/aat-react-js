@@ -1,18 +1,19 @@
+
+
 import React from "react";
 import "./SendFriendRequest.css";
 import myImage from "./logo.jpg"; // Adjust the path as needed
 import { NavLink } from "react-router-dom";
 
-export default function SendFriendRequest({ name, handle, image, isActive,user_id }) {
+export default function SendFriendRequest({ name, handle, image, isActive, user_id, is_friend }) {
   return (
-    
     <div
       className={`friend-request-container p-2  d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
         isActive ? "active" : ""
       }`}
       style={{ maxWidth: "100%" }}
     >
-      <div className="profile-image me-2 ">
+      <div className="profile-image me-2">
         <NavLink
           key={user_id}
           to={`/profile/${user_id}`}
@@ -31,8 +32,10 @@ export default function SendFriendRequest({ name, handle, image, isActive,user_i
         <p className="fw-bold mb-0 text-truncate">{name}</p>
         <p className="text-muted mb-0 text-truncate">{handle}</p>
       </div>
-      <div className="add-friend-button">
-        {/* //When you have requested */}
+
+
+
+{/* //When you have requested */}
         {/* <button
           className="btn-add-friend btn-primary"
           type="button"
@@ -48,19 +51,25 @@ export default function SendFriendRequest({ name, handle, image, isActive,user_i
         >
           Cancel request
         </button> */}
-        {/* //When you have not requested */}
-        <button
-          className=" btn-add-friend btn-primary"
-          type="button"
-          style={{
-            backgroundColor: "#274a65",
-            outline: "none",
-            boxShadow: "none",
-            border: "none",
-          }}
-        >
-          <i className="fas fa-user-plus"></i> Add
-        </button>
+
+
+
+      <div className="add-friend-button">
+        {/* Show button only if is_friend is false */}
+        {!is_friend && (
+          <button
+            className="btn-add-friend btn-primary"
+            type="button"
+            style={{
+              backgroundColor: "#274a65",
+              outline: "none",
+              boxShadow: "none",
+              border: "none",
+            }}
+          >
+            <i className="fas fa-user-plus"></i> Add
+          </button>
+        )}
       </div>
     </div>
   );

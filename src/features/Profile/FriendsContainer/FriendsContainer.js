@@ -64,6 +64,7 @@ export default function FriendsContainer({ id }) {
                 name={`${friend.user_fname} ${friend.user_lname}`} // Combine first and last name
                 image={friend.profile_picture}
                 handle={friend.identifier}
+                is_friend={friend.is_friend}
               />
             </div>
           ))}
