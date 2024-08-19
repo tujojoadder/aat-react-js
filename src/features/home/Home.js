@@ -34,7 +34,7 @@ export default function Home() {
           (newPost) => !allPosts.some((post) => post.post_id === newPost.post_id)
         );
         if (newPosts.length > 0) {
-          console.log(newPosts);
+         
           setAllPosts((prevPosts) => [...prevPosts, ...newPosts]);
         }
       }

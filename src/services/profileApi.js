@@ -26,6 +26,10 @@ export const profileApi = createApi({
           }),
 
 
+          getSpecificUserPhoto: builder.query({
+            query: ({ photoPage = 1, id }) => `getspecificuserphotos?page=${photoPage}&id=${id}`, // Updated to include id
+          }),
+
 
 
       
@@ -34,4 +38,4 @@ export const profileApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetSpecificUserPostQuery } = profileApi
+export const {useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery } = profileApi

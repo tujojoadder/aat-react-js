@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import image from "./logo.jpg";
-import image1 from "./logo1.png";
+import React, { useEffect, useState } from 'react';
 import './ImageContainer.css'; // Ensure you create and import this CSS file
 
-const ImageContainer = () => {
+import { useInView } from 'react-intersection-observer';
+import Spinner from '../../Spinner/Spinner';
+import { useGetSpecificUserPhotoQuery } from '../../../services/profileApi';
+
+const ImageContainer = ({ id }) => {
   const [modalImage, setModalImage] = useState(null);
 
   const openModal = (src, alt) => {
@@ -14,24 +16,98 @@ const ImageContainer = () => {
     setModalImage(null);
   };
 
+  /* Getting Photo data */
+  const [photoPage, setPhotoPage] = useState(1);
+  const [allPhotos, setAllPhotos] = useState([]);
+  const [hasMorePhotos, setHasMorePhotos] = useState(true);
+
+  // Get reference and visibility state
+  const { ref: photoRef, inView: photoInView } = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  });
+
+  // Fetch data using dynamic query
+  const {
+    data: useGetSpecificUserPhotoQueryData,
+    isFetching: useGetSpecificUserPhotoQueryIsFetching,
+    isError: useGetSpecificUserPhotoQueryIsError,
+    isSuccess: useGetSpecificUserPhotoQueryIsSuccess,
+  } = useGetSpecificUserPhotoQuery({ photoPage, id });
+
+if (useGetSpecificUserPhotoQueryIsSuccess) {
+  console.log(useGetSpecificUserPhotoQueryData);
+}
+
+
+  // Effect to process fetched data
+  useEffect(() => {
+    if (
+      useGetSpecificUserPhotoQueryIsSuccess &&
+      useGetSpecificUserPhotoQueryData?.data
+    ) {
+      if (useGetSpecificUserPhotoQueryData.data.length === 0) {
+        setHasMorePhotos(false);
+      } else {
+        const newPhotos = useGetSpecificUserPhotoQueryData.data.filter(
+          (newPost) =>
+            !allPhotos.some((post) => post.post_id === newPost.post_id)
+        );
+        if (newPhotos.length > 0) {
+          setAllPhotos((prevPosts) => [...prevPosts, ...newPhotos]);
+        }
+      }
+    }
+  }, [useGetSpecificUserPhotoQueryData, useGetSpecificUserPhotoQueryIsSuccess]);
+
+  // Effect to handle infinite scroll logic
+  useEffect(() => {
+    if (
+      photoInView &&
+      !useGetSpecificUserPhotoQueryIsFetching &&
+      !useGetSpecificUserPhotoQueryIsError &&
+      hasMorePhotos &&
+      useGetSpecificUserPhotoQueryIsSuccess
+    ) {
+      setPhotoPage((prevPage) => prevPage + 1);
+    }
+  }, [
+    photoInView,
+    useGetSpecificUserPhotoQueryIsFetching,
+    useGetSpecificUserPhotoQueryIsError,
+    hasMorePhotos,
+    useGetSpecificUserPhotoQueryIsSuccess,
+  ]);
+
   return (
     <div className="container py-4" style={{ border: 'none' }}>
       <div className="row">
-        {[image, image1, image, image1, image, image1, image, image1].map((src, index) => (
+        {allPhotos.map((photo, index) => (
           <div className="col-4 mb-4" key={index}>
             <div className="image-container">
               <img
-                src={src}
+                src={photo?.image_post?.post_url} // Assuming 'url' is the correct key for the image URL
                 className="img-fluid rounded shadow-sm cursor-pointer"
                 style={{ height: '115px', width: '100%' }}
-                alt={`Logo ${index + 1}`}
-                onClick={() => openModal(src, `Logo ${index + 1}`)}
+                alt={photo.caption || `Photo ${index + 1}`}
+                onClick={() => openModal(photo?.image_post?.post_url, photo.caption)}
               />
             </div>
           </div>
         ))}
       </div>
 
+      {/* Infinite Scroll Trigger */}
+      <div ref={photoRef} className="infinite-scroll-trigger"></div>
+
+      {/* Loading Spinner */}
+      {useGetSpecificUserPhotoQueryIsFetching && (
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
+      )}
+
+      {/* Modal for Viewing Image */}
       {modalImage && (
         <div className="modal show d-block" tabIndex="-1" role="dialog" onClick={closeModal}>
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
