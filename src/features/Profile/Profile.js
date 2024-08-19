@@ -29,7 +29,11 @@ const { ref, inView } = useInView({
   threshold: 0,
   triggerOnce: false,
 });
-
+useEffect(() => {
+  setPage(1);
+  setAllPosts([]);
+  setHasMorePosts(true);
+}, [id]);
 // Fetch data using dynamic query
 const { data: useGetSpecificUserPostQueryData, isFetching: useGetSpecificUserPostQueryIsFetching, isError: useGetSpecificUserPostQueryIsError, isSuccess: useGetSpecificUserPostQueryIsSuccess } = useGetSpecificUserPostQuery({page,id});
 
@@ -48,7 +52,7 @@ useEffect(() => {
       }
     }
   }
-}, [useGetSpecificUserPostQueryData, useGetSpecificUserPostQueryIsSuccess]);
+}, [,useGetSpecificUserPostQueryData, useGetSpecificUserPostQueryIsSuccess,id]);
 
 // Effect to handle infinite scroll logic
 useEffect(() => {
@@ -130,6 +134,8 @@ useEffect(() => {
 
   return (
     <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: '100vh' }}>
+      
+      
       <div className="header__wrapper m-0 p-0">
         <div style={backgroundImageStyle}>
         <ProfileHomeBack text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`} />        </div>
