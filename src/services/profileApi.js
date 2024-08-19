@@ -20,16 +20,21 @@ export const profileApi = createApi({
     endpoints: (builder) => ({
 
 
-
+   /*    get specific usrer post for profile */
         getSpecificUserPost: builder.query({
             query: ({ page = 1, id }) => `getspecificuserposts?page=${page}&id=${id}`, // Updated to include id
           }),
 
-
+   /*    get specific usrer images for profile */
           getSpecificUserPhoto: builder.query({
             query: ({ photoPage = 1, id }) => `getspecificuserphotos?page=${photoPage}&id=${id}`, // Updated to include id
           }),
 
+
+   /* get specific usrer images for profile */
+       getSpecificUserFriend: builder.query({
+       query: ({ friendPage = 1, id }) => `getspecificuserfriendids?page=${friendPage}&id=${id}`, // Updated to include id
+       }),
 
 
       
@@ -38,4 +43,4 @@ export const profileApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery } = profileApi
+export const {useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery } = profileApi

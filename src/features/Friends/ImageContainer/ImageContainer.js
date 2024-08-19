@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import './ImageContainer.css'; // Ensure you create and import this CSS file
+import React, { useEffect, useState } from "react";
+import "./ImageContainer.css"; // Ensure you create and import this CSS file
 
-import { useInView } from 'react-intersection-observer';
-import Spinner from '../../Spinner/Spinner';
-import { useGetSpecificUserPhotoQuery } from '../../../services/profileApi';
+import { useInView } from "react-intersection-observer";
+import Spinner from "../../Spinner/Spinner";
+import { useGetSpecificUserPhotoQuery } from "../../../services/profileApi";
 
 const ImageContainer = ({ id }) => {
   const [modalImage, setModalImage] = useState(null);
@@ -35,10 +35,9 @@ const ImageContainer = ({ id }) => {
     isSuccess: useGetSpecificUserPhotoQueryIsSuccess,
   } = useGetSpecificUserPhotoQuery({ photoPage, id });
 
-if (useGetSpecificUserPhotoQueryIsSuccess) {
-  console.log(useGetSpecificUserPhotoQueryData);
-}
-
+  if (useGetSpecificUserPhotoQueryIsSuccess) {
+    console.log("photo" + useGetSpecificUserPhotoQueryData);
+  }
 
   // Effect to process fetched data
   useEffect(() => {
@@ -80,7 +79,7 @@ if (useGetSpecificUserPhotoQueryIsSuccess) {
   ]);
 
   return (
-    <div className="container py-4" style={{ border: 'none' }}>
+    <div className="container py-4" style={{ border: "none" }}>
       <div className="row">
         {allPhotos.map((photo, index) => (
           <div className="col-4 mb-4" key={index}>
@@ -88,36 +87,46 @@ if (useGetSpecificUserPhotoQueryIsSuccess) {
               <img
                 src={photo?.image_post?.post_url} // Assuming 'url' is the correct key for the image URL
                 className="img-fluid rounded shadow-sm cursor-pointer"
-                style={{ height: '115px', width: '100%' }}
+                style={{ height: "115px", width: "100%" }}
                 alt={photo.caption || `Photo ${index + 1}`}
-                onClick={() => openModal(photo?.image_post?.post_url, photo.caption)}
+                onClick={() =>
+                  openModal(photo?.image_post?.post_url, photo.caption)
+                }
               />
             </div>
           </div>
         ))}
       </div>
-
-      {/* Infinite Scroll Trigger */}
-      <div ref={photoRef} className="infinite-scroll-trigger"></div>
-
-      {/* Loading Spinner */}
-      {useGetSpecificUserPhotoQueryIsFetching && (
-        <div className="d-flex justify-content-center">
-          <Spinner />
-        </div>
-      )}
-
+    {/*   //Spinner Scroll */}
+      <div
+        ref={photoRef}
+        className="loading-trigger"
+        style={{ minHeight: "40px" }}
+      >
+        {useGetSpecificUserPhotoQueryIsFetching && <Spinner />}
+      </div>
       {/* Modal for Viewing Image */}
       {modalImage && (
-        <div className="modal show d-block" tabIndex="-1" role="dialog" onClick={closeModal}>
-          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div className="modal-content custom-modal-content" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-body p-0" style={{ marginTop: '7vh' }}>
+        <div
+          className="modal show d-block"
+          tabIndex="-1"
+          role="dialog"
+          onClick={closeModal}
+        >
+          <div
+            className="modal-dialog modal-dialog-centered modal-lg"
+            role="document"
+          >
+            <div
+              className="modal-content custom-modal-content"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="modal-body p-0" style={{ marginTop: "7vh" }}>
                 <img
                   src={modalImage.src}
                   className="img-fluid w-100"
                   alt={modalImage.alt}
-                  style={{ maxHeight: '75vh', objectFit: 'contain' }}
+                  style={{ maxHeight: "75vh", objectFit: "contain" }}
                 />
                 <div className="d-flex justify-content-center mt-3">
                   <button
