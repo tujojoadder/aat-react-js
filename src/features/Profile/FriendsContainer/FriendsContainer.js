@@ -74,7 +74,7 @@ export default function FriendsContainer({ id }) {
         <div
           ref={friendRef}
           className="loading-trigger"
-          style={{ minHeight: '40px' }}
+             style={{height:'7vh',minHeight:'40px'}}
         >
           {useGetSpecificUserFriendQueryIsFetching && <Spinner />}
         </div>

@@ -16,6 +16,7 @@ import ImagePost from "../home/Components/ImagePost/ImagePost";
 import TextPost from "../home/Components/TextPost/TextPost";
 import Spinner from "../Spinner/Spinner";
 import FriendsContainer from "./FriendsContainer/FriendsContainer";
+import FollowerContainer from "./FollowerContainer/FollowerContainer";
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState("post");
@@ -43,9 +44,8 @@ export default function Profile() {
     isSuccess: useGetSpecificUserPostQueryIsSuccess,
   } = useGetSpecificUserPostQuery({ page, id });
 
-
   if (useGetSpecificUserPostQueryIsFetching) {
-    console.log("post"+useGetSpecificUserPostQueryData);
+    console.log("post" + useGetSpecificUserPostQueryData);
   }
   // Effect to process fetched data
   useEffect(() => {
@@ -61,7 +61,6 @@ export default function Profile() {
             !allPosts.some((post) => post.post_id === newPost.post_id)
         );
         if (newPosts.length > 0) {
-        
           setAllPosts((prevPosts) => [...prevPosts, ...newPosts]);
         }
       }
@@ -72,10 +71,6 @@ export default function Profile() {
     useGetSpecificUserPostQueryIsSuccess,
     id,
   ]);
-
-
-
-
 
   // Effect to handle infinite scroll logic
   useEffect(() => {
@@ -157,10 +152,8 @@ export default function Profile() {
     minHeight: "calc(100px + 15vw)",
   };
 
-
-
   function handlePhotoTabClick() {
-    setActiveTab('photo');
+    setActiveTab("photo");
   }
 
   return (
@@ -307,11 +300,11 @@ export default function Profile() {
                   </div>
                 ))}
 
-{/* Scroller Spinner */}
+                {/* Scroller Spinner */}
                 <div
                   ref={ref}
                   className="loading-trigger"
-                  style={{minHeight:'40px'}}
+                  style={{ height: "7vh", minHeight: "40px" }}
                 >
                   {useGetSpecificUserPostQueryIsFetching && <Spinner />}
                 </div>
@@ -321,10 +314,11 @@ export default function Profile() {
               id="image"
               className="image-container-secssion mb-md-4 px-md-3 pt-3 tab-pane fade"
             >
-
-{activeTab=='photo'?(<ImageContainer id={id} />):(<p>No photo</p>)}
-             
-              
+              {activeTab == "photo" ? (
+                <ImageContainer id={id} />
+              ) : (
+                <p>No photo</p>
+              )}
             </div>
             <div id="about" className="p-3 tab-pane fade">
               <h4 className="ps-2 ">About</h4>
@@ -332,12 +326,9 @@ export default function Profile() {
             </div>
             <div id="friends" className="tab-pane fade w-100">
               <FriendsContainer id={id} />
-
-
-
             </div>
             <div id="follower" className="p-md-3 tab-pane fade">
-              <ProfileFriend />
+              <FollowerContainer id={id} />
             </div>
             <div id="following" className="p-md-3 tab-pane fade">
               <ProfileFriend />

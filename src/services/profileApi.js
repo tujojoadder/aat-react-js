@@ -37,10 +37,16 @@ export const profileApi = createApi({
        }),
 
 
+
+   /* get all followers for specific user on profile*/
+   getSpecificUserFollower: builder.query({
+    query: ({ followerPage = 1, id }) => `getspecificuserfollower?page=${followerPage}&id=${id}`, // Updated to include id
+    }),
+
       
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery } = profileApi
+export const {useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery } = profileApi

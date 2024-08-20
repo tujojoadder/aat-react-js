@@ -101,7 +101,7 @@ const ImageContainer = ({ id }) => {
       <div
         ref={photoRef}
         className="loading-trigger"
-        style={{ minHeight: "40px" }}
+        style={{height:'7vh',minHeight:'40px'}}
       >
         {useGetSpecificUserPhotoQueryIsFetching && <Spinner />}
       </div>
