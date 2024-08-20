@@ -16,6 +16,15 @@ const { ref:followerRef, inView:fllowerInView } = useInView({
   triggerOnce: false,
 });
 
+
+
+  //Reset post if id change
+  useEffect(() => {
+    setFollowerPage(1);
+    setallFollower([]);
+    sethasMoreFollower(true);
+  }, [id]);
+
 // Fetch data using dynamic query
 const { data: useGetSpecificUserFollowerQueryData, isFetching: useGetSpecificUserFollowerQueryIsFetching, isError: useGetSpecificUserFollowerQueryIsError, isSuccess: useGetSpecificUserFollowerQueryIsSuccess }
  = useGetSpecificUserFollowerQuery({followerPage,id});

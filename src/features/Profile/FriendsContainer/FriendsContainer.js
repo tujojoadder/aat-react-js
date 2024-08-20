@@ -15,6 +15,13 @@ export default function FriendsContainer({ id }) {
     triggerOnce: false,
   });
 
+    //Reset friends if id change
+    useEffect(() => {
+      setFriendPage(1);
+      setAllFriends([]);
+      setHasMoreFriends(true);
+    }, [id]);
+
   // Fetch data using dynamic query
   const { 
     data: useGetSpecificUserFriendQueryData, 

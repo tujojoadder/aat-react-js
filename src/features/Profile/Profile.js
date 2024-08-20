@@ -17,6 +17,7 @@ import TextPost from "../home/Components/TextPost/TextPost";
 import Spinner from "../Spinner/Spinner";
 import FriendsContainer from "./FriendsContainer/FriendsContainer";
 import FollowerContainer from "./FollowerContainer/FollowerContainer";
+import FollowingContainer from "./FollowingContainer/FollowingContainer";
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState("post");
@@ -31,6 +32,7 @@ export default function Profile() {
     threshold: 0,
     triggerOnce: false,
   });
+  //Reset post if id change
   useEffect(() => {
     setPage(1);
     setAllPosts([]);
@@ -331,7 +333,7 @@ export default function Profile() {
               <FollowerContainer id={id} />
             </div>
             <div id="following" className="p-md-3 tab-pane fade">
-              <ProfileFriend />
+              <FollowingContainer id={id} />
             </div>
           </div>
         </div>

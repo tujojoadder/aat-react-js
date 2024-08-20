@@ -15,6 +15,12 @@ const ImageContainer = ({ id }) => {
   const closeModal = () => {
     setModalImage(null);
   };
+  //Reset post if id change
+  useEffect(() => {
+    setPhotoPage(1);
+    setAllPhotos([]);
+    setHasMorePhotos(true);
+  }, [id]);
 
   /* Getting Photo data */
   const [photoPage, setPhotoPage] = useState(1);
