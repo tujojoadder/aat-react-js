@@ -22,7 +22,7 @@ export const profileApi = createApi({
 
    /*    get specific usrer post for profile */
         getSpecificUserPost: builder.query({
-            query: ({ page = 1, id }) => `getspecificuserposts?page=${page}&id=${id}`, // Updated to include id
+            query: ({ page = 1, userId }) => `getspecificuserposts?page=${page}&id=${userId}`, // Updated to include id
           }),
 
    /*    get specific usrer images for profile */
