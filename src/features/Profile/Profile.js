@@ -186,7 +186,7 @@ export default function Profile() {
           <div className="tab-pane fade" id="follower">
             <h4>Follower</h4>
            <FollowerContainer  userId={id}   />
-          </div>
+          </div> 
     
           {/* Following Tab Content */}
           <div className="tab-pane fade" id="following">
