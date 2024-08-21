@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import ProfileSkeleton from "./ProfileSkeleton/ProfileSkeleton";
 import ProfileHomeBack from "./ProfileHomeBack/ProfileHomeBack";
 import ProfilePost from "./ProfilePost/ProfilePost";
@@ -9,13 +9,52 @@ import FriendsContainer from "./FriendsContainer/FriendsContainer";
 import FollowerContainer from "./FollowerContainer/FollowerContainer";
 import FollowingContainer from "./FollowingContainer/FollowingContainer";
 import About from "../home/Components/About/About";
+import CustomScrollBar from "../CustomScrollBar/CustomScrollBar";
 
 export default function Profile() {
   const { id } = useParams();
-  const location = useLocation(); // Get the current location
-
-  // Move useState and useEffect here
+  const scrollRef = useRef(null);
   const [currentTab, setCurrentTab] = useState("More");
+
+  /* // Create a unique key for storing the scroll position
+  const localStorageKey = `scrollPosition_${id}`;
+
+  // Restore scroll position from localStorage
+  useEffect(() => {
+    const storedScrollPosition = localStorage.getItem(localStorageKey);
+    if (scrollRef.current && storedScrollPosition) {
+      scrollRef.current.scrollTop = parseInt(storedScrollPosition, 10);
+    }
+
+    // Clean up scroll event listener
+    return () => {
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [id]);
+
+  // Handle scroll event and save scroll position
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const scrollTop = scrollRef.current.scrollTop;
+      console.log(`Current scroll position: ${scrollTop}`); // Log scroll position
+      localStorage.setItem(localStorageKey, scrollTop);
+    }
+  };
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.addEventListener("scroll", handleScroll);
+    }
+
+    // Clean up scroll event listener on unmount
+    return () => {
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [id]); */
 
   useEffect(() => {
     const handleResize = () => {
@@ -72,7 +111,7 @@ export default function Profile() {
 
   return (
     <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: "100vh" }}>
-      <div className="header__wrapper m-0 p-0">
+      <div ref={scrollRef} className="header__wrapper m-0 p-0" style={{ overflowY: 'scroll', height: '100vh' }}>
         <div style={backgroundImageStyle}>
           <ProfileHomeBack text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`} />
         </div>
@@ -89,7 +128,7 @@ export default function Profile() {
         </div>
 
         {/* Tabs */}
-        <ul className="nav nav-tabs mt-3">
+        <ul className="nav nav-tabs mt-3 mx-2">
           <li className="nav-item">
             <a className="nav-link active" href="#post" data-bs-toggle="tab">
               Posts
@@ -161,46 +200,45 @@ export default function Profile() {
         </ul>
 
         {/* Tab Content */}
-        <div className="tab-content p-3">
+        <div className="tab-content p-3 px-0">
           {/* Posts Tab Content */}
           <div className="tab-pane fade show active" id="post">
-            <h4>Posts</h4>
-            
-            {/* Example post content */}
+            <h4 className="ms-4">Posts</h4>
             <ProfilePost userId={id} />
           </div>
 
           {/* Photos Tab Content */}
           <div className="tab-pane fade" id="image">
-            <h4>Photos</h4>
+            <h4 className="ms-4">Photos</h4>
             <ImageContainer userId={id} />
           </div>
 
           {/* Friends Tab Content */}
           <div className="tab-pane fade" id="friends">
-            <h4>Friends</h4>
-            <FriendsContainer  userId={id}  />
+            <h4 className="ms-4">Friends</h4>
+            <FriendsContainer userId={id} />
           </div>
 
           {/* Follower Tab Content */}
           <div className="tab-pane fade" id="follower">
-            <h4>Follower</h4>
-           <FollowerContainer  userId={id}   />
-          </div> 
-    
+            <h4 className="ms-4">Follower</h4>
+            <FollowerContainer userId={id} />
+          </div>
+
           {/* Following Tab Content */}
           <div className="tab-pane fade" id="following">
-            <h4>Following</h4>
-           <FollowingContainer  userId={id}  />
+            <h4 className="ms-4">Following</h4>
+            <FollowingContainer userId={id} />
           </div>
 
           {/* About Tab Content */}
           <div className="tab-pane fade" id="about">
-            <h4>About</h4>
-           <About/>
+            <h4 className="ms-4">About</h4>
+            <About />
           </div>
         </div>
       </div>
+      <CustomScrollBar scrollRef={scrollRef} /> {/* Include CustomScrollBar */}
     </div>
   );
 }
