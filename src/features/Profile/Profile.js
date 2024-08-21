@@ -203,37 +203,41 @@ export default function Profile() {
         <div className="tab-content p-3 px-0">
           {/* Posts Tab Content */}
           <div className="tab-pane fade show active" id="post">
-            <h4 className="ms-4">Posts</h4>
+            <h5 className="ms-4 mb-4" color="#65676b">Posts</h5>
             <ProfilePost userId={id} />
           </div>
 
           {/* Photos Tab Content */}
           <div className="tab-pane fade" id="image">
-            <h4 className="ms-4">Photos</h4>
+            <h5 className="ms-4 mb-1" color="#65676b">Photos</h5>
+
             <ImageContainer userId={id} />
           </div>
 
           {/* Friends Tab Content */}
           <div className="tab-pane fade" id="friends">
-            <h4 className="ms-4">Friends</h4>
+            <h5 className="ms-4 mb-1" color="#65676b">Friends</h5>
+
             <FriendsContainer userId={id} />
           </div>
 
           {/* Follower Tab Content */}
           <div className="tab-pane fade" id="follower">
-            <h4 className="ms-4">Follower</h4>
+            <h5 className="ms-4 mb-1" color="#65676b">Follower</h5>
+
             <FollowerContainer userId={id} />
           </div>
 
           {/* Following Tab Content */}
           <div className="tab-pane fade" id="following">
-            <h4 className="ms-4">Following</h4>
+            <h5 className="ms-4 mb-1" color="#65676b">Following</h5>
+
             <FollowingContainer userId={id} />
           </div>
 
           {/* About Tab Content */}
           <div className="tab-pane fade" id="about">
-            <h4 className="ms-4">About</h4>
+          <h5 className="ms-4 mb-1" color="#65676b">About</h5>
             <About />
           </div>
         </div>

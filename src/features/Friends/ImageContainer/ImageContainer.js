@@ -87,6 +87,8 @@ const ImageContainer = ({ userId }) => {
   return (
     <div className="container py-4" style={{ border: "none" }}>
       <div className="row">
+
+      {allPhotos.length === 0 && !useGetSpecificUserPhotoQueryIsFetching && <h4 className="text-center" style={{color:'#592529'}}>No Photos to show</h4>}
         {allPhotos.map((photo, index) => (
           <div className="col-4 mb-4" key={index}>
             <div className="image-container">

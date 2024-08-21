@@ -30,8 +30,6 @@ export default function ProfilePost({ userId }) {
   // Update post list and avoid duplicates
   useEffect(() => {
     if (isSuccess && userPosts?.data) {
-      console.log("Fetched posts:", userPosts.data); // Debugging line to check fetched data
-
       if (userPosts.data.length === 0) {
         setHasMorePosts(false);
       } else {
@@ -61,7 +59,7 @@ export default function ProfilePost({ userId }) {
   return (
     <div className="post-wrapper">
       {/* Display posts */}
-      {allPosts.length === 0 && !isFetching && <p className="text-center">No posts available.</p>}
+      {allPosts.length === 0 && !isFetching && <h4 className="text-center" style={{color:'#592529'}}>No Posts to show</h4>}
       {allPosts.map((post) => (
         <div key={post.post_id} className="post-container">
           {post.text_post && !post.image_post && <TextPost post={post} />}
@@ -74,11 +72,6 @@ export default function ProfilePost({ userId }) {
       <div ref={ref} className="loading-trigger" style={{ height: "7vh", minHeight: "40px" }}>
         {isFetching && <Spinner />}
       </div>
-
-      {/* Message when no more posts */}
-      {!hasMorePosts && !isFetching && (
-        <p className="text-center">No more posts available.</p>
-      )}
     </div>
   );
 }

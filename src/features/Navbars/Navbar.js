@@ -263,14 +263,19 @@ const Navbar = () => {
                 </div>
               </NavLink>
 
-              <NavLink to="/profile" className="custom-link">
-                <div className="d-flex align-items-center my-2 mb-3 py-1 pl-5 mydiv">
-                  <span>
-                    <i className="fa-solid fa-user fs-2"></i>
-                  </span>
-                  <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
-                </div>
-              </NavLink>
+              <NavLink 
+      to="/profile" 
+      className={({ isActive }) => 
+        isActive && window.location.pathname === '/profile' ? 'custom-link active' : 'custom-link'
+      }
+    >
+      <div className="d-flex align-items-center my-2 mb-3 py-1 pl-5 mydiv">
+        <span>
+          <i className="fa-solid fa-user fs-2"></i>
+        </span>
+        <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
+      </div>
+    </NavLink>
 
               <button
                 className="d-flex align-items-center pt-1 pl-5 my-2 custom-link mydiv"

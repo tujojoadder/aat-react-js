@@ -65,6 +65,9 @@ if (useGetSpecificUserFollowerQueryIsSuccess) {
     <div>
     <div className="container py-4" style={{ border: 'none' }}>
       <div className="row">
+
+      {allFollower.length === 0 && !useGetSpecificUserFollowerQueryIsFetching && <h4 className="text-center" style={{color:'#592529'}}>No Follower to show</h4>}
+
         {allFollower.map((follower, index) => (
           <div className="col-12 mb-2" key={index}>
     <ShowUserFlower 
