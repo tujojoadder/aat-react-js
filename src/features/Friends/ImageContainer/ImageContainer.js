@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 import Spinner from "../../Spinner/Spinner";
 import { useGetSpecificUserPhotoQuery } from "../../../services/profileApi";
 
-const ImageContainer = ({ id }) => {
+const ImageContainer = ({ userId }) => {
   const [modalImage, setModalImage] = useState(null);
 
   const openModal = (src, alt) => {
@@ -20,7 +20,7 @@ const ImageContainer = ({ id }) => {
     setPhotoPage(1);
     setAllPhotos([]);
     setHasMorePhotos(true);
-  }, [id]);
+  }, [userId]);
 
   /* Getting Photo data */
   const [photoPage, setPhotoPage] = useState(1);
@@ -39,7 +39,7 @@ const ImageContainer = ({ id }) => {
     isFetching: useGetSpecificUserPhotoQueryIsFetching,
     isError: useGetSpecificUserPhotoQueryIsError,
     isSuccess: useGetSpecificUserPhotoQueryIsSuccess,
-  } = useGetSpecificUserPhotoQuery({ photoPage, id });
+  } = useGetSpecificUserPhotoQuery({ photoPage, userId });
 
   if (useGetSpecificUserPhotoQueryIsSuccess) {
     console.log("photo" + useGetSpecificUserPhotoQueryData);

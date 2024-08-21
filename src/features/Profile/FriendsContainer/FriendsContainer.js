@@ -4,7 +4,7 @@ import Spinner from '../../Spinner/Spinner';
 import { useGetSpecificUserFriendQuery } from '../../../services/profileApi';
 import SendFriendRequest from '../../home/Components/SendFriendRequest/SendFriendRequest';
 
-export default function FriendsContainer({ id }) {
+export default function FriendsContainer({ userId }) {
   const [friendPage, setFriendPage] = useState(1);
   const [allFriends, setAllFriends] = useState([]);
   const [hasMoreFriends, setHasMoreFriends] = useState(true);
@@ -20,7 +20,7 @@ export default function FriendsContainer({ id }) {
       setFriendPage(1);
       setAllFriends([]);
       setHasMoreFriends(true);
-    }, [id]);
+    }, [userId]);
 
   // Fetch data using dynamic query
   const { 
@@ -28,7 +28,7 @@ export default function FriendsContainer({ id }) {
     isFetching: useGetSpecificUserFriendQueryIsFetching, 
     isError: useGetSpecificUserFriendQueryIsError, 
     isSuccess: useGetSpecificUserFriendQueryIsSuccess 
-  } = useGetSpecificUserFriendQuery({ friendPage, id });
+  } = useGetSpecificUserFriendQuery({ friendPage, userId });
 
   // Log query data for debugging
   useEffect(() => {

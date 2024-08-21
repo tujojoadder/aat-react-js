@@ -27,26 +27,26 @@ export const profileApi = createApi({
 
    /*    get specific usrer images for profile */
           getSpecificUserPhoto: builder.query({
-            query: ({ photoPage = 1, id }) => `getspecificuserphotos?page=${photoPage}&id=${id}`, // Updated to include id
+            query: ({ photoPage = 1, userId }) => `getspecificuserphotos?page=${photoPage}&id=${userId}`, // Updated to include id
           }),
 
 
    /* get specific usrer images for profile */
        getSpecificUserFriend: builder.query({
-       query: ({ friendPage = 1, id }) => `getspecificuserfriendids?page=${friendPage}&id=${id}`, // Updated to include id
+       query: ({ friendPage = 1, userId }) => `getspecificuserfriendids?page=${friendPage}&id=${userId}`, // Updated to include id
        }),
 
 
 
    /* get all followers for specific user on profile*/
    getSpecificUserFollower: builder.query({
-    query: ({ followerPage = 1, id }) => `getspecificuserfollower?page=${followerPage}&id=${id}`, // Updated to include id
+    query: ({ followerPage = 1, userId }) => `getspecificuserfollower?page=${followerPage}&id=${userId}`, // Updated to include id
     }),
 
 
    /* get all following for specific user on profile*/
    getSpecificUserFollowing: builder.query({
-    query: ({ followingPage = 1, id }) => `getspecificuserfollowing?page=${followingPage}&id=${id}`, // Updated to include id
+    query: ({ followingPage = 1, userId }) => `getspecificuserfollowing?page=${followingPage}&id=${userId}`, // Updated to include id
     }),
 
 

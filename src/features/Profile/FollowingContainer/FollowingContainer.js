@@ -4,7 +4,7 @@ import Spinner from '../../Spinner/Spinner';
 import { useInView } from 'react-intersection-observer';
 import ShowUserFlowing from './ShowUserFlowing/ShowUserFlowing';
 
-export default function FollowingContainer({ id }) {
+export default function FollowingContainer({ userId }) {
     const [followingPage, setFollowingPage] = useState(1);
     const [allFollowing, setAllFollowing] = useState([]);
     const [hasMoreFollowing, setHasMoreFollowing] = useState(true);
@@ -19,14 +19,14 @@ export default function FollowingContainer({ id }) {
     setFollowingPage(1);
     setAllFollowing([]);
     setHasMoreFollowing(true);
-  }, [id]);
+  }, [userId]);
     // Fetch data using dynamic query
     const { 
         data: useGetSpecificUserFollowingQueryData, 
         isFetching: useGetSpecificUserFollowingQueryIsFetching,
         isError: useGetSpecificUserFollowingQueryIsError, 
         isSuccess: useGetSpecificUserFollowingQueryIsSuccess 
-    } = useGetSpecificUserFollowingQuery({ followingPage, id });
+    } = useGetSpecificUserFollowingQuery({ followingPage, userId });
 
 if (useGetSpecificUserFollowingQueryIsSuccess) {
     console.log(useGetSpecificUserFollowingQueryData)

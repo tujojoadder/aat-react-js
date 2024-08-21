@@ -5,7 +5,7 @@ import SendFriendRequest from '../../home/Components/SendFriendRequest/SendFrien
 import { useInView } from 'react-intersection-observer';
 import ShowUserFlower from './ShowUserFlower/ShowUserFlower';
 
-export default function FollowerContainer({id}) {
+export default function FollowerContainer({userId}) {
 const [followerPage, setFollowerPage] = useState(1);
 const [allFollower, setallFollower] = useState([]);
 const [hasMoreFollower, sethasMoreFollower] = useState(true);
@@ -23,11 +23,11 @@ const { ref:followerRef, inView:fllowerInView } = useInView({
     setFollowerPage(1);
     setallFollower([]);
     sethasMoreFollower(true);
-  }, [id]);
+  }, [userId]);
 
 // Fetch data using dynamic query
 const { data: useGetSpecificUserFollowerQueryData, isFetching: useGetSpecificUserFollowerQueryIsFetching, isError: useGetSpecificUserFollowerQueryIsError, isSuccess: useGetSpecificUserFollowerQueryIsSuccess }
- = useGetSpecificUserFollowerQuery({followerPage,id});
+ = useGetSpecificUserFollowerQuery({followerPage,userId});
 
 
 if (useGetSpecificUserFollowerQueryIsSuccess) {
