@@ -59,7 +59,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToastError, setToastSuccess } from "./features/home/HomeSlice";
 import HadithBox from "./features/home/Components/Hadithbox/HadithBox";
 import SetHadith from "./features/home/Components/SetHadith/SetHadith";
-import MyProfile from "./features/Profile/MyProfile";
+import MyProfile from "./features/Profile/MyProfile/MyProfile";
 
 function App() {
   const dispatch = useDispatch();

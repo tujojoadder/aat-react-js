@@ -19,6 +19,7 @@ export const profileApi = createApi({
      }),
     endpoints: (builder) => ({
 
+    /* <----  Other's User ---> */      
 
    /*    get specific usrer post for profile */
         getSpecificUserPost: builder.query({
@@ -51,10 +52,51 @@ export const profileApi = createApi({
 
 
 
+
+/*<<<---- Auth user ---->>> */
+
+/*    get specific usrer post for profile */
+getAuthUserPost: builder.query({
+  query: ({ page = 1 }) => `getauthuserposts?page=${page}`, // Updated to include id
+}),
+
+/*    get specific usrer images for profile */
+getAuthUserPhoto: builder.query({
+  query: ({ photoPage = 1 }) => `getauthuserphotos?page=${photoPage}`, // Updated to include id
+}),
+
+
+/* get specific usrer images for profile */
+getAuthUserFriend: builder.query({
+query: ({ friendPage = 1}) => `getauthuserfriendids?page=${friendPage}`, // Updated to include id
+}),
+
+
+
+/* get all followers for specific user on profile*/
+getAuthUserFollower: builder.query({
+query: ({ followerPage = 1 }) => `getauthuserfollower?page=${followerPage}`, // Updated to include id
+}),
+
+
+/* get all following for specific user on profile*/
+getAuthUserFollowing: builder.query({
+query: ({ followingPage = 1 }) => `getauthuserfollowing?page=${followingPage}`, // Updated to include id
+}),
+
+
+
+
+
+
+
+
+
+
       
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery } = profileApi
+export const {useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi

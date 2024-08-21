@@ -1,19 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./MyProfile.css";
 import image from "./logo.jpg";
-import TextPost from "../home/Components/TextPost/TextPost";
+import TextPost from "../../home/Components/TextPost/TextPost";
 import { NavLink, useParams } from "react-router-dom";
 
-import ImagePost from "../home/Components/ImagePost/ImagePost";
-import ImageContainer from "../Friends/ImageContainer/ImageContainer";
-import About from "../home/Components/About/About";
-import ProfileFriend from "./ProfileFriends/ProfileFriend/ProfileFriend";
-import BPost from "../home/Components/BPost/BPost";
-import ProfileHomeBack from "./ProfileHomeBack/ProfileHomeBack";
+import ImagePost from "../../home/Components/ImagePost/ImagePost";
+import ImageContainer from "../../Friends/ImageContainer/ImageContainer";
+import About from "../../home/Components/About/About";
+import ProfileFriend from "../ProfileFriends/ProfileFriend/ProfileFriend";
+import BPost from "../../home/Components/BPost/BPost";
+import ProfileHomeBack from "../ProfileHomeBack/ProfileHomeBack";
 import { useSelector } from "react-redux";
+import MyProfilePost from "./MyProfilePost/MyProfilePost";
+import CustomScrollBar from "../../CustomScrollBar/CustomScrollBar";
+import MyProfileImageContainer from "./MyProfileImageContainer/MyProfileImageContainer";
+import MyProfileFriendsContainer from "./MyProfileFriendsContainer/MyProfileFriendsContainer";
+import MyProfileFollowerContainer from "./MyProfileFollowerContainer/MyProfileFollowerContainer";
+import MyProfileFollowingContainer from "./MyProfileFollowingContainer/MyProfileFollowingContainer";
 
 export default function MyProfile() {
-  // Using useSelector to retrieve the profile details from Redux state
+
+
+  const scrollRef = useRef(null);
+  /*  // Using useSelector to retrieve the profile details from Redux state */
   const {
     profile_picture,
     user_fname,
@@ -84,7 +93,7 @@ export default function MyProfile() {
       className="friend-home main border-start border-end mb-1 m-0 p-0"
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
-      <div className="header__wrapper m-0 p-0 ">
+        <div ref={scrollRef} className="header__wrapper m-0 p-0" style={{ overflowY: 'scroll', height: '100vh' }}>
         <div style={backgroundImageStyle}>
           <ProfileHomeBack text="My account" />
         </div>
@@ -208,14 +217,8 @@ export default function MyProfile() {
               id="post"
               className="post-container-secssion mb-md-4 tab-pane fade show active"
             >
-              {/* <TextPost/>
-            <BPost/>
-            <ImagePost/>
-            <BPost/>
-            <TextPost/>
-            <BPost/>
-            <ImagePost/>
-            <BPost/> */}
+
+             <MyProfilePost/> 
             </div>
 
             {/* Image Section */}
@@ -223,7 +226,7 @@ export default function MyProfile() {
               id="image"
               className="image-container-secssion mb-md-4 px-md-3 pt-3 tab-pane fade"
             >
-              <ImageContainer />
+              <MyProfileImageContainer/>
             </div>
 
             {/* About Section */}
@@ -233,48 +236,23 @@ export default function MyProfile() {
             </div>
             {/* Friends Section */}
             <div id="friends" className="tab-pane fade w-100">
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
+              <MyProfileFriendsContainer />
             </div>
 
             {/* Follower Section */}
             <div id="follower" className="p-md-3 tab-pane fade">
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
+              <MyProfileFollowerContainer/>
             </div>
             {/* Following Section */}
             <div id="following" className="p-md-3 tab-pane fade">
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
-              <ProfileFriend />
+              <MyProfileFollowingContainer/>
             </div>
           </div>
         </div>
       </div>
+      <CustomScrollBar scrollRef={scrollRef} /> {/* Include CustomScrollBar */}
+
     </div>
+
   );
 }
