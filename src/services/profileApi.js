@@ -96,9 +96,15 @@ saveAbout: builder.mutation({
 }),
 
 
+/* Update birthdate */
 
-
-
+updateBirthdate: builder.mutation({
+  query: (birthday) => ({
+    url: '/users/updatebirthdate',
+    method: 'PUT',
+    body: birthday,
+  }),
+}),
 
       
     }),
@@ -106,4 +112,4 @@ saveAbout: builder.mutation({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useSaveAboutMutation,useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi
+export const {useUpdateBirthdateMutation,useSaveAboutMutation,useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi
