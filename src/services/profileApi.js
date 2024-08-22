@@ -86,7 +86,14 @@ query: ({ followingPage = 1 }) => `getauthuserfollowing?page=${followingPage}`, 
 
 
 
-
+/*<<<---- About ---->*/
+saveAbout: builder.mutation({
+  query: (about) => ({
+    url: '/about/createorupdate',
+    method: 'POST',
+    body: about,
+  }),
+}),
 
 
 
@@ -99,4 +106,4 @@ query: ({ followingPage = 1 }) => `getauthuserfollowing?page=${followingPage}`, 
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi
+export const {useSaveAboutMutation,useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi

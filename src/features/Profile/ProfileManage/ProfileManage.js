@@ -1,68 +1,152 @@
 import React, { useState } from 'react';
 import './ProfileManage.css';
 import ProfileHomeBack from '../ProfileHomeBack/ProfileHomeBack';
+import { useSaveAboutMutation } from '../../../services/profileApi';
+import { useDispatch } from 'react-redux';
+import { setToastSuccess } from '../../home/HomeSlice';
+import { handleApiError } from '../../handleApiError/handleApiError';
 
 export default function ProfileManage() {
-  const [profileImage, setProfileImage] = useState(null);
-  const [coverImage, setCoverImage] = useState(null);
-  const [userInfo, setUserInfo] = useState({
-    name: '',
-    email: '',
-    bio: '',
-    location: '',
-    relationshipStatus: '',
-    gender: '',
-    birthdate: '',
-    work: '',
-    education: ''
+
+  const dispatch = useDispatch();
+
+  // State for managing profile data
+  const [about, setAbout] = useState({
+    location: 'City, Country',
+    relationshipStatus: 'Single',
+    work: 'Job Title at Company',
+    education: 'Degree/Field of Study at University',
   });
 
+  // State for handling edit mode
+  const [editMode, setEditMode] = useState(false);
+  
+  const [saveProfile, { isLoading, error }] = useSaveAboutMutation();
+
+  // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserInfo({
-      ...userInfo,
-      [name]: value
-    });
+    setAbout({ ...about, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic
-    console.log('Profile Updated:', profileImage, coverImage, userInfo);
+  // Toggle edit mode
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
   };
+
+
+
+
+const handleSave = async (e) => {
+  e.preventDefault();
+  try {
+    const res =  await saveProfile(about).unwrap();
+    if (res.data) {
+      dispatch(setToastSuccess({ toastSuccess: "About info updated sucessfully" }));
+    } else if (res.error) {
+      handleApiError(res.error, dispatch);
+    }
+  } catch (error) {
+    handleApiError(error, dispatch);
+  }
+};
+
+
 
   return (
-    <div className="friend-home main p-0 m-0  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}>
-      <ProfileHomeBack text="Profile name"/>
-    <div className="profile-update-container container mt-5 ">
-      <h2 className="text-center mb-4">Update Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="row mb-4">
-          <div className="col-md-6">
-            <label htmlFor="profileImage" className="form-label">Profile Photo</label>
-            <select className="form-select" id="profileImage" onChange={(e) => setProfileImage(e.target.value)}>
-              <option value="">Select Profile Photo</option>
-              <option value="photo1.jpg">Photo 1</option>
-              <option value="photo2.jpg">Photo 2</option>
-              <option value="photo3.jpg">Photo 3</option>
-            </select>
-            {profileImage && <img src={`/images/${profileImage}`} alt="Profile Preview" className="img-thumbnail mt-2" />}
+    <div className="friend-home main border-left border-right m-0 p-0" style={{ backgroundColor: "white", minHeight: '100vh', overflow: 'hidden' }}>
+      <ProfileHomeBack />
+      <div className="container pt-4">
+        <h4 className="text-center">Manage Your About Info</h4>
+        <div className="p-4">
+          <div className="row">
+            {/* Location */}
+            <div className="col-12 mb-3">
+              <label className="form-label">
+                <i className="fas fa-map-marker-alt me-2"></i> Location
+              </label>
+              {editMode ? (
+                <input
+                  type="text"
+                  className="form-control"
+                  name="location"
+                  value={about.location}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <p>{about.location}</p>
+              )}
+            </div>
+            {/* Relationship Status */}
+            <div className="col-12 mb-3">
+              <label className="form-label">
+                <i className="fas fa-heart me-2"></i> Relationship Status
+              </label>
+              {editMode ? (
+                <select
+                  className="form-select"
+                  name="relationshipStatus"
+                  value={about.relationshipStatus}
+                  onChange={handleInputChange}
+                >
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Divorced">Divorced</option>
+                </select>
+              ) : (
+                <p>{about.relationshipStatus}</p>
+              )}
+            </div>
+            {/* Work */}
+            <div className="col-12 mb-3">
+              <label className="form-label">
+                <i className="fas fa-briefcase me-2"></i> Work
+              </label>
+              {editMode ? (
+                <input
+                  type="text"
+                  className="form-control"
+                  name="work"
+                  value={about.work}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <p>{about.work}</p>
+              )}
+            </div>
+            {/* Education */}
+            <div className="col-12 mb-3">
+              <label className="form-label">
+                <i className="fas fa-graduation-cap me-2"></i> Education
+              </label>
+              {editMode ? (
+                <input
+                  type="text"
+                  className="form-control"
+                  name="education"
+                  value={about.education}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <p>{about.education}</p>
+              )}
+            </div>
           </div>
-          <div className="col-md-6">
-            <label htmlFor="coverImage" className="form-label">Cover Photo</label>
-            <select className="form-select" id="coverImage" onChange={(e) => setCoverImage(e.target.value)}>
-              <option value="">Select Cover Photo</option>
-              <option value="cover1.jpg">Cover 1</option>
-              <option value="cover2.jpg">Cover 2</option>
-              <option value="cover3.jpg">Cover 3</option>
-            </select>
-            {coverImage && <img src={`/images/${coverImage}`} alt="Cover Preview" className="img-thumbnail mt-2" />}
+          {/* Edit/Save Button */}
+          <div className="text-center">
+            {editMode ? (
+              <button className="btn btn-success" onClick={handleSave} disabled={isLoading}>
+                {isLoading ? 'Saving...' : 'Save Changes'}
+              </button>
+            ) : (
+              <button className="btn btn-primary" onClick={toggleEditMode}>
+                Edit Profile
+              </button>
+            )}
+            {error && <p className="text-danger">Failed to save About info: {error.message}</p>}
           </div>
         </div>
-        
-        <button type="submit" className="btn btn-primary">Update Profile</button>
-      </form>
-    </div>
+      </div>
     </div>
   );
 }
