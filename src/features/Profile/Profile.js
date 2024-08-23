@@ -12,8 +12,8 @@ import About from "../home/Components/About/About";
 import CustomScrollBar from "../CustomScrollBar/CustomScrollBar";
 import SmallScreenBack from "../SmallScreenBack/SmallScreenBack";
 import LargeScreenBack from "../LargeScreenBack/LargeScreenBack";
-import LargeScreenProfile from "../LargeScreenBack/LargeScreenProfile";
-
+import LargeScreenProfile from "../LargeScreenBack/LargeScreenProfileBack";
+import { NavLink } from 'react-router-dom';
 export default function Profile() {
   const { id } = useParams();
   const scrollRef = useRef(null);
@@ -130,6 +130,49 @@ export default function Profile() {
             <h2>{profileData?.data?.user_fname} {profileData?.data?.user_lname}</h2>
             <p>@{profileData?.data?.identifier}</p>
           </div>
+          <div className="right__col">
+          <nav>
+            <div className="d-flex justify-content-center justify-content-sm-end">
+              {/*  massage and Manage will stay for admin */}
+
+              {/*   Manage */}
+              <NavLink to="/profile/manage" className="text-decoration-none">
+                <div
+                  className="btn btn-md btn-primary mx-1 d-flex align-items-center mt-1"
+                  style={{ cursor: "pointer" }}
+                >
+                  <i className="fa-solid fa-pen"></i>
+                  <span className="ms-1">Manage</span>
+                </div>
+              </NavLink>
+
+              {/* Message Button */}
+              <div
+                className="btn-sm btn-primary rounded-circle d-flex align-items-center justify-content-center mx-1 p-2"
+                style={{ cursor: "pointer", height: "35px", marginTop: "2px" }}
+              >
+                <i className="fa-solid fa-envelope fs-5"></i>
+              </div>
+              {/*   Add friend */}
+              <div
+                className="btn btn-md btn-primary mx-1 d-flex align-items-center px-2"
+                style={{ cursor: "pointer" }}
+              >
+               <i className="fa-solid fa-user-plus text-white"></i>
+                <span className="ms-1">Add friend</span>
+              </div>
+
+              {/*   Follow */}
+              <div
+                className="btn btn-md btn-primary mx-1 d-flex align-items-center px-2 me-3"
+                style={{ cursor: "pointer" }}
+              >
+
+                <span className="ms-1">Follow</span>
+              </div>
+            </div>
+          </nav>
+        </div>
         </div>
 
         {/* Tabs */}
