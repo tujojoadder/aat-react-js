@@ -56,7 +56,7 @@ export default function MyProfilePost() {
   return (
     <div className="post-wrapper">
       {/* Display posts */}
-      {allPosts.length === 0 && !isFetching && <h4 className="text-center" style={{color:'#592529'}}>No Posts to show</h4>}
+      {allPosts.length === 0 && !isFetching && <h4 className="text-center mt-5" style={{color:'#592529'}}>No Posts to show</h4>}
       {allPosts.map((post) => (
         <div key={post.post_id} className="post-container">
           {post.text_post && !post.image_post && <TextPost post={post} />}

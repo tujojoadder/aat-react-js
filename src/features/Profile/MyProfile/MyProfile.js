@@ -17,6 +17,7 @@ import MyProfileImageContainer from "./MyProfileImageContainer/MyProfileImageCon
 import MyProfileFriendsContainer from "./MyProfileFriendsContainer/MyProfileFriendsContainer";
 import MyProfileFollowerContainer from "./MyProfileFollowerContainer/MyProfileFollowerContainer";
 import MyProfileFollowingContainer from "./MyProfileFollowingContainer/MyProfileFollowingContainer";
+import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
 
 export default function MyProfile() {
 
@@ -93,6 +94,10 @@ export default function MyProfile() {
       className="friend-home main border-start border-end mb-1 m-0 p-0"
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
+
+  
+  <SmallScreenBack/>
+
         <div ref={scrollRef} className="header__wrapper m-0 p-0" style={{ overflowY: 'scroll', height: '100vh' }}>
         <div style={backgroundImageStyle}>
           <ProfileHomeBack text="My account" />

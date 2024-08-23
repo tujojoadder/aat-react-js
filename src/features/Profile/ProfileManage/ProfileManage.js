@@ -1,13 +1,30 @@
-import React, { useState } from "react";
-import { useSaveAboutMutation, useUpdateBirthdateMutation, useUpdateGenderMutation } from "../../../services/profileApi";
+import React, { useEffect, useState } from "react";
+import { useGetAboutDataQuery, useSaveAboutMutation, useUpdateBirthdateMutation, useUpdateGenderMutation } from "../../../services/profileApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setToastSuccess } from "../../home/HomeSlice";
 import { handleApiError } from "../../handleApiError/handleApiError";
+import ProfileHomeBack from "../ProfileHomeBack/ProfileHomeBack";
+import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
+import LargeScreenBack from "../../LargeScreenBack/LargeScreenBack";
 
 export default function ProfileManage() {
 
   const birthdate = useSelector((state) => state.home.birthdate);
   const currentGender = useSelector((state) => state.home.gender);
+
+const {
+  data: useGetAboutDataQueryuseGetAboutDataQueryData,
+  isSuccess: useGetAboutDataQuerySucess,
+  isLoading: useGetAboutDataQueryLoading,
+  isError: useGetAboutDataQueryError,
+  isFetching: useGetAboutDataQueryisFetching,
+  refetch: useGetAboutDataQueryrefetch,
+} = useGetAboutDataQuery();
+
+if (useGetAboutDataQuerySucess) {
+  console.log(useGetAboutDataQueryuseGetAboutDataQueryData)
+}
+
 
 
   const [birthday, setBirthday] = useState(() => {
@@ -34,11 +51,25 @@ export default function ProfileManage() {
 
   // State management
   const [about, setAbout] = useState({
-    location: "City, Country",
-    relationshipStatus: "Single",
-    work: "Job Title at Company",
-    education: "Degree/Field of Study at University",
+    location: "",
+    relationshipStatus: "",
+    work: "",
+    education: "",
   });
+
+  useEffect(() => {
+    if (useGetAboutDataQuerySucess && useGetAboutDataQueryuseGetAboutDataQueryData) {
+      setAbout({
+        location: useGetAboutDataQueryuseGetAboutDataQueryData.data.location || "",
+        relationshipStatus: useGetAboutDataQueryuseGetAboutDataQueryData.data.relationship_status || "",
+        work: useGetAboutDataQueryuseGetAboutDataQueryData.data.work || "",
+        education: useGetAboutDataQueryuseGetAboutDataQueryData.data.education || "",
+       
+      });
+    }
+  }, [useGetAboutDataQuerySucess, useGetAboutDataQueryuseGetAboutDataQueryData]);
+
+
 
 
 
@@ -145,8 +176,13 @@ export default function ProfileManage() {
 
   return (
     <div className="container py-4 main mx-0 p-0">
-      <h2 className="text-center mb-4">Manage Your Profile</h2>
-      <div className="card shadow-sm rounded p-4 mb-4">
+
+
+
+<LargeScreenBack text="Manage Profile Info" />
+<SmallScreenBack  text="Manage Profile Info" /> 
+      
+      <div className="card shadow-sm rounded p-4 mb-4 my-3">
         <div className="d-flex  justify-content-between align-items-center">
           <h3>About </h3>
 
@@ -195,9 +231,9 @@ export default function ProfileManage() {
               value={about.relationshipStatus}
               onChange={handleInputChange}
             >
-              <option value="Single">Single</option>
-              <option value="Married">Married</option>
-              <option value="Divorced">Divorced</option>
+              <option value="single">Single</option>
+              <option value="married">Married</option>
+              <option value="divorced">Divorced</option>
             </select>
           ) : (
             <p>{about.relationshipStatus}</p>

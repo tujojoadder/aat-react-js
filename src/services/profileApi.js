@@ -117,10 +117,21 @@ updateGender: builder.mutation({
 }),
 
 
+
+/* Get About data */
+getAboutData: builder.query({
+  query: () => ({
+    url: '/getabout',
+    method: 'GET',
+   
+  }),
+}),
+
+
       
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useUpdateGenderMutation,useUpdateBirthdateMutation,useSaveAboutMutation,useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi
+export const {useGetAboutDataQuery,useUpdateGenderMutation,useUpdateBirthdateMutation,useSaveAboutMutation,useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi

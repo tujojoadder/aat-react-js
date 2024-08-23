@@ -90,13 +90,13 @@ export default function HadithStatus() {
     <HadithIteam key="create-item" type="create" />, // Special item with type='create'
     ...allDayHadith.map((user) => (
       <HadithIteam
-        key={user.user_id}
-        user_fname={user.user_fname || 'N/A'} // Provide default values
-        user_lname={user.user_lname || 'N/A'}
-        profile_picture={user.profile_picture || 'N/A'}
-        hadith={user.day_hadith.hadith.hadith || 'No hadith available'}
-        day_hadth_id={user.day_hadith.day_hadith_id || 'unknown'}
-        serialNumber={user.serialNumber || 0}
+        key={user?.user_id}
+        user_fname={user.user_fname} // Provide default values
+        user_lname={user?.user_lname}
+        profile_picture={user?.profile_picture}
+        hadith={user?.day_hadith?.hadith?.hadith }
+        day_hadth_id={user?.day_hadith?.day_hadith_id}
+        serialNumber={user?.serialNumber}
       />
     ))
   ];

@@ -12,7 +12,7 @@ import Spinner from "../../../Spinner/Spinner";
 import HadithBoxSkeleton from "./HadithBoxSkeleton/HadithBoxSkeleton";
 
 const HadithBox = () => {
-  
+
   const { data: hadith, isFetching, isError, refetch } = useGetRandomHadithQuery();
   const isLg = useMediaQuery({ query: "(min-width: 1400px)" });
   const dispatch = useDispatch();

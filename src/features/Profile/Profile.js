@@ -10,6 +10,9 @@ import FollowerContainer from "./FollowerContainer/FollowerContainer";
 import FollowingContainer from "./FollowingContainer/FollowingContainer";
 import About from "../home/Components/About/About";
 import CustomScrollBar from "../CustomScrollBar/CustomScrollBar";
+import SmallScreenBack from "../SmallScreenBack/SmallScreenBack";
+import LargeScreenBack from "../LargeScreenBack/LargeScreenBack";
+import LargeScreenProfile from "../LargeScreenBack/LargeScreenProfile";
 
 export default function Profile() {
   const { id } = useParams();
@@ -112,8 +115,10 @@ export default function Profile() {
   return (
     <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: "100vh" }}>
       <div ref={scrollRef} className="header__wrapper m-0 p-0" style={{ overflowY: 'scroll', height: '100vh' }}>
+     {/*    Back buttons */}
+      <SmallScreenBack text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`} />
+      <LargeScreenProfile text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`} />
         <div style={backgroundImageStyle}>
-          <ProfileHomeBack text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`} />
         </div>
 
         {/* Header of profile */}
@@ -128,7 +133,7 @@ export default function Profile() {
         </div>
 
         {/* Tabs */}
-        <ul className="nav nav-tabs mt-3 mx-2">
+        <ul className="nav nav-tabs mt-3 mx-2 ">
           <li className="nav-item">
             <a className="nav-link active" href="#post" data-bs-toggle="tab">
               Posts
