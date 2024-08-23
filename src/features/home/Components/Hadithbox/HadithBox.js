@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDayHadithDetailsMutation, useGetRandomHadithQuery, useSetDayhadithMutation } from "../../../../services/hadithApi";
-
 import "./HadithBox.css";
 import { useMediaQuery } from "react-responsive";
 import { handleApiError } from "../../../handleApiError/handleApiError";
@@ -112,12 +111,20 @@ const HadithBox = () => {
       if (res.data) {
         dispatch(setToastSuccess({ toastSuccess: 'Hadith added as your Day Hadith successfully' }));
         setButtonClass('success');
-        setTimeout(() => setButtonClass(''), 500);
+
+        // Enable the button again after 10 seconds
+        setTimeout(() => {
+          setButtonClass('');
+          setButtonDisabled(false);
+        }, 10000);
+
       } else if (res.error) {
         handleApiError(res.error, dispatch);
+        setButtonDisabled(false); // Re-enable button if there's an error
       }
     } catch (error) {
       handleApiError(error, dispatch);
+      setButtonDisabled(false); // Re-enable button if there's an error
     }
   };
 
