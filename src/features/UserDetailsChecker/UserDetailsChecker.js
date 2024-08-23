@@ -6,7 +6,9 @@ import {
   setUser_lname,
   setEmail,
   setIdentifier,
-  setCover_photo
+  setCover_photo,
+  setBirthDate,
+  setGender
 } from "../../features/home/HomeSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetUserDetailsQuery } from "../../services/userAuthApi";
@@ -24,6 +26,10 @@ const UserDetailsChecker = ({ children }) => {
     isError: userDetailsError,
   } = useGetUserDetailsQuery();
 
+
+  if (userDetailsSuccess) {
+    console.log(userDetails);
+  }
   useEffect(() => {
 
    /*  if user is authenticated */
@@ -35,6 +41,8 @@ const UserDetailsChecker = ({ children }) => {
       dispatch(setEmail({ email: userDetails.data.email }));
       dispatch(setIdentifier({ identifier: userDetails.data.identifier }));
       dispatch(setCover_photo({ cover_photo: userDetails.data.cover_photo }));
+      dispatch(setBirthDate({ birthdate: userDetails.data.birthdate }));
+      dispatch(setGender({ gender: userDetails.data.gender }));
       setIsLoading(false);
       if (location.pathname == '/login' ||
         location.pathname == '/forgotpassword' ||

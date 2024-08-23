@@ -11,6 +11,8 @@ const initialState = {
   email: "",
   identifier: "",
   cover_photo:"",
+  gender:"",
+  birthdate:"",
 
 /*   Confirmation Modal state  */
 show_modal:false,
@@ -68,6 +70,17 @@ export const homeSlice = createSlice({
       const { cover_photo } = action.payload;
       state.cover_photo = cover_photo;
     },
+    /* gender */
+    setGender: (state, action) => {
+      const { gender } = action.payload;
+      state.gender = gender;
+    },
+  /* birthdate */
+  setBirthDate: (state, action) => {
+    const { birthdate } = action.payload;
+    state.birthdate = birthdate;
+  },
+
 
 /*  <--- Confirmation Modal State ---> */
  
@@ -114,6 +127,6 @@ setAllDayHadith: (state, action) => {
 });
 
 // Action creators are generated for each case reducer function
-export const { setCover_photo,setIsLiked,setProfile_picture,setUser_fname,setUser_lname,setEmail,setIdentifier,setModalMessage,setShow_Modal,setToken,setToastError,setToastSuccess,setAllDayHadith} = homeSlice.actions;
+export const { setCover_photo,setIsLiked,setProfile_picture,setUser_fname,setUser_lname,setEmail,setIdentifier,setModalMessage,setShow_Modal,setToken,setToastError,setToastSuccess,setAllDayHadith,setBirthDate,setGender} = homeSlice.actions;
 
 export default homeSlice.reducer;

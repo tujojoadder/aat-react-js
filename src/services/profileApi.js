@@ -106,10 +106,21 @@ updateBirthdate: builder.mutation({
   }),
 }),
 
+
+/* Update gender */
+updateGender: builder.mutation({
+  query: (gender) => ({
+    url: '/users/updategender',
+    method: 'PUT',
+    body: gender,
+  }),
+}),
+
+
       
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useUpdateBirthdateMutation,useSaveAboutMutation,useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi
+export const {useUpdateGenderMutation,useUpdateBirthdateMutation,useSaveAboutMutation,useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi

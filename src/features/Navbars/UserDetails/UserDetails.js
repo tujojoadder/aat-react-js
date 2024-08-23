@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./UserDetails.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setShow_Modal,setModalMessage } from "../../home/HomeSlice";
+import { setShow_Modal, setModalMessage } from "../../home/HomeSlice";
 export default function UserDetails() {
   const dispatch = useDispatch();
 
@@ -13,11 +13,9 @@ export default function UserDetails() {
 
   const handleClick = () => {
     dispatch(setShow_Modal({ show_modal: true }));
-    dispatch(setModalMessage({ modal_message: 'Do you want to logout ?' }));
+    dispatch(setModalMessage({ modal_message: "Do you want to logout ?" }));
   };
 
-
-  
   const profile_picture = useSelector((state) => state.home.profile_picture);
   const user_fname = useSelector((state) => state.home.user_fname);
   const user_lname = useSelector((state) => state.home.user_lname);
@@ -41,7 +39,7 @@ export default function UserDetails() {
           </div>
           <div className="profile-info flex-grow-1 d-none d-lg-block">
             <p className="user-details-user-name fw-bold mb-0 text-truncate">
-              {identifier}
+              {user_fname} {user_lname}
             </p>
             <p className="text-muted mb-0 text-truncate">{email}</p>
           </div>
