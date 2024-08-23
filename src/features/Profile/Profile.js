@@ -135,16 +135,7 @@ export default function Profile() {
             <div className="d-flex justify-content-center justify-content-sm-end">
               {/*  massage and Manage will stay for admin */}
 
-              {/*   Manage */}
-              <NavLink to="/profile/manage" className="text-decoration-none">
-                <div
-                  className="btn btn-md btn-primary mx-1 d-flex align-items-center mt-1"
-                  style={{ cursor: "pointer" }}
-                >
-                  <i className="fa-solid fa-pen"></i>
-                  <span className="ms-1">Manage</span>
-                </div>
-              </NavLink>
+          
 
               {/* Message Button */}
               <div
