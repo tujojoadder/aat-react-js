@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDayHadithDetailsMutation, useGetRandomHadithQuery, useSetDayhadithMutation } from "../../../../services/hadithApi";
+
 import "./HadithBox.css";
 import { useMediaQuery } from "react-responsive";
 import { handleApiError } from "../../../handleApiError/handleApiError";
@@ -11,13 +12,12 @@ import Spinner from "../../../Spinner/Spinner";
 import HadithBoxSkeleton from "./HadithBoxSkeleton/HadithBoxSkeleton";
 
 const HadithBox = () => {
-
   const { data: hadith, isFetching, isError, refetch } = useGetRandomHadithQuery();
   const isLg = useMediaQuery({ query: "(min-width: 1400px)" });
   const dispatch = useDispatch();
   const [buttonClass, setButtonClass] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [showJoinedGroups, setShowJoinedGroups] = useState(false); 
+  const [showJoinedGroups, setShowJoinedGroups] = useState(false);
   const [likeDetails, setLikeDetails] = useState([]);
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true); // Manage loading state
@@ -59,6 +59,33 @@ const HadithBox = () => {
       setIsLoading(false); // Set loading to false once data is fetched
     }
   }, [isFetching]);
+
+  useEffect(() => {
+    if (buttonDisabled) {
+      setButtonClass('success'); // Set button class to 'success' when button is disabled
+    }
+  }, [buttonDisabled]);
+
+  const handleAddButtonClick = async () => {
+    if (buttonDisabled) return;
+    try {
+      setButtonDisabled(true); // Disable the button after clicking
+      const res = await setDayHadith({ hadith_id: hadith.data.hadith_id });
+      if (res.data) {
+        dispatch(setToastSuccess({ toastSuccess: 'Hadith added as your Day Hadith successfully' }));
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
+      }
+    } catch (error) {
+      handleApiError(error, dispatch);
+    }
+  };
+
+  const handleRefetchClick = () => {
+    refetch();
+    setButtonDisabled(false); // Enable the button again after refetch is clicked
+    setButtonClass(''); // Reset button class when refetching
+  };
 
   // Handle rendering logic
   if (isLoading) {
@@ -103,31 +130,6 @@ const HadithBox = () => {
     }
   }
 
-  const handleAddButtonClick = async () => {
-    if (buttonDisabled) return;
-    try {
-      setButtonDisabled(true);
-      const res = await setDayHadith({ hadith_id: hadith.data.hadith_id });
-      if (res.data) {
-        dispatch(setToastSuccess({ toastSuccess: 'Hadith added as your Day Hadith successfully' }));
-        setButtonClass('success');
-
-        // Enable the button again after 10 seconds
-        setTimeout(() => {
-          setButtonClass('');
-          setButtonDisabled(false);
-        }, 10000);
-
-      } else if (res.error) {
-        handleApiError(res.error, dispatch);
-        setButtonDisabled(false); // Re-enable button if there's an error
-      }
-    } catch (error) {
-      handleApiError(error, dispatch);
-      setButtonDisabled(false); // Re-enable button if there's an error
-    }
-  };
-
   return (
     <div className="hadith-box shadow-sm mb-2 mb-1 shadow-lg bg-white rounded border">
       <div className="hadith-head ms-0 ps-0">
@@ -160,7 +162,7 @@ const HadithBox = () => {
 
         <div
           className={`btn-new ${isFetching ? "loading" : ""}`}
-          onClick={() => refetch()}
+          onClick={handleRefetchClick} // Use the refetch handler to enable the button
         >
           <i className="fa-solid fa-rotate"></i>
         </div>

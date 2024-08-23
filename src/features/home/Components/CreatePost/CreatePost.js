@@ -110,9 +110,9 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="create-post mb-3">
-      <div className="post shadow-sm p-3 bg-white rounded">
-        <form onSubmit={handleSubmit}>
+    <div className="create-post mb-3" >
+      <div className="post shadow-sm p-3 bg-white rounded" >
+        <form onSubmit={handleSubmit} >
           <div className="form-group-1 mb-3">
             <textarea
               placeholder="What's happening?"
