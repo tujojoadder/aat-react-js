@@ -128,10 +128,52 @@ getAboutData: builder.query({
 }),
 
 
+/* <---- MProfile -----> */
+/* get mphoto to set */
+getMProfilePhotos: builder.query({
+  query: ({ photoPage = 1 }) => `viewmpicturestore?page=${photoPage}`, // Updated to include id
+}),
+
+/* get fphoto to set */
+getFProfilePhotos: builder.query({
+  query: ({ photoPage = 1 }) => `viewfpicturestore?page=${photoPage}`, // Updated to include id
+}),
+
+/* get cover photo to set */
+getCoverPhotos: builder.query({
+  query: ({ photoPage = 1 }) => `viewcoverphotostore?page=${photoPage}`, // Updated to include id
+}),
+
+/* setCoverPhoto */
+setCoverPhoto: builder.mutation({
+  query: ({ image_id }) => ({
+    url: `setcoverphoto`,
+    method: 'POST',
+    body: { image_id },
+  }),
+}),
+
+/* set MProfile picture */
+setMProfile: builder.mutation({
+  query: ({ image_id }) => ({
+    url: `setmprofile`,
+    method: 'POST',
+    body: { image_id },
+  }),
+}),
+/* setCoverPhoto */
+setFProfile: builder.mutation({
+  query: ({ image_id }) => ({
+    url: `setfprofile`,
+    method: 'POST',
+    body: { image_id },
+  }),
+}),
+
       
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useGetAboutDataQuery,useUpdateGenderMutation,useUpdateBirthdateMutation,useSaveAboutMutation,useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi
+export const {useSetFProfileMutation,useSetMProfileMutation,useSetCoverPhotoMutation,useGetCoverPhotosQuery,useGetFProfilePhotosQuery,useGetMProfilePhotosQuery,useGetAboutDataQuery,useUpdateGenderMutation,useUpdateBirthdateMutation,useSaveAboutMutation,useGetSpecificUserFollowingQuery,useGetSpecificUserFollowerQuery,useGetSpecificUserPhotoQuery, useGetSpecificUserPostQuery,useGetSpecificUserFriendQuery,useGetAuthUserPostQuery,useGetAuthUserPhotoQuery,useGetAuthUserFollowerQuery,useGetAuthUserFollowingQuery,useGetAuthUserFriendQuery } = profileApi

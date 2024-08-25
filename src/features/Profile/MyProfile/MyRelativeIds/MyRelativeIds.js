@@ -19,7 +19,7 @@ export default function MyRelativeIds({ name, handle, image, user_id }) {
         >
           <img
             className="rounded-circle"
-            src={`http://127.0.0.1:8000/${image}`}
+            src={`${image}`}
             alt="user"
             height="50px"
             width="50px"

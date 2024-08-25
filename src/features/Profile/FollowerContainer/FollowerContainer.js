@@ -30,10 +30,6 @@ const { data: useGetSpecificUserFollowerQueryData, isFetching: useGetSpecificUse
  = useGetSpecificUserFollowerQuery({followerPage,userId});
 
 
-if (useGetSpecificUserFollowerQueryIsSuccess) {
-    console.log(useGetSpecificUserFollowerQueryData)
-}
-
 // Effect to process fetched data
 useEffect(() => {
   if (useGetSpecificUserFollowerQueryIsSuccess && useGetSpecificUserFollowerQueryData?.data) {
@@ -58,9 +54,9 @@ useEffect(() => {
   }
 }, [fllowerInView, useGetSpecificUserFollowerQueryIsFetching, useGetSpecificUserFollowerQueryIsError, hasMoreFollower, useGetSpecificUserFollowerQueryIsSuccess]);
 
-if (useGetSpecificUserFollowerQueryIsSuccess) {
+/* if (useGetSpecificUserFollowerQueryIsSuccess) {
     console.log(useGetSpecificUserFollowerQueryData)
-}
+} */
   return (
     <div>
     <div className="container py-4" style={{ border: 'none' }}>

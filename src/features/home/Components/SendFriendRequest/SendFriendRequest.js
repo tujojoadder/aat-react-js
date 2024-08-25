@@ -21,7 +21,7 @@ export default function SendFriendRequest({ name, handle, image, isActive, user_
         >
           <img
             className="rounded-circle"
-            src={`http://127.0.0.1:8000/${image}`}
+            src={`${image}`}
             alt="user"
             height="50px"
             width="50px"

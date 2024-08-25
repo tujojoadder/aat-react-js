@@ -1,26 +1,64 @@
 import React, { useEffect, useState } from "react";
-import "./ImageContainer.css"; // Ensure you create and import this CSS file
-
+import "./SetMProfile.css"; // Ensure you create and import this CSS file
 import { useInView } from "react-intersection-observer";
 import Spinner from "../../Spinner/Spinner";
-import { useGetSpecificUserPhotoQuery } from "../../../services/profileApi";
+import {
+  useGetMProfilePhotosQuery,
+  useSetMProfileMutation,
+} from "../../../services/profileApi";
+import { useDispatch } from "react-redux";
+import { setProfile_picture, setToastSuccess } from "../../home/HomeSlice";
+import { handleApiError } from "../../handleApiError/handleApiError";
 
-const ImageContainer = ({ userId }) => {
+export default function SetMProfile() {
+  const dispatch = useDispatch();
+  const [
+    SetMProfileMutation,
+    {
+      isSuccess: useSetMProfileMutationSucess,
+      isLoading: useSetMProfileMutationLoading,
+      isError: useSetMProfileMutationError,
+      isFetching: useSetMProfileMutationisFetching,
+      refetch: useSetMProfileMutationrefetch,
+    },
+  ] = useSetMProfileMutation();
+
+  /*    handleSetMProfile */
+  const handleSetMProfile = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await SetMProfileMutation({
+        image_id: modalImage.id,
+      }).unwrap();
+      if (res.data) {
+        dispatch(
+          setToastSuccess({
+            toastSuccess: "Profile Picture updated Successfully",
+          })
+        );
+        //set cureent cover photo
+        dispatch(setProfile_picture({ profile_picture: res.data.image_url }));
+        //show message
+
+        //close Modal
+        setModalImage(null);
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
+      }
+    } catch (error) {
+      handleApiError(error, dispatch);
+    }
+  };
+
   const [modalImage, setModalImage] = useState(null);
 
-  const openModal = (src, alt) => {
-    setModalImage({ src, alt });
+  const openModal = (src, alt, id) => {
+    setModalImage({ src, alt, id });
   };
 
   const closeModal = () => {
     setModalImage(null);
   };
-  //Reset post if id change
-  useEffect(() => {
-    setPhotoPage(1);
-    setAllPhotos([]);
-    setHasMorePhotos(true);
-  }, [userId]);
 
   /* Getting Photo data */
   const [photoPage, setPhotoPage] = useState(1);
@@ -39,11 +77,12 @@ const ImageContainer = ({ userId }) => {
     isFetching: useGetSpecificUserPhotoQueryIsFetching,
     isError: useGetSpecificUserPhotoQueryIsError,
     isSuccess: useGetSpecificUserPhotoQueryIsSuccess,
-  } = useGetSpecificUserPhotoQuery({ photoPage, userId });
+  } = useGetMProfilePhotosQuery({ photoPage });
 
-/*   if (useGetSpecificUserPhotoQueryIsSuccess) {
-    console.log("photo" + useGetSpecificUserPhotoQueryData);
-  } */
+  /*  if (useGetSpecificUserPhotoQueryIsSuccess) {
+    console.log(useGetSpecificUserPhotoQueryData);
+  }
+ */
 
   // Effect to process fetched data
   useEffect(() => {
@@ -56,7 +95,9 @@ const ImageContainer = ({ userId }) => {
       } else {
         const newPhotos = useGetSpecificUserPhotoQueryData.data.filter(
           (newPost) =>
-            !allPhotos.some((post) => post.post_id === newPost.post_id)
+            !allPhotos.some(
+              (post) => post.profile_picture_id === newPost.profile_picture_id
+            )
         );
         if (newPhotos.length > 0) {
           setAllPhotos((prevPosts) => [...prevPosts, ...newPhotos]);
@@ -87,29 +128,38 @@ const ImageContainer = ({ userId }) => {
   return (
     <div className="container py-4" style={{ border: "none" }}>
       <div className="row">
-
-      {allPhotos.length === 0 && !useGetSpecificUserPhotoQueryIsFetching && <h4 className="text-center" style={{color:'#592529'}}>No Photos to show</h4>}
+        {allPhotos.length === 0 && !useGetSpecificUserPhotoQueryIsFetching && (
+          <h4 className="text-center" style={{ color: "#592529" }}>
+            No Photos to show
+          </h4>
+        )}
         {allPhotos.map((photo, index) => (
-          <div className="col-4 mb-4" key={index}>
+          <div className="col-6 col-md-4 mb-4" key={index}>
+            {" "}
+            {/* Update col class here */}
             <div className="image-container">
               <img
-                src={photo?.image_post?.post_url} // Assuming 'url' is the correct key for the image URL
+                src={photo?.image_url} // Assuming 'url' is the correct key for the image URL
                 className="img-fluid rounded shadow-sm cursor-pointer"
-                style={{ height: "115px", width: "100%" }}
+                style={{ height: "260px", width: "100%" }}
                 alt={photo.caption || `Photo ${index + 1}`}
                 onClick={() =>
-                  openModal(photo?.image_post?.post_url, photo.caption)
+                  openModal(
+                    photo?.image_url,
+                    photo?.caption,
+                    photo?.profile_picture_id
+                  )
                 }
               />
             </div>
           </div>
         ))}
       </div>
-    {/*   //Spinner Scroll */}
+      {/* Spinner Scroll */}
       <div
         ref={photoRef}
         className="loading-trigger"
-        style={{height:'7vh',minHeight:'40px'}}
+        style={{ height: "7vh", minHeight: "40px" }}
       >
         {useGetSpecificUserPhotoQueryIsFetching && <Spinner />}
       </div>
@@ -144,6 +194,26 @@ const ImageContainer = ({ userId }) => {
                   >
                     <i className="fas fa-times me-1"></i> Close
                   </button>
+
+                  {/* Set Profile picture button */}
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSetMProfile}
+                    disabled={useSetMProfileMutationLoading}
+                  >
+                    {useSetMProfileMutationLoading ? (
+                      <>
+                        <i className="fas fa-spinner fa-spin me-1"></i>{" "}
+                        Setting...
+                      </>
+                    ) : (
+                      <>
+                        <i className="fas fa-check me-1"></i> Set as profile
+                        Picture
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
             </div>
@@ -153,6 +223,4 @@ const ImageContainer = ({ userId }) => {
       )}
     </div>
   );
-};
-
-export default ImageContainer;
+}

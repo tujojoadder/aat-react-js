@@ -144,7 +144,7 @@ export default function HadithDayContent({
 
               <div className="user-pics">
                 <img
-                  src={`http://127.0.0.1:8000/${profile_picture}`}
+                  src={`${profile_picture}`}
        s           className="rounded-circle user_img_msg"
                   alt="user3"
                 />

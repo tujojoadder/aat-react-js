@@ -31,7 +31,7 @@ export default function UserDetails() {
         >
           <div className="profile-image me-2">
             <img
-              src={`http://127.0.0.1:8000/${profile_picture}`}
+              src={`${profile_picture}`}
               alt="user"
               height="45px"
               width="45px"

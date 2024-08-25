@@ -37,7 +37,7 @@ export default function FriendHome() {
 
     <>
    
-    <div className="friend-home main border mb-5 m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
+    <div className="friend-home main border m-0 p-0" style={{ backgroundColor: "white",minHeight:'100vh' }}>
      
     <div className="d-block d-lg-none">
       

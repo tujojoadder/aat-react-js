@@ -23,10 +23,10 @@ const { ref:followerRef, inView:fllowerInView } = useInView({
 const { data: useGetSpecificUserFollowerQueryData, isFetching: useGetSpecificUserFollowerQueryIsFetching, isError: useGetSpecificUserFollowerQueryIsError, isSuccess: useGetSpecificUserFollowerQueryIsSuccess }
  = useGetAuthUserFollowerQuery({followerPage});
 
-
+/* 
 if (useGetSpecificUserFollowerQueryIsSuccess) {
     console.log(useGetSpecificUserFollowerQueryData)
-}
+} */
 
 // Effect to process fetched data
 useEffect(() => {
@@ -52,9 +52,9 @@ useEffect(() => {
   }
 }, [fllowerInView, useGetSpecificUserFollowerQueryIsFetching, useGetSpecificUserFollowerQueryIsError, hasMoreFollower, useGetSpecificUserFollowerQueryIsSuccess]);
 
-if (useGetSpecificUserFollowerQueryIsSuccess) {
+/* if (useGetSpecificUserFollowerQueryIsSuccess) {
     console.log(useGetSpecificUserFollowerQueryData)
-}
+} */
   return (
     <div>
     <div className="container py-4" style={{ border: 'none' }}>

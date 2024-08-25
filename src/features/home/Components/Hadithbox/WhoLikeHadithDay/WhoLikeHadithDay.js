@@ -13,7 +13,7 @@ export default function WhoLikeHadithDay({ name, handle, image, isActive }) {
       <div className="profile-image me-2">
         <img
           
-          src={`http://127.0.0.1:8000/${image}`}
+          src={`${image}`}
           alt="user"
           height="55px"
           width="55px"

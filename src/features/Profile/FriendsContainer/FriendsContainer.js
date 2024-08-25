@@ -30,13 +30,13 @@ export default function FriendsContainer({ userId }) {
     isSuccess: useGetSpecificUserFriendQueryIsSuccess 
   } = useGetSpecificUserFriendQuery({ friendPage, userId });
 
-  // Log query data for debugging
+/*   // Log query data for debugging
   useEffect(() => {
     if (useGetSpecificUserFriendQueryIsSuccess) {
       console.log(useGetSpecificUserFriendQueryData);
     }
   }, [useGetSpecificUserFriendQueryIsSuccess, useGetSpecificUserFriendQueryData]);
-
+ */
   // Effect to process fetched data
   useEffect(() => {
     if (useGetSpecificUserFriendQueryIsSuccess && useGetSpecificUserFriendQueryData?.data) {

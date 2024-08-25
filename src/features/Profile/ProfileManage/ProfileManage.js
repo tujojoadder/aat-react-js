@@ -1,32 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { useGetAboutDataQuery, useSaveAboutMutation, useUpdateBirthdateMutation, useUpdateGenderMutation } from "../../../services/profileApi";
+import {
+  useGetAboutDataQuery,
+  useSaveAboutMutation,
+  useUpdateBirthdateMutation,
+  useUpdateGenderMutation,
+} from "../../../services/profileApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setToastSuccess } from "../../home/HomeSlice";
 import { handleApiError } from "../../handleApiError/handleApiError";
 import ProfileHomeBack from "../ProfileHomeBack/ProfileHomeBack";
 import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
 import LargeScreenBack from "../../LargeScreenBack/LargeScreenBack";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileManage() {
-
   const birthdate = useSelector((state) => state.home.birthdate);
   const currentGender = useSelector((state) => state.home.gender);
+const navigate=useNavigate();
+  const {
+    data: useGetAboutDataQueryuseGetAboutDataQueryData,
+    isSuccess: useGetAboutDataQuerySucess,
+    isLoading: useGetAboutDataQueryLoading,
+    isError: useGetAboutDataQueryError,
+    isFetching: useGetAboutDataQueryisFetching,
+    refetch: useGetAboutDataQueryrefetch,
+  } = useGetAboutDataQuery();
 
-const {
-  data: useGetAboutDataQueryuseGetAboutDataQueryData,
-  isSuccess: useGetAboutDataQuerySucess,
-  isLoading: useGetAboutDataQueryLoading,
-  isError: useGetAboutDataQueryError,
-  isFetching: useGetAboutDataQueryisFetching,
-  refetch: useGetAboutDataQueryrefetch,
-} = useGetAboutDataQuery();
-
-if (useGetAboutDataQuerySucess) {
-  console.log(useGetAboutDataQueryuseGetAboutDataQueryData)
-}
-
-
-
+/*   if (useGetAboutDataQuerySucess) {
+    console.log(useGetAboutDataQueryuseGetAboutDataQueryData);
+  }
+ */
   const [birthday, setBirthday] = useState(() => {
     if (birthdate) {
       const [year, month, day] = birthdate.split("-");
@@ -43,10 +46,6 @@ if (useGetAboutDataQuerySucess) {
     };
   });
 
-
-
-
-
   const dispatch = useDispatch();
 
   // State management
@@ -58,20 +57,25 @@ if (useGetAboutDataQuerySucess) {
   });
 
   useEffect(() => {
-    if (useGetAboutDataQuerySucess && useGetAboutDataQueryuseGetAboutDataQueryData) {
+    if (
+      useGetAboutDataQuerySucess &&
+      useGetAboutDataQueryuseGetAboutDataQueryData
+    ) {
       setAbout({
-        location: useGetAboutDataQueryuseGetAboutDataQueryData.data.location || "",
-        relationshipStatus: useGetAboutDataQueryuseGetAboutDataQueryData.data.relationship_status || "",
+        location:
+          useGetAboutDataQueryuseGetAboutDataQueryData.data.location || "",
+        relationshipStatus:
+          useGetAboutDataQueryuseGetAboutDataQueryData.data
+            .relationship_status || "",
         work: useGetAboutDataQueryuseGetAboutDataQueryData.data.work || "",
-        education: useGetAboutDataQueryuseGetAboutDataQueryData.data.education || "",
-       
+        education:
+          useGetAboutDataQueryuseGetAboutDataQueryData.data.education || "",
       });
     }
-  }, [useGetAboutDataQuerySucess, useGetAboutDataQueryuseGetAboutDataQueryData]);
-
-
-
-
+  }, [
+    useGetAboutDataQuerySucess,
+    useGetAboutDataQueryuseGetAboutDataQueryData,
+  ]);
 
   const [gender, setGender] = useState(currentGender);
 
@@ -80,8 +84,15 @@ if (useGetAboutDataQuerySucess) {
   const [editGender, setEditGender] = useState(false);
 
   const [saveAbout, { isLoading, error }] = useSaveAboutMutation();
-  const [updateBirthdate, { isLoading: UpdateBirthdateMutationLoading, error: UpdateBirthdateMutationError }] = useUpdateBirthdateMutation();
-  const [updateGender, { isLoading: isSavingGender }] = useUpdateGenderMutation();
+  const [
+    updateBirthdate,
+    {
+      isLoading: UpdateBirthdateMutationLoading,
+      error: UpdateBirthdateMutationError,
+    },
+  ] = useUpdateBirthdateMutation();
+  const [updateGender, { isLoading: isSavingGender }] =
+    useUpdateGenderMutation();
 
   // Handlers
   const handleInputChange = (e) => {
@@ -102,7 +113,9 @@ if (useGetAboutDataQuerySucess) {
     try {
       const res = await saveAbout(about).unwrap();
       if (res.data) {
-        dispatch(setToastSuccess({ toastSuccess: `About info updated successfully` }));
+        dispatch(
+          setToastSuccess({ toastSuccess: `About info updated successfully` })
+        );
         setEditAbout(false);
       } else if (res.error) {
         handleApiError(res.error, dispatch);
@@ -117,7 +130,9 @@ if (useGetAboutDataQuerySucess) {
     try {
       const res = await updateBirthdate(birthday);
       if (res.data) {
-        dispatch(setToastSuccess({ toastSuccess: `Birthdate updated successfully` }));
+        dispatch(
+          setToastSuccess({ toastSuccess: `Birthdate updated successfully` })
+        );
         setEditBirthday(false);
       } else if (res.error) {
         handleApiError(res.error, dispatch);
@@ -131,7 +146,9 @@ if (useGetAboutDataQuerySucess) {
     try {
       const res = await updateGender({ gender }).unwrap();
       if (res.data) {
-        dispatch(setToastSuccess({ toastSuccess: "Gender updated successfully" }));
+        dispatch(
+          setToastSuccess({ toastSuccess: "Gender updated successfully" })
+        );
         setEditGender(false);
       } else if (res.error) {
         handleApiError(res.error, dispatch);
@@ -151,6 +168,8 @@ if (useGetAboutDataQuerySucess) {
     }
   };
 
+
+/* Edite button */
   const handleEdit = (section) => {
     if (section === "About") {
       setEditAbout(true);
@@ -160,6 +179,19 @@ if (useGetAboutDataQuerySucess) {
       setEditGender(true);
     }
   };
+
+/* handleChangeProfile button */
+const handleChangeProfile = () => {
+ navigate('setprofile');
+};
+
+
+
+/* handleChangeCover button */
+const handleChangeCover = () => {
+  navigate('setcoverphoto');
+};
+
 
   const populateDays = () => {
     const daysInMonth = new Date(
@@ -175,29 +207,57 @@ if (useGetAboutDataQuerySucess) {
   };
 
   return (
-    <div className="container py-4 main mx-0 p-0">
+    <div className="container pb-4 main mx-0 p-0 border">
+      <LargeScreenBack text="Manage Profile Info" />
+      <SmallScreenBack text="Manage Profile Info" />
 
+      {/*  Update Profile and cover photos */}
+      <div className="container mt-4 ">
+        <div className="row justify-content-center">
+          {/* Button for Changing Profile Picture */}
+          <div className="col-auto">
+            <button onClick={handleChangeProfile} className="btn p-2 btn-primary d-flex align-items-center">
+              <i className="fas fa-user-circle me-2"></i>{" "}
+              {/* Font Awesome Icon for Profile */}
+              Change Profile Picture
+            </button>
+          </div>
 
+          {/* Button for Changing Cover Photo */}
+          <div className="col-auto">
+            <button onClick={handleChangeCover}  className="btn btn-secondary p-2 d-flex align-items-center">
+              <i className="fas fa-image me-2"></i>{" "}
+              {/* Font Awesome Icon for Cover Photo */}
+              Change Cover Photo
+            </button>
+          </div>
+        </div>
+      </div>
 
-<LargeScreenBack text="Manage Profile Info" />
-<SmallScreenBack  text="Manage Profile Info" /> 
-      
-      <div className="card shadow-sm rounded p-4 mb-4 my-3">
+      <div className="card shadow-sm rounded mx-2 p-4 mb-4 my-3 mt-4">
         <div className="d-flex  justify-content-between align-items-center">
           <h3>About </h3>
-
-         
           {editAbout ? (
             <div>
-              <button className="btn btn-success me-2" onClick={handleAboutSave} disabled={isLoading}>
+              <button
+                className="btn btn-success me-2"
+                onClick={handleAboutSave}
+                disabled={isLoading}
+              >
                 {isLoading ? "Saving..." : "Save"}
               </button>
-              <button className="btn btn-secondary" onClick={() => handleCancel("About")}>
+              <button
+                className="btn btn-secondary"
+                onClick={() => handleCancel("About")}
+              >
                 Cancel
               </button>
             </div>
           ) : (
-            <button className="btn btn-primary" onClick={() => handleEdit("About")}>
+            <button
+              className="btn btn-primary"
+              onClick={() => handleEdit("About")}
+            >
               Edit
             </button>
           )}
@@ -275,20 +335,30 @@ if (useGetAboutDataQuerySucess) {
         </div>
       </div>
 
-      <div className="card shadow-sm rounded p-4 mb-4">
+      <div className="card shadow-sm rounded p-4 mb-4 mx-2">
         <div className="d-flex justify-content-between align-items-center">
-          <h5 >Birthdate</h5>
+          <h5>Birthdate</h5>
           {editBirthday ? (
             <div>
-              <button className="btn btn-success me-2" onClick={handleBirthdaySave} disabled={UpdateBirthdateMutationLoading}>
+              <button
+                className="btn btn-success me-2"
+                onClick={handleBirthdaySave}
+                disabled={UpdateBirthdateMutationLoading}
+              >
                 {UpdateBirthdateMutationLoading ? "Saving..." : "Save"}
               </button>
-              <button className="btn btn-secondary" onClick={() => handleCancel("Birthday")}>
+              <button
+                className="btn btn-secondary"
+                onClick={() => handleCancel("Birthday")}
+              >
                 Cancel
               </button>
             </div>
           ) : (
-            <button className="btn btn-primary" onClick={() => handleEdit("Birthday")}>
+            <button
+              className="btn btn-primary"
+              onClick={() => handleEdit("Birthday")}
+            >
               Edit
             </button>
           )}
@@ -304,8 +374,13 @@ if (useGetAboutDataQuerySucess) {
                 onChange={handleBirthdayChange}
                 required
               >
-                <option value="" disabled>Year</option>
-                {Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i).map((year) => (
+                <option value="" disabled>
+                  Year
+                </option>
+                {Array.from(
+                  { length: 100 },
+                  (_, i) => new Date().getFullYear() - i
+                ).map((year) => (
                   <option key={year} value={year}>
                     {year}
                   </option>
@@ -320,7 +395,9 @@ if (useGetAboutDataQuerySucess) {
                 onChange={handleBirthdayChange}
                 required
               >
-                <option value="" disabled>Month</option>
+                <option value="" disabled>
+                  Month
+                </option>
                 {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
                   <option key={month} value={month}>
                     {month}
@@ -336,44 +413,65 @@ if (useGetAboutDataQuerySucess) {
                 onChange={handleBirthdayChange}
                 required
               >
-                <option value="" disabled>Day</option>
+                <option value="" disabled>
+                  Day
+                </option>
                 {populateDays()}
               </select>
             </div>
           </div>
         ) : (
-          <p>{birthday.birthdate_day}/{birthday.birthdate_month}/{birthday.birthdate_year}</p>
+          <p>
+            {birthday.birthdate_day}/{birthday.birthdate_month}/
+            {birthday.birthdate_year}
+          </p>
         )}
       </div>
 
-      <div className="card shadow-sm rounded p-4">
+      <div className="card shadow-sm rounded p-4 mx-2">
         <div className="d-flex justify-content-between align-items-center">
           <h5>Gender</h5>
           {editGender ? (
             <div>
-              <button className="btn btn-success me-2" onClick={handleGenderSave} disabled={isSavingGender}>
+              <button
+                className="btn btn-success me-2"
+                onClick={handleGenderSave}
+                disabled={isSavingGender}
+              >
                 {isSavingGender ? "Saving..." : "Save"}
               </button>
-              <button className="btn btn-secondary" onClick={() => handleCancel("Gender")}>
+              <button
+                className="btn btn-secondary"
+                onClick={() => handleCancel("Gender")}
+              >
                 Cancel
               </button>
             </div>
           ) : (
-            <button className="btn btn-primary" onClick={() => handleEdit("Gender")}>
+            <button
+              className="btn btn-primary"
+              onClick={() => handleEdit("Gender")}
+            >
               Edit
             </button>
           )}
         </div>
         <hr />
         {editGender ? (
-          <select className="form-select" value={gender} onChange={handleGenderChange}>
+          <select
+            className="form-select"
+            value={gender}
+            onChange={handleGenderChange}
+          >
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
         ) : (
-<p>{gender.charAt(0).toUpperCase() + gender.slice(1).toLowerCase()}</p>
-    )}
+          <p>
+            {gender.charAt(0).toUpperCase() + gender.slice(1).toLowerCase()}
+          </p>
+        )}
       </div>
     </div>
   );

@@ -60,13 +60,16 @@ import { setToastError, setToastSuccess } from "./features/home/HomeSlice";
 import HadithBox from "./features/home/Components/Hadithbox/HadithBox";
 import SetHadith from "./features/home/Components/SetHadith/SetHadith";
 import MyProfile from "./features/Profile/MyProfile/MyProfile";
+import SetProfile from "./features/Profile/SetMProfile/SetMProfile";
+import SetMProfile from "./features/Profile/SetMProfile/SetMProfile";
+import SetCoverPhoto from "./features/Profile/SetCoverPhoto/SetCoverPhoto";
 
 function App() {
   const dispatch = useDispatch();
   const toastError = useSelector((state) => state.home.toastError);
   const toastSuccess = useSelector((state) => state.home.toastSuccess);
   useEffect(() => {
-    if (toastError ) {
+    if (toastError) {
       toast.error(toastError, {
         position: "bottom-center",
         autoClose: 2000,
@@ -78,7 +81,7 @@ function App() {
         theme: "dark",
       });
     }
-    if (toastSuccess ) {
+    if (toastSuccess) {
       toast.success(toastSuccess, {
         position: "bottom-center",
         autoClose: 2000,
@@ -90,10 +93,10 @@ function App() {
         theme: "dark",
       });
     }
-   /*  Clean toastError */
+    /*  Clean toastError */
     dispatch(setToastError({ toastError: "" }));
     dispatch(setToastSuccess({ toastSuccess: "" }));
-  }, [toastError,toastSuccess]);
+  }, [toastError, toastSuccess]);
   return (
     <BrowserRouter>
       <ConfirmModal />
@@ -207,9 +210,19 @@ function App() {
             <Route path="profile" exact element={<MyProfile />} />
             <Route path="profile" exact element={<Homeleft />} />
 
-
             {/* Profile --->manage */}
             <Route path="profile/manage" exact element={<ProfileManage />} />
+          
+           {/* Set Profile from database */}
+           <Route path="profile/manage/setprofile" exact element={<SetProfile />} />
+           <Route path="profile/manage/setprofile" exact element={<Homeleft />} />
+
+          {/*<<--- Cover Photo ---> */}
+
+          {/* Set Profile from database */}
+          <Route path="profile/manage/setcoverphoto" exact element={<SetCoverPhoto />} />
+           <Route path="profile/manage/setcoverphoto" exact element={<Homeleft />} />
+
 
             {/* Groups */}
             <Route path="groups" exact element={<GroupsHome />} />
@@ -329,12 +342,8 @@ function App() {
               element={<IChannelsManage />}
             />
 
-
-
             {/* Mobile Menu */}
             <Route path="menu" exact element={<MobileMenu />} />
-
-   
           </Route>
 
           {/* private route without navbar  */}
@@ -348,11 +357,8 @@ function App() {
             exact
             element={<ResetPassword />}
           />
-         {/* hadithBox */}
-         <Route path="dayhadith" exact element={<SetHadith />} />
-
-
-
+          {/* hadithBox */}
+          <Route path="dayhadith" exact element={<SetHadith />} />
 
           <Route path="*" exact element={<NotFound />} />
         </Routes>

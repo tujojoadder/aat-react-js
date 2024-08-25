@@ -26,10 +26,10 @@ const UserDetailsChecker = ({ children }) => {
     isError: userDetailsError,
   } = useGetUserDetailsQuery();
 
-
+/* 
   if (userDetailsSuccess) {
     console.log(userDetails);
-  }
+  } */
   useEffect(() => {
 
    /*  if user is authenticated */

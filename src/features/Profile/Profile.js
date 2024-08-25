@@ -77,7 +77,7 @@ export default function Profile() {
   }, [currentTab]);
 
   // Fetch user profile data
-  const { data: profileData, isFetching, isError } = useGetUserDetailsQuery(id);
+  const { data: profileData, isFetching, isError,isSuccess} = useGetUserDetailsQuery(id);
 
   // Handle loading state
   if (isFetching) return <ProfileSkeleton />;
@@ -91,12 +91,14 @@ export default function Profile() {
     );
   }
 
+
   // Background styling for the profile cover
   const backgroundImageStyle = {
-    backgroundImage: `url(http://127.0.0.1:8000/${profileData?.data?.cover_photo})`,
+    backgroundImage: `url(${profileData?.data?.cover_photo})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     minHeight: "calc(100px + 15vw)",
+    backgroundColor: "lightgrey" // Added for debugging
   };
 
   // Tabs handling function
@@ -124,8 +126,8 @@ export default function Profile() {
         {/* Header of profile */}
         <div className="cols__container">
           <div className="left__col">
-            <div className="img__container">
-              <img src={`http://127.0.0.1:8000/${profileData?.data?.profile_picture}`} alt="Profile" />
+            <div className="img__container" >
+              <img  src={`${profileData?.data?.profile_picture}`} style={{backgroundColor:'lightgray'}} alt="Profile" />
             </div>
             <h2>{profileData?.data?.user_fname} {profileData?.data?.user_lname}</h2>
             <p>@{profileData?.data?.identifier}</p>

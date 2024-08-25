@@ -59,6 +59,8 @@ import MyPages from "../Page/MyPages/MyPages";
 import UserDetails from "./UserDetails/UserDetails";
 import HadithBox from "../home/Components/Hadithbox/HadithBox";
 import MyProfile from "../Profile/MyProfile/MyProfile";
+import SetProfile from "../Profile/SetProfile/SetProfile";
+import SetCoverPhoto from "../Profile/SetCoverPhoto/SetCoverPhoto";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -97,12 +99,12 @@ const Navbar = () => {
         overflowX: "hidden",
       }}
     >
-      <div className={isNotSm ? "container-sm  " : "ps-2 pe-2"} >
+      <div className={isNotSm ? "container-sm  " : "ps-2 pe-2"}>
         {/* xs NAV BAR */}
         {!isInPathsToHideNav && !isInPathsToHideNavHead && (
           <nav
             className={`bg-light xs-nav fixed-bottom d-sm-none border-bottom`}
-            style={{minWidth:'270px'}}
+            style={{ minWidth: "270px" }}
           >
             <div className="container-fluid">
               <div className="row">
@@ -176,7 +178,8 @@ const Navbar = () => {
                 overflowX: "hidden",
               }}
             >
-             {} <div
+              {}{" "}
+              <div
                 className="mb-3   d-flex align-items-center justify-content-center mydiv "
                 style={{
                   width: "60px",
@@ -199,7 +202,6 @@ const Navbar = () => {
                   ></i>
                 </span>
               </div>
-
               <NavLink to="/" className="custom-link">
                 <div className="d-flex align-items-center py-1 pl-5 my-2 custom-link mydiv">
                   <span>
@@ -208,7 +210,6 @@ const Navbar = () => {
                   <p className="d-none d-lg-block fs-4 ps-2 text">Home</p>
                 </div>
               </NavLink>
-
               <NavLink to="/friends" className="custom-link">
                 <div className="d-flex align-items-center py-1 my-2 pl-5 custom-link mydiv">
                   <span>
@@ -217,7 +218,6 @@ const Navbar = () => {
                   <p className="d-none d-lg-block fs-4 ps-2 text">Friends</p>
                 </div>
               </NavLink>
-
               <NavLink to="/groups" className="custom-link">
                 <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                   <span>
@@ -226,7 +226,6 @@ const Navbar = () => {
                   <p className="d-none d-lg-block fs-4 ps-2 text">Groups</p>
                 </div>
               </NavLink>
-
               <NavLink to="/page" className="custom-link">
                 <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                   <span>
@@ -235,7 +234,6 @@ const Navbar = () => {
                   <p className="d-none d-lg-block fs-4 ps-2 text">Pages</p>
                 </div>
               </NavLink>
-
               <NavLink to="/message" className="custom-link">
                 <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                   <span>
@@ -244,7 +242,6 @@ const Navbar = () => {
                   <p className="d-none d-lg-block fs-4 ps-2 text">Messages</p>
                 </div>
               </NavLink>
-
               <NavLink to="/quiz" className="custom-link">
                 <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                   <span>
@@ -253,7 +250,6 @@ const Navbar = () => {
                   <p className="d-none d-lg-block fs-4 ps-2 text">Quiz</p>
                 </div>
               </NavLink>
-
               <NavLink to="/ichannel" className="custom-link">
                 <div className="d-flex align-items-center my-2 py-1 pl-5 mydiv">
                   <span>
@@ -262,21 +258,21 @@ const Navbar = () => {
                   <p className="d-none d-lg-block fs-4 ps-2 text">iChanel</p>
                 </div>
               </NavLink>
-
-              <NavLink 
-      to="/profile" 
-      className={({ isActive }) => 
-        isActive && window.location.pathname === '/profile' ? 'custom-link active' : 'custom-link'
-      }
-    >
-      <div className="d-flex align-items-center my-2 mb-3 py-1 pl-5 mydiv">
-        <span>
-          <i className="fa-solid fa-user fs-2"></i>
-        </span>
-        <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
-      </div>
-    </NavLink>
-
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive && window.location.pathname === "/profile"
+                    ? "custom-link active"
+                    : "custom-link"
+                }
+              >
+                <div className="d-flex align-items-center my-2 mb-3 py-1 pl-5 mydiv">
+                  <span>
+                    <i className="fa-solid fa-user fs-2"></i>
+                  </span>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">Profile</p>
+                </div>
+              </NavLink>
               <button
                 className="d-flex align-items-center pt-1 pl-5 my-2 custom-link mydiv"
                 style={{
@@ -314,7 +310,6 @@ const Navbar = () => {
                   More
                 </span>
               </button>
-
               <div
                 id="moreOptions"
                 style={{
@@ -340,9 +335,7 @@ const Navbar = () => {
                   </div>
                 </NavLink>
               </div>
-
               {/* Account details */}
-
               <UserDetails />
             </div>
           </div>
@@ -378,13 +371,12 @@ const Navbar = () => {
                 />
                 <Route path="/friends/all-friends/:id" element={<Profile />} />
                 {/*Profile */}
-                
-                   {/* view own profile */}
-            <Route path="profile" exact element={<MyProfile />} />
-                
-                
-            {/* view others profile */}
-            <Route path="profile/:id" exact element={<Profile />} />
+
+                {/* view own profile */}
+                <Route path="profile" exact element={<MyProfile />} />
+
+                {/* view others profile */}
+                <Route path="profile/:id" exact element={<Profile />} />
 
                 {/* Profile --->manage */}
                 <Route
@@ -392,6 +384,20 @@ const Navbar = () => {
                   exact
                   element={<ProfileManage />}
                 />
+
+                {/* Set Profile  */}
+                <Route
+                  path="profile/manage/setprofile"
+                  exact
+                  element={<SetProfile />}
+                />
+
+          {/*<<--- Cover Photo ---> */}
+
+          {/* Set Profile from database */}
+          <Route path="profile/manage/setcoverphoto" exact element={<SetCoverPhoto />} />
+
+
 
                 {/* Grouos */}
                 <Route path="/groups" element={<GroupsHome />} />
@@ -484,7 +490,6 @@ const Navbar = () => {
                 />
                 {/* Mobile Menu */}
                 <Route path="menu" exact element={<MobileMenu />} />
-
               </Routes>
             </div>
           </div>
@@ -534,6 +539,15 @@ const Navbar = () => {
               {/* Profile */}
               <Route path="/profile" element={<Homeleft />} />
               <Route path="profile/:id" exact element={<Homeleft />} />
+              {/* Set Profile  */}
+              <Route
+                path="profile/manage/setprofile"
+                exact
+                element={<Homeleft />}
+              />
+
+            {/*<<--- Cover Photo ---> */}
+             <Route path="profile/manage/setcoverphoto" exact element={<Homeleft />} />
 
               {/* Groups */}
               <Route path="/groups" element={<GroupsHomeRight />} />

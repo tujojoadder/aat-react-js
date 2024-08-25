@@ -83,10 +83,11 @@ export default function MyProfile() {
 
   // Inline style for the background image
   const backgroundImageStyle = {
-    backgroundImage: `url(http://127.0.0.1:8000/${cover_photo})`,
+    backgroundImage: `url(${cover_photo})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     minHeight: "calc(100px + 15vw)",
+    backgroundColor: "lightgrey" // Added for debugging
   };
 
   return (
@@ -106,8 +107,10 @@ export default function MyProfile() {
           <div className="left__col">
             <div className="img__container">
               <img
-                src={`http://127.0.0.1:8000/${profile_picture}`}
+               style={{backgroundColor:'lightgray'}}
+                src={`${profile_picture}`}
                 alt={"Profile Image"}
+                
               />
 
               <span></span>
@@ -142,8 +145,8 @@ export default function MyProfile() {
         </div>
 
         {/* Content section */}
-        <div className="content-secssion mx-2">
-          <ul className="nav nav-tabs mt-3">
+        <div className="content-secssion ">
+          <ul className="nav nav-tabs mt-3 mx-2">
             <li className="nav-item">
               <a className="nav-link active" href="#post" data-bs-toggle="tab">
                 Posts

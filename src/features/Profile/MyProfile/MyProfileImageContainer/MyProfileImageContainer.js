@@ -40,10 +40,10 @@ const MyProfileImageContainer = () => {
     isSuccess: useGetSpecificUserPhotoQueryIsSuccess,
   } = useGetAuthUserPhotoQuery({ photoPage });
 
-  if (useGetSpecificUserPhotoQueryIsSuccess) {
+  /* if (useGetSpecificUserPhotoQueryIsSuccess) {
     console.log("photo" + useGetSpecificUserPhotoQueryData);
   }
-
+ */
   // Effect to process fetched data
   useEffect(() => {
     if (

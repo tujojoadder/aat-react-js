@@ -78,8 +78,6 @@ dayHadithDetails: builder.mutation({
 
 
 
-    
-
 
 
       

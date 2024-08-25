@@ -95,7 +95,7 @@ code {
 /* Top margin for navbar */
 @media (max-width: 576px) {
   .main {
-  
+  margin-top: 2rem;
    margin-bottom: 100px !important;
   }
 }

@@ -88,7 +88,7 @@ export default function ImagePost({ post }) {
               </div>
             )}
             <img
-              src={`http://127.0.0.1:8000/${post.author.profile_picture}`}
+              src={`${post.author.profile_picture}`}
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}

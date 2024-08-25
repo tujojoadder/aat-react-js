@@ -25,12 +25,7 @@ export default function MyProfileFriendsContainer() {
     isSuccess: useGetSpecificUserFriendQueryIsSuccess 
   } = useGetAuthUserFriendQuery({ friendPage});
 
-  // Log query data for debugging
-  useEffect(() => {
-    if (useGetSpecificUserFriendQueryIsSuccess) {
-      console.log(useGetSpecificUserFriendQueryData);
-    }
-  }, [useGetSpecificUserFriendQueryIsSuccess, useGetSpecificUserFriendQueryData]);
+
 
   // Effect to process fetched data
   useEffect(() => {
