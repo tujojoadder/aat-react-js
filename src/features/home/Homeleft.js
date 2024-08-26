@@ -5,6 +5,7 @@ import SearchBox from "./Components/SearchBox/SearchBox";
 import HadithBox from "./Components/Hadithbox/HadithBox";
 import { Scrollbars } from "react-custom-scrollbars";
 import { useFriendSuggestionhomeQuery } from "../../services/friendsApi";
+import SuggestionContainer from "./Components/AllContainer/SuggestionContainer/SuggestionContainer";
 
 export default function Homeleft() {
   const { data: suggestion, isFetching, isError, refetch } = useFriendSuggestionhomeQuery();
@@ -70,7 +71,7 @@ export default function Homeleft() {
                   return (
                  
                       <div className="col-12 mb-2">
-                        <SendFriendRequest
+                        <SuggestionContainer
                         user_id={`${profile.user_id}`}
                           name={`${profile.user_fname} ${profile.user_lname}`}
                           handle={`@${profile.identifier}`}
