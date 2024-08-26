@@ -32,7 +32,7 @@ export const profileApi = createApi({
           }),
 
 
-   /* get specific usrer images for profile */
+   /* get specific usrer frien for profile */
        getSpecificUserFriend: builder.query({
        query: ({ friendPage = 1, userId }) => `getspecificuserfriendids?page=${friendPage}&id=${userId}`, // Updated to include id
        }),
