@@ -1,31 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SuggestionContainer.css";
 import { NavLink } from "react-router-dom";
-import { useSendFriendRequestMutation } from "../../../../../services/friendsApi";
+import { useCancelFriendRequestMutation, useSendFriendRequestMutation } from "../../../../../services/friendsApi";
 import { handleApiError } from "../../../../handleApiError/handleApiError";
 import { useDispatch } from "react-redux";
 import { setToastSuccess } from "../../../HomeSlice";
 
-export default function SuggestionContainer({ name, handle, image, isActive, user_id, is_friend }) {
+export default function SuggestionContainer({ name, handle, image, isActive, user_id }) {
     const dispatch = useDispatch();
+    const [requestSent, setRequestSent] = useState(false);
+    const [requestCanceled, setRequestCanceled] = useState(false);
 
-    const [
-        SendFriendRequestMutation,
-        {
-            isSuccess: useSendFriendRequestMutationSucess,
-            isLoading: useSendFriendRequestMutationLoading,
-            isError: useSendFriendRequestMutationError,
-            isFetching: useSendFriendRequestMutationisFetching,
-            refetch: useSendFriendRequestMutationrefetch,
-        },
-    ] = useSendFriendRequestMutation();
+    const [SendFriendRequestMutation, { isLoading: sendingRequest }] = useSendFriendRequestMutation();
+    const [CancelFriendRequestMutation, { isLoading: cancelingRequest }] = useCancelFriendRequestMutation();
 
     const handleAddButton = async (e) => {
         e.preventDefault();
         try {
             const res = await SendFriendRequestMutation({ receiver_id: user_id });
             if (res.data) {
-                dispatch(setToastSuccess({ toastSuccess: 'Sended request successfully' }));
+                dispatch(setToastSuccess({ toastSuccess: 'Sent request successfully' }));
+                setRequestSent(true);
+                setRequestCanceled(false); // Reset cancel state if request is sent again
             } else if (res.error) {
                 handleApiError(res.error, dispatch);
             }
@@ -34,9 +30,118 @@ export default function SuggestionContainer({ name, handle, image, isActive, use
         }
     };
 
+    const handleCancelButton = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await CancelFriendRequestMutation({ receiver_id: user_id });
+            if (res.data) {
+                dispatch(setToastSuccess({ toastSuccess: 'Request canceled successfully' }));
+                setRequestSent(false);
+                setRequestCanceled(true);
+            } else if (res.error) {
+                handleApiError(res.error, dispatch);
+            }
+        } catch (error) {
+            handleApiError(error, dispatch);
+        }
+    };
+
+    const getButton = () => {
+        if (requestSent && !requestCanceled) {
+            return (
+                <button
+                    onClick={handleCancelButton}
+                    className="btn-add-friend btn-primary"
+                    type="button"
+                    style={{
+                        backgroundColor: cancelingRequest ? "#c4c4c4" : "#999999", // Black background for cancel button
+                        color: cancelingRequest ? "#888" : "white",
+                        outline: "none",
+                        boxShadow: "none",
+                        border: "none",
+                        fontSize: "14px",
+                        minWidth: "126px",
+                        cursor: cancelingRequest ? "not-allowed" : "pointer",
+                        position: "relative",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                    disabled={cancelingRequest}
+                >
+                    {cancelingRequest ? (
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    ) : (
+                        "Cancel request"
+                    )}
+                </button>
+            );
+        }
+
+        if (requestCanceled) {
+            return (
+                <button
+                    onClick={handleAddButton}
+                    className="btn-add-friend btn-primary"
+                    type="button"
+                    style={{
+                        backgroundColor: sendingRequest ? "#c4c4c4" : "#274a65",
+                        color: sendingRequest ? "#888" : "white",
+                        outline: "none",
+                        boxShadow: "none",
+                        border: "none",
+                        cursor: sendingRequest ? "not-allowed" : "pointer",
+                        position: "relative",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                    disabled={sendingRequest}
+                >
+                    {sendingRequest ? (
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    ) : (
+                        <>
+                            <i className="fas fa-user-plus me-2"></i> Add
+                        </>
+                    )}
+                </button>
+            );
+        }
+
+        return (
+            <button
+                onClick={handleAddButton}
+                className="btn-add-friend btn-primary"
+                type="button"
+                style={{
+                    backgroundColor: sendingRequest ? "#c4c4c4" : "#274a65",
+                    color: sendingRequest ? "#888" : "white",
+                    outline: "none",
+                    boxShadow: "none",
+                    border: "none",
+                    cursor: sendingRequest ? "not-allowed" : "pointer",
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+                disabled={sendingRequest}
+            >
+                {sendingRequest ? (
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                ) : (
+                    <>
+                        <i className="fas fa-user-plus me-2"></i> Add
+                    </>
+                )}
+            </button>
+        );
+    };
+
     return (
         <div
-            className={`friend-request-container p-2  d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
+            className={`friend-request-container p-2 d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
                 isActive ? "active" : ""
             }`}
             style={{ maxWidth: "100%" }}
@@ -62,54 +167,7 @@ export default function SuggestionContainer({ name, handle, image, isActive, use
             </div>
 
             <div className="add-friend-button">
-                {/* Show button based on states */}
-                {!is_friend && !useSendFriendRequestMutationSucess && (
-                    <button
-                        onClick={handleAddButton}
-                        className="btn-add-friend btn-primary"
-                        type="button"
-                        style={{
-                            backgroundColor: useSendFriendRequestMutationLoading ? "#c4c4c4" : "#274a65", // Change color when loading
-                            color: useSendFriendRequestMutationLoading ? "#888" : "white", // Change text color when loading
-                            outline: "none",
-                            boxShadow: "none",
-                            border: "none",
-                            cursor: useSendFriendRequestMutationLoading ? "not-allowed" : "pointer", // Show not-allowed cursor when loading
-                            position: "relative",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                        disabled={useSendFriendRequestMutationLoading} // Disable button when loading
-                    >
-                        {useSendFriendRequestMutationLoading ? (
-                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        ) : (
-                            <>
-                                <i className="fas fa-user-plus me-2"></i> Add
-                            </>
-                        )}
-                    </button>
-                )}
-
-                {/* Show Cancel Request button after friend request is sent */}
-                {useSendFriendRequestMutationSucess && (
-                    <button
-                        className="btn-add-friend btn-primary"
-                        type="button"
-                        style={{
-                            backgroundColor: "#e4e6eb",
-                            color: "black",
-                            outline: "none",
-                            boxShadow: "none",
-                            border: "none",
-                            fontSize: "14px",
-                            minWidth: "126px",
-                        }}
-                    >
-                        Cancel request
-                    </button>
-                )}
+                {getButton()}
             </div>
         </div>
     );

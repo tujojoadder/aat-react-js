@@ -40,11 +40,24 @@ friendSuggestionhome: builder.query({
 
 
 
-
+/* Send Friend Request */
       sendFriendRequest: builder.mutation({
         query: (receiver_id) => {
           return {
             url: "/sendfriendrequest",
+            method: "POST",
+            body: receiver_id,
+          };
+        },
+      }),
+    
+
+
+/* cancel Friend Request */
+      cancelFriendRequest: builder.mutation({
+        query: (receiver_id) => {
+          return {
+            url: "/cancelfriendrequest",
             method: "POST",
             body: receiver_id,
           };
@@ -59,4 +72,4 @@ friendSuggestionhome: builder.query({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useSendFriendRequestMutation,useGetUserDetailsQuery,useFriendSuggestionhomeQuery,useUserPostInsertMutation,useGetPostsQuery } = friendsApi
+export const { useCancelFriendRequestMutation,useSendFriendRequestMutation,useGetUserDetailsQuery,useFriendSuggestionhomeQuery,useUserPostInsertMutation,useGetPostsQuery } = friendsApi
