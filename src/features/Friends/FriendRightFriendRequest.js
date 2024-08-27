@@ -6,6 +6,7 @@ import { useGetAuthUserfriendRequestQuery } from "../../services/friendsApi";
 import { useInView } from "react-intersection-observer";
 import Spinner from "../Spinner/Spinner";
 import { Scrollbar } from "react-scrollbars-custom";
+import FriendRequestItemSm from "../ItemContainner/SmallScreenItem/FriendRequestItemSm/FriendRequestItemSm";
 
 export default function FriendRightFriendRequest() {
   const { id } = useParams();
@@ -130,7 +131,14 @@ export default function FriendRightFriendRequest() {
                   </NavLink>
                 </li>
                 <li className="nav-item w-100">
-                  <NavLink end to="/friends/requests" className="nav-link">
+                  <NavLink
+                    to="/friends/requests"
+                    className={({ isActive }) =>
+                      isActive || location.pathname.startsWith('/friends/requests')
+                        ? 'nav-link active'
+                        : 'nav-link'
+                    }
+                  >
                     <i className="fas fa-user-plus fa-fw me-2"></i> Friend requests
                   </NavLink>
                 </li>
@@ -153,23 +161,27 @@ export default function FriendRightFriendRequest() {
             </div>
 
             {/* Bottom section */}
-            <div className="pe-3">
+          
               <h5>Friend Requests</h5>
               <Scrollbar style={{ width: "100%", height: "calc(55vh - 7vh)" }}>
                 <div style={{ paddingBottom: paddingBottom }}>
+                 
                   {allFriendRequest.length === 0 ? (
                     <div className="col-12 text-center">No records</div>
                   ) : (
-                    allFriendRequest.map((profile) => (
-                      <SmallScreenUnFriendUserCard
-                        key={profile.friend_request_id}
-                        name={`${profile.user_fname} ${profile.user_lname}`}
-                        handle={profile.identifier}
-                        image={profile.profile_picture}
-                        type="friend_request"
-                        user_id={profile.user_id}
-                      />
-                    ))
+                    allFriendRequest.map((profile) => {
+                      const isActive = location.pathname === `/friends/requests/${profile.user_id}`;
+                      return (
+                        <FriendRequestItemSm
+                          key={profile.friend_request_id}
+                          name={`${profile.user_fname} ${profile.user_lname}`}
+                          handle={profile.identifier}
+                          image={profile.profile_picture}
+                          user_id={profile.user_id}
+                          isActive={isActive}
+                        />
+                      );
+                    })
                   )}
                   <div
                     ref={requestRef}
@@ -180,7 +192,7 @@ export default function FriendRightFriendRequest() {
                   </div>
                 </div>
               </Scrollbar>
-            </div>
+            
           </div>
         </div>
       </div>

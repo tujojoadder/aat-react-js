@@ -71,6 +71,11 @@ friendSuggestionhome: builder.query({
       query: ({ friendRequestPage = 1 }) => `auth-friend-requests?page=${friendRequestPage}`,
     }),
 
+
+
+
+
+    
   /* <<<<---- Friend Request Page ----->>>> */
 
 /* friend request --->>>home  */

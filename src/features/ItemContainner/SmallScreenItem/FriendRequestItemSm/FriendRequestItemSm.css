@@ -1,0 +1,62 @@
+/* SmallScreenUnFriendUserCard.css */
+
+.friend-request-container {
+    border: 1px solid #e1e4e8;
+    padding: 10px;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .friend-request-container:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-image img {
+    border: 2px solid #d1d5da;
+    border-radius: 50%;
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    color: #14171a;
+  }
+  
+  .profile-info .fw-bold {
+    font-size: 1rem;
+  }
+  
+  .profile-info .text-muted {
+    font-size: 0.95rem;
+    color: #657786;
+  }
+  
+  .add-friend-button,
+  .add-delete-button {
+    margin-left: auto; /* Push button to the right */
+  }
+  
+  
+  .btn-add-friend:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+  }
+  
+  .btn-delete-friend {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    background-color: #d8d8d8;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* Add cursor pointer */
+  }
+  
+  .btn-delete-friend:hover {
+    background-color: #c0c0c0; /* Slightly darker on hover */
+  }
+  
