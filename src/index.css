@@ -21,12 +21,30 @@ body {
 }
 
 
+react-scrollbars-custom .scrollbar-thumb {
+  width: 5px !important; /* Set the width of the scrollbar thumb */
+  background-color: #140d0d !important; /* Color of the scrollbar thumb */
+  border-radius: 5px !important; /* Optional: round the scrollbar thumb */
+}
 
 
 
+/* Customize scroll bar */
+.ScrollbarsCustom-Thumb{
+  background-color: #b8babc !important;
+}
 
+/* Hide scrollbar by default */
+.ScrollbarsCustom-TrackY {
+  width: 6px !important;
+  opacity: 0; /* Make scrollbar invisible by default */
+  transition: opacity 0.3s ease; /* Smooth transition effect */
+}
 
-
+/* Show scrollbar on hover */
+.scroll-container:hover .ScrollbarsCustom-TrackY {
+  opacity: 1; /* Make scrollbar visible on hover */
+}
 
 
 

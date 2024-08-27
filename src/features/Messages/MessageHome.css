@@ -273,7 +273,7 @@ background-color: #e4e9f5;
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px ;
 }
 
 /* Track */

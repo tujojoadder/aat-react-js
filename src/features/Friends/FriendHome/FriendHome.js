@@ -128,7 +128,9 @@ if (useGetFriendSuggestionQueryIsFetching) {
                 allFriendRequest.map((profile, index) =>
                   isSmallScreen ? (
                     <SmallScreenUnFriendUserCard
+                   
                       key={index}
+                      user_id={profile.user_id}
                       name={`${profile.user_fname} ${profile.user_lname}`}
                       handle={profile.identifier}
                       image={profile.profile_picture}
@@ -137,6 +139,7 @@ if (useGetFriendSuggestionQueryIsFetching) {
                   ) : (
                     <LargeScreenUnFriendUserCard
                       key={index}
+                      user_id={profile.user_id}
                       name={`${profile.user_fname} ${profile.user_lname}`}
                       handle={profile.identifier}
                       image={profile.profile_picture}
