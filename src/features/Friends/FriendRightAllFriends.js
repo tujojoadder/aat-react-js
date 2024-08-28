@@ -34,12 +34,7 @@ export default function FriendRightAllFriends() {
                 <li className="nav-item w-100">
                   <NavLink
                     to="/friends/requests"
-                    className={({ isActive }) =>
-                      isActive ||
-                      location.pathname.startsWith("/friends/requests")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
+                  className="nav-link"
                   >
                     <i className="fas fa-user-plus fa-fw me-2"></i> Friend
                     requests
@@ -57,7 +52,12 @@ export default function FriendRightAllFriends() {
                   </NavLink>
                 </li>
                 <li className="nav-item w-100">
-                  <NavLink end to="/friends/all-friends" className="nav-link">
+                  <NavLink end to="/friends/all-friends"   className={({ isActive }) =>
+                      isActive ||
+                      location.pathname.startsWith("/friends/all-friends")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }>
                     <i className="fas fa-users fa-fw me-2"></i> All friends
                   </NavLink>
                 </li>

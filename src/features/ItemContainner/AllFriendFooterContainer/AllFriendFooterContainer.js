@@ -9,6 +9,7 @@ import { Scrollbar } from 'react-scrollbars-custom';
 import FriendRequestItemSm from '../SmallScreenItem/FriendRequestItemSm/FriendRequestItemSm';
 import { useMediaQuery } from 'react-responsive';
 import { useGetAuthUserFriendQuery } from '../../../services/profileApi';
+import AllFriendItemSm from '../SmallScreenItem/AllFriendItemSm/AllFriendItemSm';
 
 export default function AllFriendFooterContainer() {
  
@@ -103,9 +104,9 @@ if (useGetAuthUserfriendRequestQuerySuccess) {
       ) : (
         allFriendRequest.map((profile) => {
           const isActive =
-            location.pathname === `/friends/requests/${profile.user_id}`;
+            location.pathname === `/friends/all-friends/${profile.user_id}`;
           return (
-            <FriendRequestItemSm
+            <AllFriendItemSm
               key={profile.friend_request_id}
               name={`${profile.user_fname} ${profile.user_lname}`}
               handle={profile.identifier}
