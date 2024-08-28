@@ -66,7 +66,7 @@ friendSuggestionhome: builder.query({
     
 
 
-   /* get specific usrer frien for profile */
+   /* get specific usrer friend list */
     getAuthUserfriendRequest: builder.query({
       query: ({ friendRequestPage = 1 }) => `auth-friend-requests?page=${friendRequestPage}`,
     }),
@@ -90,10 +90,24 @@ getFriendSuggestion: builder.query({
 
 
 
+/* Send Friend Request */
+manageFriendRequest: builder.mutation({
+  query: ({sender_id,decision}) => {
+    return {
+      url: "/managefriendrequest",
+      method: "POST",
+      body: {sender_id,decision},
+    };
+  },
+}),
+
+
+  
+
       
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAuthUserSentRequestQuery,useGetFriendSuggestionQuery,useGetAuthUserfriendRequestQuery,useCancelFriendRequestMutation,useSendFriendRequestMutation,useGetUserDetailsQuery,useFriendSuggestionhomeQuery,useUserPostInsertMutation,useGetPostsQuery } = friendsApi
+export const { useManageFriendRequestMutation,useGetAuthUserSentRequestQuery,useGetFriendSuggestionQuery,useGetAuthUserfriendRequestQuery,useCancelFriendRequestMutation,useSendFriendRequestMutation,useGetUserDetailsQuery,useFriendSuggestionhomeQuery,useUserPostInsertMutation,useGetPostsQuery } = friendsApi

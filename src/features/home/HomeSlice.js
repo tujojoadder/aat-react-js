@@ -1,132 +1,153 @@
-//email for login
+// Updated Redux slice
 
 import { createSlice } from "@reduxjs/toolkit";
 
-/* those states will be used from any component */
+/* Initial state */
 const initialState = {
- /*  Profile state */
+  /* Profile state */
   profile_picture: "",
   user_fname: "",
   user_lname: "",
   email: "",
   identifier: "",
-  cover_photo:"",
-  gender:"",
-  birthdate:"",
+  cover_photo: "",
+  gender: "",
+  birthdate: "",
 
-/*   Confirmation Modal state  */
-show_modal:false,
-modal_message:'No message bro',
+  /* Confirmation Modal state */
+  show_modal: false,
+  modal_message: "No message bro",
 
-/* userToen */
-token:'',
+  /* User token */
+  token: "",
 
-/* Toast Messsage */
-  toastError:'',
-  toastSuccess:'',
+  /* Toast Messages */
+  toastError: "",
+  toastSuccess: "",
 
   /* Hadith */
-  allDayHadith: [], 
-  
+  allDayHadith: [],
+
+  /* Friends Requests */
+  acceptedRequests: {}, // To store accepted friend requests by user ID
+  rejectedRequests: {}, // To store rejected/canceled friend requests by user ID
+  sentRequests: {},     // To store sent friend requests by user ID
 };
 
 export const homeSlice = createSlice({
   name: "userDetails",
   initialState,
   reducers: {
+    /* Profile state reducers */
 
-/*  <--- Profile State ---> */
-
-    /* profile_picture */
     setProfile_picture: (state, action) => {
-      const { profile_picture } = action.payload;
-      state.profile_picture = profile_picture;
+      state.profile_picture = action.payload.profile_picture;
     },
 
-    /* user_fname */
     setUser_fname: (state, action) => {
-      const { user_fname } = action.payload;
-      state.user_fname = user_fname;
+      state.user_fname = action.payload.user_fname;
     },
-    /* user_lname */
+
     setUser_lname: (state, action) => {
-      const { user_lname } = action.payload;
-      state.user_lname = user_lname;
+      state.user_lname = action.payload.user_lname;
     },
 
-    /* email */
     setEmail: (state, action) => {
-      const { email } = action.payload;
-      state.email = email;
+      state.email = action.payload.email;
     },
 
-    /* identifier */
     setIdentifier: (state, action) => {
-      const { identifier } = action.payload;
-      state.identifier = identifier;
+      state.identifier = action.payload.identifier;
     },
-     /* cover_photo */
-     setCover_photo: (state, action) => {
-      const { cover_photo } = action.payload;
-      state.cover_photo = cover_photo;
+
+    setCover_photo: (state, action) => {
+      state.cover_photo = action.payload.cover_photo;
     },
-    /* gender */
+
     setGender: (state, action) => {
-      const { gender } = action.payload;
-      state.gender = gender;
+      state.gender = action.payload.gender;
     },
-  /* birthdate */
-  setBirthDate: (state, action) => {
-    const { birthdate } = action.payload;
-    state.birthdate = birthdate;
-  },
 
+    setBirthDate: (state, action) => {
+      state.birthdate = action.payload.birthdate;
+    },
 
-/*  <--- Confirmation Modal State ---> */
- 
-setShow_Modal: (state,action) => {
-  const { show_modal } = action.payload;
-  state.show_modal =show_modal;
-},
+    /* Confirmation Modal state reducers */
 
-setModalMessage: (state, action) => {
-  const { modal_message } = action.payload;
-  state.modal_message = modal_message;
-},
+    setShow_Modal: (state, action) => {
+      state.show_modal = action.payload.show_modal;
+    },
 
-setToken: (state, action) => {
-  const { token } = action.payload;
-  state.token = token;
-},
+    setModalMessage: (state, action) => {
+      state.modal_message = action.payload.modal_message;
+    },
 
+    setToken: (state, action) => {
+      state.token = action.payload.token;
+    },
 
+    /* Toast Messages reducers */
 
-/* Toast Message */
-setToastError: (state, action) => {
-  const { toastError } = action.payload;
-  state.toastError = toastError;
-},
-setToastSuccess: (state, action) => {
-  const { toastSuccess } = action.payload;
-  state.toastSuccess = toastSuccess;
-},
+    setToastError: (state, action) => {
+      state.toastError = action.payload.toastError;
+    },
 
-/* <--- Hadith ---> */
-setAllDayHadith: (state, action) => {
-  state.allDayHadith = action.payload;
-},
-    /* <--- Update isLiked status for a specific Hadith ---> */
- /* Update isLiked for specific index */
- setIsLiked: (state, action) => {
-  const { index } = action.payload;
-  state.allDayHadith[index].day_hadith.isLiked = true;
-},
+    setToastSuccess: (state, action) => {
+      state.toastSuccess = action.payload.toastSuccess;
+    },
 
+    /* Hadith reducers */
 
+    setAllDayHadith: (state, action) => {
+      state.allDayHadith = action.payload;
+    },
+
+    setIsLiked: (state, action) => {
+      const { index } = action.payload;
+      state.allDayHadith[index].day_hadith.isLiked = true;
+    },
+
+    /* Friend Requests reducers */
+
+    setRequestSent: (state, action) => {
+      const { userId } = action.payload;
+      state.sentRequests[userId] = true; // Mark request as sent
+      delete state.rejectedRequests[userId]; // Remove from rejected if re-sent
+    },
+
+    setRequestAccepted: (state, action) => {
+      const { userId } = action.payload;
+      state.acceptedRequests[userId] = true; // Mark request as accepted
+      delete state.sentRequests[userId]; // Remove from sent if accepted
+    },
+
+    setRequestRejected: (state, action) => {
+      const { userId } = action.payload;
+      state.rejectedRequests[userId] = true; // Mark request as rejected/canceled
+      delete state.sentRequests[userId]; // Remove from sent if canceled
+    },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { setCover_photo,setIsLiked,setProfile_picture,setUser_fname,setUser_lname,setEmail,setIdentifier,setModalMessage,setShow_Modal,setToken,setToastError,setToastSuccess,setAllDayHadith,setBirthDate,setGender} = homeSlice.actions;
+export const {
+  setProfile_picture,
+  setUser_fname,
+  setUser_lname,
+  setEmail,
+  setIdentifier,
+  setCover_photo,
+  setGender,
+  setBirthDate,
+  setShow_Modal,
+  setModalMessage,
+  setToken,
+  setToastError,
+  setToastSuccess,
+  setAllDayHadith,
+  setIsLiked,
+  setRequestSent,
+  setRequestAccepted,
+  setRequestRejected,
+} = homeSlice.actions;
 
 export default homeSlice.reducer;
