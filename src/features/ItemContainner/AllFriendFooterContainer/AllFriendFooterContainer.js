@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useGetAuthUserfriendRequestQuery } from '../../../services/friendsApi';
@@ -6,8 +8,9 @@ import Spinner from '../../Spinner/Spinner';
 import { Scrollbar } from 'react-scrollbars-custom';
 import FriendRequestItemSm from '../SmallScreenItem/FriendRequestItemSm/FriendRequestItemSm';
 import { useMediaQuery } from 'react-responsive';
+import { useGetAuthUserFriendQuery } from '../../../services/profileApi';
 
-export default function FriendRequestFooter() {
+export default function AllFriendFooterContainer() {
  
   const location = useLocation();
   const { ref: requestRef, inView: inViewRequests } = useInView({
@@ -28,7 +31,13 @@ export default function FriendRequestFooter() {
     isError: useGetAuthUserfriendRequestQueryError,
     isFetching: useGetAuthUserfriendRequestQueryFetching,
     refetch: useGetAuthUserfriendRequestQueryRefetch,
-  } = useGetAuthUserfriendRequestQuery({ friendRequestPage });
+  } = useGetAuthUserFriendQuery({ friendPage:friendRequestPage });
+
+
+if (useGetAuthUserfriendRequestQuerySuccess) {
+    console.log(useGetAuthUserfriendRequestQueryData);
+}
+
 
   // Define media queries
   const isSmallScreen = useMediaQuery({ query: '(max-height: 600px)' });
@@ -72,7 +81,7 @@ export default function FriendRequestFooter() {
         (newRequest) =>
           !allFriendRequest.some(
             (request) =>
-              request.friend_request_id === newRequest.friend_request_id
+              request.user_id === newRequest.user_id
           )
       );
       if (newRequests.length > 0) {

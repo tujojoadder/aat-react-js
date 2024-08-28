@@ -21,13 +21,18 @@ body {
 }
 
 
+
+
 react-scrollbars-custom .scrollbar-thumb {
   width: 5px !important; /* Set the width of the scrollbar thumb */
   background-color: #140d0d !important; /* Color of the scrollbar thumb */
   border-radius: 5px !important; /* Optional: round the scrollbar thumb */
 }
 
-
+/* for small back button */
+.sm-back{
+  margin-top: 60px;
+}
 
 /* Customize scroll bar */
 .ScrollbarsCustom-Thumb{

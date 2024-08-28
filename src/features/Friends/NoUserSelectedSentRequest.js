@@ -6,6 +6,10 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { NavLink, useLocation } from 'react-router-dom';
 import SendFriendRequest from '../home/Components/SendFriendRequest/SendFriendRequest';
 import FriendsTabs from './FriendsTabs/FriendsTabs';
+import FriendSentFooterContainer from '../ItemContainner/FriendSentFooterContainer/FriendSentFooterContainer';
+import FriendSuggestionBack from './FriendBack/FriendSuggestionBack/FriendSuggestionBack';
+import SmallScreenBack from '../SmallScreenBack/SmallScreenBack';
+import MidLgScreenBack from '../SmallScreenBack/MidLgScreenBack';
 
 export default function NoUserSelectedSentRequest() {
   const styles = {
@@ -36,101 +40,27 @@ export default function NoUserSelectedSentRequest() {
     },
   };
 
-  const profiles = [
-    {
-        name: 'MarkfdRockwell',
-        handle: '@mark_rockwell',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },
-      {
-        name: 'JanedfbDoe',
-        handle: '@jane_doe',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },
-      {
-        name: 'JohnfSmith',
-        handle: '@john_smith',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },{
-        name: 'MarkfdRockwell',
-        handle: '@mark_rockwell',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },
-      {
-        name: 'JanedfbDoe',
-        handle: '@jane_doe',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },
-      {
-        name: 'JohnfSmith',
-        handle: '@john_smith',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },{
-        name: 'MarkfdRockwell',
-        handle: '@mark_rockwell',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },
-      {
-        name: 'JanedfbDoe',
-        handle: '@jane_doe',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },
-      {
-        name: 'JohnfSmith',
-        handle: '@john_smith',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },{
-        name: 'MarkfdRockwell',
-        handle: '@mark_rockwell',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },
-      {
-        name: 'JanedfbDoe',
-        handle: '@jane_doe',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },
-      {
-        name: 'JohnfSmith',
-        handle: '@john_smith',
-        image: 'https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg',
-      },
-  ];
-
   const location = useLocation();
 
   return (
     <>
-      {/* Content for small and medium devices */}
-      <div className="d-block d-lg-none main px-0 " >
-         {/* FriendsTabs */}
-         <div className="d-block d-lg-none">
-          <FriendsTabs />
-        </div>
-      <h5 className="ms-3">Sent Requests</h5>
-   
-            <div className="mb-5">
-            {profiles.map((profile, index) => {
-                  const isActive = location.pathname === `/friends/sent-requests/${profile.name}`;
-                  return (
-                    <NavLink
-                      key={index}
-                      to={`/friends/sent-requests/${profile.name}`}
-                      className="text-decoration-none"
-                    >
-                      <div className="col-12 mb-2 px-0">
-                        <SendFriendRequest
-                          name={profile.name}
-                          handle={profile.handle}
-                          image={profile.image}
-                          isActive={isActive}
-                        />
-                      </div>
-                    </NavLink>
-                  );
-                })}
-              </div>
+     
+  {/* Content for small and medium devices */}
+  <div className="d-block d-lg-none  px-0" style={{ overflow: "hidden" }}>
+        {/* FriendsTabs */}
 
+        {/*  Back button */}
+        <SmallScreenBack text="Sent requests" />
+        <MidLgScreenBack text="Sent requests" />
+
+        {/*    Use sm-back for equalize top margin */}
+        <div className="sm-back">
+          <FriendSentFooterContainer />
+        </div>
       </div>
+
+
+
 
       {/* Content for large devices */}
       <div className="d-none d-lg-block border-start border-end" style={{height:'101vh'}}>

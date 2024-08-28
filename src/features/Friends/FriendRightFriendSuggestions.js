@@ -8,93 +8,14 @@ import { useInView } from "react-intersection-observer";
 import SmallScreenUnFriendUserCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
 import Spinner from "../Spinner/Spinner";
 import SuggestionItemSm from "../ItemContainner/SmallScreenItem/SuggestionItemSm/SuggestionItemSm";
+import FriendSuggestionFooterContainer from "../ItemContainner/FriendSuggestionFooterContainer/FriendSuggestionFooterContainer";
 
 export default function FriendRightFriendSuggestions() {
-  const scrollRef = React.useRef(null);
-  const [paddingBottom, setPaddingBottom] = useState("15vh"); // Default padding
-  // Effect to adjust padding based on screen height
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerHeight < 600) {
-        setPaddingBottom("15vh");
-      } else {
-        setPaddingBottom("4vh");
-      }
-    };
-    handleResize(); // Initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Friend Suggestions State Management
-  const [friendSuggestionPage, setFriendSuggestionPage] = useState(1);
-  const [allFriendSuggestions, setAllFriendSuggestions] = useState([]);
-  const [hasMoreFriendSuggestions, setHasMoreFriendSuggestions] =
-    useState(true);
-
-  // Fetching Friend Suggestions
-  const {
-    data: useGetFriendSuggestionQueryData,
-    isSuccess: useGetFriendSuggestionQuerySuccess,
-    isFetching: useGetFriendSuggestionQueryIsFetching,
-    isError: useGetFriendSuggestionQueryError,
-    refetch: useGetFriendSuggestionQueryRefetch,
-  } = useGetFriendSuggestionQuery({ friendSuggestionPage });
-
-  // Get reference and visibility state for friend suggestions
-  const { ref: suggestionRef, inView: inViewSuggestions } = useInView({
-    threshold: 0,
-    triggerOnce: false,
-  });
-
-  // Effect to process fetched friend suggestion data
-  useEffect(() => {
-    if (
-      useGetFriendSuggestionQuerySuccess &&
-      useGetFriendSuggestionQueryData?.data
-    ) {
-      if (useGetFriendSuggestionQueryData.data.length === 0) {
-        setHasMoreFriendSuggestions(false); // No more data to load
-      }
-      const newSuggestions = useGetFriendSuggestionQueryData.data.filter(
-        (newSuggestion) =>
-          !allFriendSuggestions.some(
-            (suggestion) => suggestion.user_id === newSuggestion.user_id
-          )
-      );
-      if (newSuggestions.length > 0) {
-        setAllFriendSuggestions((prevSuggestions) => [
-          ...prevSuggestions,
-          ...newSuggestions,
-        ]);
-      }
-    }
-  }, [useGetFriendSuggestionQuerySuccess, useGetFriendSuggestionQueryData]);
-
-  // Effect to handle infinite scroll logic for friend suggestions
-  useEffect(() => {
-    if (
-      inViewSuggestions &&
-      !useGetFriendSuggestionQueryIsFetching &&
-      !useGetFriendSuggestionQueryError &&
-      hasMoreFriendSuggestions &&
-      useGetFriendSuggestionQuerySuccess
-    ) {
-      setFriendSuggestionPage((prevPage) => prevPage + 1);
-    }
-  }, [
-    inViewSuggestions,
-    useGetFriendSuggestionQueryIsFetching,
-    useGetFriendSuggestionQueryError,
-    hasMoreFriendSuggestions,
-    useGetFriendSuggestionQuerySuccess,
-  ]);
-
   const location = useLocation();
   return (
     <div style={{ overflowX: "hidden" }}>
       <div
-        ref={scrollRef}
+   
         className="scroll-container w-100"
         style={{ overflowY: "hidden", height: "100vh" }}
       >
@@ -151,36 +72,13 @@ export default function FriendRightFriendSuggestions() {
             {/* Bottom section */}
 
             <h5>Friend Suggestions</h5>
-            <Scrollbar style={{ width: "100%", height: "calc(55vh - 7vh)" }}>
-              <div style={{ paddingBottom: paddingBottom }}>
-               
-                  {allFriendSuggestions.length === 0 ? (
-                    <div className="col-12 text-center">No records</div>
-                  ) : (
-                    allFriendSuggestions.map((profile) => {
-                      const isActive = location.pathname === `/friends/suggestions/${profile.user_id}`;
-                      return (
-                        <SuggestionItemSm
-                          key={profile.friend_request_id}
-                          name={`${profile.user_fname} ${profile.user_lname}`}
-                          handle={profile.identifier}
-                          image={profile.profile_picture}
-                          user_id={profile.user_id}
-                          isActive={isActive}
-                        />
-                      );
-                    })
-                  )}
-     
-                {/*   //Spinner Scroll */}
-                <div
-                  ref={suggestionRef}
-                  className="infinite-scroll-trigger"
-                  style={{ height: "7vh", minHeight: "40px" }}
-                >
-                  {useGetFriendSuggestionQueryIsFetching && <Spinner />}
-                </div>
-              </div>
+            <Scrollbar
+        style={{
+          width: '100%',
+          height: '56vh',
+        }}
+      >
+            <FriendSuggestionFooterContainer/>
             </Scrollbar>
           </div>
         </div>

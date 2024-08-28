@@ -7,110 +7,14 @@ import { useInView } from "react-intersection-observer";
 import Spinner from "../Spinner/Spinner";
 import { Scrollbar } from "react-scrollbars-custom";
 import FriendRequestItemSm from "../ItemContainner/SmallScreenItem/FriendRequestItemSm/FriendRequestItemSm";
+import FriendRequestFooter from "../ItemContainner/FriendRightFooterContainer/FriendRequestFooter";
 
 export default function FriendRightFriendRequest() {
-  const { id } = useParams();
-  const scrollRef = useRef(null);
   const location = useLocation();
-  const { ref: requestRef, inView: inViewRequests } = useInView({
-    threshold: 0,
-    triggerOnce: false,
-  });
-
-  const [friendRequestPage, setFriendRequestPage] = useState(1);
-  const [allFriendRequest, setAllFriendRequest] = useState([]);
-  const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
-  const [paddingBottom, setPaddingBottom] = useState('15vh'); // Default padding
-
-  const {
-    data: useGetAuthUserfriendRequestQueryData,
-    isSuccess: useGetAuthUserfriendRequestQuerySuccess,
-    isLoading: useGetAuthUserfriendRequestQueryLoading,
-    isError: useGetAuthUserfriendRequestQueryError,
-    isFetching: useGetAuthUserfriendRequestQueryFetching,
-    refetch: useGetAuthUserfriendRequestQueryRefetch,
-  } = useGetAuthUserfriendRequestQuery({ friendRequestPage });
-
-  useEffect(() => {
-    console.log("Fetching data state:", {
-      friendRequestPage,
-      useGetAuthUserfriendRequestQueryData,
-      useGetAuthUserfriendRequestQueryFetching,
-      inViewRequests,
-    });
-  }, [
-    friendRequestPage,
-    useGetAuthUserfriendRequestQueryData,
-    useGetAuthUserfriendRequestQueryFetching,
-    inViewRequests,
-  ]);
-
-  useEffect(() => {
-    if (
-      inViewRequests &&
-      !useGetAuthUserfriendRequestQueryFetching &&
-      !useGetAuthUserfriendRequestQueryError &&
-      hasMoreFriendRequest &&
-      useGetAuthUserfriendRequestQuerySuccess
-    ) {
-      console.log("Updating friendRequestPage:", friendRequestPage + 1);
-      setFriendRequestPage((prevPage) => prevPage + 1);
-    }
-  }, [
-    inViewRequests,
-    useGetAuthUserfriendRequestQueryFetching,
-    useGetAuthUserfriendRequestQueryError,
-    hasMoreFriendRequest,
-    useGetAuthUserfriendRequestQuerySuccess,
-  ]);
-
-  useEffect(() => {
-    if (
-      useGetAuthUserfriendRequestQuerySuccess &&
-      useGetAuthUserfriendRequestQueryData?.data
-    ) {
-      if (useGetAuthUserfriendRequestQueryData.data.length < 3) {
-        setHasMoreFriendRequest(false);
-      }
-      const newRequests = useGetAuthUserfriendRequestQueryData.data.filter(
-        (newRequest) =>
-          !allFriendRequest.some(
-            (request) =>
-              request.friend_request_id === newRequest.friend_request_id
-          )
-      );
-      if (newRequests.length > 0) {
-        setAllFriendRequest((prevRequests) => [
-          ...prevRequests,
-          ...newRequests,
-        ]);
-      }
-    }
-  }, [
-    useGetAuthUserfriendRequestQuerySuccess,
-    useGetAuthUserfriendRequestQueryData,
-  ]);
-
-  // Effect to adjust padding based on screen height
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerHeight < 600) {
-        setPaddingBottom('15vh');
-      } else {
-        setPaddingBottom('4vh');
-      }
-    };
-
-    handleResize(); // Initial check
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   return (
     <div style={{ overflowX: "hidden" }}>
       <div
-        ref={scrollRef}
         className="scroll-container w-100"
         style={{ overflowY: "hidden", height: "100vh" }}
       >
@@ -134,12 +38,14 @@ export default function FriendRightFriendRequest() {
                   <NavLink
                     to="/friends/requests"
                     className={({ isActive }) =>
-                      isActive || location.pathname.startsWith('/friends/requests')
-                        ? 'nav-link active'
-                        : 'nav-link'
+                      isActive ||
+                      location.pathname.startsWith("/friends/requests")
+                        ? "nav-link active"
+                        : "nav-link"
                     }
                   >
-                    <i className="fas fa-user-plus fa-fw me-2"></i> Friend requests
+                    <i className="fas fa-user-plus fa-fw me-2"></i> Friend
+                    requests
                   </NavLink>
                 </li>
                 <li className="nav-item w-100">
@@ -149,7 +55,8 @@ export default function FriendRightFriendRequest() {
                 </li>
                 <li className="nav-item w-100">
                   <NavLink end to="/friends/sent-requests" className="nav-link">
-                    <i className="fa fa-user-plus me-2" aria-hidden="true"></i> Sent requests
+                    <i className="fa fa-user-plus me-2" aria-hidden="true"></i>{" "}
+                    Sent requests
                   </NavLink>
                 </li>
                 <li className="nav-item w-100">
@@ -161,38 +68,16 @@ export default function FriendRightFriendRequest() {
             </div>
 
             {/* Bottom section */}
-          
-              <h5>Friend Requests</h5>
-              <Scrollbar style={{ width: "100%", height: "calc(55vh - 7vh)" }}>
-                <div style={{ paddingBottom: paddingBottom }}>
-                 
-                  {allFriendRequest.length === 0 ? (
-                    <div className="col-12 text-center">No records</div>
-                  ) : (
-                    allFriendRequest.map((profile) => {
-                      const isActive = location.pathname === `/friends/requests/${profile.user_id}`;
-                      return (
-                        <FriendRequestItemSm
-                          key={profile.friend_request_id}
-                          name={`${profile.user_fname} ${profile.user_lname}`}
-                          handle={profile.identifier}
-                          image={profile.profile_picture}
-                          user_id={profile.user_id}
-                          isActive={isActive}
-                        />
-                      );
-                    })
-                  )}
-                  <div
-                    ref={requestRef}
-                    className="infinite-scroll-trigger"
-                    style={{ height: "7vh", minHeight: "40px" }}
-                  >
-                    {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
-                  </div>
-                </div>
-              </Scrollbar>
-            
+
+            <h5>Friend Requests</h5>
+            <Scrollbar
+              style={{
+                width: "100%",
+                height: "56vh",
+              }}
+            >
+              <FriendRequestFooter />
+            </Scrollbar>
           </div>
         </div>
       </div>

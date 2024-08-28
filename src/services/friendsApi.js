@@ -71,6 +71,10 @@ friendSuggestionhome: builder.query({
       query: ({ friendRequestPage = 1 }) => `auth-friend-requests?page=${friendRequestPage}`,
     }),
 
+/* get all sented request auuth user did pendding*/   
+ getAuthUserSentRequest: builder.query({
+    query: ({ friendRequestPage = 1 }) => `sentfriendrequest?page=${friendRequestPage}`,
+  }),
 
 
 
@@ -92,4 +96,4 @@ getFriendSuggestion: builder.query({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetFriendSuggestionQuery,useGetAuthUserfriendRequestQuery,useCancelFriendRequestMutation,useSendFriendRequestMutation,useGetUserDetailsQuery,useFriendSuggestionhomeQuery,useUserPostInsertMutation,useGetPostsQuery } = friendsApi
+export const { useGetAuthUserSentRequestQuery,useGetFriendSuggestionQuery,useGetAuthUserfriendRequestQuery,useCancelFriendRequestMutation,useSendFriendRequestMutation,useGetUserDetailsQuery,useFriendSuggestionhomeQuery,useUserPostInsertMutation,useGetPostsQuery } = friendsApi
