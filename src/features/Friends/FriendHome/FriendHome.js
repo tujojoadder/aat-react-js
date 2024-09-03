@@ -165,7 +165,7 @@ export default function FriendHome() {
   return (
     <>
       <div
-        className="friend-home main  m-0 p-0 border-sm-0 border "
+        className="friend-home main  m-0 p-0 border-sm-0 border-left border-right "
         style={{ backgroundColor: "white", minHeight: "100vh" }}
       >
         <div className="d-block d-lg-none">

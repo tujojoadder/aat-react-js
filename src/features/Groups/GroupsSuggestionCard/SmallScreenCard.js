@@ -1,34 +1,45 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import './SmallScreenCard.css'; // Assuming you have this CSS file for additional styling
 
 export default function SmallScreenCard(props) {
   const buttonText = props.type === "suggestions" ? "Join" : "View";
+  const audienceClass = props.audience === "public" ? "badge-public" : "badge-private";
+  const audienceText = props.audience === "public" ? "Public" : "Private";
 
   return (
-    <NavLink to={`/groups/${props.name}`} className="text-decoration-none">
-      <div className="friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm rounded">
-        <div className="profile-s me-2">
-          <img src={props.image} alt="user" height="55px" width="55px" />
+      <div className="d-flex align-items-center mb-3  p-2 shadow-sm rounded card-small">
+        <div className="profile-img me-3">
+        <NavLink to={`/groups/${props.group_id}`} className="text-decoration-none">
+
+          <img
+            src={props.image}
+            alt="Group"
+            className="rounded-circle"
+            style={{ height: "65px", width: "65px", objectFit: "cover" }}
+          />
+            </NavLink>
         </div>
-        <div className="profile-info flex-grow-1">
-          <p className="fw-bold mb-0 text-truncate">{props.name}</p>
-          <p className="text-muted mb-0 text-truncate">{props.handle}</p>
+        <div className="flex-grow-1">
+          <h6 className="mb-1 font-weight-bold">{props.name}</h6>
+          <p className="small text-muted mb-1">{props.handle}</p>
+          <span className={`badge ${audienceClass} text-white px-2 py-1 rounded`}>
+            {audienceText}
+          </span>
         </div>
-        <div className="add-friend-button">
-          <button
-            className="btn-add-friend btn-primary px-3"
-            type="button"
-            style={{
-              backgroundColor: "#0d8de5",
-              outline: "none",
-              boxShadow: "none",
-              border: "none",
-            }}
-          >
-            {buttonText}
-          </button>
-        </div>
+
+
+        <NavLink to={`/groups/${props.group_id}`} className="text-decoration-none">
+        <button
+          className="btn btn-primary ms-3 px-3"
+          type="button"
+          style={{ backgroundColor: "#007bff", border: "none" }}
+        >
+          <b>{buttonText}</b>
+        </button>
+        </NavLink>
+
       </div>
-    </NavLink>
+  
   );
 }

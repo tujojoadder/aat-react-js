@@ -32,6 +32,12 @@ const initialState = {
   acceptedRequests: {}, // To store accepted friend requests by user ID
   rejectedRequests: {}, // To store rejected/canceled friend requests by user ID
   sentRequests: {},     // To store sent friend requests by user ID
+
+/* Group State */
+audience: '',
+groupDetails: '',
+
+
 };
 
 export const homeSlice = createSlice({
@@ -126,6 +132,22 @@ export const homeSlice = createSlice({
       state.rejectedRequests[userId] = true; // Mark request as rejected/canceled
       delete state.sentRequests[userId]; // Remove from sent if canceled
     },
+
+/* Group */
+
+setGroupAudience(state, action) {
+  state.audience = action.payload;
+},
+setGroupDetails(state, action) {
+  state.groupDetails = action.payload;
+},
+
+
+
+
+
+
+
   },
 });
 
@@ -148,6 +170,8 @@ export const {
   setRequestSent,
   setRequestAccepted,
   setRequestRejected,
+  setGroupAudience,
+  setGroupDetails
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

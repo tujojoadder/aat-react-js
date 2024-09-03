@@ -1,11 +1,12 @@
+
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Spinner from '../../Spinner/Spinner';
-import { useGetSpecificUserFriendQuery } from '../../../services/profileApi';
-import SendFriendRequest from '../../home/Components/SendFriendRequest/SendFriendRequest';
+import Spinner from '../../../Spinner/Spinner';
+import { useGetAllGroupMemberQuery } from '../../../../services/groupsApi';
+import SendFriendRequest from '../../../home/Components/SendFriendRequest/SendFriendRequest';
 
-export default function FriendsContainer({ userId }) {
-  const [friendPage, setFriendPage] = useState(1);
+export default function GroupMember({ groupId }) {
+  const [memberPage, setMemberPage] = useState(1);
   const [allFriends, setAllFriends] = useState([]);
   const [hasMoreFriends, setHasMoreFriends] = useState(true);
 
@@ -17,10 +18,10 @@ export default function FriendsContainer({ userId }) {
 
     //Reset friends if id change
     useEffect(() => {
-      setFriendPage(1);
+        setMemberPage(1);
       setAllFriends([]);
       setHasMoreFriends(true);
-    }, [userId]);
+    }, [groupId]);
 
   // Fetch data using dynamic query
   const { 
@@ -28,7 +29,7 @@ export default function FriendsContainer({ userId }) {
     isFetching: useGetSpecificUserFriendQueryIsFetching, 
     isError: useGetSpecificUserFriendQueryIsError, 
     isSuccess: useGetSpecificUserFriendQueryIsSuccess 
-  } = useGetSpecificUserFriendQuery({ friendPage, userId });
+  } = useGetAllGroupMemberQuery({ memberPage, groupId });
 
 /*   // Log query data for debugging
   useEffect(() => {
@@ -53,10 +54,14 @@ export default function FriendsContainer({ userId }) {
     }
   }, [useGetSpecificUserFriendQueryData, useGetSpecificUserFriendQueryIsSuccess, allFriends]);
 
+
+
+
+
   // Effect to handle infinite scroll logic
   useEffect(() => {
     if (friendInView && !useGetSpecificUserFriendQueryIsFetching && !useGetSpecificUserFriendQueryIsError && hasMoreFriends) {
-      setFriendPage((prevPage) => prevPage + 1);
+        setMemberPage((prevPage) => prevPage + 1);
     }
   }, [friendInView, useGetSpecificUserFriendQueryIsFetching, useGetSpecificUserFriendQueryIsError, hasMoreFriends]);
 

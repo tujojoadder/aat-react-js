@@ -112,13 +112,13 @@ export default function SuggestionItemSm({
               className="btn-add-friend btn-primary"
               type="button"
               style={{
-                backgroundColor: cancelingRequest ? "#c4c4c4" : "#e4e6eb",
-                color: cancelingRequest ? "#888" : "black",
+                backgroundColor: cancelingRequest ? "#c4c4c4" : "#999999",
+                color: cancelingRequest ? "#888" : "white",
                 outline: "none",
                 boxShadow: "none",
                 border: "none",
                 fontSize: "14px",
-                minWidth: "126px",
+                minWidth: "135px",
                 cursor: cancelingRequest ? "not-allowed" : "pointer",
               }}
               disabled={cancelingRequest}

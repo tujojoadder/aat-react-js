@@ -29,14 +29,7 @@ export default function GroupsHome() {
         <GroupsTabs />
       </div>
   
-  <BPost/>
-  <ImagePost/>
-  <BPost/>
-  <ImagePost/>
-  <TextPost/>
-  <TextPost/>
-  <ImagePost/>
-  <TextPost/>
+ 
     </div>
   );
 }

@@ -32,7 +32,7 @@ friendSuggestionhome: builder.query({
         },
       }),
 
-      //get friend sugestion 7 record for home
+      //get specific user details
 
       getUserDetails: builder.query({
         query: (id) => `/userdetails/${id}`, // Make sure this endpoint exists in your backend

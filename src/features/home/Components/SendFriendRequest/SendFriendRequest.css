@@ -1,61 +1,61 @@
-/* SendFriendRequest.css */
+/* SmallScreenUnFriendUserCard.css */
+
 .friend-request-container {
   border: 1px solid #e1e4e8;
   padding: 10px;
   max-width: 100%;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.friend-request-container:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .profile-image img {
   border: 2px solid #d1d5da;
+  border-radius: 50%;
 }
 
 .profile-info {
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  color: #14171a;
 }
 
-.profile-info p {
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.profile-info .fw-bold {
+  font-size: 1rem;
 }
 
 .profile-info .text-muted {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+  color: #657786;
 }
 
-.btn-add-friend {
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  padding: 6px 12px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  font-size: 0.875rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+.add-friend-button,
+.add-delete-button {
+  margin-left: auto; /* Push button to the right */
 }
 
-.btn-add-friend i {
-  margin-right: 5px;
-}
 
 .btn-add-friend:hover {
-  background-color: #0d8de5;
-  color: #f0f8ff;
+  background-color: #0056b3; /* Darker shade of blue on hover */
 }
 
-.btn-add-friend:hover i {
-  color: #f0f8ff;
+.btn-delete-friend {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background-color: #d8d8d8;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; /* Add cursor pointer */
 }
 
-.shadow-sm {
-  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
-}
-
-.friend-request-container.active {
-  background-color: #d6f2f5; /* Light teal background for active state */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-  transform: scale(1.02); /* Slightly enlarge the active item */
+.btn-delete-friend:hover {
+  background-color: #c0c0c0; /* Slightly darker on hover */
 }

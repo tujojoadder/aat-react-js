@@ -13,7 +13,7 @@ import CustomScrollBar from "../CustomScrollBar/CustomScrollBar";
 import SmallScreenBack from "../SmallScreenBack/SmallScreenBack";
 import LargeScreenBack from "../LargeScreenBack/LargeScreenBack";
 import LargeScreenProfile from "../LargeScreenBack/LargeScreenProfileBack";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import MidScreenBack from "../SmallScreenBack/MidScreenBack";
 export default function Profile() {
   const { id } = useParams();
@@ -77,31 +77,6 @@ export default function Profile() {
     };
   }, [currentTab]);
 
-  // Fetch user profile data
-  const { data: profileData, isFetching, isError,isSuccess} = useGetUserDetailsQuery(id);
-
-  // Handle loading state
-  if (isFetching) return <ProfileSkeleton />;
-
-  // Handle error state
-  if (isError) {
-    return (
-      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-        <p>Something went wrong. Please try again later.</p>
-      </div>
-    );
-  }
-
-
-  // Background styling for the profile cover
-  const backgroundImageStyle = {
-    backgroundImage: `url(${profileData?.data?.cover_photo})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    minHeight: "calc(100px + 15vw)",
-    backgroundColor: "lightgrey" // Added for debugging
-  };
-
   // Tabs handling function
   const handleTabClick = (tabName) => {
     if (window.innerWidth < 992) {
@@ -114,60 +89,110 @@ export default function Profile() {
       }
     }
   };
+  // Fetch user profile data
+  const {
+    data: profileData,
+    isFetching,
+    isError,
+    isSuccess,
+  } = useGetUserDetailsQuery(id);
+
+  // Handle loading state
+  if (isFetching) return <ProfileSkeleton />;
+
+  // Handle error state
+  if (isError) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <p>Something went wrong. Please try again later.</p>
+      </div>
+    );
+  }
+
+  // Background styling for the profile cover
+  const backgroundImageStyle = {
+    backgroundImage: `url(${profileData?.data?.cover_photo})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    minHeight: "calc(100px + 15vw)",
+    backgroundColor: "lightgrey", // Added for debugging
+  };
 
   return (
-    <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: "100vh" }}>
-      <div ref={scrollRef} className="header__wrapper m-0 p-0" style={{ overflowY: 'scroll', height: '100vh' }}>
-     {/*    Back buttons */}
-      <SmallScreenBack text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`} />
-      <MidScreenBack  text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`} />
-      <LargeScreenProfile text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`} />
-        <div style={backgroundImageStyle}>
-        </div>
+    <div
+      className="friend-home main border-start border-end mb-1 m-0 p-0"
+      style={{ backgroundColor: "white", minHeight: "100vh" }}
+    >
+      <div
+        ref={scrollRef}
+        className="header__wrapper m-0 p-0"
+        style={{ overflowY: "scroll", height: "100vh" }}
+      >
+        {/*    Back buttons */}
+        <SmallScreenBack
+          text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`}
+        />
+        <MidScreenBack
+          text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`}
+        />
+        <LargeScreenProfile
+          text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`}
+        />
+        <div style={backgroundImageStyle}></div>
 
         {/* Header of profile */}
         <div className="cols__container">
           <div className="left__col">
-            <div className="img__container" >
-              <img  src={`${profileData?.data?.profile_picture}`} style={{backgroundColor:'lightgray'}} alt="Profile" />
+            <div className="img__container">
+              <img
+                src={`${profileData?.data?.profile_picture}`}
+                style={{ backgroundColor: "lightgray" }}
+                alt="Profile"
+              />
             </div>
-            <h2>{profileData?.data?.user_fname} {profileData?.data?.user_lname}</h2>
+            <h2>
+              {profileData?.data?.user_fname} {profileData?.data?.user_lname}
+            </h2>
             <p>@{profileData?.data?.identifier}</p>
           </div>
           <div className="right__col">
-          <nav>
-            <div className="d-flex justify-content-center justify-content-sm-end">
-              {/*  massage and Manage will stay for admin */}
+            <nav>
+              <div className="d-flex justify-content-center justify-content-sm-end">
+                {/*  massage and Manage will stay for admin */}
 
-          
+                {/* Message Button */}
+                <div
+                  className="btn-sm btn-primary rounded-circle d-flex align-items-center justify-content-center mx-1 p-2"
+                  style={{
+                    cursor: "pointer",
+                    height: "35px",
+                    marginTop: "2px",
+                  }}
+                >
+                  <i className="fa-solid fa-envelope fs-5"></i>
+                </div>
+                {/*   Add friend */}
+                <div
+                  className="btn btn-md btn-primary mx-1 d-flex align-items-center px-2"
+                  style={{ cursor: "pointer" }}
+                >
+                  <i className="fa-solid fa-user-plus text-white"></i>
+                  <span className="ms-1">Add friend</span>
+                </div>
 
-              {/* Message Button */}
-              <div
-                className="btn-sm btn-primary rounded-circle d-flex align-items-center justify-content-center mx-1 p-2"
-                style={{ cursor: "pointer", height: "35px", marginTop: "2px" }}
-              >
-                <i className="fa-solid fa-envelope fs-5"></i>
+                {/*   Follow */}
+                <div
+                  className="btn btn-md btn-primary mx-1 d-flex align-items-center px-2 me-3"
+                  style={{ cursor: "pointer" }}
+                >
+                  <span className="ms-1">Follow</span>
+                </div>
               </div>
-              {/*   Add friend */}
-              <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center px-2"
-                style={{ cursor: "pointer" }}
-              >
-               <i className="fa-solid fa-user-plus text-white"></i>
-                <span className="ms-1">Add friend</span>
-              </div>
-
-              {/*   Follow */}
-              <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center px-2 me-3"
-                style={{ cursor: "pointer" }}
-              >
-
-                <span className="ms-1">Follow</span>
-              </div>
-            </div>
-          </nav>
-        </div>
+            </nav>
+          </div>
         </div>
 
         {/* Tabs */}
@@ -246,46 +271,57 @@ export default function Profile() {
         <div className="tab-content p-3 px-0">
           {/* Posts Tab Content */}
           <div className="tab-pane fade show active" id="post">
-            <h5 className="ms-4 mb-4" color="#65676b">Posts</h5>
+            <h5 className="ms-4 mb-4" color="#65676b">
+              Posts
+            </h5>
             <ProfilePost userId={id} />
           </div>
 
           {/* Photos Tab Content */}
           <div className="tab-pane fade" id="image">
-            <h5 className="ms-4 mb-1" color="#65676b">Photos</h5>
+            <h5 className="ms-4 mb-1" color="#65676b">
+              Photos
+            </h5>
 
             <ImageContainer userId={id} />
           </div>
 
           {/* Friends Tab Content */}
           <div className="tab-pane fade" id="friends">
-            <h5 className="ms-4 mb-1" color="#65676b">Friends</h5>
+            <h5 className="ms-4 mb-1" color="#65676b">
+              Friends
+            </h5>
 
             <FriendsContainer userId={id} />
           </div>
 
           {/* Follower Tab Content */}
           <div className="tab-pane fade" id="follower">
-            <h5 className="ms-4 mb-1" color="#65676b">Follower</h5>
+            <h5 className="ms-4 mb-1" color="#65676b">
+              Follower
+            </h5>
 
             <FollowerContainer userId={id} />
           </div>
 
           {/* Following Tab Content */}
           <div className="tab-pane fade" id="following">
-            <h5 className="ms-4 mb-1" color="#65676b">Following</h5>
+            <h5 className="ms-4 mb-1" color="#65676b">
+              Following
+            </h5>
 
             <FollowingContainer userId={id} />
           </div>
 
           {/* About Tab Content */}
           <div className="tab-pane fade" id="about">
-          <h5 className="ms-4 mb-1" color="#65676b">About</h5>
+            <h5 className="ms-4 mb-1" color="#65676b">
+              About
+            </h5>
             <About />
           </div>
         </div>
       </div>
-
     </div>
   );
 }

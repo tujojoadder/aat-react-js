@@ -34,6 +34,13 @@ react-scrollbars-custom .scrollbar-thumb {
   margin-top: 60px;
 }
 
+@media (max-width: 576px) { /* Adjust breakpoint as needed for small devices */
+  .sm-back-sm{
+    margin-top: 60px;
+  }
+}
+
+
 /* Customize scroll bar */
 .ScrollbarsCustom-Thumb{
   background-color: #b8babc !important;
