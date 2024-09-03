@@ -1,30 +1,32 @@
 import { useMediaQuery } from "react-responsive";
-import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
+import "bootstrap/dist/css/bootstrap.min.css";
 import SmallScreenCard from "./GroupsSuggestionCard/SmallScreenCard";
 import LargeScreenCard from "./GroupsSuggestionCard/LargeScreenCard.js";
-import GroupsTabs from "./GroupsTabs/GroupsTabs.js";
-import YourGroupBack from "./GroupBack/YourGroupBack/YourGroupBack.js";
-import {
-  useGetGroupsWhereAdminQuery,
-  useGetJoinedGroupsButNotAdminQuery,
-} from "../../services/groupsApi.js";
+import SmallScreenBack from "../SmallScreenBack/SmallScreenBack.js";
+import MidScreenBack from "../SmallScreenBack/MidScreenBack.js";
+import Spinner from "../Spinner/Spinner.js";
+import { useGetGroupsWhereAdminQuery, useGetJoinedGroupsButNotAdminQuery } from "../../services/groupsApi.js";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
-import Spinner from "../Spinner/Spinner.js";
-import SmallScreenBack from "../SmallScreenBack/SmallScreenBack.js";
-import MidLgScreenBack from "../SmallScreenBack/MidLgScreenBack.js";
-import MidScreenBack from "../SmallScreenBack/MidScreenBack.js";
 
 export default function GroupsYourGroups() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
 
-  const [page, setPage] = useState(1);
+  const [pageAdmin, setPageAdmin] = useState(1);
+  const [pageJoined, setPageJoined] = useState(1);
   const [allAdminGroups, setAllAdminGroups] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
+  const [hasMoreAdminGroups, setHasMoreAdminGroups] = useState(true);
   const [hasMorePosts, setHasMorePosts] = useState(true);
 
-  // Get reference and visibility state
-  const { ref, inView } = useInView({
+  // Get reference and visibility state for admin groups
+  const { ref: adminRef, inView: adminInView } = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  });
+
+  // Get reference and visibility state for joined groups
+  const { ref: joinedRef, inView: joinedInView } = useInView({
     threshold: 0,
     triggerOnce: false,
   });
@@ -35,7 +37,7 @@ export default function GroupsYourGroups() {
     isFetching: isFetchingAdminGroups,
     isError: isErrorAdminGroups,
     isSuccess: isSuccessAdminGroups,
-  } = useGetGroupsWhereAdminQuery();
+  } = useGetGroupsWhereAdminQuery(pageAdmin);
 
   // Fetch data for groups where the user is not an admin
   const {
@@ -43,12 +45,24 @@ export default function GroupsYourGroups() {
     isFetching: isFetchingJoinedGroups,
     isError: isErrorJoinedGroups,
     isSuccess: isSuccessJoinedGroups,
-  } = useGetJoinedGroupsButNotAdminQuery(page);
+  } = useGetJoinedGroupsButNotAdminQuery(pageJoined);
 
   // Effect to process fetched admin groups data
   useEffect(() => {
     if (isSuccessAdminGroups && adminGroupsData?.data) {
-      setAllAdminGroups(adminGroupsData.data);
+      setAllAdminGroups((prev) => {
+        // Filter out duplicates
+        const newAdminGroups = adminGroupsData.data.filter(
+          (newGroup) => !prev.some((group) => group.group_id === newGroup.group_id)
+        );
+        return [...prev, ...newAdminGroups];
+      });
+
+      // Update hasMoreAdminGroups based on the pagination data
+      const { current_page, total_pages } = adminGroupsData;
+      if (current_page >= total_pages) {
+        setHasMoreAdminGroups(false);
+      }
     }
   }, [adminGroupsData, isSuccessAdminGroups]);
 
@@ -75,19 +89,38 @@ export default function GroupsYourGroups() {
     }
   }, [joinedGroupsData, isSuccessJoinedGroups]);
 
-  // Effect to handle infinite scroll logic
+  // Effect to handle infinite scroll logic for admin groups
   useEffect(() => {
     if (
-      inView &&
+      adminInView &&
+      !isFetchingAdminGroups &&
+      !isErrorAdminGroups &&
+      hasMoreAdminGroups &&
+      isSuccessAdminGroups
+    ) {
+      setPageAdmin((prevPage) => prevPage + 1);
+    }
+  }, [
+    adminInView,
+    isFetchingAdminGroups,
+    isErrorAdminGroups,
+    hasMoreAdminGroups,
+    isSuccessAdminGroups,
+  ]);
+
+  // Effect to handle infinite scroll logic for joined groups
+  useEffect(() => {
+    if (
+      joinedInView &&
       !isFetchingJoinedGroups &&
       !isErrorJoinedGroups &&
       hasMorePosts &&
       isSuccessJoinedGroups
     ) {
-      setPage((prevPage) => prevPage + 1);
+      setPageJoined((prevPage) => prevPage + 1);
     }
   }, [
-    inView,
+    joinedInView,
     isFetchingJoinedGroups,
     isErrorJoinedGroups,
     hasMorePosts,
@@ -105,12 +138,10 @@ export default function GroupsYourGroups() {
       <div className="sm-back-sm"></div>
 
       {/* Section 1: Groups where the user is an admin */}
-      <div className="admin-groups-section mb-1 px-sm-4 px-lg-2 px-3">
+      <div className="admin-groups-section  px-sm-4 px-lg-2 px-3">
         <h4 className="p-2">Groups you're an admin of</h4>
         <div className="row">
-          {isFetchingAdminGroups ? (
-            <Spinner />
-          ) : allAdminGroups.length === 0 ? (
+          {allAdminGroups.length === 0 ? (
             <div className="col-12 text-center">No admin groups</div>
           ) : (
             allAdminGroups.map((group, index) =>
@@ -135,6 +166,13 @@ export default function GroupsYourGroups() {
               )
             )
           )}
+          <div
+            ref={adminRef}
+            className="infinite-scroll-trigger"
+        
+          >
+            {isFetchingAdminGroups && <Spinner />}
+          </div>
         </div>
       </div>
 
@@ -167,9 +205,8 @@ export default function GroupsYourGroups() {
               )
             )
           )}
-          {/* Assign ref to this div for inView detection */}
           <div
-            ref={ref}
+            ref={joinedRef}
             className="infinite-scroll-trigger"
             style={{ height: "7vh", minHeight: "40px" }}
           >
