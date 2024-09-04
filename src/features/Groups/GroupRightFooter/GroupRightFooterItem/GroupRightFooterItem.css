@@ -1,0 +1,66 @@
+/* Scope the .active class to the GroupRightFooterItem component */
+.group-right-footer-item.active {
+    background-color: #e5e5f4;
+}
+
+.card-small {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+
+.profile-img img {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+}
+
+.badge-public {
+    background-color: #28a745;
+}
+
+.badge-private {
+    background-color: #dc3545;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-primary:disabled {
+    background-color: #c4c4c4;
+}
+
+h6 {
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+
+.text {
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+}
+
+.flex-grow-1 {
+    min-width: 0;
+}
+
+.text-truncate {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

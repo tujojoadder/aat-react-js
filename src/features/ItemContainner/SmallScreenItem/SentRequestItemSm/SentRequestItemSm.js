@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { handleApiError } from '../../../handleApiError/handleApiError';
-import { useCancelFriendRequestMutation, useSendFriendRequestMutation } from '../../../../services/friendsApi';
-import { setToastSuccess, setRequestSent, setRequestRejected } from '../../../home/HomeSlice';
-import './SentRequestItemSm.css';
+import { useDispatch, useSelector } from "react-redux";
+import { handleApiError } from "../../../handleApiError/handleApiError";
+import {
+  useCancelFriendRequestMutation,
+  useSendFriendRequestMutation,
+} from "../../../../services/friendsApi";
+import {
+  setToastSuccess,
+  setRequestSent,
+  setRequestRejected,
+} from "../../../home/HomeSlice";
+import "./SentRequestItemSm.css";
 
 export default function SentRequestItemSm({
   name,
@@ -14,13 +21,17 @@ export default function SentRequestItemSm({
   isActive,
 }) {
   const dispatch = useDispatch();
-  
-  // Redux selectors for request status
-  const requestSent = useSelector(state => state.home.sentRequests[user_id]);
-  const requestRejected = useSelector(state => state.home.rejectedRequests[user_id]);
 
-  const [cancelFriendRequest, { isLoading: cancelingRequest }] = useCancelFriendRequestMutation();
-  const [sendFriendRequest, { isLoading: sendingRequest }] = useSendFriendRequestMutation();
+  // Redux selectors for request status
+  const requestSent = useSelector((state) => state.home.sentRequests[user_id]);
+  const requestRejected = useSelector(
+    (state) => state.home.rejectedRequests[user_id]
+  );
+
+  const [cancelFriendRequest, { isLoading: cancelingRequest }] =
+    useCancelFriendRequestMutation();
+  const [sendFriendRequest, { isLoading: sendingRequest }] =
+    useSendFriendRequestMutation();
   const [isAddButtonVisible, setAddButtonVisible] = useState(false);
 
   const handleCancelButton = async (e) => {
@@ -28,7 +39,11 @@ export default function SentRequestItemSm({
     try {
       const res = await cancelFriendRequest({ receiver_id: user_id });
       if (res.data) {
-        dispatch(setToastSuccess({ toastSuccess: 'Friend request canceled successfully' }));
+        dispatch(
+          setToastSuccess({
+            toastSuccess: "Friend request canceled successfully",
+          })
+        );
         dispatch(setRequestRejected({ userId: user_id }));
         setAddButtonVisible(true);
       } else if (res.error) {
@@ -44,7 +59,9 @@ export default function SentRequestItemSm({
     try {
       const res = await sendFriendRequest({ receiver_id: user_id });
       if (res.data) {
-        dispatch(setToastSuccess({ toastSuccess: 'Friend request sent successfully' }));
+        dispatch(
+          setToastSuccess({ toastSuccess: "Friend request sent successfully" })
+        );
         dispatch(setRequestSent({ userId: user_id }));
         setAddButtonVisible(false);
       } else if (res.error) {
@@ -64,8 +81,10 @@ export default function SentRequestItemSm({
 
   return (
     <div
-      className={`friend-request-container px-3 d-flex align-items-center mt-2 py-2 shadow-sm rounded ${isActive ? "active" : ""}`}
-      style={{ maxWidth: '100%', overflowX: 'hidden' }}
+      className={`friend-request-container px-3 d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
+        isActive ? "active" : ""
+      }`}
+      style={{ maxWidth: "100%", overflowX: "hidden" }}
     >
       <div className="profile-image me-2">
         <NavLink
@@ -90,18 +109,20 @@ export default function SentRequestItemSm({
         {isAddButtonVisible ? (
           <button
             onClick={handleAddButton}
-            className="btn-add-friend btn-primary"
+            className="btn-add-friend"
             type="button"
+            disabled={sendingRequest}
             style={{
               backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
-              outline: "none",
-              boxShadow: "none",
-              border: "none",
+              cursor: sendingRequest ? "not-allowed" : "pointer",
             }}
-            disabled={sendingRequest}
           >
             {sendingRequest ? (
-              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              <span
+                className="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
             ) : (
               <>
                 <i className="fas fa-user-plus"></i> Add
@@ -111,22 +132,22 @@ export default function SentRequestItemSm({
         ) : (
           <button
             onClick={handleCancelButton}
-            className="btn-add-friend btn-primary"
+            className="btn-add-friend"
             type="button"
+            disabled={cancelingRequest}
             style={{
+              width:'140px',
               backgroundColor: cancelingRequest ? "#c4c4c4" : "#999999",
               color: cancelingRequest ? "#888" : "white",
-              outline: "none",
-              boxShadow: "none",
-              border: "none",
-              fontSize: "14px",
-              width: "135px",
               cursor: cancelingRequest ? "not-allowed" : "pointer",
             }}
-            disabled={cancelingRequest}
           >
             {cancelingRequest ? (
-              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              <span
+                className="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
             ) : (
               "Cancel Request"
             )}

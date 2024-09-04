@@ -74,6 +74,7 @@ export default function FriendRightSentRequests() {
               style={{
                 width: "100%",
                 height: "56vh",
+
               }}
             >
           <FriendSentFooterContainer/>

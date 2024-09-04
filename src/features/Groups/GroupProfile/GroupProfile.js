@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import LargeScreenProfile from "../../LargeScreenBack/LargeScreenProfileBack";
@@ -23,10 +22,8 @@ export default function GroupProfile() {
   const scrollRef = useRef(null);
   const [currentTab, setCurrentTab] = useState("More");
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-
-  
   /* // Create a unique key for storing the scroll position
   const localStorageKey = `scrollPosition_${id}`;
 
@@ -104,16 +101,16 @@ const dispatch = useDispatch();
     isSuccess,
   } = useGetGroupDetailsQuery(id);
 
-// Dispatch actions to store audience and group details in Redux
-useEffect(() => {
-  if (isSuccess) {
-    console.log(groupData);
+  // Dispatch actions to store audience and group details in Redux
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(groupData);
 
-    // Dispatch actions to update Redux state
-    dispatch(setGroupAudience(groupData.data.audience));
-    dispatch(setGroupDetails(groupData.data.group_details));
-  }
-}, [isSuccess, groupData, dispatch]);
+      // Dispatch actions to update Redux state
+      dispatch(setGroupAudience(groupData.data.audience));
+      dispatch(setGroupDetails(groupData.data.group_details));
+    }
+  }, [isSuccess, groupData, dispatch]);
 
   if (isSuccess) {
     console.log(groupData);
@@ -153,15 +150,9 @@ useEffect(() => {
         style={{ overflowY: "scroll", height: "100vh" }}
       >
         {/*    Back buttons */}
-        <SmallScreenBack
-          text={`${groupData?.data?.group_name}`}
-        />
-        <MidScreenBack
-          text={`${groupData?.data?.group_name}`}
-        />
-        <LargeScreenProfile
-          text={`${groupData?.data?.group_name}`}
-        />
+        <SmallScreenBack text={`${groupData?.data?.group_name}`} />
+        <MidScreenBack text={`${groupData?.data?.group_name}`} />
+        <LargeScreenProfile text={`${groupData?.data?.group_name}`} />
         <div style={backgroundImageStyle}></div>
 
         {/* Header of profile */}
@@ -174,63 +165,69 @@ useEffect(() => {
                 alt="Profile"
               />
             </div>
-            <h2>
-              {groupData?.data?.group_name}
-            </h2>
+            <h2>{groupData?.data?.group_name}</h2>
             <p>@{groupData?.data?.identifier}</p>
-
-            <i className="fa-solid fa-eye"></i> <span className="" style={{ fontWeight: 'lighter' }}>{groupData?.data?.audience}</span>
-            <h7 style={{ marginBottom: "7px", marginTop: "-2px" }} className="ms-2">117.2k members</h7>
+            <i className="fa-solid fa-eye"></i>{" "}
+            <span className="" style={{ fontWeight: "lighter" }}>
+              {groupData?.data?.audience}
+            </span>
+            <h7
+              style={{ marginBottom: "7px", marginTop: "-2px" }}
+              className="ms-2"
+            >
+              117.2k members
+            </h7>
           </div>
           <div className="right__col">
-          <nav>
-            <div className="d-flex justify-content-center justify-content-sm-end">
-              { groupData.data.isAdmin && 
-
-<NavLink
-                      
-                      to='/groups/{id}/manage'
-                      className="text-decoration-none"
+            <nav>
+              <div className="d-flex justify-content-center justify-content-sm-end">
+                {groupData.data.isAdmin && (
+                  <NavLink
+                    to="/groups/{id}/manage"
+                    className="text-decoration-none"
+                  >
+                    <div
+                      className="btn btn-md btn-primary mx-1 d-flex align-items-center"
+                      style={{ cursor: "pointer" }}
                     >
-              <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center"
-                style={{ cursor: "pointer" }}
-              >
-               
-                <i className="fa-solid fa-pen"></i>
-                <span className="ms-1">Manage</span>
-                
-              </div>
-              </NavLink>
+                      <i className="fa-solid fa-pen"></i>
+                      <span className="ms-1">Manage</span>
+                    </div>
+                  </NavLink>
+                )}
 
-              }
-              
-            
-             
-              <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center"
-                style={{ cursor: "pointer" }}
-              >
-                <i className="fa-solid fa-users"></i>
-                <span className="ms-1">Join Group</span>
+                <div
+                  className="btn btn-md btn-primary mx-1 d-flex align-items-center"
+                  style={{ cursor: "pointer" }}
+                >
+                  <i className="fa-solid fa-users"></i>
+                  <span className="ms-1">Join Group</span>
+                </div>
+                <div
+                  className="btn btn-md mx-1 me-3 d-flex align-items-center"
+                  style={{
+                    cursor: "pointer",
+                    minWidth: "70px",
+                    backgroundColor: "#e4e6eb",
+                  }}
+                >
+                  <i className="fa-solid fa-share"></i>
+                  &nbsp; Share
+                </div>
               </div>
-              <div
-                className="btn btn-md mx-1 me-3 d-flex align-items-center"
-                style={{ cursor: "pointer", minWidth: "70px", backgroundColor: '#e4e6eb' }}
-              >
-                <i className="fa-solid fa-share"></i>
-                &nbsp; Share
-              </div>
-            </div>
-          </nav>
-        </div>
+            </nav>
+          </div>
         </div>
 
         {/* Tabs */}
         <ul className="nav nav-tabs mt-3 mx-2 ">
           <li className="nav-item">
-            <a className="nav-link active" href="#discussion" data-bs-toggle="tab">
-            Discussions
+            <a
+              className="nav-link active"
+              href="#discussion"
+              data-bs-toggle="tab"
+            >
+              Discussions
             </a>
           </li>
           <li className="nav-item">
@@ -264,7 +261,7 @@ useEffect(() => {
                   People
                 </a>
               </li>
-              
+
               <li>
                 <a
                   className="dropdown-item"
@@ -280,42 +277,39 @@ useEffect(() => {
         </ul>
 
         {/* Tab Content */}
-        <div className="tab-content p-3 px-0">
+        <div className="tab-content p-3 px-0 ">
           {/* Discussion Tab Content */}
-          <div className="tab-pane fade show active" id="discussion">
+          <div className="tab-pane bg-white fade show active" id="discussion">
             <h5 className="ms-4 mb-4" color="#65676b">
-            Discussion
+              Discussion
             </h5>
-           
 
-           <GroupDiscussion  groupId={id}/>
+            <GroupDiscussion groupId={id} />
           </div>
 
           {/* Photos Tab Content */}
-          <div className="tab-pane fade" id="image">
+          <div className="tab-pane fade bg-white" id="image">
             <h5 className="ms-4 mb-1" color="#65676b">
               Photos
             </h5>
-           <GroupPhoto groupId={id} />
+            <GroupPhoto groupId={id} />
           </div>
 
           {/* People Tab Content */}
-          <div className="tab-pane fade" id="people">
+          <div className="tab-pane fade bg-white" id="people">
             <h5 className="ms-4 mb-1" color="#65676b">
-            People
+              People
             </h5>
 
-        <GroupMember groupId={id} />
+            <GroupMember groupId={id} />
           </div>
 
-          
-
           {/* About Tab Content */}
-          <div className="tab-pane fade" id="about">
+          <div className="tab-pane fade bg-white" id="about">
             <h5 className="ms-4 mb-1" color="#65676b">
               About
             </h5>
-        <GroupAbout/>
+            <GroupAbout />
           </div>
         </div>
       </div>

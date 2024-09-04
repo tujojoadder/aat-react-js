@@ -34,9 +34,9 @@ export default function FriendSuggestionFooterContainer() {
 
   useEffect(() => {
     if (isSmallScreen) {
-      setPaddingBottom('30vh');
+      setPaddingBottom('35vh');
     } else {
-      setPaddingBottom('15vh');
+      setPaddingBottom('20vh');
     }
   }, [isSmallScreen]);
 

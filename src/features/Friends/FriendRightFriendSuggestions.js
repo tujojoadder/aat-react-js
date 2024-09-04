@@ -15,7 +15,6 @@ export default function FriendRightFriendSuggestions() {
   return (
     <div style={{ overflowX: "hidden" }}>
       <div
-   
         className="scroll-container w-100"
         style={{ overflowY: "hidden", height: "100vh" }}
       >
@@ -73,12 +72,12 @@ export default function FriendRightFriendSuggestions() {
 
             <h5>Friend Suggestions</h5>
             <Scrollbar
-        style={{
-          width: '100%',
-          height: '56vh',
-        }}
-      >
-            <FriendSuggestionFooterContainer/>
+              style={{
+                width: "100%",
+                height: "56vh",
+              }}
+            >
+              <FriendSuggestionFooterContainer />
             </Scrollbar>
           </div>
         </div>
