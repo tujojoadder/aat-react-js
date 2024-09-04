@@ -141,9 +141,7 @@ export default function GroupsYourGroups() {
       <div className="admin-groups-section  px-sm-4 px-lg-2 px-3">
         <h4 className="p-2">Groups you're an admin of</h4>
         <div className="row">
-          {allAdminGroups.length === 0 ? (
-            <div className="col-12 text-center">No admin groups</div>
-          ) : (
+          { (
             allAdminGroups.map((group, index) =>
               isSmallScreen ? (
                 <SmallScreenCard
@@ -153,6 +151,7 @@ export default function GroupsYourGroups() {
                   image={group.group_picture}
                   group_id={group.group_id}
                   audience={group.audience}
+                  type='admin'
                 />
               ) : (
                 <LargeScreenCard
@@ -162,6 +161,7 @@ export default function GroupsYourGroups() {
                   image={group.group_picture}
                   group_id={group.group_id}
                   audience={group.audience}
+                  type='admin'
                 />
               )
             )
@@ -180,9 +180,7 @@ export default function GroupsYourGroups() {
       <div className="friend-request-section mb-5 px-sm-4 px-lg-2 px-3">
         <h4 className="p-2">Groups you've joined</h4>
         <div className="row">
-          {allPosts.length === 0 ? (
-            <div className="col-12 text-center">No records</div>
-          ) : (
+          {(
             allPosts.map((group, index) =>
               isSmallScreen ? (
                 <SmallScreenCard
@@ -192,6 +190,7 @@ export default function GroupsYourGroups() {
                   image={group.group_picture}
                   group_id={group.group_id}
                   audience={group.audience}
+                  type='joined'
                 />
               ) : (
                 <LargeScreenCard
@@ -201,6 +200,7 @@ export default function GroupsYourGroups() {
                   image={group.group_picture}
                   group_id={group.group_id}
                   audience={group.audience}
+                   type='joined'
                 />
               )
             )

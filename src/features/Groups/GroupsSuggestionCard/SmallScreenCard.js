@@ -3,7 +3,12 @@ import { NavLink } from "react-router-dom";
 import './SmallScreenCard.css'; // Assuming you have this CSS file for additional styling
 
 export default function SmallScreenCard(props) {
-  const buttonText = props.type === "suggestions" ? "Join" : "View";
+  const buttonText =
+  props.type === "suggestions"
+    ? "Join"
+    : props.type === "admin"
+    ? "Manage"
+    : "View";
   const audienceClass = props.audience === "public" ? "badge-public" : "badge-private";
   const audienceText = props.audience === "public" ? "Public" : "Private";
 

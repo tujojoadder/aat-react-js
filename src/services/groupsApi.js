@@ -43,6 +43,15 @@ getGroupsWhereAdmin: builder.query({
   query: (page = 1) => `/groups/joined-admin?page=${page}`,
 }),
 
+// Define your API slice
+getGroupSuggestion: builder.query({
+  // Accept a parameter for the page number
+  query: (page = 1) => `/groups/suggestions?page=${page}`,
+}),
+
+
+
+
 
 
 
@@ -85,4 +94,4 @@ getAllGroupMember: builder.query({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useGetGroupsWhereAdminQuery,useGetAllGroupMemberQuery,useGetSpecificGroupPhotoQuery,useGetSpecificGroupPostQuery,useGetGroupDetailsQuery,useCreateGroupMutation,useGetJoinedGroupsButNotAdminQuery} = groupsApi
+export const {useGetGroupSuggestionQuery,useGetGroupsWhereAdminQuery,useGetAllGroupMemberQuery,useGetSpecificGroupPhotoQuery,useGetSpecificGroupPostQuery,useGetGroupDetailsQuery,useCreateGroupMutation,useGetJoinedGroupsButNotAdminQuery} = groupsApi

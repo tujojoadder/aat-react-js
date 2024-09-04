@@ -3,7 +3,15 @@ import { NavLink } from "react-router-dom";
 import "./LargeScreenCard.css"; // Assuming you have this CSS file for additional styling
 
 export default function LargeScreenCard(props) {
-  const buttonText = props.type === "suggestions" ? "Join group" : "View group";
+ 
+/*   props.type->>>joined,suggestions,suggestions */
+  const buttonText =
+    props.type === "suggestions"
+      ? "Join group"
+      : props.type === "admin"
+      ? "Manage group"
+      : "View group";
+
   const audienceClass =
     props.audience === "public" ? "badge-public" : "badge-private";
   const audienceText = props.audience === "public" ? "Public" : "Private";
@@ -15,14 +23,13 @@ export default function LargeScreenCard(props) {
           className="card-body p-0 pb-3"
           style={{ overflow: "hidden", height: "auto" }}
         >
-                 <NavLink to={`/groups/${props.group_id}`} className="text-decoration-none">
-
-          <img
-            src={props.image}
-            alt="Group"
-            className="w-100 card-img-top"
-            style={{ maxHeight: "200px", objectFit: "cover" }}
-          />
+          <NavLink to={`/groups/${props.group_id}`} className="text-decoration-none">
+            <img
+              src={props.image}
+              alt="Group"
+              className="w-100 card-img-top"
+              style={{ maxHeight: "200px", objectFit: "cover" }}
+            />
           </NavLink>
           <div className="pt-3 ps-1 pe-3">
             <div className="d-flex justify-content-between align-items-center">
