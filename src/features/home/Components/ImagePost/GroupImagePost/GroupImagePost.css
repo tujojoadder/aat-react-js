@@ -1,0 +1,136 @@
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    .user-contents-image-box {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        color: rgb(20, 23, 26);
+      }}
+  
+  .user-names-sutext {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2px;
+  }
+  
+  .full-name-text {
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgb(20, 23, 26);
+  }
+  
+  .user-name-text {
+    padding-right: 10px !important;
+    font-size: 1.05rem !important;
+    font-weight: 400 !important;
+    color: rgb(101, 119, 134) !important;
+  }
+  
+  .time-text {
+    color: rgb(101, 119, 134);
+  
+    padding-right: 25px;
+  }
+  
+  .user-contents-text {
+    font-family: "Roboto";
+    padding-right: 1rem;
+    color: rgb(48, 52, 56);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  
+  .user-contents-text a {
+    color: rgb(27, 149, 224);
+  }
+  
+  .content-icons-text {
+    display: flex;
+    justify-content: space-between;
+    width: 99%;
+    padding: 1rem 0;
+   
+    
+    
+  }
+  
+  .content-icons-text i {
+    color: rgb(101, 119, 134);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .content-icons-text i:last-child {
+    font-size: 14px;
+  }
+  
+  .content-icons-text .blue:hover {
+    color: rgba(29, 161, 242, 1.00);
+  }
+  
+  .content-icons-text .green:hover {
+    color: rgb(23, 191, 99);
+  }
+  
+  .content-icons-text .red:hover {
+    color: rgb(224, 36, 94);
+  }
+  
+  
+  /* image */
+  .bImageContainner{
+    padding-right: 11%;
+   
+   border-radius: 20px;
+  }
+  
+  @media (max-width: 1200px) { /* Adjust breakpoint as needed */
+  .bImageContainner{
+        padding-right:0%;
+    }
+  }
+  @media (min-width: 1201px) { /* Adjust breakpoint as needed */
+    .bImage{
+        min-width: 400px;
+      }
+  }
+  .bImage{
+       border-radius: 20px;
+     }
+     .image-post {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    
+    .image-post.fade-in {
+      opacity: 1;
+    }
+  
+    .profile-pic-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Adjust as needed */
+  height: 50px; /* Adjust as needed */
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #f0f0f0; /* Placeholder color */
+  }
+  
+  .profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the container without stretching */
+  }
+  
+  .profile-pic-skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+  }
+  
+  
+  
