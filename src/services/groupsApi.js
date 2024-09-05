@@ -79,12 +79,36 @@ export const groupsApi = createApi({
     getRandomGroupPost: builder.query({
       query: (page = 1) => `group/randomposts?page=${page}`, // Updated to include id
     }),
+
+
+    /* updateGroupName */
+    updateGroupName: builder.mutation({
+      query: ({ groupId, name }) => ({
+        url: `groups/${groupId}/update/name`,
+        method: 'PUT',
+        body: { name },
+      }),
+    }),
+
+    /* updateGroupDetails */
+    updateGroupDetails: builder.mutation({
+      query: ({ groupId, details }) => ({
+        url: `groups/${groupId}/update/details`,
+        method: 'PUT',
+        body: { details },
+      }),
+    }),
+
+
+
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useUpdateGroupDetailsMutation,
+  useUpdateGroupNameMutation,
   useGetRandomGroupPostQuery,
   useGetGroupSuggestionQuery,
   useGetGroupsWhereAdminQuery,

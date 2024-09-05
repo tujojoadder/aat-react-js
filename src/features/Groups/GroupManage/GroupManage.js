@@ -13,13 +13,19 @@ import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
 import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
 import LargeScreenProfile from "../../LargeScreenBack/LargeScreenProfileBack";
 import ProfileSkeleton from "../../Profile/ProfileSkeleton/ProfileSkeleton";
+import GroupOptions from "./GroupOptions/GroupOptions";
 export default function GroupManage() {
   const { id } = useParams();
   const scrollRef = useRef(null);
   const dispatch = useDispatch();
 
   // Fetch user profile data
-  const { data: groupData, isFetching, isError, isSuccess } = useGetGroupDetailsQuery(id);
+  const {
+    data: groupData,
+    isFetching,
+    isError,
+    isSuccess,
+  } = useGetGroupDetailsQuery(id);
 
   if (isSuccess) {
     console.log(groupData);
@@ -31,7 +37,10 @@ export default function GroupManage() {
   // Handle error state
   if (isError || !groupData.data.isAdmin) {
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
         <p>Something went wrong. Please try again later.</p>
       </div>
     );
@@ -50,7 +59,8 @@ export default function GroupManage() {
     {
       name: "MarkRockwell",
       handle: "@mark_rockwell",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
+      image:
+        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
     },
     // ... more profiles
   ];
@@ -60,8 +70,15 @@ export default function GroupManage() {
   const defaultActiveTab = isPublicGroup ? "options" : "post";
 
   return (
-    <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: "100vh" }}>
-      <div ref={scrollRef} className="header__wrapper m-0 p-0" style={{ overflowY: "scroll", height: "100vh" }}>
+    <div
+      className="friend-home main border-start border-end mb-1 m-0 p-0"
+      style={{ backgroundColor: "white", minHeight: "100vh" }}
+    >
+      <div
+        ref={scrollRef}
+        className="header__wrapper m-0 p-0"
+        style={{ overflowY: "scroll", height: "100vh" }}
+      >
         {/* Back buttons */}
         <SmallScreenBack text={`Manage ${groupData?.data?.group_name}`} />
         <MidScreenBack text={`Manage ${groupData?.data?.group_name}`} />
@@ -72,7 +89,11 @@ export default function GroupManage() {
         <div className="cols__container">
           <div className="left__col">
             <div className="img__container">
-              <img src={`${groupData?.data?.group_picture}`} style={{ backgroundColor: "lightgray" }} alt="Profile" />
+              <img
+                src={`${groupData?.data?.group_picture}`}
+                style={{ backgroundColor: "lightgray" }}
+                alt="Profile"
+              />
             </div>
             <h2>{groupData?.data?.group_name}</h2>
             <p>@{groupData?.data?.identifier}</p>
@@ -80,14 +101,15 @@ export default function GroupManage() {
             <span style={{ fontWeight: "lighter" }}>
               {groupData?.data?.audience}
             </span>
-            <h7 style={{ marginBottom: "7px", marginTop: "-2px" }} className="ms-2">
+            <h7
+              style={{ marginBottom: "7px", marginTop: "-2px" }}
+              className="ms-2"
+            >
               117.2k members
             </h7>
           </div>
           <div className="right__col">
-            <nav>
-              {/* Navigation buttons can be added here if needed */}
-            </nav>
+            <nav>{/* Navigation buttons can be added here if needed */}</nav>
           </div>
         </div>
 
@@ -95,33 +117,56 @@ export default function GroupManage() {
           <ul className="nav nav-tabs mt-3">
             {!isPublicGroup && (
               <li className="nav-item">
-                <a className={`nav-link ${defaultActiveTab === "post" ? "active" : ""}`} href="#post" data-bs-toggle="tab">Post Approval</a>
+                <a
+                  className={`nav-link ${
+                    defaultActiveTab === "post" ? "active" : ""
+                  }`}
+                  href="#post"
+                  data-bs-toggle="tab"
+                >
+                  Post Approval
+                </a>
               </li>
             )}
             <li className="nav-item">
-              <a className={`nav-link ${defaultActiveTab === "options" ? "active" : ""}`} href="#options" data-bs-toggle="tab">Options</a>
+              <a
+                className={`nav-link ${
+                  defaultActiveTab === "options" ? "active" : ""
+                }`}
+                href="#options"
+                data-bs-toggle="tab"
+              >
+                Options
+              </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#members" data-bs-toggle="tab">Members</a>
+              <a className="nav-link" href="#members" data-bs-toggle="tab">
+                Members
+              </a>
             </li>
           </ul>
 
           <div className="tab-content">
             {!isPublicGroup && (
-              <div id="post" className={`mx-2 post-container-secssion mb-md-4 tab-pane fade ${defaultActiveTab === "post" ? "show active" : ""}`}>
+              <div
+                id="post"
+                className={`mx-2 post-container-secssion mb-md-4 tab-pane fade ${
+                  defaultActiveTab === "post" ? "show active" : ""
+                }`}
+              >
                 <ApprovalTextPost />
                 <ApprovalImagePost />
                 <ApprovalBothPost />
               </div>
             )}
 
-            <div id="options" className={`p-md-3 tab-pane fade ${defaultActiveTab === "options" ? "show active" : ""} pb-5`}>
-              <div className="vertical-menu mb-5">
-                <a href="#" className="col-sm-12 col-md-6"><i className="fa-solid fa-image me-2"></i> Change cover photo</a>
-                <a href="#" className="col-sm-12 col-md-6"><i className="fa-solid fa-align-left me-2"></i> Change description</a>
-                <a href="#" className="col-sm-12 col-md-6"><i className="fa-solid fa-pen me-2"></i> Change group name</a>
-                <a href="#" className="col-sm-12 col-md-6"><i className="fa-solid fa-id-badge me-2"></i> Change identifier</a>
-              </div>
+            <div
+              id="options"
+              className={`p-md-3 tab-pane fade ${
+                defaultActiveTab === "options" ? "show active" : ""
+              } pb-5`}
+            >
+              <GroupOptions groupId={id} groupName={groupData?.data?.group_name} groupDetails={groupData?.data?.group_details} />
             </div>
 
             <div id="members" className="p-md-3 tab-pane fade">
