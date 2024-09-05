@@ -37,6 +37,8 @@ const initialState = {
 audience: '',
 groupDetails: '',
 
+ // State that will trigger refetch
+groupUpdate: false, 
 
 };
 
@@ -142,8 +144,13 @@ setGroupDetails(state, action) {
   state.groupDetails = action.payload;
 },
 
-
-
+setGroupUpdate: (state, action) => {
+  state.groupUpdate = action.payload;  // Update the groupUpdate state
+}
+,
+resetGroupUpdate: (state) => {
+  state.groupUpdate = false; // Reset groupUpdate to false
+}
 
 
 
@@ -152,6 +159,8 @@ setGroupDetails(state, action) {
 });
 
 export const {
+  resetGroupUpdate,
+  setGroupUpdate,
   setProfile_picture,
   setUser_fname,
   setUser_lname,

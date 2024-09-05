@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { useUpdateGroupNameMutation, useUpdateGroupDetailsMutation } from '../../../../services/groupsApi';
-import './GroupOptions.css'; // Import the CSS file for styling
-import { useDispatch } from 'react-redux';
-import { setToastSuccess } from '../../../home/HomeSlice';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  useUpdateGroupNameMutation,
+  useUpdateGroupDetailsMutation,
+} from "../../../../services/groupsApi";
+import "./GroupOptions.css"; // Import the CSS file for styling
+import { useDispatch } from "react-redux";
+import { setGroupUpdate, setToastSuccess } from "../../../home/HomeSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function GroupOptions({ groupId, groupName, groupDetails }) {
   const [editField, setEditField] = useState(null);
@@ -11,12 +14,25 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
     name: groupName,
     details: groupDetails,
   });
-  
-  
+
   const dispatch = useDispatch();
-  const navigate=useNavigate();
-  const [updateGroupName, { isLoading: isNameLoading, isError: isNameError, isSuccess: isNameSuccess }] = useUpdateGroupNameMutation();
-  const [updateGroupDetails, { isLoading: isDetailsLoading, isError: isDetailsError, isSuccess: isDetailsSuccess }] = useUpdateGroupDetailsMutation();
+  const navigate = useNavigate();
+  const [
+    updateGroupName,
+    {
+      isLoading: isNameLoading,
+      isError: isNameError,
+      isSuccess: isNameSuccess,
+    },
+  ] = useUpdateGroupNameMutation();
+  const [
+    updateGroupDetails,
+    {
+      isLoading: isDetailsLoading,
+      isError: isDetailsError,
+      isSuccess: isDetailsSuccess,
+    },
+  ] = useUpdateGroupDetailsMutation();
 
   const handleEdit = (field) => setEditField(field);
   const handleCancel = () => setEditField(null);
@@ -30,31 +46,45 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
   };
 
   const handleSave = async (field) => {
-    if (field === 'name') {
+    if (field === "name") {
       try {
         await updateGroupName({ groupId, name: groupData.name }).unwrap();
         setEditField(null);
-        navigate('/');
-    dispatch(setToastSuccess({ toastSuccess: 'Group name updated successfully' }));  
-    } catch (err) {
-        console.error('Failed to save group name:', err);
-      }
-    } else if (field === 'details') {
-      try {
-        await updateGroupDetails({ groupId, details: groupData.details }).unwrap();
-        setEditField(null);
-        navigate('/');
-        dispatch(setToastSuccess({ toastSuccess: 'Group details updated successfully' }));  
-
+        navigate("/");
+        dispatch(
+          setToastSuccess({ toastSuccess: "Group name updated successfully" })
+        );
+        // Set groupUpdate to true after successful update
+        dispatch(setGroupUpdate(true));
       } catch (err) {
-        console.error('Failed to save group details:', err);
+        console.error("Failed to save group name:", err);
+      }
+    } else if (field === "details") {
+      try {
+        await updateGroupDetails({
+          groupId,
+          details: groupData.details,
+        }).unwrap();
+        setEditField(null);
+        navigate("/");
+        dispatch(
+          setToastSuccess({
+            toastSuccess: "Group details updated successfully",
+          })
+        );
+        // Set groupUpdate to true after successful update
+        dispatch(setGroupUpdate(true));
+      } catch (err) {
+        console.error("Failed to save group details:", err);
       }
     }
   };
 
   // Utility function to truncate text
   const truncateText = (text, maxLength) => {
-    return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+    return text.length > maxLength
+      ? `${text.substring(0, maxLength)}...`
+      : text;
   };
 
   return (
@@ -62,7 +92,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
       {/* Group Name Section */}
       <div className="group-section card shadow-sm rounded p-4 mb-4 my-3 mt-4">
         <h4 className="mb-4">Group Name</h4>
-        {editField === 'name' ? (
+        {editField === "name" ? (
           <div>
             <input
               type="text"
@@ -75,27 +105,32 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
             <div className="d-flex justify-content-end">
               <button
                 className="btn btn-primary me-2"
-                onClick={() => handleSave('name')}
+                onClick={() => handleSave("name")}
                 disabled={isNameLoading}
               >
                 {isNameLoading ? "Saving..." : "Save"}
               </button>
-              <button
-                className="btn btn-secondary"
-                onClick={handleCancel}
-              >
+              <button className="btn btn-secondary" onClick={handleCancel}>
                 Cancel
               </button>
             </div>
-            {isNameError && <p className="text-danger mt-2">Failed to save group name</p>}
-            {isNameSuccess && <p className="text-success mt-2">Group name updated successfully</p>}
+            {isNameError && (
+              <p className="text-danger mt-2">Failed to save group name</p>
+            )}
+            {isNameSuccess && (
+              <p className="text-success mt-2">
+                Group name updated successfully
+              </p>
+            )}
           </div>
         ) : (
           <div className="d-flex justify-content-between align-items-center">
-            <p className="mb-0 text-muted">{truncateText(groupData.name, 17)}</p>
+            <p className="mb-0 text-muted">
+              {truncateText(groupData.name, 17)}
+            </p>
             <button
               className="btn btn-outline-primary"
-              onClick={() => handleEdit('name')}
+              onClick={() => handleEdit("name")}
             >
               Edit
             </button>
@@ -106,7 +141,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
       {/* Group Details Section */}
       <div className="group-section card shadow-sm rounded p-4 mb-4 mt-4">
         <h4 className="mb-4">Group Details</h4>
-        {editField === 'details' ? (
+        {editField === "details" ? (
           <div>
             <textarea
               className="form-control mb-3"
@@ -119,27 +154,32 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
             <div className="d-flex justify-content-end">
               <button
                 className="btn btn-primary me-2"
-                onClick={() => handleSave('details')}
+                onClick={() => handleSave("details")}
                 disabled={isDetailsLoading}
               >
                 {isDetailsLoading ? "Saving..." : "Save"}
               </button>
-              <button
-                className="btn btn-secondary"
-                onClick={handleCancel}
-              >
+              <button className="btn btn-secondary" onClick={handleCancel}>
                 Cancel
               </button>
             </div>
-            {isDetailsError && <p className="text-danger mt-2">Failed to save group details</p>}
-            {isDetailsSuccess && <p className="text-success mt-2">Group details updated successfully</p>}
+            {isDetailsError && (
+              <p className="text-danger mt-2">Failed to save group details</p>
+            )}
+            {isDetailsSuccess && (
+              <p className="text-success mt-2">
+                Group details updated successfully
+              </p>
+            )}
           </div>
         ) : (
           <div className="d-flex justify-content-between align-items-center">
-            <p className="mb-0 text-muted">{truncateText(groupData.details, 17)}</p>
+            <p className="mb-0 text-muted">
+              {truncateText(groupData.details, 17)}
+            </p>
             <button
               className="btn btn-outline-primary"
-              onClick={() => handleEdit('details')}
+              onClick={() => handleEdit("details")}
             >
               Edit
             </button>

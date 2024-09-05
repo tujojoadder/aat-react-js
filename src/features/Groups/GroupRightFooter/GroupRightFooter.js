@@ -2,23 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useInView } from "react-intersection-observer";
 import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'; // Import useSelector and useDispatch
 import Spinner from "../../Spinner/Spinner";
-import {
-  useGetGroupsWhereAdminQuery,
-  useGetJoinedGroupsButNotAdminQuery,
-} from "../../../services/groupsApi";
+import { useGetGroupsWhereAdminQuery, useGetJoinedGroupsButNotAdminQuery } from "../../../services/groupsApi";
 import GroupRightFooterItem from "./GroupRightFooterItem/GroupRightFooterItem";
 import { Scrollbar } from "react-scrollbars-custom";
+import { resetGroupUpdate } from "../../home/HomeSlice";
 
 export default function GroupRightFooter() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
   const location = useLocation();
+  const dispatch = useDispatch();
+  
+
   const [pageAdmin, setPageAdmin] = useState(1);
   const [pageJoined, setPageJoined] = useState(1);
   const [allAdminGroups, setAllAdminGroups] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMoreAdminGroups, setHasMoreAdminGroups] = useState(true);
   const [hasMorePosts, setHasMorePosts] = useState(true);
+
+  const groupUpdate = useSelector((state) => state.home.groupUpdate); // Access groupUpdate state from Redux
 
   const { ref: adminRef, inView: adminInView } = useInView({
     threshold: 0,
@@ -35,6 +39,7 @@ export default function GroupRightFooter() {
     isFetching: isFetchingAdminGroups,
     isError: isErrorAdminGroups,
     isSuccess: isSuccessAdminGroups,
+    refetch: refetchAdminGroups, // Refetch method
   } = useGetGroupsWhereAdminQuery(pageAdmin);
 
   const {
@@ -42,8 +47,20 @@ export default function GroupRightFooter() {
     isFetching: isFetchingJoinedGroups,
     isError: isErrorJoinedGroups,
     isSuccess: isSuccessJoinedGroups,
+    refetch: refetchJoinedGroups, // Refetch method
   } = useGetJoinedGroupsButNotAdminQuery(pageJoined);
 
+  // Refetch data when groupUpdate state changes
+  useEffect(() => {
+    if (groupUpdate) {
+      // Refetch both admin and joined groups data when groupUpdate is triggered
+      refetchAdminGroups();
+      refetchJoinedGroups();
+      
+      // Reset groupUpdate after refetching
+      dispatch(resetGroupUpdate());
+    }
+  }, [groupUpdate, refetchAdminGroups, refetchJoinedGroups, dispatch]);
   useEffect(() => {
     if (isSuccessAdminGroups && adminGroupsData?.data) {
       setAllAdminGroups((prev) => {
@@ -134,7 +151,7 @@ export default function GroupRightFooter() {
           <div className="admin-groups-section px-sm-4 px-lg-2 px-3 mt-2">
             <div className="row">
               {allAdminGroups.map((group) => {
-                              const isActive = location.pathname === `/groups/mygroup/${group.group_id}`;
+                const isActive = location.pathname === `/groups/mygroup/${group.group_id}`;
                 return (
                   <GroupRightFooterItem
                     key={group.group_id}
@@ -148,9 +165,7 @@ export default function GroupRightFooter() {
                   />
                 );
               })}
-              <div ref={adminRef} className="infinite-scroll-trigger">
-                
-              </div>
+              <div ref={adminRef} className="infinite-scroll-trigger"></div>
             </div>
           </div>
 
@@ -158,7 +173,8 @@ export default function GroupRightFooter() {
           <div className="friend-request-section mb-5 px-sm-4 px-lg-2 px-3">
             <div className="row">
               {allPosts.map((group) => {
-                  const isActive = location.pathname === `/groups/mygroup/${group.group_id}`;                return (
+                const isActive = location.pathname === `/groups/mygroup/${group.group_id}`;
+                return (
                   <GroupRightFooterItem
                     key={group.group_id}
                     name={group.group_name}
