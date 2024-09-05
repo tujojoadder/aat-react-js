@@ -181,9 +181,9 @@ export default function GroupProfile() {
           <div className="right__col">
             <nav>
               <div className="d-flex justify-content-center justify-content-sm-end">
-                {groupData.data.isAdmin && (
+                {groupData.data.isAdmin && groupData.data.group_id && (
                   <NavLink
-                    to="/groups/{id}/manage"
+                    to={`/groups/${groupData.data.group_id}/manage`}
                     className="text-decoration-none"
                   >
                     <div
@@ -196,13 +196,16 @@ export default function GroupProfile() {
                   </NavLink>
                 )}
 
-                <div
-                  className="btn btn-md btn-primary mx-1 d-flex align-items-center"
-                  style={{ cursor: "pointer" }}
-                >
-                  <i className="fa-solid fa-users"></i>
-                  <span className="ms-1">Join Group</span>
-                </div>
+                {!groupData.data.isAdmin && (
+                  <div
+                    className="btn btn-md btn-primary mx-1 d-flex align-items-center"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <i className="fa-solid fa-users"></i>
+                    <span className="ms-1">Join Group</span>
+                  </div>
+                )}
+
                 <div
                   className="btn btn-md mx-1 me-3 d-flex align-items-center"
                   style={{

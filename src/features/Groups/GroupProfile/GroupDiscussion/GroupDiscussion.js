@@ -7,6 +7,7 @@ import ImagePost from '../../../home/Components/ImagePost/ImagePost';
 import TextPost from '../../../home/Components/TextPost/TextPost';
 import BPost from '../../../home/Components/BPost/BPost';
 import { useGetSpecificGroupPostQuery } from '../../../../services/groupsApi';
+import CreatePost from '../../../home/Components/CreatePost/CreatePost';
 
 export default function GroupDiscussion({ groupId }) {
   const [page, setPage] = useState(1);
@@ -67,6 +68,7 @@ if (isSuccess) {
 
   return (
     <div className="post-wrapper">
+      
       {/* Display posts */}
       {allPosts.length === 0 && !isFetching && <h4 className="text-center" style={{color:'#592529'}}>No Posts to show</h4>}
       {allPosts.map((post) => (
