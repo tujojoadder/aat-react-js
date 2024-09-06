@@ -1,30 +1,23 @@
 import { useMediaQuery } from "react-responsive";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SmallScreenCard from "./GroupsSuggestionCard/SmallScreenCard";
-import LargeScreenCard from "./GroupsSuggestionCard/LargeScreenCard.js";
-import SmallScreenBack from "../SmallScreenBack/SmallScreenBack.js";
-import MidScreenBack from "../SmallScreenBack/MidScreenBack.js";
-import Spinner from "../Spinner/Spinner.js";
-import { useGetGroupsWhereAdminQuery, useGetJoinedGroupsButNotAdminQuery } from "../../services/groupsApi.js";
+import LargeScreenCard from "./GroupsSuggestionCard/LargeScreenCard";
+import SmallScreenBack from "../SmallScreenBack/SmallScreenBack";
+import MidScreenBack from "../SmallScreenBack/MidScreenBack";
+import Spinner from "../Spinner/Spinner";
+import { useGetGroupsWhereAdminQuery, useGetJoinedGroupsButNotAdminQuery } from "../../services/groupsApi";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux"; // Import useSelector
+import { useSelector } from "react-redux";
 
 export default function GroupsYourGroups() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
-  const groupUpdate = useSelector((state) => state.home.groupUpdate); // Track group updates
+  const groupUpdate = useSelector((state) => state.home.groupUpdate);
 
-  const [pageAdmin, setPageAdmin] = useState(1);
   const [pageJoined, setPageJoined] = useState(1);
   const [allAdminGroups, setAllAdminGroups] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
-  const [hasMoreAdminGroups, setHasMoreAdminGroups] = useState(true);
   const [hasMorePosts, setHasMorePosts] = useState(true);
-
-  const { ref: adminRef, inView: adminInView } = useInView({
-    threshold: 0,
-    triggerOnce: false,
-  });
 
   const { ref: joinedRef, inView: joinedInView } = useInView({
     threshold: 0,
@@ -32,36 +25,36 @@ export default function GroupsYourGroups() {
   });
 
   const {
-    data: adminGroupsData,
+    data: adminGroupsDataResponse,
     isFetching: isFetchingAdminGroups,
     isError: isErrorAdminGroups,
     isSuccess: isSuccessAdminGroups,
-    refetch: refetchAdminGroups, // Add refetch
-  } = useGetGroupsWhereAdminQuery(pageAdmin);
+    error: adminGroupsError,
+  } = useGetGroupsWhereAdminQuery();
 
   const {
     data: joinedGroupsData,
     isFetching: isFetchingJoinedGroups,
     isError: isErrorJoinedGroups,
     isSuccess: isSuccessJoinedGroups,
-    refetch: refetchJoinedGroups, // Add refetch
+    refetch: refetchJoinedGroups,
   } = useGetJoinedGroupsButNotAdminQuery(pageJoined);
 
   useEffect(() => {
-    if (isSuccessAdminGroups && adminGroupsData?.data) {
-      setAllAdminGroups((prev) => {
-        const newAdminGroups = adminGroupsData.data.filter(
-          (newGroup) => !prev.some((group) => group.group_id === newGroup.group_id)
-        );
-        return [...prev, ...newAdminGroups];
-      });
+    if (isErrorAdminGroups) {
+      console.error('Error fetching admin groups:', adminGroupsError);
+    }
+    if (isSuccessAdminGroups) {
+      console.log('Fetched admin groups data:', adminGroupsDataResponse);
+      const adminGroupsData = Object.values(adminGroupsDataResponse);
 
-      const { current_page, total_pages } = adminGroupsData;
-      if (current_page >= total_pages) {
-        setHasMoreAdminGroups(false);
+      if (Array.isArray(adminGroupsData)) {
+        setAllAdminGroups(adminGroupsData);
+      } else {
+        console.error('Admin groups data is not an array:', adminGroupsDataResponse);
       }
     }
-  }, [adminGroupsData, isSuccessAdminGroups]);
+  }, [adminGroupsDataResponse, isSuccessAdminGroups, isErrorAdminGroups, adminGroupsError]);
 
   useEffect(() => {
     if (isSuccessJoinedGroups && joinedGroupsData?.data) {
@@ -86,24 +79,6 @@ export default function GroupsYourGroups() {
 
   useEffect(() => {
     if (
-      adminInView &&
-      !isFetchingAdminGroups &&
-      !isErrorAdminGroups &&
-      hasMoreAdminGroups &&
-      isSuccessAdminGroups
-    ) {
-      setPageAdmin((prevPage) => prevPage + 1);
-    }
-  }, [
-    adminInView,
-    isFetchingAdminGroups,
-    isErrorAdminGroups,
-    hasMoreAdminGroups,
-    isSuccessAdminGroups,
-  ]);
-
-  useEffect(() => {
-    if (
       joinedInView &&
       !isFetchingJoinedGroups &&
       !isErrorJoinedGroups &&
@@ -120,8 +95,6 @@ export default function GroupsYourGroups() {
     isSuccessJoinedGroups,
   ]);
 
-
-
   return (
     <div
       className="friend-home main m-0 p-0 border-sm-0 border-left border-right"
@@ -134,35 +107,35 @@ export default function GroupsYourGroups() {
       <div className="admin-groups-section px-sm-4 px-lg-2 px-3">
         <h4 className="p-2">Groups you're an admin of</h4>
         <div className="row">
-          {allAdminGroups.map((group, index) =>
-            isSmallScreen ? (
-              <SmallScreenCard
-                key={index}
-                name={group.group_name}
-                handle={group.identifier}
-                image={group.group_picture}
-                group_id={group.group_id}
-                audience={group.audience}
-                type="admin"
-              />
-            ) : (
-              <LargeScreenCard
-                key={index}
-                name={group.group_name}
-                handle={group.identifier}
-                image={group.group_picture}
-                group_id={group.group_id}
-                audience={group.audience}
-                type="admin"
-              />
+          {isFetchingAdminGroups ? (
+            <Spinner />
+          ) : (Array.isArray(allAdminGroups) && allAdminGroups.length > 0) ? (
+            allAdminGroups.map((group, index) =>
+              isSmallScreen ? (
+                <SmallScreenCard
+                  key={index}
+                  name={group.group_name}
+                  handle={group.identifier}
+                  image={group.group_picture}
+                  group_id={group.group_id}
+                  audience={group.audience}
+                  type="admin"
+                />
+              ) : (
+                <LargeScreenCard
+                  key={index}
+                  name={group.group_name}
+                  handle={group.identifier}
+                  image={group.group_picture}
+                  group_id={group.group_id}
+                  audience={group.audience}
+                  type="admin"
+                />
+              )
             )
+          ) : (
+            <p>No admin groups found.</p>
           )}
-          <div
-            ref={adminRef}
-            className="infinite-scroll-trigger"
-          >
-            {isFetchingAdminGroups && <Spinner />}
-          </div>
         </div>
       </div>
 
