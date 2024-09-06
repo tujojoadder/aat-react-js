@@ -5,8 +5,9 @@ import {
 } from "../../../../services/groupsApi";
 import "./GroupOptions.css"; // Import the CSS file for styling
 import { useDispatch } from "react-redux";
-import { setGroupUpdate, setToastSuccess } from "../../../home/HomeSlice";
+
 import { useNavigate } from "react-router-dom";
+import { setGroupUpdate, setToastSuccess } from "../../../home/HomeSlice";
 
 export default function GroupOptions({ groupId, groupName, groupDetails }) {
   const [editField, setEditField] = useState(null);
@@ -55,7 +56,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
           setToastSuccess({ toastSuccess: "Group name updated successfully" })
         );
         // Set groupUpdate to true after successful update
-        dispatch(setGroupUpdate(true));
+        dispatch(setGroupUpdate(groupData.name));
       } catch (err) {
         console.error("Failed to save group name:", err);
       }
@@ -73,7 +74,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
           })
         );
         // Set groupUpdate to true after successful update
-        dispatch(setGroupUpdate(true));
+        dispatch(setGroupUpdate(groupData.details));
       } catch (err) {
         console.error("Failed to save group details:", err);
       }
