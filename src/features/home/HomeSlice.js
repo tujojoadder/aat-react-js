@@ -147,20 +147,13 @@ setGroupDetails(state, action) {
 setGroupUpdate: (state, action) => {
   state.groupUpdate = action.payload;  // Update the groupUpdate state
 }
-,
-resetGroupUpdate: (state) => {
-  state.groupUpdate = false; // Reset groupUpdate to false
-}
-
-
 
 
   },
 });
 
 export const {
-  resetGroupUpdate,
-  setGroupUpdate,
+ setGroupUpdate,
   setProfile_picture,
   setUser_fname,
   setUser_lname,
