@@ -15,9 +15,11 @@ import GroupDiscussion from "./GroupDiscussion/GroupDiscussion";
 import GroupPhoto from "./GroupPhoto/GroupPhoto";
 import GroupMember from "./GroupMember/GroupMember";
 import { setGroupAudience, setGroupDetails } from "../../home/HomeSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GroupAbout from "../GroupAbout/GroupAbout";
 export default function GroupProfile() {
+  const groupUpdate = useSelector((state) => state.home.groupUpdate); // Track group updates
+
   const { id } = useParams();
   const scrollRef = useRef(null);
   const [currentTab, setCurrentTab] = useState("More");
@@ -99,6 +101,7 @@ export default function GroupProfile() {
     isFetching,
     isError,
     isSuccess,
+    refetch
   } = useGetGroupDetailsQuery(id);
 
   // Dispatch actions to store audience and group details in Redux
@@ -111,6 +114,13 @@ export default function GroupProfile() {
       dispatch(setGroupDetails(groupData.data.group_details));
     }
   }, [isSuccess, groupData, dispatch]);
+
+
+  useEffect(() => {
+    refetch();
+  }, [groupUpdate]);
+
+
 
   if (isSuccess) {
     console.log(groupData);
@@ -138,6 +148,8 @@ export default function GroupProfile() {
     minHeight: "calc(100px + 15vw)",
     backgroundColor: "lightgrey", // Added for debugging
   };
+
+
 
   return (
     <div
