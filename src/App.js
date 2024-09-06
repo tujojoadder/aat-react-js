@@ -63,6 +63,8 @@ import MyProfile from "./features/Profile/MyProfile/MyProfile";
 import SetProfile from "./features/Profile/SetMProfile/SetMProfile";
 import SetMProfile from "./features/Profile/SetMProfile/SetMProfile";
 import SetCoverPhoto from "./features/Profile/SetCoverPhoto/SetCoverPhoto";
+import GroupProfileRight from "./features/Groups/GroupProfile/GroupProfileRight";
+import GroupManageright from "./features/Groups/GroupManage/GroupManageright";
 
 function App() {
   const dispatch = useDispatch();
@@ -230,7 +232,7 @@ function App() {
 
             {/* Groups---> profile */}
             <Route path="groups/:id" exact element={<GroupProfile />} />
-            <Route path="groups/:id" exact element={<GroupsHomeRight />} />
+            <Route path="groups/:id" exact element={<GroupProfileRight />} />
             <Route path="groups/mygroup/:id" exact element={<GroupProfile />} />
             <Route
               path="groups/mygroup/:id"
@@ -262,7 +264,7 @@ function App() {
             <Route
               path="groups/:id/manage"
               exact
-              element={<GroupsHomeRight />}
+              element={<GroupManageright />}
             />
 
             {/* Page */}

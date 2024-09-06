@@ -1,5 +1,6 @@
+
 import React from "react";
-import "./GroupProfileRight.css";
+
 import { Scrollbars } from "react-custom-scrollbars";
 import {
   NavLink,
@@ -10,9 +11,9 @@ import {
 } from "react-router-dom";
 import GroupAbout from "../GroupAbout/GroupAbout";
 
-export default function GroupProfileRight() {
+export default function GroupManageright() {
   const scrollRef = React.useRef(null);
- 
+  
   const location = useLocation();
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -77,14 +78,7 @@ export default function GroupProfileRight() {
               </ul>
             </div>
 
-            <h5 className="ms-3">About</h5>
-            <Scrollbars
-              style={{ width: "100%", height: "55vh", minHeight: "300px" }}
-            >
-              <div className="mb-5">
-                <GroupAbout />
-              </div>
-            </Scrollbars>
+           
           </div>
         </div>
       </div>

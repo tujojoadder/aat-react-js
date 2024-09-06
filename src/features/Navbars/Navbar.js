@@ -61,6 +61,7 @@ import HadithBox from "../home/Components/Hadithbox/HadithBox";
 import MyProfile from "../Profile/MyProfile/MyProfile";
 import SetProfile from "../Profile/SetProfile/SetProfile";
 import SetCoverPhoto from "../Profile/SetCoverPhoto/SetCoverPhoto";
+import GroupManageright from "../Groups/GroupManage/GroupManageright";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -572,7 +573,7 @@ const Navbar = () => {
               <Route
                 path="groups/:id/manage"
                 exact
-                element={<GroupsHomeRight />}
+                element={<GroupManageright />}
               />
               {/*  <<---Page-->>home page */}
               <Route path="page" exact element={<PageHomeRight />} />

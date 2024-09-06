@@ -3,13 +3,9 @@ import { useMediaQuery } from "react-responsive";
 import { useInView } from "react-intersection-observer";
 import { useLocation } from "react-router-dom";
 import Spinner from "../../Spinner/Spinner";
-import {
-  useGetGroupsWhereAdminQuery,
-  useGetJoinedGroupsButNotAdminQuery,
-} from "../../../services/groupsApi";
+import { useGetJoinedGroupsButNotAdminQuery } from "../../../services/groupsApi";
 import GroupRightFooterItem from "./GroupRightFooterItem/GroupRightFooterItem";
 import { Scrollbar } from "react-scrollbars-custom";
-import { useSelector } from "react-redux";
 
 export default function GroupRightFooter() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
@@ -20,7 +16,7 @@ export default function GroupRightFooter() {
   const [allPosts, setAllPosts] = useState([]);
   const [hasMoreAdminGroups, setHasMoreAdminGroups] = useState(true);
   const [hasMorePosts, setHasMorePosts] = useState(true);
-  const groupUpdate = useSelector((state) => state.home.groupUpdate);
+
   const { ref: adminRef, inView: adminInView } = useInView({
     threshold: 0,
     triggerOnce: false,
@@ -31,38 +27,47 @@ export default function GroupRightFooter() {
     triggerOnce: false,
   });
 
-  const {
-    data: adminGroupsData,
-    isFetching: isFetchingAdminGroups,
-    isError: isErrorAdminGroups,
-    isSuccess: isSuccessAdminGroups,
-    refetch: refetchAdminGroups,
-  } = useGetGroupsWhereAdminQuery(pageAdmin);
+  // Placeholder for fetching admin groups data
+  const fetchAdminGroups = async (page) => {
+    // Replace this with your actual fetch logic
+    // e.g., fetch(`/api/groups/admin?page=${page}`).then(res => res.json());
+    return { data: [], current_page: page, total_pages: 1 }; // Example response
+  };
 
   const {
     data: joinedGroupsData,
     isFetching: isFetchingJoinedGroups,
     isError: isErrorJoinedGroups,
     isSuccess: isSuccessJoinedGroups,
-    refetch: refetchJoinedGroups,
   } = useGetJoinedGroupsButNotAdminQuery(pageJoined);
 
   useEffect(() => {
-    if (isSuccessAdminGroups && adminGroupsData?.data) {
-      setAllAdminGroups((prev) => {
-        const newAdminGroups = adminGroupsData.data.filter(
-          (newGroup) =>
-            !prev.some((group) => group.group_id === newGroup.group_id)
-        );
-        return [...prev, ...newAdminGroups];
-      });
+    const loadAdminGroups = async () => {
+      try {
+        const adminGroupsData = await fetchAdminGroups(pageAdmin);
+        if (adminGroupsData.data) {
+          setAllAdminGroups((prev) => {
+            const newAdminGroups = adminGroupsData.data.filter(
+              (newGroup) =>
+                !prev.some((group) => group.group_id === newGroup.group_id)
+            );
+            return [...prev, ...newAdminGroups];
+          });
 
-      const { current_page, total_pages } = adminGroupsData;
-      if (current_page >= total_pages) {
-        setHasMoreAdminGroups(false);
+          const { current_page, total_pages } = adminGroupsData;
+          if (current_page >= total_pages) {
+            setHasMoreAdminGroups(false);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching admin groups:", error);
       }
+    };
+
+    if (hasMoreAdminGroups) {
+      loadAdminGroups();
     }
-  }, [adminGroupsData, isSuccessAdminGroups]);
+  }, [pageAdmin, hasMoreAdminGroups]);
 
   useEffect(() => {
     if (isSuccessJoinedGroups && joinedGroupsData?.data) {
@@ -88,52 +93,21 @@ export default function GroupRightFooter() {
   useEffect(() => {
     if (
       adminInView &&
-      !isFetchingAdminGroups &&
-      !isErrorAdminGroups &&
-      hasMoreAdminGroups &&
-      isSuccessAdminGroups
+      hasMoreAdminGroups
     ) {
       setPageAdmin((prevPage) => prevPage + 1);
     }
-  }, [
-    adminInView,
-    isFetchingAdminGroups,
-    isErrorAdminGroups,
-    hasMoreAdminGroups,
-    isSuccessAdminGroups,
-  ]);
+  }, [adminInView, hasMoreAdminGroups]);
 
   useEffect(() => {
     if (
       joinedInView &&
-      !isFetchingJoinedGroups &&
-      !isErrorJoinedGroups &&
       hasMorePosts &&
       isSuccessJoinedGroups
     ) {
       setPageJoined((prevPage) => prevPage + 1);
     }
-  }, [
-    joinedInView,
-    isFetchingJoinedGroups,
-    isErrorJoinedGroups,
-    hasMorePosts,
-    isSuccessJoinedGroups,
-  ]);
-
-  useEffect(() => {
-    // Reset states when groupUpdate occurs
-    setPageAdmin(1);
-    setPageJoined(1);
-    setAllAdminGroups([]);
-    setAllPosts([]);
-    setHasMoreAdminGroups(true);
-    setHasMorePosts(true);
-
-    // Trigger refetch for both admin and joined groups
-    refetchAdminGroups();
-    refetchJoinedGroups();
-  }, [groupUpdate]);
+  }, [joinedInView, hasMorePosts, isSuccessJoinedGroups]);
 
   return (
     <>
@@ -147,7 +121,6 @@ export default function GroupRightFooter() {
           className="friend-home main m-0 p-0 pb-5"
           style={{ backgroundColor: "white", minHeight: "100vh" }}
         >
-          
           {/* Section 1: Groups where the user is an admin */}
           <div className="admin-groups-section px-sm-4 px-lg-2 px-3 mt-2">
             <div className="row">
