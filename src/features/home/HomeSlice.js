@@ -38,7 +38,7 @@ audience: '',
 groupDetails: '',
 
  // State that will trigger refetch
-groupUpdate: false, 
+groupUpdate: 'hi', 
 
 };
 

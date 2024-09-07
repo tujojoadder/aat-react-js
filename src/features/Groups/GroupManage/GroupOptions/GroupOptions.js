@@ -51,12 +51,14 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
       try {
         await updateGroupName({ groupId, name: groupData.name }).unwrap();
         setEditField(null);
-        navigate("/");
+        
         dispatch(
           setToastSuccess({ toastSuccess: "Group name updated successfully" })
         );
         // Set groupUpdate to true after successful update
         dispatch(setGroupUpdate(groupData.name));
+
+        navigate(`/groups/${groupId}`);
       } catch (err) {
         console.error("Failed to save group name:", err);
       }
@@ -75,6 +77,8 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
         );
         // Set groupUpdate to true after successful update
         dispatch(setGroupUpdate(groupData.details));
+
+        navigate(`/groups/${groupId}`);
       } catch (err) {
         console.error("Failed to save group details:", err);
       }

@@ -15,9 +15,11 @@ import GroupDiscussion from "./GroupDiscussion/GroupDiscussion";
 import GroupPhoto from "./GroupPhoto/GroupPhoto";
 import GroupMember from "./GroupMember/GroupMember";
 import { setGroupAudience, setGroupDetails } from "../../home/HomeSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GroupAbout from "../GroupAbout/GroupAbout";
 export default function GroupProfile() {
+  const groupUpdate = useSelector((state) => state.home.groupUpdate);
+
   const { id } = useParams();
   const scrollRef = useRef(null);
   const [currentTab, setCurrentTab] = useState("More");
@@ -99,7 +101,14 @@ export default function GroupProfile() {
     isFetching,
     isError,
     isSuccess,
+    refetch
   } = useGetGroupDetailsQuery(id);
+
+
+  useEffect(() => {
+   refetch();
+  }, [groupUpdate]);
+
 
   // Dispatch actions to store audience and group details in Redux
   useEffect(() => {
