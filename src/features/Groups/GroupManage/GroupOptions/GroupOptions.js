@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import {
-  useUpdateGroupNameMutation,
-  useUpdateGroupDetailsMutation,
-} from "../../../../services/groupsApi";
-import "./GroupOptions.css"; // Import the CSS file for styling
-import { useDispatch } from "react-redux";
-
+import { useUpdateGroupNameMutation, useUpdateGroupDetailsMutation } from "../../../../services/groupsApi";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setGroupUpdate, setToastSuccess } from "../../../home/HomeSlice";
+import { setGroupUpdate, setToastSuccess, setGroupName } from "../../../home/HomeSlice";
+import "./GroupOptions.css"; // Import the CSS file for styling
 
 export default function GroupOptions({ groupId, groupName, groupDetails }) {
   const [editField, setEditField] = useState(null);
@@ -15,7 +11,8 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
     name: groupName,
     details: groupDetails,
   });
-
+  const group = useSelector((state) => state.home.adminGroups);
+console.log(group);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [
@@ -50,13 +47,14 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
     if (field === "name") {
       try {
         await updateGroupName({ groupId, name: groupData.name }).unwrap();
+        dispatch(setGroupName({ groupId, newName: groupData.name }));
         setEditField(null);
-        navigate("/");
+        /* navigate("/"); */
         dispatch(
           setToastSuccess({ toastSuccess: "Group name updated successfully" })
         );
-        // Set groupUpdate to true after successful update
-        dispatch(setGroupUpdate(groupData.name));
+        console.log(group)
+        dispatch(setGroupUpdate(true)); // Indicate that the group has been updated
       } catch (err) {
         console.error("Failed to save group name:", err);
       }
@@ -73,8 +71,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
             toastSuccess: "Group details updated successfully",
           })
         );
-        // Set groupUpdate to true after successful update
-        dispatch(setGroupUpdate(groupData.details));
+        dispatch(setGroupUpdate(true)); // Indicate that the group has been updated
       } catch (err) {
         console.error("Failed to save group details:", err);
       }
