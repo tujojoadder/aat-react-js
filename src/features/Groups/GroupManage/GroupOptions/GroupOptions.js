@@ -68,7 +68,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
           details: groupData.details,
         }).unwrap();
         setEditField(null);
-        navigate("/");
+        
         dispatch(
           setToastSuccess({
             toastSuccess: "Group details updated successfully",
@@ -76,6 +76,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
         );
         // Set groupUpdate to true after successful update
         dispatch(setGroupUpdate(groupData.details));
+        navigate(`/groups/${groupId}`);
       } catch (err) {
         console.error("Failed to save group details:", err);
       }
