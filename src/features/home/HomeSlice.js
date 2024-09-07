@@ -39,6 +39,8 @@ groupDetails: '',
 
  // State that will trigger refetch
 groupUpdate: false, 
+//for store admin groups
+adminGroups: [],
 
 };
 
@@ -146,14 +148,18 @@ setGroupDetails(state, action) {
 
 setGroupUpdate: (state, action) => {
   state.groupUpdate = action.payload;  // Update the groupUpdate state
-}
+},
 
+setAdminGroups: (state, action) => {
+  state.adminGroups = action.payload;
+},
 
   },
 });
 
 export const {
  setGroupUpdate,
+ setAdminGroups,
   setProfile_picture,
   setUser_fname,
   setUser_lname,

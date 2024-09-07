@@ -1,21 +1,23 @@
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useMediaQuery } from "react-responsive";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useInView } from "react-intersection-observer";
+import { useGetGroupsWhereAdminQuery, useGetJoinedGroupsButNotAdminQuery } from "../../services/groupsApi";
+
 import SmallScreenCard from "./GroupsSuggestionCard/SmallScreenCard";
 import LargeScreenCard from "./GroupsSuggestionCard/LargeScreenCard";
 import SmallScreenBack from "../SmallScreenBack/SmallScreenBack";
 import MidScreenBack from "../SmallScreenBack/MidScreenBack";
 import Spinner from "../Spinner/Spinner";
-import { useGetGroupsWhereAdminQuery, useGetJoinedGroupsButNotAdminQuery } from "../../services/groupsApi";
-import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { setAdminGroups } from "../home/HomeSlice";
 
 export default function GroupsYourGroups() {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
-  const groupUpdate = useSelector((state) => state.home.groupUpdate);
+  const dispatch = useDispatch();
+
+  const allAdminGroups = useSelector((state) => state.home.adminGroups);
 
   const [pageJoined, setPageJoined] = useState(1);
-  const [allAdminGroups, setAllAdminGroups] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
 
@@ -45,16 +47,15 @@ export default function GroupsYourGroups() {
       console.error('Error fetching admin groups:', adminGroupsError);
     }
     if (isSuccessAdminGroups) {
-      console.log('Fetched admin groups data:', adminGroupsDataResponse);
       const adminGroupsData = Object.values(adminGroupsDataResponse);
 
       if (Array.isArray(adminGroupsData)) {
-        setAllAdminGroups(adminGroupsData);
+        dispatch(setAdminGroups(adminGroupsData));
       } else {
         console.error('Admin groups data is not an array:', adminGroupsDataResponse);
       }
     }
-  }, [adminGroupsDataResponse, isSuccessAdminGroups, isErrorAdminGroups, adminGroupsError]);
+  }, [adminGroupsDataResponse, isSuccessAdminGroups, isErrorAdminGroups, adminGroupsError, dispatch]);
 
   useEffect(() => {
     if (isSuccessJoinedGroups && joinedGroupsData?.data) {
