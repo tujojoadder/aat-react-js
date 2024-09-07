@@ -38,7 +38,7 @@ export const groupsApi = createApi({
     // Define your API slice
 getGroupsWhereAdmin: builder.query({
   // Remove the page parameter since pagination is no longer needed
-  query: () => `/groups/joined-admin`,
+  query: (page = 1) => `/groups/joined-admin?page=${page}`,
 }),
 
 
