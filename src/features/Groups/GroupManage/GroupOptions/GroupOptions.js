@@ -57,8 +57,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
         );
         // Set groupUpdate to true after successful update
         dispatch(setGroupUpdate(groupData.name));
-
-        navigate(`/groups/${groupId}`);
+     navigate(`/groups/${groupId}`);
       } catch (err) {
         console.error("Failed to save group name:", err);
       }
@@ -77,8 +76,6 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
         );
         // Set groupUpdate to true after successful update
         dispatch(setGroupUpdate(groupData.details));
-
-        navigate(`/groups/${groupId}`);
       } catch (err) {
         console.error("Failed to save group details:", err);
       }

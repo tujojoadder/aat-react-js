@@ -38,7 +38,9 @@ audience: '',
 groupDetails: '',
 
  // State that will trigger refetch
-groupUpdate: 'hi', 
+groupUpdate: false, 
+//for store admin groups
+adminGroups: [],
 
 };
 
@@ -146,14 +148,27 @@ setGroupDetails(state, action) {
 
 setGroupUpdate: (state, action) => {
   state.groupUpdate = action.payload;  // Update the groupUpdate state
-}
+},
 
-
+setAdminGroups: (state, action) => {
+  state.adminGroups = action.payload;
+},
+// Add this to your homeSlice
+setGroupName: (state, action) => {
+  const { groupId, newName } = action.payload;
+  state.adminGroups = state.adminGroups.map((group) =>
+    group.group_id === groupId
+      ? { ...group, group_name: newName }
+      : group
+  );
+},
   },
 });
 
 export const {
  setGroupUpdate,
+ setGroupName,
+ setAdminGroups,
   setProfile_picture,
   setUser_fname,
   setUser_lname,

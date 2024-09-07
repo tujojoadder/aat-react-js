@@ -34,11 +34,13 @@ export const groupsApi = createApi({
       query: (page = 1) => `/groups/joined-not-admin?page=${page}`,
     }),
 
+
     // Define your API slice
-    getGroupsWhereAdmin: builder.query({
-      // Accept a parameter for the page number
-      query: (page = 1) => `/groups/joined-admin?page=${page}`,
-    }),
+getGroupsWhereAdmin: builder.query({
+  // Remove the page parameter since pagination is no longer needed
+  query: () => `/groups/joined-admin`,
+}),
+
 
     // Define your API slice
     getGroupSuggestion: builder.query({
