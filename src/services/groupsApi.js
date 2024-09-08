@@ -106,6 +106,16 @@ getGroupsWhereAdmin: builder.query({
     }),
 
 
+    addGroupAdmin: builder.mutation({
+      query: ({ groupId, newMember }) => ({
+        url: `/groups/${groupId}/add-admin/${newMember}`,
+        method: 'POST',
+      }),
+    }),
+
+
+
+
 
   }),
 });
@@ -114,6 +124,7 @@ getGroupsWhereAdmin: builder.query({
 // auto-generated based on the defined endpoints
 export const {
   useUpdateGroupDetailsMutation,
+  useAddGroupAdminMutation,
   useGetAllGroupMemberManageQuery,
   useUpdateGroupNameMutation,
   useGetRandomGroupPostQuery,

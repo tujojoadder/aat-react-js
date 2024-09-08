@@ -73,7 +73,9 @@ if (useGetSpecificUserFriendQueryIsSuccess) {
           {allFriends.map((friend, index) => (
             <div className="col-12 mb-2" key={index}>
               <GroupMembers 
-                user_id={friend.user_id}
+                
+                groupId={friend.group_id}
+                newMemberId={friend.user_id}
                 name={`${friend.user_fname} ${friend.user_lname}`} // Combine first and last name
                 image={friend.profile_picture}
                 identifier={friend.identifier}
