@@ -114,7 +114,12 @@ getGroupsWhereAdmin: builder.query({
     }),
 
 
-
+    kickOutMember: builder.mutation({
+      query: ({ groupId, memberId }) => ({
+        url: `/groups/${groupId}/kick-out-member/${memberId}`, // Adjusted to use URL params
+        method: 'DELETE',
+      }),
+    }),
 
 
   }),
@@ -124,6 +129,7 @@ getGroupsWhereAdmin: builder.query({
 // auto-generated based on the defined endpoints
 export const {
   useUpdateGroupDetailsMutation,
+  useKickOutMemberMutation,
   useAddGroupAdminMutation,
   useGetAllGroupMemberManageQuery,
   useUpdateGroupNameMutation,

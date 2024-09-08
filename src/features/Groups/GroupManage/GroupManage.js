@@ -56,15 +56,7 @@ export default function GroupManage() {
     backgroundColor: "lightgrey", // Added for debugging
   };
 
-  const profiles = [
-    {
-      name: "MarkRockwell",
-      handle: "@mark_rockwell",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    // ... more profiles
-  ];
+
 
   // Determine the active tab based on the group audience
   const isPublicGroup = groupData?.data?.audience === "public";
