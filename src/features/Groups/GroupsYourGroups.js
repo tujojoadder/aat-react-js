@@ -44,7 +44,9 @@ export default function GroupsYourGroups() {
     isSuccess: isSuccessAdminGroups,
     refetch: refetchAdmin,
   } = useGetGroupsWhereAdminQuery(pageAdmin);
-
+  if (isSuccessAdminGroups) {
+    console.log(adminGroupsData)
+  }
   // Fetch data for groups where the user is not an admin
   const {
     data: joinedGroupsData,
@@ -53,6 +55,7 @@ export default function GroupsYourGroups() {
     isSuccess: isSuccessJoinedGroups,
   } = useGetJoinedGroupsButNotAdminQuery(pageJoined);
 
+ 
   // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
   useEffect(() => {
   

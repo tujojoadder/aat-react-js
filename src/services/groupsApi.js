@@ -71,12 +71,16 @@ getGroupsWhereAdmin: builder.query({
         `getspecificgroupphotos?page=${photoPage}&id=${groupId}`, // Updated to include id
     }),
 
-    /* get all followers for specific user on profile*/
+    /* get member of group*/
     getAllGroupMember: builder.query({
       query: ({ memberPage = 1, groupId }) =>
         `getspecificgroupmember?page=${memberPage}&id=${groupId}`, // Updated to include id
     }),
-
+    /* get member of group for manage*/
+    getAllGroupMemberManage: builder.query({
+      query: ({ memberPage = 1, groupId }) =>
+        `getspecificgroupmembermanage?page=${memberPage}&id=${groupId}`, // Updated to include id
+    }),
     /*  get random post */
     getRandomGroupPost: builder.query({
       query: (page = 1) => `group/randomposts?page=${page}`, // Updated to include id
@@ -110,6 +114,7 @@ getGroupsWhereAdmin: builder.query({
 // auto-generated based on the defined endpoints
 export const {
   useUpdateGroupDetailsMutation,
+  useGetAllGroupMemberManageQuery,
   useUpdateGroupNameMutation,
   useGetRandomGroupPostQuery,
   useGetGroupSuggestionQuery,

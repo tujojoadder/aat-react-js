@@ -14,6 +14,7 @@ import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
 import LargeScreenProfile from "../../LargeScreenBack/LargeScreenProfileBack";
 import ProfileSkeleton from "../../Profile/ProfileSkeleton/ProfileSkeleton";
 import GroupOptions from "./GroupOptions/GroupOptions";
+import GroupManageMember from "./GroupManageMember/GroupManageMember";
 export default function GroupManage() {
   const { id } = useParams();
   const scrollRef = useRef(null);
@@ -77,7 +78,7 @@ export default function GroupManage() {
       <div
         ref={scrollRef}
         className="header__wrapper m-0 p-0"
-        style={{ overflowY: "scroll", height: "100vh" }}
+        style={{ overflowY: "scroll"}}
       >
         {/* Back buttons */}
         <SmallScreenBack text={`Manage ${groupData?.data?.group_name}`} />
@@ -170,15 +171,8 @@ export default function GroupManage() {
             </div>
 
             <div id="members" className="p-md-3 tab-pane fade">
-              {profiles.map((profile, index) => (
-                <div className="col-12 mb-2" key={index}>
-                  <GroupMembers
-                    name={profile.name}
-                    handle={profile.handle}
-                    image={profile.image}
-                  />
-                </div>
-              ))}
+              <GroupManageMember groupId={id} />
+
             </div>
           </div>
         </div>
