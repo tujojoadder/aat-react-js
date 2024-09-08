@@ -33,7 +33,11 @@ export const groupsApi = createApi({
       // Accept a parameter for the page number
       query: (page = 1) => `/groups/joined-not-admin?page=${page}`,
     }),
-
+   // Define your API slice
+   getJoinedGroupsButNotAdminRight: builder.query({
+    // Accept a parameter for the page number
+    query: (page = 1) => `/groups/joined-not-admin-right?page=${page}`,
+  }),
 
     // Define your API slice
 getGroupsWhereAdmin: builder.query({
@@ -121,6 +125,21 @@ getGroupsWhereAdmin: builder.query({
       }),
     }),
 
+    joinPublicGroup: builder.mutation({
+      query: (groupId) => ({
+        url: `groups/join/${groupId}`,
+        method: 'POST',
+      }),
+    }),
+    leaveGroup: builder.mutation({
+      query: (groupId) => ({
+        url: `groups/leave/${groupId}`,
+        method: 'POST',
+      }),
+    }),
+
+
+
 
   }),
 });
@@ -129,6 +148,9 @@ getGroupsWhereAdmin: builder.query({
 // auto-generated based on the defined endpoints
 export const {
   useUpdateGroupDetailsMutation,
+  useJoinPublicGroupMutation,
+  useLeaveGroupMutation,
+  useGetJoinedGroupsButNotAdminRightQuery,
   useKickOutMemberMutation,
   useAddGroupAdminMutation,
   useGetAllGroupMemberManageQuery,

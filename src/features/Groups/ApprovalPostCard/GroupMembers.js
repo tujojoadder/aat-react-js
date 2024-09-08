@@ -68,23 +68,23 @@ export default function GroupMembers({ name, isCreator, image, identifier, isAdm
           <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
             {!isAdminLocal && (
               <li>
-                <p
+                <a
                   className={`dropdown-item ${isLoading ? 'disabled' : ''}`} // Disable both buttons when loading
                   style={{ cursor: isLoading ? 'not-allowed' : 'pointer' }} // Update cursor to indicate loading state
                   onClick={isLoading ? null : handleAddAdmin} // Prevent click when loading
                 >
                   {isLoading ? 'Adding...' : 'Add as admin'} 
-                </p>
+                </a>
               </li>
             )}
             <li>
-              <p
+              <a
                 className={`dropdown-item ${isLoading ? 'disabled' : ''}`} // Disable both buttons when loading
                 style={{ cursor: isLoading ? 'not-allowed' : 'pointer' }} // Update cursor to indicate loading state
                 onClick={isLoading ? null : handleKickOut} // Prevent click when loading
               >
                 {isLoading ? 'Kicking out...' : 'Kick from group'}
-              </p>
+              </a>
             </li>
           </ul>
         </div>

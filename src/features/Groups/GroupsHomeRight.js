@@ -83,12 +83,12 @@ export default function GroupsHomeRight() {
               </ul>
             </div>
 
-            <h5> Your groups</h5>
+          {/*   <h5> Your groups</h5>
             <Scrollbars
               style={{ width: "100%", height: "55vh", minHeight: "300px" }}
             >
               <GroupRightFooter />
-            </Scrollbars>
+            </Scrollbars> */}
           </div>
         </div>
       </div>

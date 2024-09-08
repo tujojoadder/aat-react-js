@@ -17,6 +17,7 @@ import GroupMember from "./GroupMember/GroupMember";
 import { setGroupAudience, setGroupDetails } from "../../home/HomeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import GroupAbout from "../GroupAbout/GroupAbout";
+import PublicGroupJoinButton from "../GroupButtons/PublicGroupJoinButton/PublicGroupJoinButton";
 export default function GroupProfile() {
   const groupUpdate = useSelector((state) => state.home.groupUpdate); // Track group updates
 
@@ -215,13 +216,7 @@ export default function GroupProfile() {
                 )}
 
                 {!groupData.data.isAdmin && (
-                  <div
-                    className="btn btn-md btn-primary mx-1 d-flex align-items-center"
-                    style={{ cursor: "pointer" }}
-                  >
-                    <i className="fa-solid fa-users"></i>
-                    <span className="ms-1">Join Group</span>
-                  </div>
+                <PublicGroupJoinButton groupId={groupData.data.group_id} joinStatus={groupData.data.joinStatus} />
                 )}
 
                 <div
