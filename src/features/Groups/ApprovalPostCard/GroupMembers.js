@@ -10,7 +10,7 @@ export default function GroupMembers({ name, isCreator, image, identifier, isAdm
   
   const isSmallScreen = useMediaQuery({ query: '(max-width: 400px)' });
   const [isAdminLocal, setIsAdminLocal] = useState(isAdmin);
-  const [isVisible, setIsVisible] = useState(true); // State to manage the visibility
+  const [isDropdownVisible, setIsDropdownVisible] = useState(true); // State to manage dropdown visibility
   const [addAdmin, { isLoading: isAddAdminLoading }] = useAddGroupAdminMutation();
   const [kickOutMember, { isLoading: isKickOutLoading }] = useKickOutMemberMutation();
 
@@ -27,10 +27,9 @@ export default function GroupMembers({ name, isCreator, image, identifier, isAdm
 
   const handleKickOut = async () => {
     try {
-      const res = await kickOutMember({ groupId, memberId: newMemberId }).unwrap();
-      console.log(res);
-      // Set visibility to false to hide the entire div
-      setIsVisible(false);
+      await kickOutMember({ groupId, memberId: newMemberId }).unwrap();
+      // Hide the dropdown menu after successful kick out
+      setIsDropdownVisible(false);
     } catch (err) {
       handleApiError(err, dispatch);
     }
@@ -39,8 +38,6 @@ export default function GroupMembers({ name, isCreator, image, identifier, isAdm
   const truncateText = (text, length) => {
     return text.length > length ? text.substring(0, length) + '...' : text;
   };
-
-  if (!isVisible) return null; // Conditionally render the component
 
   return (
     <div className={`friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm rounded`} style={{ maxWidth: '100%' }}>
@@ -60,7 +57,7 @@ export default function GroupMembers({ name, isCreator, image, identifier, isAdm
           {isSmallScreen ? truncateText(identifier, 12) : identifier}
         </p>
       </div>
-      {(!isCreator && !isAuth) && (
+      {(!isCreator && !isAuth && isDropdownVisible) && (
         <div className="dropdown ms-auto">
           <button className="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             <i className="fas fa-ellipsis-v"></i>

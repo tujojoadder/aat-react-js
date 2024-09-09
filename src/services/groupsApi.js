@@ -138,7 +138,35 @@ getGroupsWhereAdmin: builder.query({
       }),
     }),
 
+    joinPrivateGroup: builder.mutation({
+      query: (groupId) => ({
+        url: `groups/join-request-private/${groupId}`,
+        method: 'POST',
+      }),
+    }),
+    cancelJoinRequest: builder.mutation({
+      query: (groupId) => ({
+        url: `groups/cancel-join-request/${groupId}`,
+        method: 'DELETE',
+      }),
+    }),
 
+/*     see all group join   request with user details  */
+getUsersWithJoinRequests: builder.query({
+  query: ({ memberPage = 1, groupId }) => 
+    `group/join-requests?page=${memberPage}&groupId=${groupId}`,
+}),
+
+/* make decision for join group request */
+manageJoinGroupRequest: builder.mutation({
+  query: ({groupId,decision,sender_id}) => {
+    return {
+      url: "/managejoingrouprequest",
+      method: "POST",
+      body: {groupId,decision,sender_id},
+    };
+  },
+}),
 
 
   }),
@@ -148,6 +176,10 @@ getGroupsWhereAdmin: builder.query({
 // auto-generated based on the defined endpoints
 export const {
   useUpdateGroupDetailsMutation,
+  useManageJoinGroupRequestMutation,
+  useGetUsersWithJoinRequestsQuery,
+  useCancelJoinRequestMutation,
+  useJoinPrivateGroupMutation,
   useJoinPublicGroupMutation,
   useLeaveGroupMutation,
   useGetJoinedGroupsButNotAdminRightQuery,

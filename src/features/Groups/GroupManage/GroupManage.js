@@ -12,11 +12,12 @@ import { useGetGroupDetailsQuery } from "../../../services/groupsApi";
 import GroupOptions from "./GroupOptions/GroupOptions";
 import GroupManageMember from "./GroupManageMember/GroupManageMember";
 import ProfileSkeleton from "../../Profile/ProfileSkeleton/ProfileSkeleton";
+import GroupJoinRequest from "../GroupProfile/GroupJoinRequest/GroupJoinRequest";
 
 export default function GroupManage() {
   const { id } = useParams();
   const scrollRef = useRef(null);
-  const [currentTab, setCurrentTab] = useState("Options");
+  const [currentTab, setCurrentTab] = useState("Post"); // Default to "Post"
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
 
   // Fetch group details
@@ -93,25 +94,25 @@ export default function GroupManage() {
         <ul className="nav nav-tabs mt-3 mx-2">
           {!isPublicGroup && (
             <li className="nav-item">
-              <a className={`nav-link ${currentTab === "Post" ? "active" : ""}`} href="#post" data-bs-toggle="tab">
+              <a className={`nav-link ${currentTab === "Post" ? "active" : ""}`} href="#post" data-bs-toggle="tab" onClick={() => handleTabClick("Post")}>
                 Approval
               </a>
             </li>
           )}
           <li className="nav-item">
-            <a className={`nav-link ${currentTab === "Join Requests" ? "active" : ""}`} href="#join-requests" data-bs-toggle="tab">
+            <a className={`nav-link ${currentTab === "Join Requests" ? "active" : ""}`} href="#join-requests" data-bs-toggle="tab" onClick={() => handleTabClick("Join Requests")}>
               Join Requests
             </a>
           </li>
           {!isSmallScreen && !isPublicGroup && (
             <>
               <li className="nav-item">
-                <a className={`nav-link ${currentTab === "Options" ? "active" : ""}`} href="#options" data-bs-toggle="tab">
+                <a className={`nav-link ${currentTab === "Options" ? "active" : ""}`} href="#options" data-bs-toggle="tab" onClick={() => handleTabClick("Options")}>
                   Options
                 </a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${currentTab === "Members" ? "active" : ""}`} href="#members" data-bs-toggle="tab">
+                <a className={`nav-link ${currentTab === "Members" ? "active" : ""}`} href="#members" data-bs-toggle="tab" onClick={() => handleTabClick("Members")}>
                   Members
                 </a>
               </li>
@@ -156,7 +157,7 @@ export default function GroupManage() {
             <GroupManageMember groupId={id} />
           </div>
           <div id="join-requests" className={`tab-pane fade ${currentTab === "Join Requests" ? "show active" : ""}`}>
-            <h1>Join Requests</h1>
+          <GroupJoinRequest groupId={id} />
           </div>
         </div>
       </div>

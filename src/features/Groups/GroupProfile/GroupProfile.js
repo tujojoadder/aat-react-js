@@ -18,6 +18,7 @@ import { setGroupAudience, setGroupDetails } from "../../home/HomeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import GroupAbout from "../GroupAbout/GroupAbout";
 import PublicGroupJoinButton from "../GroupButtons/PublicGroupJoinButton/PublicGroupJoinButton";
+import PrivateGroupJoinButton from "../GroupButtons/PrivateGroupJoinButton/PrivateGroupJoinButton";
 export default function GroupProfile() {
   const groupUpdate = useSelector((state) => state.home.groupUpdate); // Track group updates
 
@@ -102,14 +103,12 @@ export default function GroupProfile() {
     isFetching,
     isError,
     isSuccess,
-    refetch
+    refetch,
   } = useGetGroupDetailsQuery(id);
 
-
   useEffect(() => {
-   refetch();
+    refetch();
   }, [groupUpdate]);
-
 
   // Dispatch actions to store audience and group details in Redux
   useEffect(() => {
@@ -122,12 +121,9 @@ export default function GroupProfile() {
     }
   }, [isSuccess, groupData, dispatch]);
 
-
   useEffect(() => {
     refetch();
   }, [groupUpdate]);
-
-
 
   if (isSuccess) {
     console.log(groupData);
@@ -156,18 +152,12 @@ export default function GroupProfile() {
     backgroundColor: "lightgrey", // Added for debugging
   };
 
-
-
   return (
     <div
       className="friend-home main border-start border-end mb-1 m-0 p-0"
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
-      <div
-        ref={scrollRef}
-        className="header__wrapper m-0 p-0"
-    
-      >
+      <div ref={scrollRef} className="header__wrapper m-0 p-0">
         {/*    Back buttons */}
         <SmallScreenBack text={`${groupData?.data?.group_name}`} />
         <MidScreenBack text={`${groupData?.data?.group_name}`} />
@@ -216,7 +206,21 @@ export default function GroupProfile() {
                 )}
 
                 {!groupData.data.isAdmin && (
-                <PublicGroupJoinButton groupId={groupData.data.group_id} joinStatus={groupData.data.joinStatus} />
+                  <>
+                    {groupData.data.audience === "public" ? (
+                      <PublicGroupJoinButton
+                        groupId={groupData.data.group_id}
+                        joinStatus={groupData.data.joinStatus}
+                      />
+                    ) : groupData.data.audience === "private" ? (
+                      <PrivateGroupJoinButton
+                        groupId={groupData.data.group_id}
+                        joinStatus={groupData.data.joinStatus}
+                        isRequest={groupData.data.isRequest}
+
+                      />
+                    ) : null}
+                  </>
                 )}
 
                 <div

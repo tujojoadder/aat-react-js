@@ -1,0 +1,77 @@
+/* GroupJoinRequestItem.css */
+
+.group-request-container {
+    border: 1px solid #e1e4e8;
+    padding: 10px;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+}
+
+.group-request-container:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-image img {
+    border: 2px solid #d1d5da;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    color: #14171a;
+}
+
+.user-info .fw-bold {
+    font-size: 1rem;
+}
+
+.user-info .text-muted {
+    font-size: 0.95rem;
+    color: #657786;
+}
+
+.action-buttons {
+    margin-left: auto; /* Push button to the right */
+}
+
+.btn-accept:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+}
+
+.btn-reject {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    background-color: #d8d8d8;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* Add cursor pointer */
+}
+
+.btn-reject:hover {
+    background-color: #c0c0c0; /* Slightly darker on hover */
+}
+.btn-delete-friend {
+    width: 80px; /* Adjust width as needed */
+    height: 33px;
+    border-radius: 50px; /* Rounded corners for the button */
+    background-color: #d8d8d8;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* Add cursor pointer */
+    text-align: center; /* Center text */
+    padding: 0 10px; /* Adjust padding */
+    font-size: 0.9rem; /* Adjust font size */
+}
+
+.btn-delete-friend:hover {
+    background-color: #c0c0c0; /* Slightly darker on hover */
+}

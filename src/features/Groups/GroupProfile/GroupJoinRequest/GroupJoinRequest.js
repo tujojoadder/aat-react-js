@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import SendFriendRequest from '../../../home/Components/SendFriendRequest/SendFriendRequest';
-import { useGetAllGroupMemberManageQuery } from '../../../../services/groupsApi';
 import Spinner from '../../../Spinner/Spinner';
-import GroupMembers from '../../ApprovalPostCard/GroupMembers';
+import {  useGetUsersWithJoinRequestsQuery } from '../../../../services/groupsApi';
+import SendFriendRequest from '../../../home/Components/SendFriendRequest/SendFriendRequest';
+import FriendRequestItemSm from '../../../ItemContainner/SmallScreenItem/FriendRequestItemSm/FriendRequestItemSm';
+import GroupJoinRequestItem from './GroupJoinRequestItem/GroupJoinRequestItem';
 
-export default function GroupManageMember({ groupId }) {
+export default function GroupJoinRequest({ groupId }) {
   const [memberPage, setMemberPage] = useState(1);
   const [allFriends, setAllFriends] = useState([]);
   const [hasMoreFriends, setHasMoreFriends] = useState(true);
@@ -30,11 +31,24 @@ export default function GroupManageMember({ groupId }) {
     isFetching: useGetSpecificUserFriendQueryIsFetching, 
     isError: useGetSpecificUserFriendQueryIsError, 
     isSuccess: useGetSpecificUserFriendQueryIsSuccess 
-  } = useGetAllGroupMemberManageQuery({ memberPage, groupId });
+  } = useGetUsersWithJoinRequestsQuery({ memberPage, groupId });
+
 
 if (useGetSpecificUserFriendQueryIsSuccess) {
-    console.log(useGetSpecificUserFriendQueryData);
+   console.log(useGetSpecificUserFriendQueryData);
 }
+
+
+
+
+/*   // Log query data for debugging
+  useEffect(() => {
+    if (useGetSpecificUserFriendQueryIsSuccess) {
+      console.log(useGetSpecificUserFriendQueryData);
+    }
+  }, [useGetSpecificUserFriendQueryIsSuccess, useGetSpecificUserFriendQueryData]);
+ */
+  // Effect to process fetched data
   useEffect(() => {
     if (useGetSpecificUserFriendQueryIsSuccess && useGetSpecificUserFriendQueryData?.data) {
       if (useGetSpecificUserFriendQueryData.data.length === 0) {
@@ -50,9 +64,7 @@ if (useGetSpecificUserFriendQueryIsSuccess) {
     }
   }, [useGetSpecificUserFriendQueryData, useGetSpecificUserFriendQueryIsSuccess, allFriends]);
 
-if (useGetSpecificUserFriendQueryIsSuccess) {
-    console.log(useGetSpecificUserFriendQueryData)
-}
+
 
 
 
@@ -65,6 +77,7 @@ if (useGetSpecificUserFriendQueryIsSuccess) {
 
   return (
     <div>
+
       <div className="container py-4" style={{ border: 'none' }}>
         <div className="row">
 
@@ -72,20 +85,14 @@ if (useGetSpecificUserFriendQueryIsSuccess) {
 
           {allFriends.map((friend, index) => (
             <div className="col-12 mb-2" key={index}>
-              <GroupMembers 
-                
-                groupId={friend.group_id}
-                newMemberId={friend.user_id}
+              <GroupJoinRequestItem 
+              groupId={groupId}
+                user_id={friend.user_id}
                 name={`${friend.user_fname} ${friend.user_lname}`} // Combine first and last name
                 image={friend.profile_picture}
-                identifier={friend.identifier}
-                isAdmin={friend.isAdmin}
-                isCreator={friend.isCreator}
-                isAuth={friend.isAuth}
-
-/*                 handle={friend.identifier}
+                handle={friend.identifier}
                 is_friend={friend.is_friend}
-                friend_request_sent={friend.friend_request_sent} */
+                friend_request_sent={friend.friend_request_sent}
               />
             </div>
           ))}
