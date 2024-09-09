@@ -166,7 +166,7 @@ export default function GroupProfile() {
       <div
         ref={scrollRef}
         className="header__wrapper m-0 p-0"
-        style={{ overflowY: "scroll", height: "100vh" }}
+    
       >
         {/*    Back buttons */}
         <SmallScreenBack text={`${groupData?.data?.group_name}`} />

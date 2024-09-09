@@ -33,7 +33,7 @@ export default function CreateGroup() {
       // Call the mutation
       await createGroup(formData).unwrap();
       // Handle success
-      navigate("/groups/joined");
+      navigate("/");
       dispatch(setToastSuccess({ toastSuccess: "Group Created Successfully" }));
     } catch (error) {
       handleApiError(error, dispatch);
