@@ -31,7 +31,8 @@ const dispatch = useDispatch();
   };
 
   return (
-    <div>
+
+    <><div>
       {!isJoined ? (
         <div
           className={`btn btn-md btn-primary mx-1 d-flex align-items-center ${isJoining ? 'disabled' : ''}`}
@@ -52,5 +53,23 @@ const dispatch = useDispatch();
         </div>
       )}
     </div>
+    
+    <div
+                  className="btn btn-md mx-1  me-3 d-flex align-items-center"
+                  style={{
+                    cursor: "pointer",
+                    minWidth: "70px",
+                    
+                    backgroundColor: "#e4e6eb",
+                  }}
+                >
+                  <i className="fa-solid fa-share"></i>
+                  &nbsp; Share
+                </div>
+    
+    
+    
+    </>
+    
   );
 }

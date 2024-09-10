@@ -45,16 +45,16 @@ export default function ApproveBtn({ groupId, postId }) {
   }
 
   return (
-    <div className="d-flex align-items-center">
+    <div className="d-flex align-items-center me-3">
       <button
-        className="btn btn-danger btn-sm me-1"
+        className="btn btn-danger btn-sm me-1 "
         onClick={handleReject}
         disabled={isRejecting || isApproving}
       >
         {isRejecting ? "Removing..." : "Remove"}
       </button>
       <button
-        className="btn btn-success btn-sm"
+        className="btn btn-primary btn-sm ms-4"
         onClick={handleApprove}
         disabled={isApproving || isRejecting}
       >

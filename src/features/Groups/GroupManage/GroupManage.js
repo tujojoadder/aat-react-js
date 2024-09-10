@@ -107,7 +107,7 @@ export default function GroupManage() {
           {!isPublicGroup && (
             <li className="nav-item">
               <a className={`nav-link ${currentTab === "Join Requests" ? "active" : ""}`} href="#join-requests" data-bs-toggle="tab" onClick={() => handleTabClick("Join Requests")}>
-                Join Requests
+                Join Request
               </a>
             </li>
           )}

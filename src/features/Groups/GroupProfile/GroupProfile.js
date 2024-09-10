@@ -196,7 +196,7 @@ export default function GroupProfile() {
                     className="text-decoration-none"
                   >
                     <div
-                      className="btn btn-md btn-primary mx-1 d-flex align-items-center"
+                      className="btn btn-md btn-primary mx-4 d-flex align-items-center"
                       style={{ cursor: "pointer" }}
                     >
                       <i className="fa-solid fa-pen"></i>
@@ -215,25 +215,15 @@ export default function GroupProfile() {
                     ) : groupData.data.audience === "private" ? (
                       <PrivateGroupJoinButton
                         groupId={groupData.data.group_id}
-                        joinStatus={groupData.data.joinStatus}
+                        isJoin={groupData.data.joinStatus}
                         isRequest={groupData.data.isRequest}
-
+                        
                       />
                     ) : null}
                   </>
                 )}
 
-                <div
-                  className="btn btn-md mx-1 me-3 d-flex align-items-center"
-                  style={{
-                    cursor: "pointer",
-                    minWidth: "70px",
-                    backgroundColor: "#e4e6eb",
-                  }}
-                >
-                  <i className="fa-solid fa-share"></i>
-                  &nbsp; Share
-                </div>
+                
               </div>
             </nav>
           </div>

@@ -79,7 +79,7 @@ const TextPost = ({ post }) => {
   };
 
   return (
-    <div className="posts mx-2">
+    <div className="posts mx-2 ">
 
 {!post ? (
         <TextPostSkeleton />
@@ -123,7 +123,7 @@ const TextPost = ({ post }) => {
           </p>
         </div>
 
-        <div className="user-contents">
+        <div className="user-contents pe-4">
           <p style={{ margin: "0px" }}>
             {isExpanded ? fullText : previewText}
             {fullText.length > 175 && (

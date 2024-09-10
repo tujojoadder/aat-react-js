@@ -39,7 +39,7 @@ const ApprovalTextPost = ({post}) => {
   }, []); // Empty dependency array ensures effect runs only on mount and unmount
 
   return (
-    <div className="posts ">
+    <div className="posts " style={{minWidth:'10px'}}>
       <div className="user-pics">
         <img  src={`${post.author.profile_picture}`}
         alt="user3" />

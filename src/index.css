@@ -139,7 +139,7 @@ code {
   padding-left: 0px;
   padding-top: 10px;
   padding-bottom: 10px;
-
+min-width: 295px !important;
   background-color: #f9f9f9;
   padding-right: 25px; /* Default for large devices */
 }
