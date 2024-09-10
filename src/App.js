@@ -24,7 +24,6 @@ import GroupsHomeRight from "./features/Groups/GroupsHomeRight";
 import GroupSuggestion from "./features/Groups/GroupSuggestion";
 import GroupProfile from "./features/Groups/GroupProfile/GroupProfile";
 import CreateGroup from "./features/Groups/CreateGroup/CreateGroup";
-import GroupsYourGroups from "./features/Groups/GroupsYourGroups";
 import GroupManage from "./features/Groups/GroupManage/GroupManage";
 import NoUserSelectedAllFriends from "./features/Friends/NoUserSelectedAllFriends";
 import NoUserSelectedSentRequest from "./features/Friends/NoUserSelectedSentRequest";
@@ -256,10 +255,6 @@ function App() {
             {/* Groups---> create group */}
             <Route path="groups/create" exact element={<CreateGroup />} />
             <Route path="groups/create" exact element={<GroupsHomeRight />} />
-
-            {/* Groups---> your group */}
-            <Route path="groups/joinned" exact element={<GroupsYourGroups />} />
-            <Route path="groups/joineed" exact element={<GroupsHomeRight />} />
 
             {/* Groups---> my group */}
             <Route path="groups/mygroup" exact element={<GroupsMyGroups />} />

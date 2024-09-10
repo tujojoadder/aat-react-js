@@ -27,7 +27,6 @@ import GroupProfile from "../Groups/GroupProfile/GroupProfile";
 import GroupProfileRight from "../Groups/GroupProfile/GroupProfileRight";
 import CreateGroup from "../Groups/CreateGroup/CreateGroup";
 import CreateGroupRight from "../Groups/CreateGroup/CreateGroupRight";
-import GroupsYourGroups from "../Groups/GroupsYourGroups";
 import GroupManage from "../Groups/GroupManage/GroupManage";
 import NoUserSelectedSuggestion from "../Friends/NoUserSelectedSuggestion";
 import NoUserSelectedSentRequest from "../Friends/NoUserSelectedSentRequest";
@@ -415,13 +414,7 @@ const Navbar = () => {
                 <Route path="/groups/mygroup/:id" element={<GroupProfile />} />
                 {/*  <<---Groups-->>create */}
                 <Route path="groups/create" exact element={<CreateGroup />} />
-                {/*  <<---Groups-->>your group */}
-                <Route
-                  path="groups/joined"
-                  exact
-                  element={<GroupsYourGroups />}
-                />
-
+        
             {/*  <<---Groups-->>my group */}
             <Route
                   path="groups/mygroup"
@@ -584,8 +577,7 @@ const Navbar = () => {
               />
               {/*  <<---Groups-->>create */}
               <Route path="groups/create" exact element={<GroupsHomeRight />} />
-              {/*  <<---Groups-->>your group */}
-              <Route path="groups/joined" exact element={<GroupsHomeRight />} />
+
              {/*  <<---Groups-->>your group */}
             <Route path="groups/mygroup" exact element={<GroupsHomeRight />} />
                 {/*  <<---Groups-->>joined group */}
