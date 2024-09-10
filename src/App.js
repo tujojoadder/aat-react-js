@@ -65,6 +65,8 @@ import SetMProfile from "./features/Profile/SetMProfile/SetMProfile";
 import SetCoverPhoto from "./features/Profile/SetCoverPhoto/SetCoverPhoto";
 import GroupProfileRight from "./features/Groups/GroupProfile/GroupProfileRight";
 import GroupManageright from "./features/Groups/GroupManage/GroupManageright";
+import GroupsMyGroups from "./features/Groups/GroupsMyGroups";
+import GroupsJoinedGroups from "./features/Groups/GroupsJoinedGroups";
 
 function App() {
   const dispatch = useDispatch();
@@ -258,6 +260,15 @@ function App() {
             {/* Groups---> your group */}
             <Route path="groups/joinned" exact element={<GroupsYourGroups />} />
             <Route path="groups/joineed" exact element={<GroupsHomeRight />} />
+
+            {/* Groups---> my group */}
+            <Route path="groups/mygroup" exact element={<GroupsMyGroups />} />
+            <Route path="groups/mygroup" exact element={<GroupsHomeRight />} />
+            {/* Groups---> joined groups */}
+            <Route path="groups/joingroup" exact element={<GroupsJoinedGroups />} />
+            <Route path="groups/joingroup" exact element={<GroupsHomeRight />} />
+
+
 
             {/* Groups---> manage group */}
             <Route path="groups/:id/manage" exact element={<GroupManage />} />

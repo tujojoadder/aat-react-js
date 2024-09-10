@@ -62,6 +62,8 @@ import MyProfile from "../Profile/MyProfile/MyProfile";
 import SetProfile from "../Profile/SetProfile/SetProfile";
 import SetCoverPhoto from "../Profile/SetCoverPhoto/SetCoverPhoto";
 import GroupManageright from "../Groups/GroupManage/GroupManageright";
+import GroupsMyGroups from "../Groups/GroupsMyGroups";
+import GroupsJoinedGroups from "../Groups/GroupsJoinedGroups";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -419,6 +421,21 @@ const Navbar = () => {
                   exact
                   element={<GroupsYourGroups />}
                 />
+
+            {/*  <<---Groups-->>my group */}
+            <Route
+                  path="groups/mygroup"
+                  exact
+                  element={<GroupsMyGroups />}
+                />
+
+                  {/*  <<---Groups-->>joined group */}
+               <Route
+                  path="groups/joingroup"
+                  exact
+                  element={<GroupsJoinedGroups />}
+                />
+
                 {/*  <<---Groups-->>manage group */}
                 <Route
                   path="groups/:id/manage"
@@ -569,6 +586,14 @@ const Navbar = () => {
               <Route path="groups/create" exact element={<GroupsHomeRight />} />
               {/*  <<---Groups-->>your group */}
               <Route path="groups/joined" exact element={<GroupsHomeRight />} />
+             {/*  <<---Groups-->>your group */}
+            <Route path="groups/mygroup" exact element={<GroupsHomeRight />} />
+                {/*  <<---Groups-->>joined group */}
+                <Route
+                  path="groups/joingroup"
+                  exact
+                  element={<GroupsHomeRight />}
+                />
               {/*  <<---Groups-->>manage group */}
               <Route
                 path="groups/:id/manage"

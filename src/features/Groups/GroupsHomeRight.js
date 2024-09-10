@@ -1,39 +1,27 @@
 import React from "react";
 import "./GroupsHomeRight.css";
-import {
-  NavLink,
-  useLocation,
-  BrowserRouter,
-  Route,
-  Routes,
-} from "react-router-dom";
-import { Scrollbars } from "react-custom-scrollbars";
-import JoinedGroups from "./JoinedGroups/JoinedGroups";
-import GroupRightFooter from "./GroupRightFooter/GroupRightFooter";
+import { NavLink, useLocation } from "react-router-dom";
 
 export default function GroupsHomeRight() {
-  const scrollRef = React.useRef(null);
-
   const location = useLocation();
-  const isCreatePage = location.pathname === "/groups/create";
+  const isCreateGroupPage = location.pathname === "/groups/create";
 
   return (
     <div style={{ overflowX: "hidden" }}>
       <div
-        ref={scrollRef}
-        className="scroll-container w-100 "
-        style={{ overflowY: "hidden", position: "fixed " }}
+        className="scroll-container w-100"
+        style={{ overflowY: "hidden", position: "fixed" }}
       >
-        <div className="col-lg-3 ms-1 p-0 m-0 groups_right_side_bar bg-body rounded">
-          <div
-            className="menu-container"
-            style={{ height: "100vh", overflow: "hidden" }}
-          >
+        <div
+          style={{ overflow: "hidden" }}
+          className="col-lg-3 ms-1 p-0 m-0 groups_right_side_bar bg-body rounded"
+        >
+          <div className="menu-container" style={{ height: "100vh" }}>
             <div
-              className="menu "
+              className="menu"
               style={{ height: "45vh", minHeight: "310px" }}
             >
-              <h3 className="menu-header text-left ps-5 text-dark">Groups</h3>
+              <h3 className="menu-header text-left ps-2 text-dark">Groups</h3>
               <ul className="nav flex-column">
                 <li className="nav-item w-100">
                   <NavLink
@@ -42,9 +30,10 @@ export default function GroupsHomeRight() {
                     className="nav-link"
                     activeClassName="active"
                   >
-                    <i className="fa-solid fa-book me-2"></i> Your feed
+                      <i className="fa-solid fa-book me-2"></i> Your feed
                   </NavLink>
                 </li>
+                <li className="nav-item w-100"></li>
                 <li className="nav-item w-100">
                   <NavLink
                     end
@@ -52,46 +41,50 @@ export default function GroupsHomeRight() {
                     className="nav-link"
                     activeClassName="active"
                   >
-                    <i className="fas fa-lightbulb fa-fw me-2"></i> Suggestions
+                    <i className="fa-solid fa-lightbulb me-2"></i> Suggestions
                   </NavLink>
                 </li>
-                <li className="nav-item w-100 mb-3">
+                <li className="nav-item w-100">
                   <NavLink
                     end
-                    to="/groups/joined"
-                    className={({ isActive }) =>
-                        isActive || location.pathname.startsWith('/groups/mygroup')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
+                    to="/groups/mygroup"
+                    className="nav-link"
+                    activeClassName="active"
                   >
-                    <i className="fa-solid fa-users  me-2"></i> Your groups
+                    <i className="fa-solid fa-users me-2"></i> My groups
                   </NavLink>
                 </li>
-                {!isCreatePage && (
-                  <li className="nav-item w-100">
+                <li className="nav-item w-100">
+                  <NavLink
+                    end
+                    to="/groups/joingroup"
+                    className="nav-link"
+                    activeClassName="active"
+                  >
+                    <i className="fa-solid fa-user-friends me-2"></i> Joined groups
+                  </NavLink>
+                </li>
+
+                {/* Conditionally render the Create New Group button */}
+                {!isCreateGroupPage && (
+                  <li className="nav-item w-100 px-3">
                     <NavLink
                       end
                       to="/groups/create"
-                      className="create-group-link text-center py-2  px-3"
-                      activeClassName="active "
+                      className="nav-link create-group-link text-center mt-3 py-2"
+                      activeClassName="active"
                     >
-                      <i className="fa-solid fa-plus "></i> Create New Group
+                      <i className="fa-solid fa-plus me-2 "></i> Create New Group
                     </NavLink>
                   </li>
                 )}
               </ul>
             </div>
-
-          {/*   <h5> Your groups</h5>
-            <Scrollbars
-              style={{ width: "100%", height: "55vh", minHeight: "300px" }}
-            >
-              <GroupRightFooter />
-            </Scrollbars> */}
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+
