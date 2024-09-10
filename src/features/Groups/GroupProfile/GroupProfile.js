@@ -304,7 +304,7 @@ export default function GroupProfile() {
               Discussion
             </h5>
 
-            <GroupDiscussion groupId={id} />
+            <GroupDiscussion groupId={id} joinStatus={groupData.data.joinStatus} />
           </div>
 
           {/* Photos Tab Content */}

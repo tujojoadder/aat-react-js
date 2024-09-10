@@ -1,23 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
-import ApprovalTextPost from "../ApprovalPostCard/ApprovalTextPost";
-import ApprovalImagePost from "../ApprovalPostCard/ApprovalImagePost";
-import ApprovalBothPost from "../ApprovalPostCard/ApprovalBothPost";
-import GroupMembers from "../ApprovalPostCard/GroupMembers";
-import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
-import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
-import LargeScreenProfile from "../../LargeScreenBack/LargeScreenProfileBack";
-import { useGetGroupDetailsQuery } from "../../../services/groupsApi";
+import ApprovalPosts from "../ApprovalPostCard/ApprovalPosts";
 import GroupOptions from "./GroupOptions/GroupOptions";
 import GroupManageMember from "./GroupManageMember/GroupManageMember";
 import ProfileSkeleton from "../../Profile/ProfileSkeleton/ProfileSkeleton";
 import GroupJoinRequest from "../GroupProfile/GroupJoinRequest/GroupJoinRequest";
+import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
+import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
+import LargeScreenProfile from "../../LargeScreenBack/LargeScreenProfileBack";
+import { useGetGroupDetailsQuery } from "../../../services/groupsApi";
 
 export default function GroupManage() {
   const { id } = useParams();
   const scrollRef = useRef(null);
-  const [currentTab, setCurrentTab] = useState("Post"); // Default to "Post"
+  const [currentTab, setCurrentTab] = useState("Post"); // Default to "Post" for private groups
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
 
   // Fetch group details
@@ -36,6 +33,13 @@ export default function GroupManage() {
     };
   }, []);
 
+  // Set default tab based on group audience
+  useEffect(() => {
+    if (isSuccess) {
+      setCurrentTab(groupData?.data?.audience === "public" ? "Options" : "Post");
+    }
+  }, [isSuccess, groupData?.data?.audience]);
+
   // Handle tab click
   const handleTabClick = (tabName) => {
     setCurrentTab(tabName);
@@ -52,6 +56,9 @@ export default function GroupManage() {
     );
   }
 
+  // Determine if the group is public or private
+  const isPublicGroup = groupData?.data?.audience === "public";
+
   // Background styling for the profile cover
   const backgroundImageStyle = {
     backgroundImage: `url(${groupData?.data?.group_cover})`,
@@ -60,11 +67,9 @@ export default function GroupManage() {
     minHeight: "calc(100px + 15vw)",
   };
 
-  const isPublicGroup = groupData?.data?.audience === "public";
-
   return (
     <div className="friend-home main border-start border-end mb-1 m-0 p-0" style={{ backgroundColor: "white", minHeight: "100vh" }}>
-      <div ref={scrollRef} className="header__wrapper m-0 p-0" >
+      <div ref={scrollRef} className="header__wrapper m-0 p-0">
         {/* Back buttons */}
         <SmallScreenBack text={`Manage ${groupData?.data?.group_name}`} />
         <MidScreenBack text={`Manage ${groupData?.data?.group_name}`} />
@@ -99,12 +104,14 @@ export default function GroupManage() {
               </a>
             </li>
           )}
-          <li className="nav-item">
-            <a className={`nav-link ${currentTab === "Join Requests" ? "active" : ""}`} href="#join-requests" data-bs-toggle="tab" onClick={() => handleTabClick("Join Requests")}>
-              Join Requests
-            </a>
-          </li>
-          {!isSmallScreen && !isPublicGroup && (
+          {!isPublicGroup && (
+            <li className="nav-item">
+              <a className={`nav-link ${currentTab === "Join Requests" ? "active" : ""}`} href="#join-requests" data-bs-toggle="tab" onClick={() => handleTabClick("Join Requests")}>
+                Join Requests
+              </a>
+            </li>
+          )}
+          {!isSmallScreen && (
             <>
               <li className="nav-item">
                 <a className={`nav-link ${currentTab === "Options" ? "active" : ""}`} href="#options" data-bs-toggle="tab" onClick={() => handleTabClick("Options")}>
@@ -142,12 +149,10 @@ export default function GroupManage() {
         </ul>
 
         {/* Tab Content */}
-        <div className="tab-content p-3 px-0">
+        <div className="tab-content p-3 mx-2 px-0">
           {!isPublicGroup && (
             <div id="post" className={`tab-pane fade ${currentTab === "Post" ? "show active" : ""}`}>
-              <ApprovalTextPost />
-              <ApprovalImagePost />
-              <ApprovalBothPost />
+              <ApprovalPosts groupId={id} />
             </div>
           )}
           <div id="options" className={`tab-pane mx-2 fade ${currentTab === "Options" ? "show active" : ""}`}>
@@ -156,9 +161,11 @@ export default function GroupManage() {
           <div id="members" className={`tab-pane fade ${currentTab === "Members" ? "show active" : ""}`}>
             <GroupManageMember groupId={id} />
           </div>
-          <div id="join-requests" className={`tab-pane fade ${currentTab === "Join Requests" ? "show active" : ""}`}>
-          <GroupJoinRequest groupId={id} />
-          </div>
+          {!isPublicGroup && (
+            <div id="join-requests" className={`tab-pane fade ${currentTab === "Join Requests" ? "show active" : ""}`}>
+              <GroupJoinRequest groupId={id} />
+            </div>
+          )}
         </div>
       </div>
     </div>

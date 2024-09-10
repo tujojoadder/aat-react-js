@@ -2,15 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import { useInView } from "react-intersection-observer";
 
-import Spinner from '../../../Spinner/Spinner';
-import ImagePost from '../../../home/Components/ImagePost/ImagePost';
-import TextPost from '../../../home/Components/TextPost/TextPost';
-import BPost from '../../../home/Components/BPost/BPost';
-import { useGetSpecificGroupPostQuery } from '../../../../services/groupsApi';
-import CreatePost from '../../../home/Components/CreatePost/CreatePost';
-import CreateGroupPost from '../../CreateGroupPost/CreateGroupPost';
+import Spinner from '../../Spinner/Spinner';
+import ImagePost from '../../home/Components/ImagePost/ImagePost';
+import TextPost from '../../home/Components/TextPost/TextPost';
+import BPost from '../../home/Components/BPost/BPost';
+import { useGetSpecificApprovalRwquestedGroupPostsQuery } from '../../../services/groupsApi';
+import ApprovalTextPost from './ApprovalTextPost';
+import ApprovalImagePost from './ApprovalImagePost';
+import ApprovalBothPost from './ApprovalBothPost';
 
-export default function GroupDiscussion({ groupId,joinStatus }) {
+export default function ApprovalPosts({ groupId }) {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
@@ -22,7 +23,7 @@ export default function GroupDiscussion({ groupId,joinStatus }) {
   });
 
   // Fetch posts using RTK Query
-  const { data: userPosts, isFetching, isError, isSuccess } = useGetSpecificGroupPostQuery({ page, groupId });
+  const { data: userPosts, isFetching, isError, isSuccess } = useGetSpecificApprovalRwquestedGroupPostsQuery({ page, groupId });
 
   // Reset posts when `groupId` changes
   useEffect(() => {
@@ -69,17 +70,14 @@ if (isSuccess) {
 
   return (
     <div className="post-wrapper">
-      {joinStatus &&  <CreateGroupPost groupId={groupId}/>}
-
-
-
+      
       {/* Display posts */}
       {allPosts.length === 0 && !isFetching && <h4 className="text-center" style={{color:'#592529'}}>No Posts to show</h4>}
       {allPosts.map((post) => (
         <div key={post.post_id} className="post-container">
-          {post.text_post && !post.image_post && <TextPost post={post} />}
-          {!post.text_post && post.image_post && <ImagePost post={post} />}
-          {post.text_post && post.image_post && <BPost post={post} />}
+          {post.text_post && !post.image_post && <ApprovalTextPost post={post} />}
+          {!post.text_post && post.image_post && <ApprovalImagePost post={post} />}
+          {post.text_post && post.image_post && <ApprovalBothPost post={post} />}
         </div>
       ))}
 

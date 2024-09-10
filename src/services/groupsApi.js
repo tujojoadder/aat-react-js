@@ -169,6 +169,27 @@ manageJoinGroupRequest: builder.mutation({
 }),
 
 
+    /*    get specific group posts approval requests*/
+    getSpecificApprovalRwquestedGroupPosts: builder.query({
+      query: ({ page = 1, groupId }) =>
+        `getspecificgrouppostapprovalrequestes?page=${page}&id=${groupId}`, // Updated to include id
+    }),
+  /*   approvePost group post */
+
+    approvePost: builder.mutation({
+      query: ({ groupId, postId }) => ({
+        url: `/groups/${groupId}/posts/${postId}/approve`,
+        method: 'POST',
+      }),
+    }),
+
+    rejectPostApproval: builder.mutation({
+      query: ({ groupId, postId }) => ({
+        url: `/groups/${groupId}/posts/${postId}/reject`,
+        method: 'DELETE',
+      }),
+    }),
+
   }),
 });
 
@@ -176,6 +197,9 @@ manageJoinGroupRequest: builder.mutation({
 // auto-generated based on the defined endpoints
 export const {
   useUpdateGroupDetailsMutation,
+  useRejectPostApprovalMutation,
+  useApprovePostMutation,
+  useGetSpecificApprovalRwquestedGroupPostsQuery,
   useManageJoinGroupRequestMutation,
   useGetUsersWithJoinRequestsQuery,
   useCancelJoinRequestMutation,

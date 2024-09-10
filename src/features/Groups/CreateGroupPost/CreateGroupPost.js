@@ -1,12 +1,10 @@
 import React, { useRef, useState } from "react";
-import "./CreatePost.css";
-import { useUserPostInsertMutation } from "../../../../services/postApi";
-import { handleApiError } from "../../../handleApiError/handleApiError";
+import { handleApiError } from "../../handleApiError/handleApiError";
 import { useDispatch } from "react-redux";
-import { setToastSuccess } from "../../HomeSlice";
+import { setToastSuccess } from "../../home/HomeSlice";
+import { useUserGroupPostInsertMutation } from "../../../services/postApi";
 
-export default function CreatePost() {
-  const selectRef = useRef(null);
+export default function CreateGroupPost({ groupId }) {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [textValue, setTextValue] = useState("");
@@ -15,26 +13,18 @@ export default function CreatePost() {
   const [message, setMessage] = useState("");
   const [showResetButton, setShowResetButton] = useState(false);
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
-  const [audience, setAudience] = useState('public'); // New state for audience
 
-  const [userPostInsert, { isLoading, isError, isSuccess, error }] = useUserPostInsertMutation();
+  const [userPostInsert, { isLoading, isError, isSuccess, error }] = useUserGroupPostInsertMutation();
   const dispatch = useDispatch();
-
-  const handleSelectChange = (e) => {
-    setAudience(e.target.value); // Set the audience
-    if (selectRef.current) {
-      selectRef.current.blur();
-    }
-  };
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-        setSelectedFile(file);
-        setMessage('image selected');
-        setShowResetButton(true);
+      setSelectedFile(file);
+      setMessage('image selected');
+      setShowResetButton(true);
     }
-};
+  };
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
@@ -86,7 +76,7 @@ export default function CreatePost() {
 
     const formData = new FormData();
     formData.append("text", textValue);
-    formData.append("audience", audience); // Add audience to FormData
+    formData.append("groupId", groupId); // Add groupId to FormData
 
     if (selectedFile || textValue.trim()) {
       formData.append("image_or_text", selectedFile ? "image" : "text");
@@ -99,20 +89,22 @@ export default function CreatePost() {
     try {
       const res = await userPostInsert(formData);
       if (res.data) {
-  
+        console.log(res.data);
         handleReset(); // Clear form after successful submission
       } else if (res.error) {
+        console.log(res.error);
         handleApiError(res.error, dispatch);
       }
     } catch (error) {
+      console.log(error);
       handleApiError(error, dispatch);
     }
   };
 
   return (
-    <div className="create-post mb-3" >
-      <div className="post shadow-sm p-3 bg-white rounded" >
-        <form onSubmit={handleSubmit} >
+    <div className="create-post mb-3">
+      <div className="post shadow-sm p-3 bg-white rounded">
+        <form onSubmit={handleSubmit}>
           <div className="form-group-1 mb-3">
             <textarea
               placeholder="What's happening?"
@@ -151,7 +143,7 @@ export default function CreatePost() {
                   onClick={handleUploadClick}
                 ></i>
                 <input 
-                disabled={isLoading}
+                  disabled={isLoading}
                   ref={fileInputRef}
                   type="file"
                   style={{ display: "none" }}
@@ -160,39 +152,10 @@ export default function CreatePost() {
               </div>
             </div>
 
-            <div className="p-0 m-0">
-              <select
-              disabled={isLoading}
-                ref={selectRef}
-                className="form-select px-3 custom-select"
-                aria-label="Select privacy"
-                style={{
-                  width: '110px',
-                  appearance: "none",
-                  padding: "5px 10px",
-                  border: '2px solid #1682e8',
-                  borderRadius: '30px',
-                  color: '#1682e8',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  backgroundColor: '#fff',
-                  transition: 'border-color 0.3s ease',
-                }}
-                onChange={handleSelectChange}
-                onFocus={(e) => e.target.style.borderColor = "#0c62a8"}
-                onBlur={(e) => e.target.style.borderColor = "#1682e8"}
-              >
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-                <option value="only_me">Only Me</option>
-              </select>
-            </div>
-
             <div className="ms-auto d-flex align-items-center">
-              
               {showResetButton && (
                 <button
-                disabled={isLoading}
+                  disabled={isLoading}
                   type="button"
                   className="btn p-2 fs-7 me-2"
                   style={{
@@ -223,34 +186,29 @@ export default function CreatePost() {
               >
                 {isLoading ? "Posting..." : "Post"}
               </button>
-
-             
             </div>
-            
           </div>
-
         </form>
         {message && (
-  <div
-    className="image-selected-message me-2"
-    style={{
-      padding: '6px 12px',
-      fontSize: '14px',
-      fontWeight: '500',
-      color: 'black',
-      backgroundColor: '#f1f4f8',
-      borderRadius: '12px',
-      display: 'inline-block',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-      transition: 'opacity 0.3s ease',
-      opacity: isLoading ? '0.6' : '1',
-      marginLeft:'15px'
-    }}
-  >
-    {message}
-  </div>
-)}
-
+          <div
+            className="image-selected-message me-2"
+            style={{
+              padding: '6px 12px',
+              fontSize: '14px',
+              fontWeight: '500',
+              color: 'black',
+              backgroundColor: '#f1f4f8',
+              borderRadius: '12px',
+              display: 'inline-block',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              transition: 'opacity 0.3s ease',
+              opacity: isLoading ? '0.6' : '1',
+              marginLeft: '15px'
+            }}
+          >
+            {message}
+          </div>
+        )}
       </div>
     </div>
   );

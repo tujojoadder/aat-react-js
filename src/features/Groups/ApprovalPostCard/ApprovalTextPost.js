@@ -1,8 +1,21 @@
+
 import React, { useState, useEffect } from "react";
 import image from "./logo.jpg";
-const ApprovalTextPost = () => {
+import { formatPostDate } from "../../../utils/dateUtils";
+import Removebtn from "./ApprovalButton/Removebtn";
+import ApproveBtn from "./ApprovalButton/ApproveBtn";
+const ApprovalTextPost = ({post}) => {
   const [commentsHeight, setCommentsHeight] = useState("80vh"); // Default height for medium devices
 
+    /* Text */
+    const [isExpanded, setIsExpanded] = useState(false);
+    const fullText = post.text_post.post_text;
+    const previewText = fullText.substring(0, 175);
+  
+    const toggleText = () => {
+      setIsExpanded(!isExpanded);
+    };
+  
   // Function to update the height based on window width
   const updateHeight = () => {
     if (window.innerWidth < 576) {
@@ -26,28 +39,40 @@ const ApprovalTextPost = () => {
   }, []); // Empty dependency array ensures effect runs only on mount and unmount
 
   return (
-    <div className="posts">
+    <div className="posts ">
       <div className="user-pics">
-        <img src={image} alt="user3" />
+        <img  src={`${post.author.profile_picture}`}
+        alt="user3" />
       </div>
       <div className="user-content-text-box">
         <div className="user-names-text" style={{ marginTop: '2px' }}>
           <div className="name-column">
-            <h1 className="full-name-text m-0 p-0">Mohammad</h1>
-            <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
+            <h1 className="full-name-text m-0 p-0">{post.author.user_fname} {post.author.user_lname}</h1>
+            <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
           </div>
-          <p className="time-text ms-3" style={{ marginTop: '10px' }}>2hrs</p>
+          <p className="time-text ms-3" style={{ marginTop: '10px' }}>
+          {formatPostDate(post.created_at)}
+          </p>
         </div>
 
-        <div className="user-content">
-          <p style={{ margin: '0px' }}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur, laboriosam sed temporibus qui corporis sequi quos vel officia perferendis fuga odit facere ullam, expedita assumenda illum voluptas commodi. Impedit?
+        <div className="user-contents pe-3">
+          <p style={{ margin: "0px" }}>
+            {isExpanded ? fullText : previewText}
+            {fullText.length > 175 && (
+              <span
+                onClick={toggleText}
+                style={{ color: "blue", cursor: "pointer" }}
+              >
+                {isExpanded ? " See less" : "... See more"}
+              </span>
+            )}
           </p>
         </div>
 
         <div className="content-actions pe-3 d-flex justify-content-end">
-          <button className="btn btn-success me-2">Approve</button>
-          <button className="btn btn-danger">Remove</button>
+        {/* buttons */}
+
+       <ApproveBtn groupId={post.group_id} postId={post.post_id} />
         </div>
       </div>
     </div>

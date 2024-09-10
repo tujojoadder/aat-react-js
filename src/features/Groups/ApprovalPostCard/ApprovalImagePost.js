@@ -1,33 +1,74 @@
-import React from 'react'
+import React, { useState } from 'react'
 import image from "./logo.jpg";
-export default function ApprovalImagePost() {
+import { formatDate } from 'date-fns';
+import { formatPostDate } from '../../../utils/dateUtils';
+import Removebtn from './ApprovalButton/Removebtn';
+import ApproveBtn from './ApprovalButton/ApproveBtn';
+export default function ApprovalImagePost({post}) {
+
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+    /* handle image loaded or not  */
+    const handleImageLoad = () => {
+      setIsImageLoaded(true);
+    };
+    
   return (
 <div className="posts ">
       <div className="user-pics">
-        <img src={image} alt="user1" />
+        <img 
+         src={`${post.author.profile_picture}`}
+        alt="user1" />
       </div>
       <div className="user-content-box ">
         <div className="user-names" style={{ marginTop: "2px" }}>
           <div className="name-column">
-            <h1 className="full-name m-0 p-0">Turjo Joadder </h1>
-            <p className="user-name m-0 p-0">@eric_alvareeric</p>
+            <h1 className="full-name m-0 p-0">
+            {post.author.user_fname} {post.author.user_lname}
+            </h1>
+            <p className="user-name m-0 p-0">
+               @{post.author.identifier}
+              </p>
           </div>
           <p className="time me-4" style={{ marginTop: "18px" }}>
-            {" "}
-            2hrs
+          {formatPostDate(post.created_at)}
           </p>
         </div>
 
-        <div className="user-content  "  style={{marginTop:'-5px'}}>
-          <img
-            style={{ Width: "100%", maxHeight: "65vh" }}
-            src={image}
-            alt="content1"
-          />
-        </div>
+        <div className="user-contents">
+              {!isImageLoaded && (
+                <div className="image-skeleton">
+                  <div
+                    className="skeleton-box"
+                    style={{
+                      height: "300px",
+                      width: "100%",
+                      backgroundColor: "#e5e5e5",
+                      borderRadius: "15px",
+                    }}
+                  ></div>
+                </div>
+              )}
+              <div
+                className="bImageContainer"
+                style={{ display: isImageLoaded ? "block" : "none" }}
+              >
+                <img
+                  className="bImage"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "cover",
+                    maxHeight: "500px",
+                  }}
+                  src={`${post.image_post.post_url}`}
+                  alt="post-content"
+                  onLoad={handleImageLoad}
+                />
+              </div>
+            </div>
         <div className="content-actions pe-3 d-flex justify-content-end">
-          <button className="btn btn-success me-2">Approve</button>
-          <button className="btn btn-danger">Remove</button>
+          {/* buttons */}
+       <ApproveBtn groupId={post.group_id} postId={post.post_id} />
         </div>
       </div>
     </div>

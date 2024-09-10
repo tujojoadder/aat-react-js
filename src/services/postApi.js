@@ -19,17 +19,7 @@ export const postApi = createApi({
      }),
     endpoints: (builder) => ({
 
-/* Create Post */
-      
-      userPostInsert: builder.mutation({
-        query: (data) => {
-          return {
-            url: "/post/create",
-            method: "POST",
-            body: data,
-          };
-        },
-      }),
+
     
 
      /*  Retriving Post for Home feed */
@@ -38,6 +28,28 @@ export const postApi = createApi({
       }),
 
 
+/* Create Post user */     
+userPostInsert: builder.mutation({
+  query: (data) => {
+    return {
+      url: "/post/create",
+      method: "POST",
+      body: data,
+    };
+  },
+}),
+
+
+/* Create Group Post */   
+userGroupPostInsert: builder.mutation({
+  query: (data) => {
+    return {
+      url: "/group/post/create",
+      method: "POST",
+      body: data,
+    };
+  },
+}),
 
 
 
@@ -47,4 +59,4 @@ export const postApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useUserPostInsertMutation,useGetPostsQuery } = postApi
+export const { useUserPostInsertMutation,useGetPostsQuery,useUserGroupPostInsertMutation } = postApi

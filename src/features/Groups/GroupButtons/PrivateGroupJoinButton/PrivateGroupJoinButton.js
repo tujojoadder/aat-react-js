@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useJoinPrivateGroupMutation, useCancelJoinRequestMutation } from "../../../../services/groupsApi";
+import { useJoinPrivateGroupMutation, useCancelJoinRequestMutation, useLeaveGroupMutation } from "../../../../services/groupsApi";
 import { handleApiError } from "../../../handleApiError/handleApiError";
 
 export default function PrivateGroupJoinButton({ groupId, isRequest }) {
