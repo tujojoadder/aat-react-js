@@ -28,10 +28,26 @@ export const pagesApi = createApi({
               body: pageData,
             }),
           }),
-      
+          
+       // get pages where auth user is admin
+          getPagesWhereAdmin: builder.query({
+            query: (page = 1) => `get-pages-where-admin?page=${page}`, // Adjust the endpoint URL as needed
+          }),
+       // get liked pages    
+          getLikedPages: builder.query({
+            query: (page = 1) => `get-pages-liked?page=${page}`, // Adjust the endpoint URL as needed
+          }),
+        // get liked pages    
+        getPageSuggestion: builder.query({
+            query: (page = 1) => `get-pages-suggestion?page=${page}`, // Adjust the endpoint URL as needed
+          }),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useCreatePageMutation } = pagesApi
+export const {
+    useCreatePageMutation,
+    useGetPageSuggestionQuery,
+    useGetLikedPagesQuery,
+    useGetPagesWhereAdminQuery } = pagesApi

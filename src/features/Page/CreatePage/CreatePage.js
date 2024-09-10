@@ -37,7 +37,7 @@ const navigate=useNavigate();
       }).unwrap();
         // Handle success
         navigate("/");
-        dispatch(setToastSuccess({ toastSuccess: "Group Created Successfully" }));
+        dispatch(setToastSuccess({ toastSuccess: "Page Created Successfully" }));
     } catch (err) {
       // Handle error
       handleApiError(err, dispatch);    }
