@@ -16,6 +16,7 @@ import { postSlice } from '../features/Post/PostSlice'
 import { friendsApi } from '../services/friendsApi'
 import { profileApi } from '../services/profileApi'
 import { groupsApi } from '../services/groupsApi'
+import { pagesApi } from '../services/pagesApi'
 
 export const store = configureStore({
   reducer: {
@@ -33,11 +34,20 @@ export const store = configureStore({
     [friendsApi.reducerPath]: friendsApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [groupsApi.reducerPath]: groupsApi.reducer,
+    [pagesApi.reducerPath]: pagesApi.reducer,
 
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(userAuthApi.middleware,userChatApi.middleware,userLoginApi.middleware,hadithApi.middleware,postApi.middleware,friendsApi.middleware,profileApi.middleware,groupsApi.middleware),
+    getDefaultMiddleware().concat(userAuthApi.middleware,
+      userChatApi.middleware,
+      pagesApi.middleware,
+      userLoginApi.middleware,
+      hadithApi.middleware,
+      postApi.middleware,
+      friendsApi.middleware,
+      profileApi.middleware,
+      groupsApi.middleware),
 })
 
 setupListeners(store.dispatch)

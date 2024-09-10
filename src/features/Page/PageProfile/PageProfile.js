@@ -186,13 +186,13 @@ export default function PageProfile() {
             id="post"
             className="post-container-secssion mb-md-4 tab-pane fade show active"
           >
-            <BPost />
+          {/*   <BPost />
             <TextPost />
             <ImagePost />
             <BPost />
             <ImagePost />
             <TextPost />
-            <BPost />
+            <BPost /> */}
           </div>
 
           {/* Image Section */}

@@ -48,9 +48,11 @@ export default function CreateGroup() {
       <div className="m-0 p-0 ">
         {/*    Back buttons */}
         <SmallScreenBack text="Create groups" />
-
         <LargeScreenBack text="Create groups" />
         <div className="sm-back"></div>
+
+
+        
         <div className="create-group-container main p-3 pb-5">
           <div className="body">
             <form onSubmit={handleSubmit}>
