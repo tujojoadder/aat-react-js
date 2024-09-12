@@ -5,12 +5,12 @@ import { useSelector } from "react-redux";
 export default function GroupAbout() {
 
 
-  const audience = useSelector((state) => state.home.audience);
-  const groupDetails = useSelector((state) => state.home.groupDetails);
+  const audience = useSelector((state) => state?.home?.audience);
+  const groupDetails = useSelector((state) => state?.home?.groupDetails);
   const [isExpanded, setIsExpanded] = useState(false);
   
   const fullText =groupDetails;
-  const previewText = fullText.substring(0, 300);
+  const previewText = fullText?.substring(0, 300);
 
   const toggleText = () => {
     setIsExpanded(!isExpanded);
@@ -43,7 +43,7 @@ export default function GroupAbout() {
         </div>
         <p className="p-1">
           {isExpanded ? fullText : previewText}
-          {fullText.length > 300 && (
+          {fullText?.length > 300 && (
             <span
               onClick={toggleText}
               style={{ color: "blue", cursor: "pointer" }}

@@ -13,17 +13,12 @@ import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
 import LargeScreenBack from "../../LargeScreenBack/LargeScreenBack";
 import LargeScreenProfileBack from "../../LargeScreenBack/LargeScreenProfileBack";
 import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
-import GroupDiscussion from "../../Groups/GroupProfile/GroupDiscussion/GroupDiscussion";
-import GroupPhoto from "../../Groups/GroupProfile/GroupPhoto/GroupPhoto";
-import GroupMember from "../../Groups/GroupProfile/GroupMember/GroupMember";
 import { setGroupAudience, setGroupDetails } from "../../home/HomeSlice";
 import { useDispatch, useSelector } from "react-redux";
-import GroupAbout from "../../Groups/GroupAbout/GroupAbout";
-import PublicGroupJoinButton from "../../Groups/GroupButtons/PublicGroupJoinButton/PublicGroupJoinButton";
-import PrivateGroupJoinButton from "../../Groups/GroupButtons/PrivateGroupJoinButton/PrivateGroupJoinButton";
 import { useGetPageDetailsQuery } from "../../../services/pagesApi";
 import PagePost from "../PagePost/PagePost";
 import PagePhoto from "../PagePhoto/PagePhoto";
+import PageMember from "../PageMember/PageMember";
 export default function PageProfile() {
   const groupUpdate = useSelector((state) => state.home.groupUpdate); // Track group updates
 
@@ -286,7 +281,7 @@ export default function PageProfile() {
               <li>
                 <a
                   className="dropdown-item d-lg-none"
-                  href="#folllower"
+                  href="#follower"
                   data-bs-toggle="tab"
                   onClick={() => handleTabClick("Followers")}
                 >
@@ -333,7 +328,7 @@ export default function PageProfile() {
             Followers
             </h5>
 
-            <GroupMember groupId={id} />
+            <PageMember pageId={id} />
           </div>
 
           {/* About Tab Content */}
