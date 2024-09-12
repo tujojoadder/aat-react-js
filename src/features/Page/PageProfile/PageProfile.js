@@ -23,6 +23,7 @@ import PublicGroupJoinButton from "../../Groups/GroupButtons/PublicGroupJoinButt
 import PrivateGroupJoinButton from "../../Groups/GroupButtons/PrivateGroupJoinButton/PrivateGroupJoinButton";
 import { useGetPageDetailsQuery } from "../../../services/pagesApi";
 import PagePost from "../PagePost/PagePost";
+import PagePhoto from "../PagePhoto/PagePhoto";
 export default function PageProfile() {
   const groupUpdate = useSelector((state) => state.home.groupUpdate); // Track group updates
 
@@ -323,7 +324,7 @@ export default function PageProfile() {
             <h5 className="ms-4 mb-1" color="#65676b">
               Photos
             </h5>
-            <GroupPhoto groupId={id} />
+            <PagePhoto pageId={id} />
           </div>
 
           {/* Followers Tab Content */}

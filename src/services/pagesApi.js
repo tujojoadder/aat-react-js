@@ -53,6 +53,11 @@ export const pagesApi = createApi({
       `getspecificpageposts?page=${page}&id=${pageId}`, // Updated to include id
   }),
 
+    /*    get specific usrer images for profile */
+    getSpecificPagePhoto: builder.query({
+      query: ({ photoPage = 1, pageId }) =>
+        `getspecificpagephotos?page=${photoPage}&id=${pageId}`, // Updated to include id
+    }),
 
 
     }),
@@ -62,6 +67,7 @@ export const pagesApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
     useCreatePageMutation,
+    useGetSpecificPagePhotoQuery,
     useGetSpecificPagePostQuery,
     useGetPageDetailsQuery,
     useGetPageSuggestionQuery,
