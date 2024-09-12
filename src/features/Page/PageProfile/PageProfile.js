@@ -1,97 +1,217 @@
-import React, { useState, useEffect } from "react";
-import "./PageProfile.css";
-import image from "./logo.jpg";
-import TextPost from "../../home/Components/TextPost/TextPost";
 
-import ImagePost from "../../home/Components/ImagePost/ImagePost";
-import ProfileFriend from "../../Profile/ProfileFriends/ProfileFriend/ProfileFriend";
-import ImageContainer from "../../Friends/ImageContainer/ImageContainer";
-import GroupAbout from "../../Groups/GroupAbout/GroupAbout";
-import { NavLink } from "react-router-dom";
-import About from "../../home/Components/About/About";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import LargeScreenProfile from "../../LargeScreenBack/LargeScreenProfileBack";
 import PageAbout from "../PageAbout/PageAbout";
-import BPost from "../../home/Components/BPost/BPost";
-import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
 
+import { NavLink } from "react-router-dom";
+import { useGetGroupDetailsQuery } from "../../../services/groupsApi";
+import ProfileSkeleton from "../../Profile/ProfileSkeleton/ProfileSkeleton";
+import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
+import CustomScrollBar from "../../CustomScrollBar/CustomScrollBar";
+import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
+import LargeScreenBack from "../../LargeScreenBack/LargeScreenBack";
+import LargeScreenProfileBack from "../../LargeScreenBack/LargeScreenProfileBack";
+import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
+import GroupDiscussion from "../../Groups/GroupProfile/GroupDiscussion/GroupDiscussion";
+import GroupPhoto from "../../Groups/GroupProfile/GroupPhoto/GroupPhoto";
+import GroupMember from "../../Groups/GroupProfile/GroupMember/GroupMember";
+import { setGroupAudience, setGroupDetails } from "../../home/HomeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import GroupAbout from "../../Groups/GroupAbout/GroupAbout";
+import PublicGroupJoinButton from "../../Groups/GroupButtons/PublicGroupJoinButton/PublicGroupJoinButton";
+import PrivateGroupJoinButton from "../../Groups/GroupButtons/PrivateGroupJoinButton/PrivateGroupJoinButton";
+import { useGetPageDetailsQuery } from "../../../services/pagesApi";
+import PagePost from "../PagePost/PagePost";
 export default function PageProfile() {
+  const groupUpdate = useSelector((state) => state.home.groupUpdate); // Track group updates
+
+  const { id } = useParams();
+  const scrollRef = useRef(null);
   const [currentTab, setCurrentTab] = useState("More");
-  const handleTabClick = (tabName) => {
-    // Check if the screen size is less than 992px (Bootstrap's large size threshold)
-    if (window.innerWidth < 992) {
-      if (["Friends", "About"].includes(tabName)) {
-        setCurrentTab(tabName);
+
+  const dispatch = useDispatch();
+
+  /* // Create a unique key for storing the scroll position
+  const localStorageKey = `scrollPosition_${id}`;
+
+  // Restore scroll position from localStorage
+  useEffect(() => {
+    const storedScrollPosition = localStorage.getItem(localStorageKey);
+    if (scrollRef.current && storedScrollPosition) {
+      scrollRef.current.scrollTop = parseInt(storedScrollPosition, 10);
+    }
+
+    // Clean up scroll event listener
+    return () => {
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener("scroll", handleScroll);
       }
-    } else {
-      if (["About"].includes(tabName)) {
-        setCurrentTab(tabName);
-      }
+    };
+  }, [id]);
+
+  // Handle scroll event and save scroll position
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const scrollTop = scrollRef.current.scrollTop;
+      console.log(`Current scroll position: ${scrollTop}`); // Log scroll position
+      localStorage.setItem(localStorageKey, scrollTop);
     }
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      // Get current window width
-      const width = window.innerWidth;
+    if (scrollRef.current) {
+      scrollRef.current.addEventListener("scroll", handleScroll);
+    }
 
+    // Clean up scroll event listener on unmount
+    return () => {
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [id]); */
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
       if (width < 992 && currentTab === "More") {
         setCurrentTab("More");
       }
-
-      // If the screen width is 992px or more and the currentTab is "Friends", reset it to "More"
-      if (width >= 992 && currentTab === "Friends") {
+      if (width >= 992 && currentTab === "Followers") {
         setCurrentTab("More");
       }
     };
-
-    // Add event listener for resize
     window.addEventListener("resize", handleResize);
-
-    // Call handleResize immediately to set the initial state
     handleResize();
-
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [currentTab]);
 
-  return (
-    <div className="header__wrapper m-0 p-0 border">
-      <ProfileHomeBack text="Page name" />
-      <header></header>
-      <div className="cols__container">
-        <div className="left__col mb-1">
-          <div className="img__container">
-            <img src={image} alt="Anna Smith" />
-            <span></span>
-          </div>
-          <h2>Anna Smith</h2>
-          <p style={{ marginBottom: "7px", marginTop: "-2px" }}>
-            anna@example.com
-          </p>
+  // Tabs handling function
+  const handleTabClick = (tabName) => {
+    if (window.innerWidth < 992) {
+      if (["Followers", "About"].includes(tabName)) {
+        setCurrentTab(tabName);
+      }
+    } else {
+      if (["Follower", "Following", "About"].includes(tabName)) {
+        setCurrentTab(tabName);
+      }
+    }
+  };
+  // Fetch user profile data
+  const {
+    data: pageData,
+    isFetching,
+    isError,
+    isSuccess,
+    refetch,
+  } = useGetPageDetailsQuery(id);
 
-          <h6
-            style={{ marginBottom: "7px", marginTop: "-2px" }}
-            className="ms-2"
-          >
-            117.2k Likes
-          </h6>
-        </div>
-        <div className="right__col">
+  useEffect(() => {
+    refetch();
+  }, [groupUpdate]);
+
+  // Dispatch actions to store audience and group details in Redux
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(pageData);
+
+      // Dispatch actions to update Redux state
+      dispatch(setGroupAudience(pageData.data.audience));
+      dispatch(setGroupDetails(pageData.data.group_details));
+    }
+  }, [isSuccess, pageData, dispatch]);
+
+  useEffect(() => {
+    refetch();
+  }, [groupUpdate]);
+
+  if (isSuccess) {
+    console.log(pageData);
+  }
+  // Handle loading state
+  if (isFetching) return <ProfileSkeleton />;
+
+  // Handle error state
+  if (isError) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <p>Something went wrong. Please try again later.</p>
+      </div>
+    );
+  }
+
+  // Background styling for the profile cover
+  const backgroundImageStyle = {
+    backgroundImage: `url(${pageData?.data?.page_cover})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    minHeight: "calc(100px + 15vw)",
+    backgroundColor: "lightgrey", // Added for debugging
+  };
+
+  return (
+    <div
+      className="friend-home main border-start border-end mb-1 m-0 p-0"
+      style={{ backgroundColor: "white", minHeight: "100vh" }}
+    >
+      <div ref={scrollRef} className="header__wrapper m-0 p-0">
+        {/*    Back buttons */}
+        <SmallScreenBack text={`${pageData?.data?.page_name}`} />
+        <MidScreenBack text={`${pageData?.data?.page_name}`} />
+        <LargeScreenProfile text={`${pageData?.data?.page_name}`} />
+        <div style={backgroundImageStyle}></div>
+
+        {/* Header of profile */}
+        <div className="cols__container">
+          <div className="left__col">
+            <div className="img__container">
+              <img
+                src={`${pageData?.data?.page_picture}`}
+                style={{ backgroundColor: "lightgray" }}
+                alt="Profile"
+              />
+            </div>
+            <h2>{pageData?.data?.page_name}</h2>
+            <p>@{pageData?.data?.identifier}</p>
+            
+            <h7
+              style={{ marginBottom: "7px", marginTop: "-2px" }}
+              className="ms-2"
+            >
+              117.2k Likes
+            </h7>
+          </div>
+          <div className="right__col">
+            <nav>
+              <div className="d-flex justify-content-center justify-content-sm-end">
+                {pageData.data.isAdmin && pageData.data.page_id && (
+                  <NavLink
+                    to={`/groups/${pageData.data.page_id}/manage`}
+                    className="text-decoration-none"
+                  >
+                    <div
+                      className="btn btn-md btn-primary mx-4 d-flex align-items-center"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <i className="fa-solid fa-pen"></i>
+                      <span className="ms-1">Manage</span>
+                    </div>
+                  </NavLink>
+                )}
+
+<div className="right__col">
           <nav>
             <div className="d-flex justify-content-center justify-content-sm-end">
               {/*  massage and Manage will stay for admin */}
 
-              {/*   Manage */}
-              <NavLink to="/page/{id}/manage" className="text-decoration-none">
-                <div
-                  className="btn btn-md btn-primary mx-1 d-flex align-items-center mt-1"
-                  style={{ cursor: "pointer" }}
-                >
-                  <i className="fa-solid fa-pen"></i>
-                  <span className="ms-1">Manage</span>
-                </div>
-              </NavLink>
+           
 
               {/* Message Button */}
               <div
@@ -123,13 +243,21 @@ export default function PageProfile() {
             </div>
           </nav>
         </div>
-      </div>
 
-      {/* Content section */}
-      <div className="content-secssion mx-md-2">
-        <ul className="nav nav-tabs mt-3">
+                
+              </div>
+            </nav>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <ul className="nav nav-tabs mt-3 mx-2 ">
           <li className="nav-item">
-            <a className="nav-link active" href="#post" data-bs-toggle="tab">
+            <a
+              className="nav-link active"
+              href="#post"
+              data-bs-toggle="tab"
+            >
               Posts
             </a>
           </li>
@@ -139,12 +267,10 @@ export default function PageProfile() {
             </a>
           </li>
           <li className="nav-item d-none d-lg-block">
-            <a className="nav-link" href="#friends" data-bs-toggle="tab">
-              Following
+            <a className="nav-link" href="#follower" data-bs-toggle="tab">
+            Followers
             </a>
           </li>
-
-          {/* Dropdown */}
           <li className="nav-item dropdown">
             <a
               className="nav-link dropdown-toggle"
@@ -159,13 +285,14 @@ export default function PageProfile() {
               <li>
                 <a
                   className="dropdown-item d-lg-none"
-                  href="#friends"
+                  href="#folllower"
                   data-bs-toggle="tab"
-                  onClick={() => handleTabClick("Friends")}
+                  onClick={() => handleTabClick("Followers")}
                 >
-                  Following
+                  Followers
                 </a>
               </li>
+
               <li>
                 <a
                   className="dropdown-item"
@@ -180,47 +307,40 @@ export default function PageProfile() {
           </li>
         </ul>
 
-        <div className="tab-content">
-          {/* Post Section */}
-          <div
-            id="post"
-            className="post-container-secssion mb-md-4 tab-pane fade show active"
-          >
-          {/*   <BPost />
-            <TextPost />
-            <ImagePost />
-            <BPost />
-            <ImagePost />
-            <TextPost />
-            <BPost /> */}
+        {/* Tab Content */}
+        <div className="tab-content p-3 px-0 ">
+          {/* Post Tab Content */}
+          <div className="tab-pane bg-white fade show active" id="post">
+            <h5 className="ms-4 mb-4" color="#65676b">
+              Posts
+            </h5>
+
+            <PagePost pageId={id} joinStatus={pageData.data.joinStatus} />
           </div>
 
-          {/* Image Section */}
-          <div
-            id="image"
-            className="image-container-secssion mb-md-4 px-md-3 pt-3 tab-pane fade"
-          >
-            <ImageContainer />
+          {/* Photos Tab Content */}
+          <div className="tab-pane fade bg-white" id="image">
+            <h5 className="ms-4 mb-1" color="#65676b">
+              Photos
+            </h5>
+            <GroupPhoto groupId={id} />
           </div>
 
-          {/* About Section */}
-          <div id="about" className="p-3 tab-pane fade">
-            <h4 className="ps-3 pb-2 ">About</h4>
-            <PageAbout />
+          {/* Followers Tab Content */}
+          <div className="tab-pane fade bg-white" id="follower">
+            <h5 className="ms-4 mb-1" color="#65676b">
+            Followers
+            </h5>
+
+            <GroupMember groupId={id} />
           </div>
-          {/* Friends Section */}
-          <div id="friends" className="tab-pane fade w-100">
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
+
+          {/* About Tab Content */}
+          <div className="tab-pane fade bg-white" id="about">
+            <h5 className="ms-4 mb-1" color="#65676b">
+              About
+            </h5>
+            <PageAbout/>
           </div>
         </div>
       </div>
