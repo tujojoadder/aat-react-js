@@ -5,7 +5,7 @@ import { useAddGroupAdminMutation, useKickOutMemberMutation } from "../../../ser
 import { handleApiError } from "../../handleApiError/handleApiError";
 import { useDispatch } from "react-redux";
 
-export default function GroupMembers({ name, isCreator, image, identifier, isAdmin, isAuth, groupId, newMemberId }) {
+export default function GroupMembers({ name, isCreator, image, identifier, isAdmin, isAuth, groupId, newMemberId, isAuthIsCreator }) {
   const dispatch = useDispatch();
   
   const isSmallScreen = useMediaQuery({ query: '(max-width: 400px)' });
@@ -57,7 +57,10 @@ export default function GroupMembers({ name, isCreator, image, identifier, isAdm
           {isSmallScreen ? truncateText(identifier, 12) : identifier}
         </p>
       </div>
-      {(!isCreator && !isAuth && isDropdownVisible) && (
+      {/* Show dropdown only if the user is not the creator, not the authenticated user, and either:
+           1. The user is not an admin, or
+           2. The user is an admin, but the authenticated user is the creator (isAuthIsCreator is true) */}
+      {(!isCreator && !isAuth && isDropdownVisible && (!isAdminLocal || isAuthIsCreator)) && (
         <div className="dropdown ms-auto">
           <button className="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             <i className="fas fa-ellipsis-v"></i>

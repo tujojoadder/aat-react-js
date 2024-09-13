@@ -82,6 +82,8 @@ if (useGetSpecificUserFriendQueryIsSuccess) {
                 isAdmin={friend.isAdmin}
                 isCreator={friend.isCreator}
                 isAuth={friend.isAuth}
+                isAuthIsCreator={friend.isAuthIsCreator}
+
 
 /*                 handle={friend.identifier}
                 is_friend={friend.is_friend}
