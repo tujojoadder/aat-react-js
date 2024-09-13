@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import LargeScreenProfile from "../../LargeScreenBack/LargeScreenProfileBack";
@@ -13,14 +12,22 @@ import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
 import LargeScreenBack from "../../LargeScreenBack/LargeScreenBack";
 import LargeScreenProfileBack from "../../LargeScreenBack/LargeScreenProfileBack";
 import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
-import { setGroupAudience, setGroupDetails } from "../../home/HomeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetPageDetailsQuery } from "../../../services/pagesApi";
 import PagePost from "../PagePost/PagePost";
 import PagePhoto from "../PagePhoto/PagePhoto";
 import PageMember from "../PageMember/PageMember";
+import {
+  setpageCategory,
+  setpageDetails,
+  setpageEmail,
+  setPageError,
+  setpageLocation,
+  setPagePhone,
+} from "../../home/HomeSlice";
+import PageButtons from "../PageButtons/PageButtons";
 export default function PageProfile() {
-  const groupUpdate = useSelector((state) => state.home.groupUpdate); // Track group updates
+  const pageUpdate = useSelector((state) => state.home.pageUpdate); // Track group updates
 
   const { id } = useParams();
   const scrollRef = useRef(null);
@@ -108,22 +115,31 @@ export default function PageProfile() {
 
   useEffect(() => {
     refetch();
-  }, [groupUpdate]);
+  }, [pageUpdate]);
 
   // Dispatch actions to store audience and group details in Redux
   useEffect(() => {
     if (isSuccess) {
+      dispatch(setPageError(''));
       console.log(pageData);
 
       // Dispatch actions to update Redux state
-      dispatch(setGroupAudience(pageData.data.audience));
-      dispatch(setGroupDetails(pageData.data.group_details));
+      dispatch(setPagePhone(pageData.data.phone));
+      dispatch(setpageCategory(pageData.data.category));
+      dispatch(setpageLocation(pageData.data.location));
+      dispatch(setpageEmail(pageData.data.email));
+      dispatch(setpageDetails(pageData.data.page_details));
     }
   }, [isSuccess, pageData, dispatch]);
 
+if (isError) {
+  dispatch(setPageError(isError));
+}
+
+
   useEffect(() => {
     refetch();
-  }, [groupUpdate]);
+  }, [pageUpdate]);
 
   if (isSuccess) {
     console.log(pageData);
@@ -176,7 +192,7 @@ export default function PageProfile() {
             </div>
             <h2>{pageData?.data?.page_name}</h2>
             <p>@{pageData?.data?.identifier}</p>
-            
+
             <h7
               style={{ marginBottom: "7px", marginTop: "-2px" }}
               className="ms-2"
@@ -189,7 +205,7 @@ export default function PageProfile() {
               <div className="d-flex justify-content-center justify-content-sm-end">
                 {pageData.data.isAdmin && pageData.data.page_id && (
                   <NavLink
-                    to={`/groups/${pageData.data.page_id}/manage`}
+                    to={`/page/${pageData.data.page_id}/manage`}
                     className="text-decoration-none"
                   >
                     <div
@@ -201,46 +217,12 @@ export default function PageProfile() {
                     </div>
                   </NavLink>
                 )}
-
-<div className="right__col">
-          <nav>
-            <div className="d-flex justify-content-center justify-content-sm-end">
-              {/*  massage and Manage will stay for admin */}
-
-           
-
-              {/* Message Button */}
-              <div
-                className="btn-sm btn-primary rounded-circle d-flex align-items-center justify-content-center mx-1 p-2"
-                style={{ cursor: "pointer", height: "35px", marginTop: "2px" }}
-              >
-                <i className="fa-solid fa-envelope fs-5"></i>
-              </div>
-              {/*   Like */}
-              <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center px-3"
-                style={{ cursor: "pointer" }}
-              >
-                <i className="fa-solid fa-thumbs-up"></i>
-                <span className="ms-1">Like</span>
-              </div>
-
-              {/*   Share */}
-              <div
-                className="btn btn-md mx-1 me-3 d-flex align-items-center"
-                style={{
-                  cursor: "pointer",
-                  minWidth: "70px",
-                  backgroundColor: "#e4e6eb",
-                }}
-              >
-                <i className="fa-solid fa-share"></i> &nbsp; Share
-              </div>
-            </div>
-          </nav>
-        </div>
-
-                
+                {!pageData.data.isAdmin && (
+                  <PageButtons
+                    pageId={pageData.data.page_id}
+                    joinStatus={pageData.data.joinStatus}
+                  />
+                )}
               </div>
             </nav>
           </div>
@@ -249,11 +231,7 @@ export default function PageProfile() {
         {/* Tabs */}
         <ul className="nav nav-tabs mt-3 mx-2 ">
           <li className="nav-item">
-            <a
-              className="nav-link active"
-              href="#post"
-              data-bs-toggle="tab"
-            >
+            <a className="nav-link active" href="#post" data-bs-toggle="tab">
               Posts
             </a>
           </li>
@@ -264,7 +242,7 @@ export default function PageProfile() {
           </li>
           <li className="nav-item d-none d-lg-block">
             <a className="nav-link" href="#follower" data-bs-toggle="tab">
-            Followers
+              Followers
             </a>
           </li>
           <li className="nav-item dropdown">
@@ -325,7 +303,7 @@ export default function PageProfile() {
           {/* Followers Tab Content */}
           <div className="tab-pane fade bg-white" id="follower">
             <h5 className="ms-4 mb-1" color="#65676b">
-            Followers
+              Followers
             </h5>
 
             <PageMember pageId={id} />
@@ -336,7 +314,7 @@ export default function PageProfile() {
             <h5 className="ms-4 mb-1" color="#65676b">
               About
             </h5>
-            <PageAbout/>
+            <PageAbout />
           </div>
         </div>
       </div>

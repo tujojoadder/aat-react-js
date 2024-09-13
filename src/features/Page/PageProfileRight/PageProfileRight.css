@@ -1,0 +1,16 @@
+.menu {
+    min-height: 310px;
+  }
+  
+  @media (min-height: 768px) {
+    .menu {
+      max-height: calc(100vh - 380px); /* Adjust the value as necessary */
+    }
+  }
+  
+  @media (min-height: 1200px) {
+    .menu {
+      max-height: calc(100vh - 460px); /* Further adjustment for very large screens */
+    }
+  }
+    

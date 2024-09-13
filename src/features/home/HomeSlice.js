@@ -42,6 +42,18 @@ groupUpdate: false,
 //for store admin groups
 adminGroups: [],
 
+
+
+/* <--- Page ---> */
+pagePhone: '',
+pageCategory: '',
+pageLocation: '',
+pageEmail:'',
+pageDetails:'',
+ // State that will trigger refetch
+ pageUpdate: false, 
+pageError:''
+
 };
 
 export const homeSlice = createSlice({
@@ -146,8 +158,8 @@ setGroupDetails(state, action) {
   state.groupDetails = action.payload;
 },
 
-setGroupUpdate: (state, action) => {
-  state.groupUpdate = action.payload;  // Update the groupUpdate state
+setPageUpdate: (state, action) => {
+  state.pageUpdate = action.payload;  // Update the pageUpdate state
 },
 
 setAdminGroups: (state, action) => {
@@ -162,11 +174,59 @@ setGroupName: (state, action) => {
       : group
   );
 },
+
+/*<--- Page --->*/
+/* 
+pageAddress: '',
+pageCategory: '',
+pageLocation: '',
+pageEmail:'',
+pageDetails:'', */
+
+
+setPagePhone(state, action) {
+  state.pagePhone = action.payload;
+},
+setpageCategory(state, action) {
+  state.pageCategory = action.payload;
+},
+setpageLocation(state, action) {
+  state.pageLocation = action.payload;
+},
+setpageEmail(state, action) {
+  state.pageEmail = action.payload;
+},
+setpageDetails(state, action) {
+  state.pageDetails = action.payload;
+},
+
+setGroupUpdate: (state, action) => {
+  state.groupUpdate = action.payload;  // Update the groupUpdate state
+},
+setPageError: (state, action) => {
+  state.pageError = action.payload;  // Update the groupUpdate state
+},
+
+
   },
 });
+/*<--- Page --->*/
+/* 
+pageAddress: '',
+pageCategory: '',
+pageLocation: '',
+pageEmail:'',
+pageDetails:'', */
 
 export const {
  setGroupUpdate,
+ setPageError,
+ setPageUpdate,
+ setPagePhone,
+ setpageCategory,
+ setpageLocation,
+ setpageEmail,
+ setpageDetails,
  setGroupName,
  setAdminGroups,
   setProfile_picture,

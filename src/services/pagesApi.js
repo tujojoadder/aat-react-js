@@ -64,7 +64,18 @@ export const pagesApi = createApi({
         `getspecificpagemember?page=${memberPage}&id=${pageId}`, // Updated to include id
     }),
 
-
+    joinPage: builder.mutation({
+      query: (pageId) => ({
+        url: `page/join/${pageId}`,
+        method: 'POST',
+      }),
+    }),
+    leavePage: builder.mutation({
+      query: (pageId) => ({
+        url: `page/leave/${pageId}`,
+        method: 'POST',
+      }),
+    }),
 
     
   }),
@@ -74,6 +85,8 @@ export const pagesApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreatePageMutation,
+  useJoinPageMutation,
+  useLeavePageMutation,
   useGetSpecificPagePhotoQuery,
   useGetAllPageMemberQuery,
   useGetSpecificPagePostQuery,
