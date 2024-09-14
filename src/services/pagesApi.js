@@ -77,6 +77,51 @@ export const pagesApi = createApi({
       }),
     }),
 
+    /* updatePageName */
+    updatePageName: builder.mutation({
+      query: ({ pageId, name }) => ({
+        url: `pages/${pageId}/update/name`,
+        method: 'PUT',
+        body: { name },
+      }),
+    }),
+
+    /* updateGroupDetails */
+    updatePageDetails: builder.mutation({
+      query: ({ pageId, details }) => ({
+        url: `pages/${pageId}/update/details`,
+        method: 'PUT',
+        body: { details },
+      }),
+    }),
+    /* updateGroupDetails */
+    updatePageLocation: builder.mutation({
+      query: ({ pageId, location }) => ({
+        url: `pages/${pageId}/update/location`,
+        method: 'PUT',
+        body: { location },
+      }),
+    }),
+
+       /* updateGroupDetails */
+       updatePagePhone: builder.mutation({
+        query: ({ pageId, phone }) => ({
+          url: `pages/${pageId}/update/phone`,
+          method: 'PUT',
+          body: { phone },
+        }),
+      }),
+         /* updateGroupDetails */
+         updatePageEmail: builder.mutation({
+          query: ({ pageId, email }) => ({
+            url: `pages/${pageId}/update/email`,
+            method: 'PUT',
+            body: { email },
+          }),
+        }),
+    
+
+
     
   }),
 });
@@ -85,6 +130,11 @@ export const pagesApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreatePageMutation,
+  useUpdatePageEmailMutation,
+  useUpdatePageLocationMutation,
+  useUpdatePagePhoneMutation,
+  useUpdatePageDetailsMutation,
+  useUpdatePageNameMutation,
   useJoinPageMutation,
   useLeavePageMutation,
   useGetSpecificPagePhotoQuery,

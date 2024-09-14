@@ -66,6 +66,7 @@ import GroupProfileRight from "./features/Groups/GroupProfile/GroupProfileRight"
 import GroupManageright from "./features/Groups/GroupManage/GroupManageright";
 import GroupsMyGroups from "./features/Groups/GroupsMyGroups";
 import GroupsJoinedGroups from "./features/Groups/GroupsJoinedGroups";
+import PageManageRight from "./features/Page/PageManageRight/PageManageRight";
 
 function App() {
   const dispatch = useDispatch();
@@ -284,6 +285,7 @@ function App() {
 
             {/* Page---> manage */}
             <Route path="page/:id/manage" exact element={<PageManage />} />
+            <Route path="page/:id/manage" exact element={<PageManageRight />} />
 
             {/* Page---> Liked */}
             <Route path="page/liked" exact element={<PageLiked />} />

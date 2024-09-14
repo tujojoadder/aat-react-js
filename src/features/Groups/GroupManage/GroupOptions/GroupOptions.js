@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import { setGroupUpdate, setToastSuccess } from "../../../home/HomeSlice";
+import { handleApiError } from "../../../handleApiError/handleApiError";
 
 export default function GroupOptions({ groupId, groupName, groupDetails }) {
   const [editField, setEditField] = useState(null);
@@ -59,7 +60,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
         dispatch(setGroupUpdate(groupData.name));
      navigate(`/groups/${groupId}`);
       } catch (err) {
-        console.error("Failed to save group name:", err);
+        handleApiError(err, dispatch);
       }
     } else if (field === "details") {
       try {
@@ -78,7 +79,7 @@ export default function GroupOptions({ groupId, groupName, groupDetails }) {
         dispatch(setGroupUpdate(groupData.details));
         navigate(`/groups/${groupId}`);
       } catch (err) {
-        console.error("Failed to save group details:", err);
+      handleApiError(err,dispatch)
       }
     }
   };

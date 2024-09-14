@@ -63,6 +63,7 @@ import SetCoverPhoto from "../Profile/SetCoverPhoto/SetCoverPhoto";
 import GroupManageright from "../Groups/GroupManage/GroupManageright";
 import GroupsMyGroups from "../Groups/GroupsMyGroups";
 import GroupsJoinedGroups from "../Groups/GroupsJoinedGroups";
+import PageManageRight from "../Page/PageManageRight/PageManageRight";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -605,6 +606,10 @@ const Navbar = () => {
 
               {/*  Page---> Created */}
               <Route path="page/created" exact element={<PageHomeRight />} />
+            
+            {/* Page-->Manage */}
+            <Route path="page/:id/manage" exact element={<PageManageRight />} />
+             
               {/*    Messages */}
               <Route path="message" exact element={<MessageHomeRight />} />
               {/*  Meaage---> to anyone */}
