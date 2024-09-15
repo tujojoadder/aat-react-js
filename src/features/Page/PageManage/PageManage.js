@@ -1,22 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import LargeScreenProfile from "../../LargeScreenBack/LargeScreenProfileBack";
-import PageAbout from "../PageAbout/PageAbout";
-
-import { NavLink } from "react-router-dom";
-import { useGetGroupDetailsQuery } from "../../../services/groupsApi";
 import ProfileSkeleton from "../../Profile/ProfileSkeleton/ProfileSkeleton";
-import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
-import CustomScrollBar from "../../CustomScrollBar/CustomScrollBar";
 import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
-import LargeScreenBack from "../../LargeScreenBack/LargeScreenBack";
-import LargeScreenProfileBack from "../../LargeScreenBack/LargeScreenProfileBack";
 import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetPageDetailsQuery } from "../../../services/pagesApi";
-import PagePost from "../PagePost/PagePost";
-import PagePhoto from "../PagePhoto/PagePhoto";
-import PageMember from "../PageMember/PageMember";
 import {
   setpageCategory,
   setpageDetails,
@@ -27,6 +16,7 @@ import {
 } from "../../home/HomeSlice";
 import PageButtons from "../PageButtons/PageButtons";
 import PageOptions from "../PageOptions/PageOptions";
+import PageManageMember from "../PageManageMember/PageManageMember";
 export default function PageManage() {
   const pageUpdate = useSelector((state) => state.home.pageUpdate); // Track group updates
 
@@ -77,17 +67,15 @@ export default function PageManage() {
   // Handle loading state
   if (isFetching) return <ProfileSkeleton />;
 
-  // Handle error state
-  if (isError) {
+
+  if (isError || !pageData?.data?.isAdmin) {
     return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "100vh" }}
-      >
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
         <p>Something went wrong. Please try again later.</p>
       </div>
     );
   }
+
 
   // Background styling for the profile cover
   const backgroundImageStyle = {
@@ -140,8 +128,8 @@ export default function PageManage() {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#image" data-bs-toggle="tab">
-              Photos
+            <a className="nav-link" href="#members" data-bs-toggle="tab">
+              Members
             </a>
           </li>
         </ul>
@@ -162,12 +150,12 @@ export default function PageManage() {
          />
           </div>
 
-          {/* Photos Tab Content */}
-          <div className="tab-pane fade bg-white" id="image">
+          {/* Members Tab Content */}
+          <div className="tab-pane fade bg-white" id="members">
             <h5 className="ms-4 mb-1" color="#65676b">
-              Photos
+              Members
             </h5>
-            <PagePhoto pageId={id} />
+            <PageManageMember pageId={id} />
           </div>
         </div>
       </div>

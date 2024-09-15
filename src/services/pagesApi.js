@@ -121,6 +121,28 @@ export const pagesApi = createApi({
         }),
     
 
+ /* get member of page on manage*/
+ getAllPageMemberForManage: builder.query({
+  query: ({ memberPage = 1, pageId }) =>
+    `getspecificpagememberformanage?page=${memberPage}&id=${pageId}`, // Updated to include id
+}),
+
+
+
+addPageAdmin: builder.mutation({
+  query: ({ pageId, newMember }) => ({
+    url: `/page/${pageId}/add-admin/${newMember}`,
+    method: 'POST',
+  }),
+}),
+
+
+kickOutPageMember: builder.mutation({
+  query: ({ pageId, memberId }) => ({
+    url: `/page/${pageId}/kick-out-member/${memberId}`, // Adjusted to use URL params
+    method: 'DELETE',
+  }),
+}),
 
     
   }),
@@ -130,6 +152,9 @@ export const pagesApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreatePageMutation,
+  useAddPageAdminMutation,
+  useKickOutPageMemberMutation,
+  useGetAllPageMemberForManageQuery,
   useUpdatePageEmailMutation,
   useUpdatePageLocationMutation,
   useUpdatePagePhoneMutation,
