@@ -97,7 +97,7 @@ const Navbar = () => {
     <div
       style={{
         width: "100%",
-        height: "100vh",
+        height: "100.5vh",
         minHeight: "300px",
         overflowX: "hidden",
       }}
