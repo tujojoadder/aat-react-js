@@ -1,24 +1,27 @@
-
 import React, { useEffect } from "react";
 import "./WrongAns.css";
-import { setHadithData, setHadithId, setStorySeen, stopReward } from "../../QuizSlice";
+import {
+  setHadithData,
+  setHadithId,
+  setStorySeen,
+  stopReward,
+} from "../../QuizSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetRandomHadithMutation } from "../../../../services/quizApi";
 
 export default function WrongAns() {
   const { points } = useSelector((state) => state.quiz);
   const dispatch = useDispatch();
-  
+
   // Mutation hook to fetch a new hadith
-  const [postRandomHadith, { data: hadithData, error, isLoading, isSuccess }] = useGetRandomHadithMutation();
+  const [postRandomHadith, { data: hadithData, error, isLoading, isSuccess }] =
+    useGetRandomHadithMutation();
 
   const handleBack = () => {
     dispatch(stopReward());
   };
 
   const handleClaim = async () => {
-    dispatch(stopReward());
-
     // Trigger the API call to fetch a new hadith
     try {
       await postRandomHadith();
@@ -33,6 +36,7 @@ export default function WrongAns() {
       dispatch(setHadithData(hadithData.hadith.hadith));
       dispatch(setHadithId(hadithData.hadith.hadith_id));
       dispatch(setStorySeen());
+      dispatch(stopReward());
     }
   }, [hadithData, dispatch]);
 
@@ -52,15 +56,20 @@ export default function WrongAns() {
           </div>
 
           <div className="button-group">
-            <button className="back-button" onClick={handleBack}>
+            <button
+              className="back-button"
+              disabled={isLoading}
+              onClick={handleBack}
+            >
               <i className="fas fa-chevron-left"></i> Back
             </button>
-            <button 
-              className="claim-button" 
-              onClick={handleClaim} 
+            <button
+              className="claim-button"
+              onClick={handleClaim}
               disabled={isLoading} // Disable button while loading
             >
-              {isLoading ? "Loading..." : "Next"} <i className="fas fa-chevron-right"></i>
+              {isLoading ? "Next..." : "Next"}{" "}
+              <i className="fas fa-chevron-right"></i>
             </button>
           </div>
         </div>
