@@ -169,14 +169,14 @@ const Navbar = () => {
         <div className="row">
           {/* LEFT SIDE BAR */}
           <div
-            style={{ backgroundColor: "#fdfdfd", height: "100vh" }}
+            style={{ backgroundColor: "#fdfdfd", height: "100.2h" }}
             className="p-0 d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar"
           >
             <div
               className="pe-2  bg-body rounded "
               style={{
                 width: "97%",
-                height: "100vh",
+                height: "100.1vh",
                 overflowY: "auto",
                 overflowX: "hidden",
               }}

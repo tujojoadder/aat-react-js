@@ -1,9 +1,11 @@
 import React from 'react';
 import './CorrectAns.css';
 import { setStorySeen, stopReward } from '../../QuizSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function CorrectAns() {
+  const { points } = useSelector((state) => state.quiz);
+
   const dispatch = useDispatch();
 
   const handleBack = () => {
@@ -26,7 +28,7 @@ export default function CorrectAns() {
           </h1>
           <div className="points">
             <span className="points-label">Reward:</span>
-            <span className="points-value">+5 points</span>
+            <span className="points-value">+{points} points</span>
           </div>
 
           <div className="button-group" >

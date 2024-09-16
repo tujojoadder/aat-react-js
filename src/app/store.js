@@ -17,6 +17,7 @@ import { friendsApi } from '../services/friendsApi'
 import { profileApi } from '../services/profileApi'
 import { groupsApi } from '../services/groupsApi'
 import { pagesApi } from '../services/pagesApi'
+import { quizApi } from '../services/quizApi'
 
 export const store = configureStore({
   reducer: {
@@ -35,6 +36,7 @@ export const store = configureStore({
     [profileApi.reducerPath]: profileApi.reducer,
     [groupsApi.reducerPath]: groupsApi.reducer,
     [pagesApi.reducerPath]: pagesApi.reducer,
+    [quizApi.reducerPath]: quizApi.reducer,
 
   },
 
@@ -47,6 +49,7 @@ export const store = configureStore({
       postApi.middleware,
       friendsApi.middleware,
       profileApi.middleware,
+      quizApi.middleware,
       groupsApi.middleware),
 })
 
