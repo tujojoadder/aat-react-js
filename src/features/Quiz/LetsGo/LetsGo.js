@@ -3,6 +3,7 @@ import "./LetsGo.css"; // Custom CSS for styling the button and container
 import { useDispatch } from "react-redux";
 import { setStorySeen, setHadithData, setHadithId } from "../QuizSlice";
 import { useGetRandomHadithMutation } from "../../../services/quizApi";
+import { handleApiError } from "../../handleApiError/handleApiError";
 export default function LetsGo() {
   const dispatch = useDispatch();
   const [postRandomHadith, { data: hadithData, error, isLoading,isSuccess }] = useGetRandomHadithMutation();
@@ -12,7 +13,7 @@ export default function LetsGo() {
     try {
       await postRandomHadith(); // Trigger the POST request
     } catch (error) {
-      console.error("Error fetching hadith:", error);
+      handleApiError(error, dispatch);
     }
   };
 
@@ -32,7 +33,6 @@ export default function LetsGo() {
       <button className="letsgo-button" onClick={handleLetsGo} disabled={isLoading}>
         {isLoading ? "Loading..." : "Let's Go"}
       </button>
-      {error && <p className="error-message">Failed to fetch Hadith. Please try again.</p>}
     </div>
   );
 }

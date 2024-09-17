@@ -40,7 +40,9 @@ export const quizApi = createApi({
               body: answerData,
             }),
           }),
-
+          getCurrentStory: builder.query({
+            query: () => 'get-current-story', // API endpoint
+          }),
 
 
     }),
@@ -50,4 +52,5 @@ export const quizApi = createApi({
 // auto-generated based on the defined endpoints
 export const {useGetRandomHadithMutation,
     useCheckAnswerMutation,
+    useGetCurrentStoryQuery,
     useGetRandomQuestionMutation } = quizApi
