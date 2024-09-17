@@ -25,12 +25,14 @@ export default function QuizHome() {
 
   // When current story data is fetched, store it in Redux
   useEffect(() => {
-    if (currentStory && !currentStory?.data?.reading) {
-      dispatch(setHadithData(currentStory?.data?.hadith_text));
-      dispatch(setHadithId(currentStory?.data?.hadith_id));
+    if (currentStory && currentStory?.reading=='no') {
+      console.log(currentStory)
+      dispatch(setHadithData(currentStory?.hadith_text));
+      dispatch(setHadithId(currentStory?.hadith_id));
       dispatch(setStorySeen());
     }
-    if (currentStory && currentStory?.reading) {
+    if (currentStory && currentStory?.reading=='yes') {
+      console.log(currentStory)
       // Dispatch actions to update Redux store
       dispatch(stopStorySeen());
       dispatch(setQuesSeen());
