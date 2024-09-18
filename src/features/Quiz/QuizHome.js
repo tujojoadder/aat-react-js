@@ -21,6 +21,7 @@ import { handleApiError } from "../handleApiError/handleApiError";
 import RewardSection from "./RewardSection/RewardSection";
 import CorrectAns from "./RewardSection/CorrectAns/CorrectAns";
 import WrongAns from "./RewardSection/WrongAns/WrongAns";
+import LetsGoSkeleton from "./LetsGo/LetsGoSkeleton";
 export default function QuizHome() {
   const { quiz_page, hadithData, hadithId, win } = useSelector(
     (state) => state.quiz
@@ -66,6 +67,8 @@ export default function QuizHome() {
       handleApiError(error, dispatch);
     }
   };
+
+
 
   // When current story data is fetched, store it in Redux and only update if there is no existing quiz_page
   useEffect(() => {
@@ -119,9 +122,9 @@ export default function QuizHome() {
       });
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LetsGoSkeleton/> ;
   if (error) return <div>Error loading current story.</div>;
-
+ 
   return (
     <div
       className="mb-lg-1 friend-home p-0 m-0 main border-start"
