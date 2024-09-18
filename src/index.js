@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useGetUserDetailsQuery } from "./services/userAuthApi";
 import { createRoot } from "react-dom/client";
 import { Provider, useDispatch } from "react-redux";
-import { store } from "./app/store";
 import App from "./App";
+
+import { PersistGate } from 'redux-persist/integration/react';
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -14,6 +15,7 @@ import {
   setEmail,
   setIdentifier,
 } from "./features/home/HomeSlice";
+import { store,persistor } from "./app/store";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -53,10 +55,14 @@ const UserDetailsChecker = () => {
 
 root.render(
   <Provider store={store}>
+   
+   <PersistGate loading={null} persistor={persistor}>
     <GoogleOAuthProvider clientId="921280622729-651dvf4na3lejbnqn7tbsutvirne3hn2.apps.googleusercontent.com">
       <UserDetailsChecker />
       <App />
     </GoogleOAuthProvider>
+    </PersistGate>
+
   </Provider>
 );
 

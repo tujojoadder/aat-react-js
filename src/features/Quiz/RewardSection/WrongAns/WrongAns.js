@@ -4,7 +4,9 @@ import {
   setHadithData,
   setHadithId,
   setStorySeen,
+  stopQuesSeen,
   stopReward,
+  stopStorySeen,
 } from "../../QuizSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetRandomHadithMutation } from "../../../../services/quizApi";
@@ -19,6 +21,8 @@ export default function WrongAns() {
 
   const handleBack = () => {
     dispatch(stopReward());
+    dispatch(stopQuesSeen());
+    dispatch(stopStorySeen());
   };
 
   const handleClaim = async () => {

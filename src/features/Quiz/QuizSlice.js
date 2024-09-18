@@ -18,6 +18,8 @@ const initialState = {
   win:false,
   points:0,
 
+  quiz_page:''
+
 };
 
 export const quizSlice = createSlice({
@@ -77,12 +79,14 @@ export const quizSlice = createSlice({
         setPoints: (state, action) => {
           state.points = action.payload.points;
         },
-
+        setQuizPage: (state, action) => {
+          state.quiz_page = action.payload.quiz_page;
+        },
 
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setHadithData,setPoints,setWin,setLose,setQuestionId,setQuestion,setFirstAns,setSecondAns,setHadithId,setStorySeen,stopStorySeen,setQuesSeen,stopQuesSeen,setReward,stopReward } = quizSlice.actions;
+export const { setHadithData,setQuizPage,setPoints,setWin,setLose,setQuestionId,setQuestion,setFirstAns,setSecondAns,setHadithId,setStorySeen,stopStorySeen,setQuesSeen,stopQuesSeen,setReward,stopReward } = quizSlice.actions;
 
 export default quizSlice.reducer;

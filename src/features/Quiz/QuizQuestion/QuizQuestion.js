@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./QuizQuestion.css"; // Import the custom CSS file
 import { useDispatch, useSelector } from "react-redux";
-import { setLose, setPoints, setReward, setWin, stopQuesSeen } from "../QuizSlice";
+import { setLose, setPoints, setQuizPage, setReward, setWin, stopQuesSeen } from "../QuizSlice";
 import { useCheckAnswerMutation } from "../../../services/quizApi";
 
 export default function QuizQuestion() {
-  const { question, first_ans, second_ans, question_id } = useSelector(
+  const { question, first_ans, second_ans,question_id } = useSelector(
     (state) => state.quiz
   );
   const dispatch = useDispatch();
@@ -20,12 +20,12 @@ export default function QuizQuestion() {
   useEffect(() => {
     if (isSuccess) {
       if (answerResponse?.is_correct) {
-        dispatch(setReward());
+        dispatch(setQuizPage({ quiz_page: 'reward' }));
         dispatch(setWin()); //make win state true
         dispatch(setPoints({points:5})); 
       } else {
         /*                 alert(`Wrong answer! The correct answer was ${answerResponse?.correct_answer}`); */
-        dispatch(setReward());
+        dispatch(setQuizPage({ quiz_page: 'reward' }));
         dispatch(setLose()); //make win state false
         dispatch(setPoints({points:5})); 
       }

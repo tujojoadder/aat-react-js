@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './CorrectAns.css';
-import { setHadithData, setHadithId, setStorySeen, stopReward } from '../../QuizSlice';
+import { setHadithData, setHadithId, setStorySeen, stopQuesSeen, stopReward, stopStorySeen } from '../../QuizSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetRandomHadithMutation } from '../../../../services/quizApi';
 
@@ -15,6 +15,8 @@ export default function CorrectAns() {
 
   const handleBack = () => {
     dispatch(stopReward());
+    dispatch(stopQuesSeen());
+    dispatch(stopStorySeen());
   };
 
 
