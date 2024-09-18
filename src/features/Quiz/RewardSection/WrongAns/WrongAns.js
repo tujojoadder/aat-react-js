@@ -3,6 +3,7 @@ import "./WrongAns.css";
 import {
   setHadithData,
   setHadithId,
+  setQuizPage,
   setStorySeen,
   stopQuesSeen,
   stopReward,
@@ -19,11 +20,12 @@ export default function WrongAns() {
   const [postRandomHadith, { data: hadithData, error, isLoading, isSuccess }] =
     useGetRandomHadithMutation();
 
-  const handleBack = () => {
-    dispatch(stopReward());
-    dispatch(stopQuesSeen());
-    dispatch(stopStorySeen());
-  };
+ // Handle the "Back" button click event
+ const handleBack = () => {
+  // Set the quiz page to "lets_go" when going back
+  dispatch(setQuizPage({ quiz_page: "lets_go" }));
+ 
+};
 
   const handleClaim = async () => {
     // Trigger the API call to fetch a new hadith
@@ -39,8 +41,8 @@ export default function WrongAns() {
     if (hadithData) {
       dispatch(setHadithData(hadithData.hadith.hadith));
       dispatch(setHadithId(hadithData.hadith.hadith_id));
-      dispatch(setStorySeen());
-      dispatch(stopReward());
+      dispatch(setQuizPage({ quiz_page: "story" }));
+
     }
   }, [hadithData, dispatch]);
 

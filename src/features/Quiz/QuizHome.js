@@ -10,15 +10,23 @@ import {
   setQuestionId,
   setQuestion,
   setFirstAns,
-  setSecondAns
+  setSecondAns,
 } from "./QuizSlice";
-import { useGetCurrentStoryQuery, useGetRandomHadithMutation, useGetRandomQuestionMutation } from "../../services/quizApi";
+import {
+  useGetCurrentStoryQuery,
+  useGetRandomHadithMutation,
+  useGetRandomQuestionMutation,
+} from "../../services/quizApi";
 import { handleApiError } from "../handleApiError/handleApiError";
 import RewardSection from "./RewardSection/RewardSection";
+import CorrectAns from "./RewardSection/CorrectAns/CorrectAns";
+import WrongAns from "./RewardSection/WrongAns/WrongAns";
 export default function QuizHome() {
-  const { quiz_page, hadithData, hadithId } = useSelector((state) => state.quiz);
+  const { quiz_page, hadithData, hadithId, win } = useSelector(
+    (state) => state.quiz
+  );
   const dispatch = useDispatch();
-  const quizPageRef = useRef(null);  // Using ref to store quiz page
+  const quizPageRef = useRef(null); // Using ref to store quiz page
 
   // Fetch current story data using RTK Query
   const { data: currentStory, error, isLoading } = useGetCurrentStoryQuery();
@@ -61,7 +69,8 @@ export default function QuizHome() {
 
   // When current story data is fetched, store it in Redux and only update if there is no existing quiz_page
   useEffect(() => {
-    if (!quizPageRef.current) {  // Only run this if there isn't already a quiz_page
+    if (!quizPageRef.current) {
+      // Only run this if there isn't already a quiz_page
       if (currentStory && currentStory?.reading === "no") {
         dispatch(setHadithData(currentStory?.hadith_text));
         dispatch(setHadithId(currentStory?.hadith_id));
@@ -84,14 +93,21 @@ export default function QuizHome() {
   }, [hadithDatas, dispatch]);
 
   // Fetch random question and answers
-  const [getRandomQuestion, { data: questionData, isLoading: getRandomQuestionisLoading, isError: getRandomQuestionisError }] = useGetRandomQuestionMutation();
+  const [
+    getRandomQuestion,
+    {
+      data: questionData,
+      isLoading: getRandomQuestionisLoading,
+      isError: getRandomQuestionisError,
+    },
+  ] = useGetRandomQuestionMutation();
 
   const handleLetsAns = () => {
     getRandomQuestion(hadithId)
       .unwrap()
       .then((response) => {
         if (response) {
-          dispatch(setQuizPage({ quiz_page: 'ques' }));
+          dispatch(setQuizPage({ quiz_page: "ques" }));
           dispatch(setQuestionId(response.question_id));
           dispatch(setQuestion(response.question));
           dispatch(setFirstAns(response.first_ans));
@@ -99,7 +115,7 @@ export default function QuizHome() {
         }
       })
       .catch((error) => {
-        console.error('Failed to fetch question:', error);
+        console.error("Failed to fetch question:", error);
       });
   };
 
@@ -115,19 +131,23 @@ export default function QuizHome() {
         overflow: "hidden",
       }}
     >
-      <h1>{quiz_page}</h1>
+    
       {quiz_page === "story" && (
         <div className="quiz-story-container main">
           <div className="story-body">
             <div className="story-header">
               <h2 className="header-title text-secondary">
-                The Hadith {quiz_page}
+                The Hadith 
               </h2>
               <hr />
             </div>
             <p className="story-content">{hadithData}</p>
-            <button className="start-quiz-button" onClick={handleLetsAns} disabled={getRandomQuestionisLoading}>
-              {getRandomQuestionisLoading ? 'Loading...' : 'Let\'s Answer'}
+            <button
+              className="start-quiz-button"
+              onClick={handleLetsAns}
+              disabled={getRandomQuestionisLoading}
+            >
+              {getRandomQuestionisLoading ? "Loading..." : "Let's Answer"}
             </button>
             {getRandomQuestionisError && <p>Error loading question.</p>}
           </div>
@@ -136,7 +156,7 @@ export default function QuizHome() {
       {quiz_page === "ques" && <QuizQuestion />}
       {quiz_page === "lets_go" && (
         <div className="letsgo-container">
-          <h1>Let's Go</h1>
+         
           <button
             className="letsgo-button"
             onClick={handleLetsGo}
@@ -147,7 +167,12 @@ export default function QuizHome() {
         </div>
       )}
 
-{quiz_page === "reward" && <RewardSection />}
+      {quiz_page === "reward" && (
+        <div className="reward-container main m-0 p-0">
+          {/* Conditionally render CorrectAns or WrongAns based on the win value */}
+          {win ? <CorrectAns /> : <WrongAns />}
+        </div>
+      )}
     </div>
   );
 }
