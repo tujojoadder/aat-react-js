@@ -16,7 +16,7 @@ export default function PageHome() {
   const groupUpdate = useSelector((state) => state.home.groupUpdate);
 
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
-  const [pageAdmin, setPageAdmin] = useState(1);
+  const [pageNumber, setpageNumber] = useState(1);
   const [allAdminGroups, setAllAdminGroups] = useState([]);
   const [hasMoreAdminGroups, setHasMoreAdminGroups] = useState(true);
 
@@ -33,7 +33,7 @@ export default function PageHome() {
     isError: isErrorAdminGroups,
     isSuccess: isSuccessAdminGroups,
     refetch: refetchAdmin,
-  } = useGetPageSuggestionQuery(pageAdmin);
+  } = useGetPageSuggestionQuery(pageNumber);
 
   if (isErrorAdminGroups) {
     console.log(adminGroupsData)
@@ -43,7 +43,7 @@ export default function PageHome() {
   }
   // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
   useEffect(() => {
-    setPageAdmin(1);
+    setpageNumber(1);
     setAllAdminGroups([]);
     setHasMoreAdminGroups(true);
 
@@ -80,7 +80,7 @@ export default function PageHome() {
       hasMoreAdminGroups &&
       isSuccessAdminGroups
     ) {
-      setPageAdmin((prevPage) => prevPage + 1);
+      setpageNumber((prevPage) => prevPage + 1);
     }
   }, [
     adminInView,
