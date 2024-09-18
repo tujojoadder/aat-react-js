@@ -27,11 +27,15 @@ export const iaccountsApi = createApi({
             }),
           }),
         
-
+    /*  get random post */
+    getRandomIaccountPost: builder.query({
+        query: (page = 1) => `iaccount/randomposts?page=${page}`, // Updated to include id
+      }),
+  
 
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useCreateIAccountMutation} = iaccountsApi
+export const {useCreateIAccountMutation,useGetRandomIaccountPostQuery} = iaccountsApi

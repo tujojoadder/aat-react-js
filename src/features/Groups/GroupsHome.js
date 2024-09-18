@@ -11,7 +11,7 @@ import { useGetRandomGroupPostQuery } from "../../services/groupsApi";
 import GroupImagePost from "../home/Components/ImagePost/GroupImagePost/GroupImagePost";
 import GroupTextPost from "../home/Components/TextPost/GroupTextPost/GroupTextPost";
 import GroupBPost from "../home/Components/BPost/GroupBPost/GroupBPost";
-export default function Home() {
+export default function GroupsHome() {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
