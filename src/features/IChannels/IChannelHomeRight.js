@@ -39,7 +39,7 @@ export default function IChannelHomeRight() {
                     className="nav-link"
                     activeClassName="active"
                   >
-                    <i className="fa-solid fa-compass me-2"></i> Discover
+                      <i className="fa-solid fa-book me-2"></i> Your feed
                   </NavLink>
                 </li>
                 <li className="nav-item w-100">
