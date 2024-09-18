@@ -37,7 +37,7 @@ export default function QuizHome() {
     postRandomHadith,
     {
       data: hadithDatas,
-      error: postRandomHadithError,
+      isError: postRandomHadithError,
       isLoading: postRandomHadithLoading,
     },
   ] = useGetRandomHadithMutation();

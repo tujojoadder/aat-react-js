@@ -29,14 +29,14 @@ export default function IChannelHome() {
        <IChannelTabs/>
       </div>
   
-  <BPost/>
+{/*   <BPost/>
   <ImagePost/>
   <BPost/>
   <ImagePost/>
   <TextPost/>
   <TextPost/>
   <ImagePost/>
-  <TextPost/>
+  <TextPost/> */}
     </div>
   );
 }

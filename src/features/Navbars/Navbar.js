@@ -258,7 +258,7 @@ const Navbar = () => {
                   <span>
                     <i className="fa-solid fa-mosque fs-2"></i>
                   </span>
-                  <p className="d-none d-lg-block fs-4 ps-2 text">iChanel</p>
+                  <p className="d-none d-lg-block fs-4 ps-2 text">iChannel</p>
                 </div>
               </NavLink>
               <NavLink
