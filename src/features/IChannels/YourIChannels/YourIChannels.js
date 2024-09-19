@@ -112,7 +112,7 @@ export default function YourIChannels() {
               name={page.iaccount_name}
               handle={page.identifier}
               image={page.iaccount_picture}
-              type='liked'
+              type='manage'
               />
             ) : (
               <YourChannelLargeScreenCard
@@ -121,7 +121,7 @@ export default function YourIChannels() {
                 name={page.iaccount_name}
                 handle={page.identifier}
                 image={page.iaccount_picture}
-                type='liked'
+                type='manage'
               />
             )
           )}

@@ -15,8 +15,8 @@ export default function YourChannelLargeScreenCard({iaccountId,name,handle,image
             <p className="small text-muted text-truncate">@{handle}</p>
             <div className="d-flex flex-column">
               <button style={{ backgroundColor: '#e4e6eb' }} className="btn btn-md py-2 mb-2 w-100">
-                {type === "discover" ? (
-                  <b><i className="fa-solid fa-thumbs-up fs-5 pe-2"></i>Like</b>
+                {type === "manage" ? (
+                  <b>Manage</b>
                 ) : (
                   <b>View</b>
                 )}

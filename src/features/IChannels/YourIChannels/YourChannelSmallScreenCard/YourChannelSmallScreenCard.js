@@ -23,8 +23,8 @@ export default function YourChannelSmallScreenCard({iaccountId,name,handle,image
               border: "none",
             }}
           >
-            {type === "discover" ? (
-              <b><i className="fa-solid fa-thumbs-up fs-5 pe-1"></i></b>
+            {type === "manage" ? (
+              <b>manage</b>
             ) : (
               <b>View</b>
             )}

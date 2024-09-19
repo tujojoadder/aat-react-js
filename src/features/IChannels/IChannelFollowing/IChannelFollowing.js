@@ -1,155 +1,139 @@
 
-import React from "react";
+
 import { useMediaQuery } from "react-responsive";
-import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
-import PageSmallScreenCard from "../../Page/PageSmallScreenCard/PageSmallScreenCard";
-import PageLargeScreenCard from "../../Page/PageLargeScreenCard/PageLargeScreenCard";
-import IChannelSmallScreenCard from "../IChannelSmallScreenCard/IChannelSmallScreenCard";
-import IChannelLargeScreenCard from "../IChannelLargeScreenCard/IChannelLargeScreenCard";
-import IChannelTabs from "../IChannelTabs/IChannelTabs";
-import ChannelFollowingBack from "../iChannelBack/ChannelFollowingBack/ChannelFollowingBack";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack.js";
+import MidScreenBack from "../../SmallScreenBack/MidScreenBack.js";
+import Spinner from "../../Spinner/Spinner.js";
+import { useGetLikedPagesQuery } from "../../../services/pagesApi.js";
+import { useInView } from "react-intersection-observer";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import PageSmallScreenCard from "../../Page/PageSmallScreenCard/PageSmallScreenCard.js";
+import PageLargeScreenCard from "../../Page/PageLargeScreenCard/PageLargeScreenCard.js";
+import { useGetLikedIaccountsQuery } from "../../../services/iaccountsApi.js";
+import YourChannelSmallScreenCard from "../YourIChannels/YourChannelSmallScreenCard/YourChannelSmallScreenCard.js";
+import YourChannelLargeScreenCard from "../YourIChannels/YourChannelLargeScreenCard/YourChannelLargeScreenCard.js";
 
 export default function IChannelFollowing() {
-  const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
+  const groupUpdate = useSelector((state) => state.home.groupUpdate);
 
-  const profiles = [
-    {
-      name: "Marknj",
-      handle: "@mark_rockwell",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JanedDoe",
-      handle: "@jane_doe",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JohcsSmith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },{
-      name: "MarcsRockwell",
-      handle: "@mark_rockwell",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JancsDoe",
-      handle: "@jane_doe",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JohcsSmith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },{
-      name: "MarcsRockwell",
-      handle: "@mark_rockwell",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JancsDoe",
-      handle: "@jane_doe",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JohcsSmith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },{
-      name: "MarcsRockwell",
-      handle: "@mark_rockwell",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JancsDoe",
-      handle: "@jane_doe",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "Johcsmith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },{
-      name: "MarcsRockwell",
-      handle: "@mark_rockwell",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JancsDoe",
-      handle: "@jane_doe",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JohcsSmith",
-      handle: "@john_smith",
-      image:
-        "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-  ];
+  const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
+  const [pageNumber, setpageNumber] = useState(1);
+  const [allAdminGroups, setAllAdminGroups] = useState([]);
+  const [hasMoreAdminGroups, setHasMoreAdminGroups] = useState(true);
+
+  // Get reference and visibility state for admin groups
+  const { ref: adminRef, inView: adminInView } = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  });
+
+  // Fetch data for pages where the user is an admin
+  const {
+    data: adminGroupsData,
+    isFetching: isFetchingAdminGroups,
+    isError: isErrorAdminGroups,
+    isSuccess: isSuccessAdminGroups,
+    refetch: refetchAdmin,
+  } = useGetLikedIaccountsQuery(pageNumber);
+
+  if (isErrorAdminGroups) {
+    console.log(adminGroupsData)
+  }
+  if (isSuccessAdminGroups) {
+    console.log(adminGroupsData)
+  }
+  // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
+  useEffect(() => {
+    setpageNumber(1);
+    setAllAdminGroups([]);
+    setHasMoreAdminGroups(true);
+
+    // Refetch data for pages where the user is an admin
+    refetchAdmin();
+  }, [groupUpdate]);
+
+  // Effect to process fetched admin groups data
+  useEffect(() => {
+    if (isSuccessAdminGroups && adminGroupsData?.data) {
+      setAllAdminGroups((prev) => {
+        // Filter out duplicates
+        const newAdminGroups = adminGroupsData.data.filter(
+          (newGroup) =>
+            !prev.some((group) => group.iaccount_id === newGroup.iaccount_id)
+        );
+        return [...prev, ...newAdminGroups];
+      });
+
+      // Update hasMoreAdminGroups based on the pagination data
+      const { current_page, total_pages } = adminGroupsData;
+      if (current_page >= total_pages) {
+        setHasMoreAdminGroups(false);
+      }
+    }
+  }, [adminGroupsData, isSuccessAdminGroups]);
+
+  // Effect to handle infinite scroll logic for admin groups
+  useEffect(() => {
+    if (
+      adminInView &&
+      !isFetchingAdminGroups &&
+      !isErrorAdminGroups &&
+      hasMoreAdminGroups &&
+      isSuccessAdminGroups
+    ) {
+      setpageNumber((prevPage) => prevPage + 1);
+    }
+  }, [
+    adminInView,
+    isFetchingAdminGroups,
+    isErrorAdminGroups,
+    hasMoreAdminGroups,
+    isSuccessAdminGroups,
+  ]);
 
   return (
-     /* <<<--- Scroll Needed --->>> */
+    <div
+      className="friend-home main m-0 p-0 border-sm-0 border-left border-right"
+      style={{ backgroundColor: "white", minHeight: "100vh" }}
+    >
+      {/* Back button */}
+      <SmallScreenBack text="Your groups" />
+      <MidScreenBack text="Your groups" />
+      <div className="sm-back-sm"></div>
 
-    <div className="friend-home main border-left border-right " style={{ backgroundColor: "white",marginLeft:'0px',padding:'0px'}}>
-
-
- {/*  IChnnels tabs */}
-<div className="d-block d-lg-none">
- <ChannelFollowingBack/>
-      </div>
-      {/* Friend Request Section */}
-      <div className="friend-request-section mb-5 mx-2 ">
-        <h5 className="p-2" >Following channels</h5>
+      {/* Section 1: Pages where the user is an admin */}
+      <div className="admin-groups-section  px-sm-4 px-lg-2 px-3">
+        <h4 className="p-2">Pages you're an admin of</h4>
         <div className="row">
-          {profiles.length === 0 ? (
-            <div className="col-12 text-center">No records</div>
-          ) : (
-            profiles.map((profile, index) =>
-              isSmallScreen ? (
-               
-                <IChannelSmallScreenCard
-                  key={index}
-                  name={profile.name}
-                  handle={profile.handle}
-                  image={profile.image}
-                  type='following'
-                
-                />
-               
-              ) : (
-                
-                <IChannelLargeScreenCard
-               
-                  key={index}
-                  name={profile.name}
-                  handle={profile.handle}
-                  image={profile.image}
-                  type='following'
-                />
-             
-              )
+          {allAdminGroups.map((page, index) =>
+            isSmallScreen ? (
+              <YourChannelSmallScreenCard
+              key={index}
+              iaccountId={page.iaccount_id}
+              name={page.iaccount_name}
+              handle={page.identifier}
+              image={page.iaccount_picture}
+              type='following'
+              />
+            ) : (
+              <YourChannelLargeScreenCard
+              key={index}
+              iaccountId={page.iaccount_id}
+              name={page.iaccount_name}
+              handle={page.identifier}
+              image={page.iaccount_picture}
+              type='following'
+            />
             )
           )}
+          <div ref={adminRef} className="infinite-scroll-trigger">
+            {isFetchingAdminGroups && <Spinner />}
+          </div>
         </div>
       </div>
-
-      
-
-      
     </div>
   );
 }
