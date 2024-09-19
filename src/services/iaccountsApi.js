@@ -32,10 +32,15 @@ export const iaccountsApi = createApi({
         query: (page = 1) => `iaccount/randomposts?page=${page}`, // Updated to include id
       }),
   
-
+// get pages where auth user is admin
+getYourIaccounts: builder.query({
+  query: (page = 1) => `get-your-iaccounts?page=${page}`, // Adjust the endpoint URL as needed
+}),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useCreateIAccountMutation,useGetRandomIaccountPostQuery} = iaccountsApi
+export const {useCreateIAccountMutation,
+  useGetYourIaccountsQuery,
+  useGetRandomIaccountPostQuery} = iaccountsApi
