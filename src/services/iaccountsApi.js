@@ -42,9 +42,18 @@ export const iaccountsApi = createApi({
       query: (page = 1) => `get-iaccounts-liked?page=${page}`, // Adjust the endpoint URL as needed
     }),
 
+    //get specific group details
+    getIaccountDetails: builder.query({
+      query: (id) => `/iaccountdetails/${id}`, // Make sure this endpoint exists in your backend
+    }),
 
 
 
+ /*    get specific group posts */
+ getSpecificIaccountPost: builder.query({
+  query: ({ page = 1, iChannelId }) =>
+    `getspecificiaccountposts?page=${page}&id=${iChannelId}`, // Updated to include id
+}),
 
 
 
@@ -56,6 +65,8 @@ export const iaccountsApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreateIAccountMutation,
+  useGetSpecificIaccountPostQuery,
+  useGetIaccountDetailsQuery,
   useGetLikedIaccountsQuery,
   useGetYourIaccountsQuery,
   useGetRandomIaccountPostQuery,

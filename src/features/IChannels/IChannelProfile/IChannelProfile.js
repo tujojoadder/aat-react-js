@@ -1,79 +1,181 @@
-import React, { useState, useEffect } from "react";
-import "./IChannelProfile.css";
-import image from "./logo.jpg";
-import TextPost from "../../home/Components/TextPost/TextPost";
-import ImagePost from "../../home/Components/ImagePost/ImagePost";
-import ProfileFriend from "../../Profile/ProfileFriends/ProfileFriend/ProfileFriend";
-import ImageContainer from "../../Friends/ImageContainer/ImageContainer";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import LargeScreenProfile from "../../LargeScreenBack/LargeScreenProfileBack";
+
 import { NavLink } from "react-router-dom";
-import BPost from "../../home/Components/BPost/BPost";
-import ProfileHomeBack from "../../Profile/ProfileHomeBack/ProfileHomeBack";
+import ProfileSkeleton from "../../Profile/ProfileSkeleton/ProfileSkeleton";
+
+import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
+
+import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetPageDetailsQuery } from "../../../services/pagesApi";
+import PagePost from "../../Page/PagePost/PagePost";
+import PagePhoto from "../../Page/PagePhoto/PagePhoto";
+import PageMember from "../../Page/PageMember/PageMember";
+import { setPageError } from "../../home/HomeSlice";
+import PageButtons from "../../Page/PageButtons/PageButtons";
+import { useGetIaccountDetailsQuery } from "../../../services/iaccountsApi";
+import IChannelPosts from "../iChannelPost/IChannelPosts";
 
 export default function IChannelProfile() {
-  return (
-    <div className="header__wrapper m-0 p-0 border">
-      <ProfileHomeBack text="iChannel name" />
-      <header></header>
-      <div className="cols__container">
-        <div className="left__col mb-1">
-          <div className="img__container">
-            <img src={image} alt="Anna Smith" />
-            <span></span>
-          </div>
-          <h2>Anna Smith</h2>
-          <p style={{ marginBottom: "7px", marginTop: "-2px" }}>
-            anna@example.com
-          </p>
+  const pageUpdate = useSelector((state) => state.home.pageUpdate); // Track group updates
 
-          <h6
-            style={{ marginBottom: "7px", marginTop: "-2px" }}
-            className="ms-2"
-          >
-            117.2k Follower
-          </h6>
-        </div>
-        <div className="right__col">
-          <nav>
-            <div className="d-flex justify-content-center justify-content-sm-end">
-               
-             {/*  Only for admin groups */}
-             <NavLink
-                      
-                      to='/ichannel/{id}/manage'
-                      className="text-decoration-none"
-                    >
-              <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center"
-                style={{ cursor: "pointer" }}
-              >
-               
-                <i className="fa-solid fa-pen"></i>
-                <span className="ms-1">Manage</span>
-                
-              </div>
-              </NavLink>
-              <div
-                className="btn btn-md btn-primary mx-1 d-flex align-items-center"
-                style={{ cursor: "pointer" }}
-              >
-               <i className="fa-solid fa-mosque  "></i> 
-                <span className="ms-1">Join Channel</span>
-              </div>
-              <div
-                className="btn btn-md mx-1 me-3 d-flex align-items-center"
-                style={{ cursor: "pointer", minWidth: "70px", backgroundColor: '#e4e6eb' }}
-              >
-                <i className="fa-solid fa-share"></i>
-                &nbsp; Share
-              </div>
-            </div>
-          </nav>
-        </div>
+  const { id } = useParams();
+  const scrollRef = useRef(null);
+
+  const dispatch = useDispatch();
+
+  /* // Create a unique key for storing the scroll position
+  const localStorageKey = `scrollPosition_${id}`;
+
+  // Restore scroll position from localStorage
+  useEffect(() => {
+    const storedScrollPosition = localStorage.getItem(localStorageKey);
+    if (scrollRef.current && storedScrollPosition) {
+      scrollRef.current.scrollTop = parseInt(storedScrollPosition, 10);
+    }
+
+    // Clean up scroll event listener
+    return () => {
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [id]);
+
+  // Handle scroll event and save scroll position
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const scrollTop = scrollRef.current.scrollTop;
+      console.log(`Current scroll position: ${scrollTop}`); // Log scroll position
+      localStorage.setItem(localStorageKey, scrollTop);
+    }
+  };
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.addEventListener("scroll", handleScroll);
+    }
+
+    // Clean up scroll event listener on unmount
+    return () => {
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [id]); */
+
+  // Fetch user profile data
+  const {
+    data: pageData,
+    isFetching,
+    isError,
+    isSuccess,
+    refetch,
+  } = useGetIaccountDetailsQuery(id);
+
+  useEffect(() => {
+    refetch();
+  }, [pageUpdate]);
+
+  if (isError) {
+    dispatch(setPageError(isError));
+  }
+
+  useEffect(() => {
+    refetch();
+  }, [pageUpdate]);
+
+  if (isSuccess) {
+    console.log(pageData);
+  }
+  // Handle loading state
+  if (isFetching) return <ProfileSkeleton />;
+
+  // Handle error state
+  /*   if (isError) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <p>Something went wrong. Please try again later.</p>
       </div>
+    );
+  }
+ */
+  // Background styling for the profile cover
+  const backgroundImageStyle = {
+    backgroundImage: `url(${pageData?.data?.iaccount_cover})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    minHeight: "calc(100px + 15vw)",
+    backgroundColor: "lightgrey", // Added for debugging
+  };
 
-      {/* Content section */}
-      <div className="content-secssion mx-md-2">
-        <ul className="nav nav-tabs mt-3">
+  return (
+    <div
+      className="friend-home main border-start border-end mb-1 m-0 p-0"
+      style={{ backgroundColor: "white", minHeight: "100vh" }}
+    >
+      <div ref={scrollRef} className="header__wrapper m-0 p-0">
+        {/*    Back buttons */}
+        <SmallScreenBack text={`${pageData?.data?.iaccount_name}`} />
+        <MidScreenBack text={`${pageData?.data?.iaccount_name}`} />
+        <LargeScreenProfile text={`${pageData?.data?.iaccount_name}`} />
+        <div style={backgroundImageStyle}></div>
+
+        {/* Header of profile */}
+        <div className="cols__container">
+          <div className="left__col">
+            <div className="img__container">
+              <img
+                src={`${pageData?.data?.iaccount_picture}`}
+                style={{ backgroundColor: "lightgray" }}
+                alt="Profile"
+              />
+            </div>
+            <h2>{pageData?.data?.iaccount_name}</h2>
+            <p>@{pageData?.data?.identifier}</p>
+
+            <h7
+              style={{ marginBottom: "7px", marginTop: "-2px" }}
+              className="ms-2"
+            >
+              117.2k Likes
+            </h7>
+          </div>
+          <div className="right__col">
+            <nav>
+              <div className="d-flex justify-content-center justify-content-sm-end">
+                {pageData?.data?.isAdmin && pageData?.data?.page_id && (
+                  <NavLink
+                    to={`/page/${pageData?.data?.page_id}/manage`}
+                    className="text-decoration-none"
+                  >
+                    <div
+                      className="btn btn-md btn-primary mx-4 d-flex align-items-center"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <i className="fa-solid fa-pen"></i>
+                      <span className="ms-1">Manage</span>
+                    </div>
+                  </NavLink>
+                )}
+                {!pageData?.data?.isAdmin && (
+                  <PageButtons
+                    pageId={pageData?.data?.page_id}
+                    joinStatus={pageData?.data?.joinStatus}
+                  />
+                )}
+              </div>
+            </nav>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <ul className="nav nav-tabs mt-3 mx-2 ">
           <li className="nav-item">
             <a className="nav-link active" href="#post" data-bs-toggle="tab">
               Posts
@@ -84,49 +186,59 @@ export default function IChannelProfile() {
               Photos
             </a>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#friends" data-bs-toggle="tab">
-              Following
+          <li className="nav-item d-none d-lg-block">
+            <a className="nav-link" href="#follower" data-bs-toggle="tab">
+              Followers
             </a>
+          </li>
+          <li className="nav-item dropdown">
+            <a
+              className="nav-link dropdown-toggle"
+              data-bs-toggle="dropdown"
+              href="#"
+              role="button"
+              aria-expanded="false"
+            ></a>
+            <ul className="dropdown-menu">
+              <li>
+                <a
+                  className="dropdown-item d-lg-none"
+                  href="#follower"
+                  data-bs-toggle="tab"
+                >
+                  Followers
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
 
-        <div className="tab-content">
-          {/* Post Section */}
-          <div
-            id="post"
-            className="post-container-secssion mb-md-4 tab-pane fade show active"
-          >
-         {/*    <BPost />
-            <TextPost />
-            <ImagePost />
-            <BPost />
-            <ImagePost />
-            <TextPost />
-            <BPost /> */}
+        {/* Tab Content */}
+        <div className="tab-content p-3 px-0 ">
+          {/* Post Tab Content */}
+          <div className="tab-pane bg-white fade show active" id="post">
+            <h5 className="ms-4 mb-4" color="#65676b">
+              Posts
+            </h5>
+            <IChannelPosts iChannelId={id} isCreator={pageData.data.isCreator} /> 
+            {/*   <PagePost pageId={id} joinStatus={pageData.data.joinStatus} /> */}
           </div>
 
-          {/* Image Section */}
-          <div
-            id="image"
-            className="image-container-secssion mb-md-4 px-md-3 pt-3 tab-pane fade"
-          >
-            <ImageContainer />
+          {/* Photos Tab Content */}
+          <div className="tab-pane fade bg-white" id="image">
+            <h5 className="ms-4 mb-1" color="#65676b">
+              Photos
+            </h5>
+            {/*    <PagePhoto pageId={id} /> */}
           </div>
 
-          {/* Following Section */}
-          <div id="friends" className="tab-pane fade w-100">
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
-            <ProfileFriend />
+          {/* Followers Tab Content */}
+          <div className="tab-pane fade bg-white" id="follower">
+            <h5 className="ms-4 mb-1" color="#65676b">
+              Followers
+            </h5>
+
+            {/*   <PageMember pageId={id} /> */}
           </div>
         </div>
       </div>
