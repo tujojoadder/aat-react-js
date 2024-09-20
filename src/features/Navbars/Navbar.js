@@ -591,7 +591,7 @@ const Navbar = () => {
               <Route
                 path="groups/:id/manage"
                 exact
-                element={<GroupManageright />}
+                element={<GroupsHomeRight />}
               />
               {/*  <<---Page-->>home page */}
               <Route path="page" exact element={<PageHomeRight />} />

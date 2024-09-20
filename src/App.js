@@ -271,7 +271,7 @@ function App() {
             <Route
               path="groups/:id/manage"
               exact
-              element={<GroupManageright />}
+              element={<GroupsHomeRight />}
             />
 
             {/* Page */}
