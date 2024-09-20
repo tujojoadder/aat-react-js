@@ -55,6 +55,13 @@ export const iaccountsApi = createApi({
     `getspecificiaccountposts?page=${page}&id=${iChannelId}`, // Updated to include id
 }),
 
+    /*    get specific usrer images for ichannel */
+    getSpecificIChannelPhoto: builder.query({
+      query: ({ photoPage = 1, iChannelId }) =>
+        `getspecificichannelphotos?page=${photoPage}&id=${iChannelId}`, // Updated to include id
+    }),
+
+
 
 
 
@@ -65,6 +72,7 @@ export const iaccountsApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreateIAccountMutation,
+  useGetSpecificIChannelPhotoQuery,
   useGetSpecificIaccountPostQuery,
   useGetIaccountDetailsQuery,
   useGetLikedIaccountsQuery,

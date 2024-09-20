@@ -17,6 +17,7 @@ import { setPageError } from "../../home/HomeSlice";
 import PageButtons from "../../Page/PageButtons/PageButtons";
 import { useGetIaccountDetailsQuery } from "../../../services/iaccountsApi";
 import IChannelPosts from "../iChannelPost/IChannelPosts";
+import IChannelPhotos from "../IChannelPhotos/IChannelPhotos";
 
 export default function IChannelProfile() {
   const pageUpdate = useSelector((state) => state.home.pageUpdate); // Track group updates
@@ -229,6 +230,7 @@ export default function IChannelProfile() {
             <h5 className="ms-4 mb-1" color="#65676b">
               Photos
             </h5>
+            <IChannelPhotos  iChannelId={id}   />
             {/*    <PagePhoto pageId={id} /> */}
           </div>
 
