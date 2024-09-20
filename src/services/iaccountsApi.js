@@ -65,9 +65,19 @@ export const iaccountsApi = createApi({
    getSpecificIaccountFollowerFriend: builder.query({
     query: ({ followerPage = 1, iChannelId }) => `getspecificiaccountfollowerids?page=${followerPage}&id=${iChannelId}`, // Updated to include id
     }),
+    joinIChannel: builder.mutation({
+      query: (iChannelId) => ({
+        url: `iaccount/join/${iChannelId}`,
+        method: 'POST',
+      }),
+    }),
 
-
-
+    leaveIChannel: builder.mutation({
+      query: (iChannelId) => ({
+        url: `iaccount/leave/${iChannelId}`,
+        method: 'POST',
+      }),
+    }),
 
 
   }),
@@ -77,6 +87,8 @@ export const iaccountsApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreateIAccountMutation,
+  useJoinIChannelMutation,
+  useLeaveIChannelMutation,
   useGetSpecificIaccountFollowerFriendQuery,
   useGetSpecificIChannelPhotoQuery,
   useGetSpecificIaccountPostQuery,

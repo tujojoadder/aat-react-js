@@ -19,6 +19,7 @@ import { useGetIaccountDetailsQuery } from "../../../services/iaccountsApi";
 import IChannelPosts from "../iChannelPost/IChannelPosts";
 import IChannelPhotos from "../IChannelPhotos/IChannelPhotos";
 import IChannelFollowerContainer from "../IChannelFollowerContainer/IChannelFollowerContainer";
+import IChannelButton from "../IChannelButton/IChannelButton";
 
 export default function IChannelProfile() {
   const pageUpdate = useSelector((state) => state.home.pageUpdate); // Track group updates
@@ -151,9 +152,9 @@ export default function IChannelProfile() {
           <div className="right__col">
             <nav>
               <div className="d-flex justify-content-center justify-content-sm-end">
-                {pageData?.data?.isAdmin && pageData?.data?.page_id && (
+                {pageData?.data?.isCreator && pageData?.data?.iaccount_id && (
                   <NavLink
-                    to={`/page/${pageData?.data?.page_id}/manage`}
+                    to={`/ichannel/${pageData?.data?.iaccount_id}/manage`}
                     className="text-decoration-none"
                   >
                     <div
@@ -165,9 +166,9 @@ export default function IChannelProfile() {
                     </div>
                   </NavLink>
                 )}
-                {!pageData?.data?.isAdmin && (
-                  <PageButtons
-                    pageId={pageData?.data?.page_id}
+                {!pageData?.data?.isCreator && (
+                  <IChannelButton
+                    iChannelId={pageData?.data?.iaccount_id}
                     joinStatus={pageData?.data?.joinStatus}
                   />
                 )}
