@@ -61,6 +61,11 @@ export const iaccountsApi = createApi({
         `getspecificichannelphotos?page=${photoPage}&id=${iChannelId}`, // Updated to include id
     }),
 
+   /* get specific iaccount frien for profile */
+   getSpecificIaccountFollowerFriend: builder.query({
+    query: ({ followerPage = 1, iChannelId }) => `getspecificiaccountfollowerids?page=${followerPage}&id=${iChannelId}`, // Updated to include id
+    }),
+
 
 
 
@@ -72,6 +77,7 @@ export const iaccountsApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreateIAccountMutation,
+  useGetSpecificIaccountFollowerFriendQuery,
   useGetSpecificIChannelPhotoQuery,
   useGetSpecificIaccountPostQuery,
   useGetIaccountDetailsQuery,

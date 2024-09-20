@@ -18,6 +18,7 @@ import PageButtons from "../../Page/PageButtons/PageButtons";
 import { useGetIaccountDetailsQuery } from "../../../services/iaccountsApi";
 import IChannelPosts from "../iChannelPost/IChannelPosts";
 import IChannelPhotos from "../IChannelPhotos/IChannelPhotos";
+import IChannelFollowerContainer from "../IChannelFollowerContainer/IChannelFollowerContainer";
 
 export default function IChannelProfile() {
   const pageUpdate = useSelector((state) => state.home.pageUpdate); // Track group updates
@@ -192,26 +193,6 @@ export default function IChannelProfile() {
               Followers
             </a>
           </li>
-          <li className="nav-item dropdown">
-            <a
-              className="nav-link dropdown-toggle"
-              data-bs-toggle="dropdown"
-              href="#"
-              role="button"
-              aria-expanded="false"
-            ></a>
-            <ul className="dropdown-menu">
-              <li>
-                <a
-                  className="dropdown-item d-lg-none"
-                  href="#follower"
-                  data-bs-toggle="tab"
-                >
-                  Followers
-                </a>
-              </li>
-            </ul>
-          </li>
         </ul>
 
         {/* Tab Content */}
@@ -221,7 +202,10 @@ export default function IChannelProfile() {
             <h5 className="ms-4 mb-4" color="#65676b">
               Posts
             </h5>
-            <IChannelPosts iChannelId={id} isCreator={pageData.data.isCreator} /> 
+            <IChannelPosts
+              iChannelId={id}
+              isCreator={pageData.data.isCreator}
+            />
             {/*   <PagePost pageId={id} joinStatus={pageData.data.joinStatus} /> */}
           </div>
 
@@ -230,17 +214,14 @@ export default function IChannelProfile() {
             <h5 className="ms-4 mb-1" color="#65676b">
               Photos
             </h5>
-            <IChannelPhotos  iChannelId={id}   />
-            {/*    <PagePhoto pageId={id} /> */}
+            <IChannelPhotos iChannelId={id} />
           </div>
 
-          {/* Followers Tab Content */}
           <div className="tab-pane fade bg-white" id="follower">
             <h5 className="ms-4 mb-1" color="#65676b">
               Followers
             </h5>
-
-            {/*   <PageMember pageId={id} /> */}
+            <IChannelFollowerContainer iChannelId={id} />
           </div>
         </div>
       </div>
