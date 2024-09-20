@@ -79,6 +79,16 @@ export const iaccountsApi = createApi({
       }),
     }),
 
+    /* updateGroupName */
+    updatIAccountName: builder.mutation({
+      query: ({ iChannelId, name }) => ({
+        url: `iaccount/${iChannelId}/update/name`,
+        method: 'PUT',
+        body: { name },
+      }),
+    }),
+
+
 
   }),
 });
@@ -87,6 +97,7 @@ export const iaccountsApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreateIAccountMutation,
+  useUpdatIAccountNameMutation,
   useJoinIChannelMutation,
   useLeaveIChannelMutation,
   useGetSpecificIaccountFollowerFriendQuery,

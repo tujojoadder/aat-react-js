@@ -64,6 +64,7 @@ import GroupManageright from "../Groups/GroupManage/GroupManageright";
 import GroupsMyGroups from "../Groups/GroupsMyGroups";
 import GroupsJoinedGroups from "../Groups/GroupsJoinedGroups";
 import PageManageRight from "../Page/PageManageRight/PageManageRight";
+import IChannelManage from "../IChannels/IChannelManage/IChannelManage";
 
 const Navbar = () => {
   const isNotSm = useMediaQuery({ minWidth: 576 }); // Bootstrap's sm breakpoint is 576px
@@ -498,7 +499,7 @@ const Navbar = () => {
                 <Route
                   path="ichannel/:id/manage"
                   exact
-                  element={<IChannelsManage />}
+                  element={<IChannelManage />}
                 />
                 {/* Mobile Menu */}
                 <Route path="menu" exact element={<MobileMenu />} />
