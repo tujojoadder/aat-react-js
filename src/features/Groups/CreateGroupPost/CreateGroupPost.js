@@ -3,6 +3,7 @@ import { handleApiError } from "../../handleApiError/handleApiError";
 import { useDispatch } from "react-redux";
 import { setToastSuccess } from "../../home/HomeSlice";
 import { useUserGroupPostInsertMutation } from "../../../services/postApi";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateGroupPost({ groupId }) {
   const fileInputRef = useRef(null);
@@ -16,7 +17,7 @@ export default function CreateGroupPost({ groupId }) {
 
   const [userPostInsert, { isLoading, isError, isSuccess, error }] = useUserGroupPostInsertMutation();
   const dispatch = useDispatch();
-
+  const navigate=useNavigate();
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -91,6 +92,9 @@ export default function CreateGroupPost({ groupId }) {
       if (res.data) {
         console.log(res.data);
         handleReset(); // Clear form after successful submission
+        navigate(`/groups/${groupId}`);
+
+
       } else if (res.error) {
         console.log(res.error);
         handleApiError(res.error, dispatch);

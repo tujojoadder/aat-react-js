@@ -1,17 +1,18 @@
-
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-import Spinner from '../../Spinner/Spinner';
+import Spinner from "../../Spinner/Spinner";
 
-import ImagePost from '../../home/Components/ImagePost/ImagePost';
-import TextPostSkeleton from '../../home/Components/TextPost/TextPostSkeleton/TextPostSkeleton';
-import BPost from '../../home/Components/BPost/BPost';
-import { useGetSpecificPagePostQuery } from '../../../services/pagesApi';
-import TextPost from '../../home/Components/TextPost/TextPost';
+import ImagePost from "../../home/Components/ImagePost/ImagePost";
+import TextPostSkeleton from "../../home/Components/TextPost/TextPostSkeleton/TextPostSkeleton";
+import BPost from "../../home/Components/BPost/BPost";
+import { useGetSpecificPagePostQuery } from "../../../services/pagesApi";
+import TextPost from "../../home/Components/TextPost/TextPost";
+import PageTextPost from "../PageTextPost/PageTextPost";
+import PageImagePost from "../PageImagePost/PageImagePost";
+import PageBPost from "../PageBPost/PageBPost";
 
-export default function PagePost({ pageId,joinStatus }) {
+export default function PagePost({ pageId, joinStatus }) {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
@@ -23,7 +24,12 @@ export default function PagePost({ pageId,joinStatus }) {
   });
 
   // Fetch posts using RTK Query
-  const { data: userPosts, isFetching, isError, isSuccess } = useGetSpecificPagePostQuery({ page, pageId });
+  const {
+    data: userPosts,
+    isFetching,
+    isError,
+    isSuccess,
+  } = useGetSpecificPagePostQuery({ page, pageId });
 
   // Reset posts when `pageId` changes
   useEffect(() => {
@@ -39,7 +45,10 @@ export default function PagePost({ pageId,joinStatus }) {
         setHasMorePosts(false);
       } else {
         const newPosts = userPosts.data.filter(
-          (post) => !allPosts.some((existingPost) => existingPost.post_id === post.post_id)
+          (post) =>
+            !allPosts.some(
+              (existingPost) => existingPost.post_id === post.post_id
+            )
         );
 
         if (newPosts.length > 0) {
@@ -49,12 +58,9 @@ export default function PagePost({ pageId,joinStatus }) {
     }
   }, [userPosts, isSuccess, allPosts]);
 
-
-
-
-if (isSuccess) {
+  if (isSuccess) {
     console.log(userPosts);
-}
+  }
 
   // Infinite scroll effect to load more posts
   useEffect(() => {
@@ -65,27 +71,42 @@ if (isSuccess) {
 
   // Error Handling
   if (isError) {
-    return <p className="text-center">Failed to load posts. Please try again later.</p>;
+    return (
+      <p className="text-center">
+        Failed to load posts. Please try again later.
+      </p>
+    );
   }
 
   return (
     <div className="post-wrapper">
- {/*      {joinStatus &&  <CreateGroupPost pageId={pageId}/>}
- */}
-
+      {/*      {joinStatus &&  <CreateGroupPost pageId={pageId}/>}
+       */}
 
       {/* Display posts */}
-      {allPosts.length === 0 && !isFetching && <h4 className="text-center" style={{color:'#592529'}}>No Posts to show</h4>}
+      {allPosts.length === 0 && !isFetching && (
+        <h4 className="text-center" style={{ color: "#592529" }}>
+          No Posts to show
+        </h4>
+      )}
       {allPosts.map((post) => (
         <div key={post.post_id} className="post-container">
-          {post.text_post && !post.image_post && <TextPost post={post} />}
+          {/*           {post.text_post && !post.image_post && <TextPost post={post} />}
           {!post.text_post && post.image_post && <ImagePost post={post} />}
-          {post.text_post && post.image_post && <BPost post={post} />}
+          {post.text_post && post.image_post && <BPost post={post} />} */}
+
+          {post.text_post && !post.image_post && <PageTextPost post={post} />}
+          {!post.text_post && post.image_post && <PageImagePost post={post} />}
+          {post.text_post && post.image_post && <PageBPost post={post} />}
         </div>
       ))}
 
       {/* Infinite scroll trigger */}
-      <div ref={ref} className="loading-trigger" style={{ height: "7vh", minHeight: "40px" }}>
+      <div
+        ref={ref}
+        className="loading-trigger"
+        style={{ height: "7vh", minHeight: "40px" }}
+      >
         {isFetching && <Spinner />}
       </div>
     </div>
