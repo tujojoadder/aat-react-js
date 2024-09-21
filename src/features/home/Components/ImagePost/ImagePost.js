@@ -66,7 +66,7 @@ export default function ImagePost({ post }) {
   const handleProfilePicLoad = () => {
     setIsProfilePicLoaded(true);
   };
-  
+
   return (
     <div className="posts mx-2">
       {!post ? (
@@ -142,15 +142,18 @@ export default function ImagePost({ post }) {
               </div>
             </div>
             <div className="content-icons px-2">
+
+              <i className="far fa-heart fas red-heart"><span className="ps-1">109</span></i>
+              <i className="far fa-thumbs-down  fas red-unlike"><span className="ps-1">109</span></i>
+              
               <i
-                className="far fa-heart red"
+                className="ps-md-3 far fa-comment blue"
                 data-bs-toggle="modal"
                 data-bs-target="#imageModal"
               >
-                109
+                {" "}
+                1.6k
               </i>
-              <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
-              <i className="ps-md-3 far fa-comment blue"> 1.6k</i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
             </div>
           </div>
