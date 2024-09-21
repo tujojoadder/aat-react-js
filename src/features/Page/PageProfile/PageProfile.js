@@ -289,7 +289,7 @@ if (isError) {
               Posts
             </h5>
 
-            <PagePost pageId={id} joinStatus={pageData.data.joinStatus} />
+            <PagePost pageId={id} isAdmin={pageData.data.isAdmin} />
           </div>
 
           {/* Photos Tab Content */}

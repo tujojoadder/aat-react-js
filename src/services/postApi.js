@@ -51,12 +51,36 @@ userGroupPostInsert: builder.mutation({
   },
 }),
 
+/* Create Page Post */   
+userPagePostInsert: builder.mutation({
+  query: (data) => {
+    return {
+      url: "/page/post/create",
+      method: "POST",
+      body: data,
+    };
+  },
+}),
+
+/* Create iAccount Post */   
+userIAccountPostInsert: builder.mutation({
+  query: (data) => {
+    return {
+      url: "/iaccount/post/create",
+      method: "POST",
+      body: data,
+    };
+  },
+}),
 
 
-      
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useUserPostInsertMutation,useGetPostsQuery,useUserGroupPostInsertMutation } = postApi
+export const { useUserPostInsertMutation,
+  useUserIAccountPostInsertMutation,
+  useUserPagePostInsertMutation,
+  useGetPostsQuery,
+  useUserGroupPostInsertMutation } = postApi

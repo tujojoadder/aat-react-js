@@ -9,6 +9,8 @@ import IChannelImagePost from '../IChannelImagePost/IChannelImagePost';
 import IChannelTextPost from '../IChannelTextPost/IChannelTextPost';
 import IChannelBPost from '../IChannelBPost/IChannelBPost';
 import { useGetSpecificIaccountPostQuery } from '../../../services/iaccountsApi';
+import CreateIChannel from '../CreateIChannel/CreateIChannel';
+import CreateIChannelPosts from '../CreateIChannelPosts/CreateIChannelPosts';
 
 export default function IChannelPosts({ iChannelId,isCreator }) {
   const [page, setPage] = useState(1);
@@ -70,8 +72,8 @@ if (isError) {
 
   return (
     <div className="post-wrapper">
-      {isCreator &&  <CreateGroupPost iChannelId={iChannelId}/>}
-
+    
+{isCreator && <CreateIChannelPosts iChannelId={iChannelId} />}
       {/* Display posts */}
       {allPosts.length === 0 && !isFetching && <h4 className="text-center" style={{color:'#592529'}}>No Posts to show</h4>}
       {allPosts.map((post) => (

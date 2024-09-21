@@ -11,8 +11,9 @@ import TextPost from "../../home/Components/TextPost/TextPost";
 import PageTextPost from "../PageTextPost/PageTextPost";
 import PageImagePost from "../PageImagePost/PageImagePost";
 import PageBPost from "../PageBPost/PageBPost";
+import CreatePagePost from "../CreatePagePost/CreatePagePost";
 
-export default function PagePost({ pageId, joinStatus }) {
+export default function PagePost({ pageId, isAdmin }) {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
@@ -80,9 +81,10 @@ export default function PagePost({ pageId, joinStatus }) {
 
   return (
     <div className="post-wrapper">
-      {/*      {joinStatus &&  <CreateGroupPost pageId={pageId}/>}
-       */}
+           {isAdmin &&  <CreatePagePost pageId={pageId} />}
+      
 
+      
       {/* Display posts */}
       {allPosts.length === 0 && !isFetching && (
         <h4 className="text-center" style={{ color: "#592529" }}>
@@ -91,10 +93,6 @@ export default function PagePost({ pageId, joinStatus }) {
       )}
       {allPosts.map((post) => (
         <div key={post.post_id} className="post-container">
-          {/*           {post.text_post && !post.image_post && <TextPost post={post} />}
-          {!post.text_post && post.image_post && <ImagePost post={post} />}
-          {post.text_post && post.image_post && <BPost post={post} />} */}
-
           {post.text_post && !post.image_post && <PageTextPost post={post} />}
           {!post.text_post && post.image_post && <PageImagePost post={post} />}
           {post.text_post && post.image_post && <PageBPost post={post} />}
