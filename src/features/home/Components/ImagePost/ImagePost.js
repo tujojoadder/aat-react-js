@@ -11,6 +11,12 @@ import { setLoveReaction, setUnlikeReactions } from "../../HomeSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ImagePost({ post }) {
+  
+  
+  
+  const [toggleLove] = useToggleLoveMutation();
+  const [toggleUnlike] = useToggleUnlikeMutation();
+
   const dispatch = useDispatch();
   // Redux selectors for request status
   const loveReactions = useSelector(
@@ -28,6 +34,39 @@ export default function ImagePost({ post }) {
       dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
     }
   }, []);
+  const handleLoveClick = async () => {
+    // Optimistic update
+
+    if (loveReactions) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
+    } else {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
+
+    try {
+      await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle love:", error);
+    }
+  };
+
+  const handleUnlikeClick = async () => {
+    // Optimistic update
+
+    if (unlikeReactions) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
+    } else {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
+
+    try {
+      await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle unlike:", error);
+    }
+  };
+
+
 
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
@@ -41,19 +80,13 @@ export default function ImagePost({ post }) {
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false);
-
   const modalRef = useRef(null);
-
-  const [toggleLove] = useToggleLoveMutation();
-  const [toggleUnlike] = useToggleUnlikeMutation();
-
   const updateWidth = () => {
     setIsXSmall(window.innerWidth <= 650);
     setIsSmall(window.innerWidth > 650 && window.innerWidth <= 950);
     setIsMid(window.innerWidth > 950 && window.innerWidth <= 1200);
     setIsLg(window.innerWidth > 1200);
   };
-
   useEffect(() => {
     updateWidth();
     window.addEventListener("resize", updateWidth);
@@ -91,37 +124,7 @@ export default function ImagePost({ post }) {
     setIsProfilePicLoaded(true);
   };
 
-  const handleLoveClick = async () => {
-    // Optimistic update
-
-    if (loveReactions) {
-      dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
-    } else {
-      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
-    }
-
-    try {
-      await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
-    } catch (error) {
-      console.error("Failed to toggle love:", error);
-    }
-  };
-
-  const handleUnlikeClick = async () => {
-    // Optimistic update
-
-    if (unlikeReactions) {
-      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
-    } else {
-      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
-    }
-
-    try {
-      await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
-    } catch (error) {
-      console.error("Failed to toggle unlike:", error);
-    }
-  };
+  
 
   return (
     <div className="posts mx-2">
