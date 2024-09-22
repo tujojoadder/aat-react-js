@@ -5,6 +5,8 @@ import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImag
 import "./ImagePost.css";
 import { formatPostDate } from "../../../../utils/dateUtils";
 import ImagePostSkeleton from "./ImagePostSkeleton/ImagePostSkeleton";
+import { useToggleLoveMutation } from "../../../../services/loveApi";
+import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 
 export default function ImagePost({ post }) {
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
@@ -17,11 +19,17 @@ export default function ImagePost({ post }) {
   const [isLg, setIsLg] = useState(window.innerWidth > 1200);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  /* Image load handling  */
+  // Local state for love/unlike
+  const [isLoveActive, setIsLoveActive] = useState(post.isLove);
+  const [isUnlikeActive, setIsUnlikeActive] = useState(post.isUnlike);
+
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false); // State to track profile picture load
+  const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false);
 
   const modalRef = useRef(null);
+
+  const [toggleLove] = useToggleLoveMutation();
+  const [toggleUnlike] = useToggleUnlikeMutation();
 
   const updateWidth = () => {
     setIsXSmall(window.innerWidth <= 650);
@@ -38,6 +46,7 @@ export default function ImagePost({ post }) {
     };
   }, []);
 
+  // Update state for modal open/close
   useEffect(() => {
     const modalElement = modalRef.current;
     if (modalElement) {
@@ -58,13 +67,48 @@ export default function ImagePost({ post }) {
     }
   }, []);
 
-  /* handle image loaded or not  */
   const handleImageLoad = () => {
     setIsImageLoaded(true);
   };
 
   const handleProfilePicLoad = () => {
     setIsProfilePicLoaded(true);
+  };
+
+  const handleLoveClick = async () => {
+    // Optimistic update
+    const prevLove = isLoveActive;
+    const prevUnlike = isUnlikeActive;
+
+    setIsLoveActive(true);
+    setIsUnlikeActive(false); // If love is active, unlike should be deactivated
+
+    try {
+      await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
+    } catch (error) {
+      // Revert back if API call fails
+      console.error("Failed to toggle love:", error);
+      setIsLoveActive(prevLove);
+      setIsUnlikeActive(prevUnlike);
+    }
+  };
+
+  const handleUnlikeClick = async () => {
+    // Optimistic update
+    const prevLove = isLoveActive;
+    const prevUnlike = isUnlikeActive;
+
+    setIsLoveActive(false); // If unlike is active, love should be deactivated
+    setIsUnlikeActive(true);
+
+    try {
+      await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
+    } catch (error) {
+      // Revert back if API call fails
+      console.error("Failed to toggle unlike:", error);
+      setIsLoveActive(prevLove);
+      setIsUnlikeActive(prevUnlike);
+    }
   };
 
   return (
@@ -142,10 +186,20 @@ export default function ImagePost({ post }) {
               </div>
             </div>
             <div className="content-icons px-2">
-
-              <i className="far fa-heart fas red-heart"><span className="ps-1">109</span></i>
-              <i className="far fa-thumbs-down  fas red-unlike"><span className="ps-1">109</span></i>
-              
+              <i
+                className={`far fa-heart ${isLoveActive ? "fas red-heart" : ""}`}
+                onClick={handleLoveClick}
+              >
+                <span className="ps-1">109</span>
+              </i>
+              <i
+                className={`far fa-thumbs-down ${
+                  isUnlikeActive ? "fas black-unlike" : ""
+                }`}
+                onClick={handleUnlikeClick}
+              >
+                <span className="ps-1">109</span>
+              </i>
               <i
                 className="ps-md-3 far fa-comment blue"
                 data-bs-toggle="modal"
@@ -155,70 +209,6 @@ export default function ImagePost({ post }) {
                 1.6k
               </i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
-            </div>
-          </div>
-
-          {/* Modal */}
-          <div
-            className="modal fade"
-            id="imageModal"
-            tabIndex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-            ref={modalRef}
-            style={{ overflowY: "hidden" }}
-          >
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header shadow-sm p-3 bg-body rounded">
-                  <h5 className="modal-title fs-5" id="exampleModalLabel">
-                    Comments
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div className="modal-body">
-                  {isModalOpen && (
-                    <>
-                      <div
-                        className="comments pb-4 px-md-4"
-                        style={{ height: "100vh", overflowY: "scroll" }}
-                      >
-                        <CommentedImage />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <div style={{ paddingBottom: "20vh" }}></div>
-                      </div>
-                      <div
-                        className="card-footer p-0 m-0"
-                        style={{
-                          position: "fixed",
-                          bottom: "0",
-                          width: isXSmall
-                            ? "100%"
-                            : isSmall
-                            ? "74.8%"
-                            : isMid
-                            ? "59.8%"
-                            : isLg
-                            ? "49.9%"
-                            : "49.9%",
-                        }}
-                      >
-                        <Comment />
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
         </>

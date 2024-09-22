@@ -279,16 +279,16 @@ max-width: 100%;
 /* Unlike */
 
 /* Heart Animation */
-.red-unlike {
+.black-unlike {
   color: #3b3b3b !important;
   animation: heartBeat 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important;
   transition: transform 0.3s ease-in-out !important;
 }
-.red-unlike span {
+.black-unlike span {
   color: #657786 !important;
 
 }
-.red-unlike:hover span {
+.black-unlike:hover span {
   color: #586169 !important;
 }
 

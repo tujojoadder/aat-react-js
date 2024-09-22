@@ -23,6 +23,8 @@ import { groupsApi } from '../services/groupsApi'
 import { pagesApi } from '../services/pagesApi'
 import { quizApi } from '../services/quizApi'
 import { iaccountsApi } from '../services/iaccountsApi';
+import { loveApi } from '../services/loveApi';
+import { unlikeApi } from '../services/unlikeApi';
 
 // Redux-persist configuration
 const persistConfig = {
@@ -48,6 +50,9 @@ const rootReducer = combineReducers({
   [pagesApi.reducerPath]: pagesApi.reducer,
   [quizApi.reducerPath]: quizApi.reducer,
   [iaccountsApi.reducerPath]: iaccountsApi.reducer,
+  [loveApi.reducerPath]: loveApi.reducer,
+  [unlikeApi.reducerPath]: unlikeApi.reducer,
+  
 });
 
 // Persist the reducer
@@ -71,6 +76,8 @@ export const store = configureStore({
       quizApi.middleware,
       groupsApi.middleware,
       iaccountsApi.middleware,
+      loveApi.middleware,
+      unlikeApi.middleware,
     ),
 });
 

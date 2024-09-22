@@ -24,7 +24,7 @@ export default function Home() {
   });
 
   const { data, isFetching, isError, isSuccess } = useGetPostsQuery(page);
-  
+
   useEffect(() => {
     if (isSuccess && data?.data) {
       if (data.data.length === 0) {
