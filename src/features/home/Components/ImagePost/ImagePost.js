@@ -13,21 +13,21 @@ import { useDispatch, useSelector } from "react-redux";
 export default function ImagePost({ post }) {
   const dispatch = useDispatch();
   // Redux selectors for request status
-  const loveReactions = useSelector(state => state.home.loveReactions[post.post_id]);
-  const unlikeReactions = useSelector(state => state.home.unlikeReactions[post.post_id]);
+  const loveReactions = useSelector(
+    (state) => state.home.loveReactions[post.post_id]
+  );
+  const unlikeReactions = useSelector(
+    (state) => state.home.unlikeReactions[post.post_id]
+  );
 
-useEffect(() => {
- 
-if (post.isLove) {
-  dispatch(setLoveReaction({ postId: post.post_id }));
-}
-if (post.isUnlike) {
-  dispatch(setUnlikeReactions({ postId: post.post_id })); // Revert if necessary
-
-}
-
-}, [])
-
+  useEffect(() => {
+    if (post.isLove) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
+    if (post.isUnlike) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
+  }, []);
 
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
@@ -93,25 +93,33 @@ if (post.isUnlike) {
 
   const handleLoveClick = async () => {
     // Optimistic update
-    dispatch(setLoveReaction({ postId: post.post_id }));
-    
+
+    if (loveReactions) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
+    } else {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
+
     try {
       await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
     } catch (error) {
       console.error("Failed to toggle love:", error);
-      dispatch(setUnlikeReactions({ postId: post.post_id })); // Revert if necessary
     }
   };
 
   const handleUnlikeClick = async () => {
     // Optimistic update
-    dispatch(setUnlikeReactions({ postId: post.post_id }));
+
+    if (unlikeReactions) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
+    } else {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
 
     try {
       await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
     } catch (error) {
       console.error("Failed to toggle unlike:", error);
-      dispatch(setLoveReaction({ postId: post.post_id })); // Revert if necessary
     }
   };
 
@@ -191,13 +199,17 @@ if (post.isUnlike) {
             </div>
             <div className="content-icons px-2">
               <i
-                className={`far fa-heart ${loveReactions  ? "fas red-heart" : ""}`}
+                className={`far fa-heart ${
+                  loveReactions ? "fas red-heart" : ""
+                }`}
                 onClick={handleLoveClick}
               >
                 <span className="ps-1">109</span>
               </i>
               <i
-                className={`far fa-thumbs-down ${unlikeReactions ? "fas black-unlike" : ""}`}
+                className={`far fa-thumbs-down ${
+                  unlikeReactions ? "fas black-unlike" : ""
+                }`}
                 onClick={handleUnlikeClick}
               >
                 <span className="ps-1">109</span>
@@ -211,6 +223,69 @@ if (post.isUnlike) {
                 1.6k
               </i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
+            </div>
+          </div>
+          {/* Modal */}
+          <div
+            className="modal fade"
+            id="imageModal"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+            ref={modalRef}
+            style={{ overflowY: "hidden" }}
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header shadow-sm p-3 bg-body rounded">
+                  <h5 className="modal-title fs-5" id="exampleModalLabel">
+                    Comments
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  {isModalOpen && (
+                    <>
+                      <div
+                        className="comments pb-4 px-md-4"
+                        style={{ height: "100vh", overflowY: "scroll" }}
+                      >
+                        <CommentedImage />
+                        <TextComment />
+                        <TextComment />
+                        <TextComment />
+                        <TextComment />
+                        <TextComment />
+                        <TextComment />
+                        <div style={{ paddingBottom: "20vh" }}></div>
+                      </div>
+                      <div
+                        className="card-footer p-0 m-0"
+                        style={{
+                          position: "fixed",
+                          bottom: "0",
+                          width: isXSmall
+                            ? "100%"
+                            : isSmall
+                            ? "74.8%"
+                            : isMid
+                            ? "59.8%"
+                            : isLg
+                            ? "49.9%"
+                            : "49.9%",
+                        }}
+                      >
+                        <Comment />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </>

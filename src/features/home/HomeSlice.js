@@ -224,16 +224,24 @@ setPageError: (state, action) => {
 
 
 setLoveReaction: (state, action) => {
-  const { postId } = action.payload;
-  state.loveReactions[postId] = true; // Mark request as sent
-  delete state.unlikeReactions[postId]; // Remove from rejected if re-sent
+  const { postId, isActive } = action.payload;
+  if (isActive) {
+    state.loveReactions[postId] = true; // Mark as loved
+    delete state.unlikeReactions[postId]; // Remove the 'unlike' if it was previously active
+  } else {
+    delete state.loveReactions[postId]; // Remove love reaction if deactivated
+  }
 },
 
 setUnlikeReactions: (state, action) => {
-  const { postId } = action.payload;
-  state.unlikeReactions[postId] = true; // Mark request as accepted
-  delete state.loveReactions[postId]; // Remove from sent if accepted
-},
+  const { postId, isActive } = action.payload;
+  if (isActive) {
+    state.unlikeReactions[postId] = true; // Mark as unliked
+    delete state.loveReactions[postId]; // Remove love reaction if it was previously active
+  } else {
+    delete state.unlikeReactions[postId]; // Remove unlike reaction if deactivated
+  }
+}
 
 
   },

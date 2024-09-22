@@ -272,11 +272,12 @@ max-width: 100%;
 }
 
 .far:hover {
-  transform: scale(1.1)  !important;
+  transform: scale(1.2)  !important;
 }
 
 
 /* Unlike */
+
 
 /* Heart Animation */
 .black-unlike {
