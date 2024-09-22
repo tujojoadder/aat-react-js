@@ -7,8 +7,28 @@ import { formatPostDate } from "../../../../utils/dateUtils";
 import ImagePostSkeleton from "./ImagePostSkeleton/ImagePostSkeleton";
 import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
+import { setLoveReaction, setUnlikeReactions } from "../../HomeSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ImagePost({ post }) {
+  const dispatch = useDispatch();
+  // Redux selectors for request status
+  const loveReactions = useSelector(state => state.home.loveReactions[post.post_id]);
+  const unlikeReactions = useSelector(state => state.home.unlikeReactions[post.post_id]);
+
+useEffect(() => {
+ 
+if (post.isLove) {
+  dispatch(setLoveReaction({ postId: post.post_id }));
+}
+if (post.isUnlike) {
+  dispatch(setUnlikeReactions({ postId: post.post_id })); // Revert if necessary
+
+}
+
+}, [])
+
+
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
     window.innerWidth > 650 && window.innerWidth <= 950
@@ -18,10 +38,6 @@ export default function ImagePost({ post }) {
   );
   const [isLg, setIsLg] = useState(window.innerWidth > 1200);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Local state for love/unlike
-  const [isLoveActive, setIsLoveActive] = useState(post.isLove);
-  const [isUnlikeActive, setIsUnlikeActive] = useState(post.isUnlike);
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false);
@@ -77,37 +93,25 @@ export default function ImagePost({ post }) {
 
   const handleLoveClick = async () => {
     // Optimistic update
-    const prevLove = isLoveActive;
-    const prevUnlike = isUnlikeActive;
-
-    setIsLoveActive(true);
-    setIsUnlikeActive(false); // If love is active, unlike should be deactivated
-
+    dispatch(setLoveReaction({ postId: post.post_id }));
+    
     try {
       await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
     } catch (error) {
-      // Revert back if API call fails
       console.error("Failed to toggle love:", error);
-      setIsLoveActive(prevLove);
-      setIsUnlikeActive(prevUnlike);
+      dispatch(setUnlikeReactions({ postId: post.post_id })); // Revert if necessary
     }
   };
 
   const handleUnlikeClick = async () => {
     // Optimistic update
-    const prevLove = isLoveActive;
-    const prevUnlike = isUnlikeActive;
-
-    setIsLoveActive(false); // If unlike is active, love should be deactivated
-    setIsUnlikeActive(true);
+    dispatch(setUnlikeReactions({ postId: post.post_id }));
 
     try {
       await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
     } catch (error) {
-      // Revert back if API call fails
       console.error("Failed to toggle unlike:", error);
-      setIsLoveActive(prevLove);
-      setIsUnlikeActive(prevUnlike);
+      dispatch(setLoveReaction({ postId: post.post_id })); // Revert if necessary
     }
   };
 
@@ -187,15 +191,13 @@ export default function ImagePost({ post }) {
             </div>
             <div className="content-icons px-2">
               <i
-                className={`far fa-heart ${isLoveActive ? "fas red-heart" : ""}`}
+                className={`far fa-heart ${loveReactions  ? "fas red-heart" : ""}`}
                 onClick={handleLoveClick}
               >
                 <span className="ps-1">109</span>
               </i>
               <i
-                className={`far fa-thumbs-down ${
-                  isUnlikeActive ? "fas black-unlike" : ""
-                }`}
+                className={`far fa-thumbs-down ${unlikeReactions ? "fas black-unlike" : ""}`}
                 onClick={handleUnlikeClick}
               >
                 <span className="ps-1">109</span>

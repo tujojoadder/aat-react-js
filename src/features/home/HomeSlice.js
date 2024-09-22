@@ -52,7 +52,20 @@ pageEmail:'',
 pageDetails:'',
  // State that will trigger refetch
  pageUpdate: false, 
-pageError:''
+pageError:'',
+
+
+
+
+loveReactions: {}, // To store rejected/canceled friend requests by user ID
+unlikeReactions: {},     // To store sent friend requests by user ID
+
+
+
+
+
+
+
 
 };
 
@@ -208,6 +221,21 @@ setPageError: (state, action) => {
 },
 
 
+
+
+setLoveReaction: (state, action) => {
+  const { postId } = action.payload;
+  state.loveReactions[postId] = true; // Mark request as sent
+  delete state.unlikeReactions[postId]; // Remove from rejected if re-sent
+},
+
+setUnlikeReactions: (state, action) => {
+  const { postId } = action.payload;
+  state.unlikeReactions[postId] = true; // Mark request as accepted
+  delete state.loveReactions[postId]; // Remove from sent if accepted
+},
+
+
   },
 });
 /*<--- Page --->*/
@@ -220,6 +248,8 @@ pageDetails:'', */
 
 export const {
  setGroupUpdate,
+ setLoveReaction,
+ setUnlikeReactions,
  setPageError,
  setPageUpdate,
  setPagePhone,
