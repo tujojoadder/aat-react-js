@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function ImagePost({ post }) {
   
   
-  
+/*   Love and Unlike  */
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
 
@@ -65,6 +65,9 @@ export default function ImagePost({ post }) {
       console.error("Failed to toggle unlike:", error);
     }
   };
+
+
+
 
 
 
@@ -201,13 +204,15 @@ export default function ImagePost({ post }) {
               </div>
             </div>
             <div className="content-icons px-2">
+              
+            {/*   Love and Unlike */} 
               <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
                 onClick={handleLoveClick}
               >
-                <span className="ps-1">109</span>
+                <span className="ps-1">{post.totalLove}</span>
               </i>
               <i
                 className={`far fa-thumbs-down ${
@@ -215,8 +220,12 @@ export default function ImagePost({ post }) {
                 }`}
                 onClick={handleUnlikeClick}
               >
-                <span className="ps-1">109</span>
+                <span className="ps-1">{post.totalUnlike}</span>
               </i>
+
+
+
+
               <i
                 className="ps-md-3 far fa-comment blue"
                 data-bs-toggle="modal"

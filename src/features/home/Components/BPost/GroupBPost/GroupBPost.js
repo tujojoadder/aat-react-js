@@ -5,8 +5,75 @@ import { formatPostDate } from "../../../../../utils/dateUtils";
 import TextComment from "../../TextComment/TextComment";
 import Comment from "../../Comment/Comment/Comment";
 import ImagePostSkeleton from "../../ImagePost/ImagePostSkeleton/ImagePostSkeleton";
+import { useToggleLoveMutation } from "../../../../../services/loveApi";
+import { useToggleUnlikeMutation } from "../../../../../services/unlikeApi";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoveReaction, setUnlikeReactions } from "../../../HomeSlice";
 
 export default function GroupBPost({ post }) {
+
+/*   Love and Unlike  */
+const [toggleLove] = useToggleLoveMutation();
+const [toggleUnlike] = useToggleUnlikeMutation();
+
+const dispatch = useDispatch();
+// Redux selectors for request status
+const loveReactions = useSelector(
+  (state) => state.home.loveReactions[post.post_id]
+);
+const unlikeReactions = useSelector(
+  (state) => state.home.unlikeReactions[post.post_id]
+);
+
+useEffect(() => {
+  if (post.isLove) {
+    dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+  }
+  if (post.isUnlike) {
+    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+  }
+}, []);
+const handleLoveClick = async () => {
+  // Optimistic update
+
+  if (loveReactions) {
+    dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
+  } else {
+    dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+  }
+
+  try {
+    await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
+  } catch (error) {
+    console.error("Failed to toggle love:", error);
+  }
+};
+
+const handleUnlikeClick = async () => {
+  // Optimistic update
+
+  if (unlikeReactions) {
+    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
+  } else {
+    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+  }
+
+  try {
+    await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
+  } catch (error) {
+    console.error("Failed to toggle unlike:", error);
+  }
+};
+
+
+
+
+
+
+
+
+
+
   /* Image load handling  */
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false); // State to track profile picture load
@@ -197,16 +264,23 @@ export default function GroupBPost({ post }) {
             </div>
 
             <div className="content-icons  px-2 ">
+              {/*   Love and Unlike */} 
               <i
-                className=" far fa-heart red  "
-                data-bs-toggle="modal"
-                data-bs-target="#BPostModal"
+                className={`far fa-heart ${
+                  loveReactions ? "fas red-heart" : ""
+                }`}
+                onClick={handleLoveClick}
               >
-                {" "}
-                109
+                <span className="ps-1">{post.totalLove}</span>
               </i>
-
-              <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
+              <i
+                className={`far fa-thumbs-down ${
+                  unlikeReactions ? "fas black-unlike" : ""
+                }`}
+                onClick={handleUnlikeClick}
+              >
+                <span className="ps-1">{post.totalUnlike}</span>
+              </i>
 
               <i className="ps-md-3 far fa-comment blue "> 1.6k</i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>

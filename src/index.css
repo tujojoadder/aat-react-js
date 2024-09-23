@@ -243,37 +243,41 @@ max-width: 100%;
   color: red !important;
   animation: heartBeat 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important;
   transition: transform 0.3s ease-in-out !important;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Adds a shadow to give depth */
 }
+
 .red-heart span {
   color: #657786 !important;
-
+  transition: color 0.3s ease-in-out;
 }
+
 .red-heart:hover span {
   color: #586169 !important;
 }
 
 @keyframes heartBeat {
   0% {
-    transform: scale(1)  !important;
+    transform: scale(1) rotateX(0deg) rotateY(0deg) translateZ(0);
   }
   30% {
-    transform: scale(1.2)  !important;
+    transform: scale(1.2) rotateX(15deg) rotateY(-15deg) translateZ(10px);
   }
   60% {
-    transform: scale(0.9)  !important;
+    transform: scale(0.9) rotateX(-10deg) rotateY(10deg) translateZ(-5px);
   }
   100% {
-    transform: scale(1)  !important;
+    transform: scale(1) rotateX(0deg) rotateY(0deg) translateZ(0);
   }
 }
 
-.far {
-  transition: transform 0.3s ease-in-out  !important;
+/* Hover effect to enhance 3D look */
+.red-heart:hover {
+  transform: scale(1.1) rotateX(10deg) rotateY(-10deg) translateZ(10px);
 }
 
-.far:hover {
-  transform: scale(1.2)  !important;
-}
+
 
 
 /* Unlike */
@@ -284,6 +288,9 @@ max-width: 100%;
   color: #3b3b3b !important;
   animation: heartBeat 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important;
   transition: transform 0.3s ease-in-out !important;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Adds a shadow to give depth */
 }
 .black-unlike span {
   color: #657786 !important;

@@ -56,11 +56,9 @@ pageError:'',
 
 
 
-
+/* Love and Unlike */
 loveReactions: {}, // To store rejected/canceled friend requests by user ID
 unlikeReactions: {},     // To store sent friend requests by user ID
-
-
 
 
 
@@ -223,6 +221,8 @@ setPageError: (state, action) => {
 
 
 
+/* Love and Unlike */
+
 setLoveReaction: (state, action) => {
   const { postId, isActive } = action.payload;
   if (isActive) {
@@ -242,6 +242,24 @@ setUnlikeReactions: (state, action) => {
     delete state.unlikeReactions[postId]; // Remove unlike reaction if deactivated
   }
 }
+,
+
+/* 
+totalLove:{},
+totalUnlike:{}
+ */
+
+setTotalLove: (state, action) => {
+  const { postId, isActive,total } = action.payload;
+  if (isActive) {
+    state.totalLove[postId] = true; // Mark as loved
+    delete state.unlikeReactions[postId]; // Remove the 'unlike' if it was previously active
+  } else {
+    delete state.loveReactions[postId]; // Remove love reaction if deactivated
+  }
+},
+
+
 
 
   },
