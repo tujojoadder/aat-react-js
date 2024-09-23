@@ -57,7 +57,7 @@ getGroupsWhereAdmin: builder.query({
       query: (id) => `/groupdetails/${id}`, // Make sure this endpoint exists in your backend
     }),
 
-    /* get specific usrer frien for profile */
+    /* get specific group frien for profile */
     getSpecificGroupPeople: builder.query({
       query: ({ friendPage = 1, groupId }) =>
         `getspecificuserfriendids?page=${friendPage}&id=${groupId}`, // Updated to include id
