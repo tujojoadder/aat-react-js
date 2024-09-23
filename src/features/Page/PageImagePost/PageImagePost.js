@@ -11,58 +11,68 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoveReaction, setUnlikeReactions } from "../../home/HomeSlice";
 
 export default function PageImagePost({ post }) {
-  /*   Love and Unlike  */
-  const [toggleLove] = useToggleLoveMutation();
-  const [toggleUnlike] = useToggleUnlikeMutation();
+  
 
-  const dispatch = useDispatch();
-  // Redux selectors for request status
-  const loveReactions = useSelector(
-    (state) => state.home.loveReactions[post.post_id]
-  );
-  const unlikeReactions = useSelector(
-    (state) => state.home.unlikeReactions[post.post_id]
-  );
+/*   Love and Unlike  */
+const [toggleLove] = useToggleLoveMutation();
+const [toggleUnlike] = useToggleUnlikeMutation();
 
-  useEffect(() => {
-    if (post.isLove) {
-      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
-    }
-    if (post.isUnlike) {
-      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
-    }
-  }, []);
-  const handleLoveClick = async () => {
-    // Optimistic update
+const dispatch = useDispatch();
+// Redux selectors for request status
+const loveReactions = useSelector(
+  (state) => state.home.loveReactions[post.post_id]
+);
+const unlikeReactions = useSelector(
+  (state) => state.home.unlikeReactions[post.post_id]
+);
 
-    if (loveReactions) {
-      dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
-    } else {
-      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
-    }
+useEffect(() => {
+  if (post.isLove) {
+    dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+  }
+  if (post.isUnlike) {
+    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+  }
+}, []);
+const handleLoveClick = async () => {
+  // Optimistic update
 
-    try {
-      await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
-    } catch (error) {
-      console.error("Failed to toggle love:", error);
-    }
-  };
+  if (loveReactions) {
+    dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
+  } else {
+    dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+  }
 
-  const handleUnlikeClick = async () => {
-    // Optimistic update
+  try {
+    await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
+  } catch (error) {
+    console.error("Failed to toggle love:", error);
+  }
+};
 
-    if (unlikeReactions) {
-      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
-    } else {
-      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
-    }
+const handleUnlikeClick = async () => {
+  // Optimistic update
 
-    try {
-      await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
-    } catch (error) {
-      console.error("Failed to toggle unlike:", error);
-    }
-  };
+  if (unlikeReactions) {
+    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
+  } else {
+    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+  }
+
+  try {
+    await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
+  } catch (error) {
+    console.error("Failed to toggle unlike:", error);
+  }
+};
+
+
+
+
+
+
+
+
 
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
