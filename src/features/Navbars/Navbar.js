@@ -98,7 +98,7 @@ const Navbar = () => {
     <div
       style={{
         width: "100%",
-        height: "100.5vh",
+        height: "100vh",
         minHeight: "300px",
         overflowX: "hidden",
       }}
@@ -134,7 +134,7 @@ const Navbar = () => {
                       style={{
                         borderRadius: "50%",
                         padding: "10px",
-                        marginTop: "0.5vh",
+                     /*    marginTop: "0.5vh", */
                         display: "inline-block",
                         backgroundColor: isQuiz ? "#2f00ff" : "#B7BAC0",
                       }}
@@ -170,14 +170,14 @@ const Navbar = () => {
         <div className="row">
           {/* LEFT SIDE BAR */}
           <div
-            style={{ backgroundColor: "#fdfdfd", height: "100.2h" }}
+            style={{ backgroundColor: "#fdfdfd", height: "99vh"}}
             className="p-0 d-none col-sm-2 d-sm-block col-md-2 col-lg-3 d-flex flex-column text-sm-end text-md-start align-items-lg-start left_sidebar"
           >
             <div
               className="pe-2  bg-body rounded "
               style={{
                 width: "97%",
-                height: "100.1vh",
+                height: "100vh",
                 overflowY: "auto",
                 overflowX: "hidden",
               }}
