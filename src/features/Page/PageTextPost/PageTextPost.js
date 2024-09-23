@@ -205,15 +205,16 @@ const handleUnlikeClick = async () => {
 
         <div className="content-icons pe-3">
           
-
-{/*   Love and Unlike */} 
-<i
+ {/*   Love and Unlike */}
+ <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
                 onClick={handleLoveClick}
               >
-                <span className="ps-1">{post.totalLove}</span>
+                {post.totalLove > 0 && (
+                  <span className="ps-1">{post.totalLove}</span>
+                )}
               </i>
               <i
                 className={`far fa-thumbs-down ${
@@ -221,7 +222,9 @@ const handleUnlikeClick = async () => {
                 }`}
                 onClick={handleUnlikeClick}
               >
-                <span className="ps-1">{post.totalUnlike}</span>
+                {post.totalUnlike > 0 && (
+                  <span className="ps-1">{post.totalUnlike}</span>
+                )}
               </i>
 
 

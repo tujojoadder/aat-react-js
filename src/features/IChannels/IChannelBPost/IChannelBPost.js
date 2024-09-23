@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import TextComment from "../../home/Components/ReplyComment/ReplyComment";
 import Comment from "../../home/Components/Comment/Comment/Comment";
@@ -6,12 +5,69 @@ import CommentedBothPosts from "../../CommentedMedia/CommentedBothposts/Commente
 import "./IChannelBPost.css";
 import { formatPostDate } from "../../../utils/dateUtils";
 import ImagePostSkeleton from "../../home/Components/ImagePost/ImagePostSkeleton/ImagePostSkeleton";
+import { useToggleLoveMutation } from "../../../services/loveApi";
+import { useToggleUnlikeMutation } from "../../../services/unlikeApi";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoveReaction, setUnlikeReactions } from "../../home/HomeSlice";
 
 export default function IChannelBPost({ post }) {
-    /* Image load handling  */
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
-    const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false); // State to track profile picture load
-  
+  /*  Love Unlike  */
+  const [toggleLove] = useToggleLoveMutation();
+  const [toggleUnlike] = useToggleUnlikeMutation();
+
+  const dispatch = useDispatch();
+  // Redux selectors for request status
+  const loveReactions = useSelector(
+    (state) => state.home.loveReactions[post.post_id]
+  );
+  const unlikeReactions = useSelector(
+    (state) => state.home.unlikeReactions[post.post_id]
+  );
+
+  useEffect(() => {
+    if (post.isLove) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
+    if (post.isUnlike) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
+  }, []);
+  const handleLoveClick = async () => {
+    // Optimistic update
+
+    if (loveReactions) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
+    } else {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
+
+    try {
+      await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle love:", error);
+    }
+  };
+
+  const handleUnlikeClick = async () => {
+    // Optimistic update
+
+    if (unlikeReactions) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
+    } else {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
+
+    try {
+      await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle unlike:", error);
+    }
+  };
+
+  /* Image load handling  */
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false); // State to track profile picture load
+
   /* comment width */
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
@@ -77,14 +133,14 @@ export default function IChannelBPost({ post }) {
   const handleProfilePicLoad = () => {
     setIsProfilePicLoaded(true);
   };
-  
+
   return (
     <div className="posts mx-2 ">
-         {!post ? (
+      {!post ? (
         <ImagePostSkeleton />
       ) : (
         <>
-      <div className="user-pics">
+          <div className="user-pics">
             {!isProfilePicLoaded && (
               <div className="profile-pic-skeleton">
                 <div
@@ -99,44 +155,45 @@ export default function IChannelBPost({ post }) {
               </div>
             )}
             <img
-
-src={`${post.iaccount.iaccount_picture}`}
-          alt="user-profile"
+              src={`${post.iaccount.iaccount_picture}`}
+              alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
             />
           </div>
-      <div className="user-contents-text-box">
-        <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
-          <div className="name-column">
-            <h1 className="full-name-text m-0 p-0">
-              {post.iaccount.iaccount_name} 
-            </h1>
-            <p className="user-name-text m-0 p-0">@{post.iaccount.identifier}</p>
-          </div>
-          <p
-            className="time-text ms-3"
-            style={{ marginTop: "10px", maxWidth: "150px" }}
-          >
-            {formatPostDate(post.created_at)}
-          </p>
-        </div>
-
-        <div className="user-contents pb-2">
-          <p style={{ margin: "0px" }}>
-            {isExpanded ? fullText : previewText}
-            {fullText.length > 175 && (
-              <span
-                onClick={toggleText}
-                style={{ color: "blue", cursor: "pointer" }}
+          <div className="user-contents-text-box">
+            <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
+              <div className="name-column">
+                <h1 className="full-name-text m-0 p-0">
+                  {post.iaccount.iaccount_name}
+                </h1>
+                <p className="user-name-text m-0 p-0">
+                  @{post.iaccount.identifier}
+                </p>
+              </div>
+              <p
+                className="time-text ms-3"
+                style={{ marginTop: "10px", maxWidth: "150px" }}
               >
-                {isExpanded ? " See less" : "... See more"}
-              </span>
-            )}
-          </p>
-        </div>
+                {formatPostDate(post.created_at)}
+              </p>
+            </div>
 
-        <div className="user-contents">
+            <div className="user-contents pb-2">
+              <p style={{ margin: "0px" }}>
+                {isExpanded ? fullText : previewText}
+                {fullText.length > 175 && (
+                  <span
+                    onClick={toggleText}
+                    style={{ color: "blue", cursor: "pointer" }}
+                  >
+                    {isExpanded ? " See less" : "... See more"}
+                  </span>
+                )}
+              </p>
+            </div>
+
+            <div className="user-contents">
               {!isImageLoaded && (
                 <div className="image-skeleton">
                   <div
@@ -169,93 +226,106 @@ src={`${post.iaccount.iaccount_picture}`}
               </div>
             </div>
 
-        <div className="content-icons  px-2 ">
-          <i
-            className=" far fa-heart red  "
-            data-bs-toggle="modal"
-            data-bs-target="#BPostModal"
-          >
-            {" "}
-            109
-          </i>
+            <div className="content-icons  px-2 ">
+               {/*   Love and Unlike */}
+               <i
+                className={`far fa-heart ${
+                  loveReactions ? "fas red-heart" : ""
+                }`}
+                onClick={handleLoveClick}
+              >
+                {post.totalLove > 0 && (
+                  <span className="ps-1">{post.totalLove}</span>
+                )}
+              </i>
+              <i
+                className={`far fa-thumbs-down ${
+                  unlikeReactions ? "fas black-unlike" : ""
+                }`}
+                onClick={handleUnlikeClick}
+              >
+                {post.totalUnlike > 0 && (
+                  <span className="ps-1">{post.totalUnlike}</span>
+                )}
+              </i>
 
-          <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
+              
 
-          <i className="ps-md-3 far fa-comment blue "> 1.6k</i>
-          <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
-        </div>
-      </div>
-
-      {/* Modal */}
-      <div
-        style={{ overflowY: "hidden" }}
-        className="modal fade "
-        id="BPostModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-        ref={modalRef}
-      >
-        <div className="modal-dialog ">
-          <div className="modal-content ">
-            <div className="modal-header shadow-sm p-3 bg-body rounded">
-              <h5 className="modal-title fs-5" id="exampleModalLabel">
-                bb Comment
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body ">
-              {isModalOpen && (
-                <>
-                  <div
-                    className="comments px-md-4 "
-                    style={{
-                      height: "100vh",
-                      overflowY: "scroll",
-                      overflowX: "hidden",
-                    }}
-                  >
-                    <CommentedBothPosts />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    {/* Needed */}
-                    <div style={{ paddingBottom: "20vh" }}></div>
-                  </div>
-                  {/* Footer */}
-                  <div
-                    className="card-footer p-0 m-0"
-                    style={{
-                      position: "fixed",
-                      bottom: "0px",
-                      width: isXSmall
-                        ? "100%"
-                        : isSmall
-                        ? "74.8%"
-                        : isMid
-                        ? "59.8%"
-                        : isLg
-                        ? "49.9%"
-                        : "49.9%",
-                    }}
-                  >
-                    <Comment />
-                  </div>
-                </>
-              )}
+              <i className="ps-md-3 far fa-comment blue "> 1.6k</i>
+              <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
             </div>
           </div>
-        </div>
-      </div>
-      </>
+
+          {/* Modal */}
+          <div
+            style={{ overflowY: "hidden" }}
+            className="modal fade "
+            id="BPostModal"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+            ref={modalRef}
+          >
+            <div className="modal-dialog ">
+              <div className="modal-content ">
+                <div className="modal-header shadow-sm p-3 bg-body rounded">
+                  <h5 className="modal-title fs-5" id="exampleModalLabel">
+                    bb Comment
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body ">
+                  {isModalOpen && (
+                    <>
+                      <div
+                        className="comments px-md-4 "
+                        style={{
+                          height: "100vh",
+                          overflowY: "scroll",
+                          overflowX: "hidden",
+                        }}
+                      >
+                        <CommentedBothPosts />
+                        <TextComment />
+                        <TextComment />
+                        <TextComment />
+                        <TextComment />
+                        <TextComment />
+                        <TextComment />
+                        {/* Needed */}
+                        <div style={{ paddingBottom: "20vh" }}></div>
+                      </div>
+                      {/* Footer */}
+                      <div
+                        className="card-footer p-0 m-0"
+                        style={{
+                          position: "fixed",
+                          bottom: "0px",
+                          width: isXSmall
+                            ? "100%"
+                            : isSmall
+                            ? "74.8%"
+                            : isMid
+                            ? "59.8%"
+                            : isLg
+                            ? "49.9%"
+                            : "49.9%",
+                        }}
+                      >
+                        <Comment />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

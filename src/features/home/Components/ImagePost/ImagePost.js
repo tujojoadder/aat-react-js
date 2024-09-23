@@ -205,14 +205,16 @@ export default function ImagePost({ post }) {
             </div>
             <div className="content-icons px-2">
               
-            {/*   Love and Unlike */} 
-              <i
+            {/*   Love and Unlike */}
+            <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
                 onClick={handleLoveClick}
               >
-                <span className="ps-1">{post.totalLove}</span>
+                {post.totalLove > 0 && (
+                  <span className="ps-1">{post.totalLove}</span>
+                )}
               </i>
               <i
                 className={`far fa-thumbs-down ${
@@ -220,7 +222,9 @@ export default function ImagePost({ post }) {
                 }`}
                 onClick={handleUnlikeClick}
               >
-                <span className="ps-1">{post.totalUnlike}</span>
+                {post.totalUnlike > 0 && (
+                  <span className="ps-1">{post.totalUnlike}</span>
+                )}
               </i>
 
 

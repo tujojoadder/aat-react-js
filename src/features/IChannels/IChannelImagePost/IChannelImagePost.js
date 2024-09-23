@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import TextComment from "../../home/Components/ReplyComment/ReplyComment";
 import Comment from "../../home/Components/Comment/Comment/Comment";
@@ -6,8 +5,65 @@ import CommentedImage from "../../CommentedMedia/CommentedImage/CommentedImage";
 import "./IChannelImagePost.css";
 import { formatPostDate } from "../../../utils/dateUtils";
 import ImagePostSkeleton from "../../home/Components/ImagePost/ImagePostSkeleton/ImagePostSkeleton";
+import { useToggleLoveMutation } from "../../../services/loveApi";
+import { useToggleUnlikeMutation } from "../../../services/unlikeApi";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoveReaction, setUnlikeReactions } from "../../home/HomeSlice";
 
 export default function IChannelImagePost({ post }) {
+  /*   Love and Unlike  */
+  const [toggleLove] = useToggleLoveMutation();
+  const [toggleUnlike] = useToggleUnlikeMutation();
+
+  const dispatch = useDispatch();
+  // Redux selectors for request status
+  const loveReactions = useSelector(
+    (state) => state.home.loveReactions[post.post_id]
+  );
+  const unlikeReactions = useSelector(
+    (state) => state.home.unlikeReactions[post.post_id]
+  );
+
+  useEffect(() => {
+    if (post.isLove) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
+    if (post.isUnlike) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
+  }, []);
+  const handleLoveClick = async () => {
+    // Optimistic update
+
+    if (loveReactions) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
+    } else {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
+
+    try {
+      await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle love:", error);
+    }
+  };
+
+  const handleUnlikeClick = async () => {
+    // Optimistic update
+
+    if (unlikeReactions) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
+    } else {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
+
+    try {
+      await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle unlike:", error);
+    }
+  };
+
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
     window.innerWidth > 650 && window.innerWidth <= 950
@@ -67,7 +123,7 @@ export default function IChannelImagePost({ post }) {
   const handleProfilePicLoad = () => {
     setIsProfilePicLoaded(true);
   };
-  
+
   return (
     <div className="posts mx-2">
       {!post ? (
@@ -89,7 +145,7 @@ export default function IChannelImagePost({ post }) {
               </div>
             )}
             <img
-             src={`${post.iaccount.iaccount_picture}`}
+              src={`${post.iaccount.iaccount_picture}`}
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
@@ -99,7 +155,7 @@ export default function IChannelImagePost({ post }) {
             <div className="user-names-text pb-1">
               <div className="name-column">
                 <h1 className="full-name-text m-0 p-0">
-                {post.iaccount.iaccount_name} 
+                  {post.iaccount.iaccount_name}
                 </h1>
                 <p className="user-name-text m-0 p-0">
                   @{post.iaccount.identifier}
@@ -143,14 +199,28 @@ export default function IChannelImagePost({ post }) {
               </div>
             </div>
             <div className="content-icons px-2">
+              {/*   Love and Unlike */}
               <i
-                className="far fa-heart red"
-                data-bs-toggle="modal"
-                data-bs-target="#imageModal"
+                className={`far fa-heart ${
+                  loveReactions ? "fas red-heart" : ""
+                }`}
+                onClick={handleLoveClick}
               >
-                109
+                {post.totalLove > 0 && (
+                  <span className="ps-1">{post.totalLove}</span>
+                )}
               </i>
-              <i className="fa-regular fa-thumbs-down ps-md-3"> 536</i>
+              <i
+                className={`far fa-thumbs-down ${
+                  unlikeReactions ? "fas black-unlike" : ""
+                }`}
+                onClick={handleUnlikeClick}
+              >
+                {post.totalUnlike > 0 && (
+                  <span className="ps-1">{post.totalUnlike}</span>
+                )}
+              </i>
+
               <i className="ps-md-3 far fa-comment blue"> 1.6k</i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
             </div>
