@@ -55,7 +55,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setToastError, setToastSuccess } from "./features/home/HomeSlice";
+import { setToastError, setToastSuccess, setUserOffline, setUserOnline } from "./features/home/HomeSlice";
 import HadithBox from "./features/home/Components/Hadithbox/HadithBox";
 import SetHadith from "./features/home/Components/SetHadith/SetHadith";
 import MyProfile from "./features/Profile/MyProfile/MyProfile";
@@ -67,9 +67,12 @@ import GroupManageright from "./features/Groups/GroupManage/GroupManageright";
 import GroupsMyGroups from "./features/Groups/GroupsMyGroups";
 import GroupsJoinedGroups from "./features/Groups/GroupsJoinedGroups";
 import PageManageRight from "./features/Page/PageManageRight/PageManageRight";
+import echo from "./echo";
 
 function App() {
+
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.home.user_id);
   const toastError = useSelector((state) => state.home.toastError);
   const toastSuccess = useSelector((state) => state.home.toastSuccess);
   useEffect(() => {
@@ -101,6 +104,58 @@ function App() {
     dispatch(setToastError({ toastError: "" }));
     dispatch(setToastSuccess({ toastSuccess: "" }));
   }, [toastError, toastSuccess]);
+
+
+  useEffect(() => {
+    let offlineTimeouts = {}; // Object to store timeouts for each user
+  
+    const channel = echo
+      .join("status-update")
+      .here((users) => {
+        console.log("current users", users);
+        users.forEach((user) => {
+          if (user.user_id !== userId) { // Check if it's not the authUser
+            if (offlineTimeouts[user.user_id]) {
+              clearTimeout(offlineTimeouts[user.user_id]); // Clear any pending timeout if user rejoins
+              delete offlineTimeouts[user.user_id];
+            }
+            dispatch(setUserOnline(user.user_id)); // Set user as online for other users
+          }
+        });
+      })
+      .joining((user) => {
+        console.log("user joined", user);
+        if (user.user_id !== userId) { // Check if it's not the authUser
+          if (offlineTimeouts[user.user_id]) {
+            clearTimeout(offlineTimeouts[user.user_id]); // Prevent marking user as offline if they rejoin
+            delete offlineTimeouts[user.user_id];
+          }
+          dispatch(setUserOnline(user.user_id)); // Set user as online for other users
+        }
+      })
+      .leaving((user) => {
+        console.log("user left", user);
+        if (user.user_id !== userId) { // Check if it's not the authUser
+          offlineTimeouts[user.user_id] = setTimeout(() => {
+            dispatch(setUserOffline(user.user_id)); // Mark user as offline after 15 seconds
+            delete offlineTimeouts[user.user_id]; // Clean up after timeout is executed
+          }, 15000); // 15 second delay before marking offline
+        }
+      })
+      .listen("UserStatusEvent", (e) => {
+        console.log("MessageEvent", e);
+      });
+  
+    // Cleanup function to avoid memory leaks
+    return () => {
+      echo.leaveChannel("status-update"); // Correct method to leave the channel
+      Object.values(offlineTimeouts).forEach(clearTimeout); // Clear all timeouts on component unmount
+    };
+  }, [dispatch, userId]);
+  
+
+
+
   return (
     <BrowserRouter>
       <ConfirmModal />

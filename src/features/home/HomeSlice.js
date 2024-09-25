@@ -5,6 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 /* Initial state */
 const initialState = {
   /* Profile state */
+  user_id: "",
   profile_picture: "",
   user_fname: "",
   user_lname: "",
@@ -62,6 +63,10 @@ unlikeReactions: {},     // To store sent friend requests by user ID
 
 
 
+  /* Online  Users */
+// Initial state: an array to store online user IDs
+  onlineUsers: [],
+
 
 
 
@@ -72,7 +77,9 @@ export const homeSlice = createSlice({
   initialState,
   reducers: {
     /* Profile state reducers */
-
+    setUser_id: (state, action) => {
+      state.user_id = action.payload.user_id;
+    },
     setProfile_picture: (state, action) => {
       state.profile_picture = action.payload.profile_picture;
     },
@@ -262,6 +269,20 @@ setTotalLove: (state, action) => {
 
 
 
+
+/*   Online Users */
+setUserOnline: (state, action) => {
+  state.onlineUsers.push(action.payload);
+},
+setUserOffline: (state, action) => {
+  state.onlineUsers = state.onlineUsers.filter(
+    (userId) => userId !== action.payload
+  );
+},
+
+
+
+
   },
 });
 /*<--- Page --->*/
@@ -274,6 +295,8 @@ pageDetails:'', */
 
 export const {
  setGroupUpdate,
+ setUserOffline,
+ setUserOnline,
  setLoveReaction,
  setUnlikeReactions,
  setPageError,
@@ -286,6 +309,7 @@ export const {
  setGroupName,
  setAdminGroups,
   setProfile_picture,
+  setUser_id,
   setUser_fname,
   setUser_lname,
   setEmail,

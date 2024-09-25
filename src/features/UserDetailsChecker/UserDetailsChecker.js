@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
+  setUser_id,
   setProfile_picture,
   setUser_fname,
   setUser_lname,
@@ -12,6 +13,8 @@ import {
 } from "../../features/home/HomeSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetUserDetailsQuery } from "../../services/userAuthApi";
+
+/* in App.js */
 
 const UserDetailsChecker = ({ children }) => {
   const dispatch = useDispatch();
@@ -35,6 +38,7 @@ const UserDetailsChecker = ({ children }) => {
    /*  if user is authenticated */
     if (userDetailsSuccess) {
 
+      dispatch(setUser_id({ user_id: userDetails.data.user_id }));
       dispatch(setProfile_picture({ profile_picture: userDetails.data.profile_picture }));
       dispatch(setUser_fname({ user_fname: userDetails.data.user_fname }));
       dispatch(setUser_lname({ user_lname: userDetails.data.user_lname }));

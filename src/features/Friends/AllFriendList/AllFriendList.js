@@ -1,14 +1,18 @@
 import React from "react";
 import "./AllFriendList.css";
+import { useSelector } from "react-redux";
 
 export default function AllFriendList({
   name,
   handle,
   image,
   isActive,
-  isOnline,
   user_id,
 }) {
+
+  const onlineUsers = useSelector((state) => state.home.onlineUsers); // Access onlineUsers from Redux
+  const isOnline = onlineUsers.includes(user_id);
+
   return (
     <div
       className={`friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm rounded ${
@@ -27,7 +31,9 @@ export default function AllFriendList({
         {/* Online/Offline indicator */}
         <span
           id={`${user_id}-status`}
-          className="offline-status position-absolute rounded-circle"
+          className={`status-indicator position-absolute rounded-circle ${
+            isOnline ? "online-status" : "offline-status"
+          }`}
           style={{
 
            

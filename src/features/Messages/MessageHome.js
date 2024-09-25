@@ -7,8 +7,15 @@ import { useGetAuthUserFriendQuery } from "../../services/profileApi";
 import { useInView } from "react-intersection-observer";
 import Spinner from "../Spinner/Spinner";
 import NoUserSelectedToMessage from "./NoUserSelectedToMessage/NoUserSelectedToMessage";
+import echo from "../../echo";
+import { setUserOffline, setUserOnline } from "../home/HomeSlice";
+import { useDispatch } from "react-redux";
 
 export default function MessageHome() {
+
+
+  const dispatch = useDispatch();
+  
   const [isSmallOrMedium, setIsSmallOrMedium] = useState(window.innerWidth < 992);
   const [isLargeDevice, setIsLargeDevice] = useState(window.innerWidth >= 992);
   const [commentsHeight, setCommentsHeight] = useState(window.innerWidth < 576 ? "73vh" : "81vh");
@@ -97,6 +104,14 @@ export default function MessageHome() {
     useGetAuthUserfriendRequestQuerySuccess,
     useGetAuthUserfriendRequestQueryData,
   ]);
+
+
+
+
+
+
+
+
 
   return isLargeDevice ? (
     <div
