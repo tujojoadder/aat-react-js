@@ -1,7 +1,9 @@
 
   import Echo from 'laravel-echo';
   import Pusher from 'pusher-js';
-  const userToken = localStorage.getItem("userToken");
+  import Cookies from 'js-cookie';
+
+  const userToken = Cookies.get('userToken');
 
   window.Pusher = Pusher;
 

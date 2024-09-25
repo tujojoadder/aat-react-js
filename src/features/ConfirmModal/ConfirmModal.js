@@ -27,6 +27,10 @@ const ConfirmModal = () => {
     if (isSuccess) {
       // Clear the token cookie and navigate to the login page or home page
       Cookies.remove('userToken');
+
+      sessionStorage.removeItem("quiz_page");
+localStorage.removeItem("persist:root");
+
       dispatch(setToastSuccess({ toastSuccess: "Logged out successfully!" }));
      
       navigate('/login'); // Replace with your desired route
