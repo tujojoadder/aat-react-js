@@ -302,3 +302,23 @@ max-width: 100%;
   color: #586169 !important;
 }
 
+
+
+/* Make user active or not  */
+.online-status {
+  background-color: #4cd964; /* Correct property name */
+  width: 14px; /* No quotes around values */
+  height: 14px;
+  bottom: 0;
+  right: 0;
+  border: 2px solid white;
+}
+
+.offline-status {
+  background-color: #D4D6D8;
+  width: 14px;
+  height: 14px;
+  bottom: 0;
+  right: 0;
+  border: 2px solid white;
+}
