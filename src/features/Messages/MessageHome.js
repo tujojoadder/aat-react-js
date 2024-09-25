@@ -1,137 +1,151 @@
 import React, { useEffect, useState } from "react";
 import "./MessageHome.css";
-import { Scrollbars } from "react-custom-scrollbars";
 import { useLocation, NavLink } from "react-router-dom";
-import SendMessage from "./SendMessages/SendMessage";
-import NoUserSelectedToMessage from "./NoUserSelectedToMessage/NoUserSelectedToMessage";
 import AllFriendList from "../Friends/AllFriendList/AllFriendList";
 import SearchBox from "../home/Components/SearchBox/SearchBox";
+import { useGetAuthUserFriendQuery } from "../../services/profileApi";
+import { useInView } from "react-intersection-observer";
+import Spinner from "../Spinner/Spinner";
+import NoUserSelectedToMessage from "./NoUserSelectedToMessage/NoUserSelectedToMessage";
 
 export default function MessageHome() {
-  const [commentsHeight, setCommentsHeight] = useState("80vh"); // Default height for medium devices
-  const [isSmallOrMedium, setIsSmallOrMedium] = useState(window.innerWidth < 992); // Default check for small or medium devices
+  const [isSmallOrMedium, setIsSmallOrMedium] = useState(window.innerWidth < 992);
+  const [isLargeDevice, setIsLargeDevice] = useState(window.innerWidth >= 992);
+  const [commentsHeight, setCommentsHeight] = useState(window.innerWidth < 576 ? "73vh" : "81vh");
 
-  // Function to update the height based on window width
+  // Handle window resize
   const updateDimensions = () => {
-    if (window.innerWidth < 576) {
-      setCommentsHeight("73vh"); // Small devices (sm) like mobile phones
-    } else {
-      setCommentsHeight("81vh"); // Medium devices (md) like tablets and desktops
-    }
+    const windowWidth = window.innerWidth;
+    setIsSmallOrMedium(windowWidth < 992);
+    setIsLargeDevice(windowWidth >= 992);
 
-    setIsSmallOrMedium(window.innerWidth < 992); // Check if the device is small or medium
+    // Update height based on window size
+    if (windowWidth < 576) {
+      setCommentsHeight("73vh");
+    } else {
+      setCommentsHeight("81vh");
+    }
   };
 
-  // Effect to update dimensions when component mounts and on window resize
   useEffect(() => {
-    updateDimensions(); // Initial height and width update
-
     // Event listener for window resize
     window.addEventListener("resize", updateDimensions);
 
-    // Cleanup function to remove event listener
+    // Cleanup the event listener on unmount
     return () => {
       window.removeEventListener("resize", updateDimensions);
     };
   }, []); // Empty dependency array ensures effect runs only on mount and unmount
 
-  const [isLargeDevice, setIsLargeDevice] = useState(window.innerWidth >= 992); // State to check if the device is large
-
-  // Effect to check if the window width is larger than 992px when the component mounts
-  useEffect(() => {
-    setIsLargeDevice(window.innerWidth >= 992);
-  }, []); // Empty dependency array ensures this runs only on mount
-
-  const scrollRef = React.useRef(null);
-  const profiles = [
-    {
-      name: "MarkRockwell",
-      handle: "@mark_rockwell",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JaneDoe",
-      handle: "@jane_doe",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JohnSmith",
-      handle: "@john_smith",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "MarkRockdwell",
-      handle: "@mark_rockwell",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JanedDoe",
-      handle: "@jane_doe",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JohnSmidth",
-      handle: "@john_smith",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "MarkRodckwell",
-      handle: "@mark_rockwell",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JaneDdoe",
-      handle: "@jane_doe",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JohnSmfith",
-      handle: "@john_smith",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "MarkRockwevll",
-      handle: "@mark_rockwell",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JaneDvoe",
-      handle: "@jane_doe",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    {
-      name: "JohnSmvith",
-      handle: "@john_smith",
-      image: "https://bootstrapious.com/i/snippets/sn-cards/profile-1_dewapk.jpg",
-    },
-    // Add more profileQuis as needed
-  ];
-
   const location = useLocation();
+  const { ref: requestRef, inView: inViewRequests } = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  });
+
+  const [friendRequestPage, setFriendRequestPage] = useState(1);
+  const [allFriendRequest, setAllFriendRequest] = useState([]);
+  const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
+
+  const {
+    data: useGetAuthUserfriendRequestQueryData,
+    isSuccess: useGetAuthUserfriendRequestQuerySuccess,
+    isFetching: useGetAuthUserfriendRequestQueryFetching,
+    isError: useGetAuthUserfriendRequestQueryError,
+  } = useGetAuthUserFriendQuery({ friendPage: friendRequestPage });
+
+  useEffect(() => {
+    if (
+      inViewRequests &&
+      !useGetAuthUserfriendRequestQueryFetching &&
+      !useGetAuthUserfriendRequestQueryError &&
+      hasMoreFriendRequest &&
+      useGetAuthUserfriendRequestQuerySuccess
+    ) {
+      setFriendRequestPage((prevPage) => prevPage + 1);
+    }
+  }, [
+    inViewRequests,
+    useGetAuthUserfriendRequestQueryFetching,
+    useGetAuthUserfriendRequestQueryError,
+    hasMoreFriendRequest,
+    useGetAuthUserfriendRequestQuerySuccess,
+  ]);
+
+  useEffect(() => {
+    if (
+      useGetAuthUserfriendRequestQuerySuccess &&
+      useGetAuthUserfriendRequestQueryData?.data
+    ) {
+      if (useGetAuthUserfriendRequestQueryData.data.length < 3) {
+        setHasMoreFriendRequest(false);
+      }
+      const newRequests = useGetAuthUserfriendRequestQueryData.data.filter(
+        (newRequest) =>
+          !allFriendRequest.some(
+            (request) => request.user_id === newRequest.user_id
+          )
+      );
+      if (newRequests.length > 0) {
+        setAllFriendRequest((prevRequests) => [
+          ...prevRequests,
+          ...newRequests,
+        ]);
+      }
+    }
+  }, [
+    useGetAuthUserfriendRequestQuerySuccess,
+    useGetAuthUserfriendRequestQueryData,
+  ]);
 
   return isLargeDevice ? (
-    <div className="message-home main  mb-5" style={{ backgroundColor: "white",minHeight:'100vh' }}><NoUserSelectedToMessage /></div>
+    <div
+      className="message-home main mb-5"
+      style={{ backgroundColor: "white", minHeight: "100vh" }}
+    >
+      {/* Large Device Layout */}
+
+      <NoUserSelectedToMessage/>
+    </div>
   ) : (
-    <div className="p-0 m-0 main border ">
-<SearchBox/>
-        <div className="mb-5">
-          {profiles.map((profile, index) => {
-            const isActive = location.pathname === `/message/${profile.name}`;
+    <div
+    className="friend-home main  m-0 p-0 border-sm-0 border-left border-right "
+    style={{ backgroundColor: "white", minHeight: "100vh" }}
+  >
+      <SearchBox />
+      <div className="mb-5">
+        {allFriendRequest.length === 0 ? (
+          <div className="col-12 text-center">No records</div>
+        ) : (
+          allFriendRequest.map((profile, index) => {
+            const isActive =
+              location.pathname === `/friends/all-friends/${profile.user_id}`;
             return (
-              <NavLink key={index} to={`/message/${profile.name}`} className="text-decoration-none">
-                <div className="col-12 mb-2 m-0 p-0">
-                  <AllFriendList
-                    name={profile.name}
-                    handle={profile.handle}
-                    image={profile.image}
-                    isActive={isActive}
-                  />
-                </div>
+              <NavLink
+                key={index}
+                to={`/message/${profile.user_id}`}
+                className="text-decoration-none"
+              >
+                <AllFriendList
+                  key={profile.friend_request_id}
+                  name={`${profile.user_fname} ${profile.user_lname}`}
+                  handle={profile.identifier}
+                  image={profile.profile_picture}
+                  user_id={profile.user_id}
+                  isActive={isActive}
+                />
               </NavLink>
             );
-          })}
+          })
+        )}
+        <div
+          ref={requestRef}
+          className="infinite-scroll-trigger"
+          style={{ height: "7vh", minHeight: "40px" }}
+        >
+          {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
         </div>
- 
+      </div>
     </div>
   );
 }

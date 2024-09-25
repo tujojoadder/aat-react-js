@@ -45,7 +45,7 @@ export default function NoUserSelectedToMessage() {
 
       {/* Content for large devices */}
       <div className="d-none d-lg-block  " style={{ marginLeft:'-2%' }}>
-        <div style={styles.container} className="border">
+        <div style={styles.container} className="border-left border-right">
           <div style={styles.content}>
             <i className="fa-solid fa-envelope" style={styles.icon}></i>
 
