@@ -85,8 +85,9 @@
   margin-bottom: 10px;
   margin-left: 7px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #007bff, #0062cc);
-  color: white;
+
+  background: linear-gradient(135deg, #e4e9f5, #cccfd4);
+  color: rgb(31, 30, 30);
   padding: 12px;
   position: relative;
   max-width: 70%;
@@ -106,7 +107,13 @@
   margin-bottom: 10px;
   margin-right: 7px;
   border-radius: 20px;
-  background-color: #e4e9f5;
+
+
+
+
+
+  background: linear-gradient(135deg, #6b6ab3, #8c64e3);
+  color: white;
   padding: 12px;
   position: relative;
   max-width: 70%;
@@ -135,7 +142,7 @@
 .msg_time {
   position: absolute;
   left: 0;
-  bottom: -20px;
+  bottom: -23px;
   color: rgba(20, 16, 16, 0.5);
   font-size: 10px;
 }
@@ -225,3 +232,31 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+
+
+
+
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+
+
+.message-body {
+  flex-grow: 1; /* This will make the body take the remaining space */
+  overflow: hidden; /* To ensure the scrollbar only applies inside */
+  display: flex;
+  flex-direction: column;
+}
+
+.msg_card_body {
+  flex-grow: 1; /* Make the message container fill the space */
+  overflow-y: auto; /* Enable scrolling */
+  padding: 10px;
+}
+

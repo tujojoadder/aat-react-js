@@ -17,16 +17,14 @@ export default function SendMessage() {
 
     try {
       // Send the message to the backend and capture the response
-      await sendMessage({ receiver_id: receiverID, message }).unwrap();
-
+     const res= await sendMessage({ receiver_id: receiverID, message }).unwrap();
+console.log(res);
     } catch (error) {
       console.error('Error:', error); // Log any error
     }
   };
 
-  if (isSuccess) {
-    console.log(sendMessage);
-  }
+  
 
   return (
     <div style={{ width: '100%' }} className="create-comment shadow-sm border-top bg-body">
