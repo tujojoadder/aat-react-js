@@ -109,7 +109,7 @@
   border-radius: 20px;
 
 
-
+min-width:2.5rem ;
 
 
   background: linear-gradient(135deg, #6b6ab3, #8c64e3);
@@ -142,6 +142,7 @@
 .msg_time {
   position: absolute;
   left: 0;
+  min-width: 80px;
   bottom: -23px;
   color: rgba(20, 16, 16, 0.5);
   font-size: 10px;
@@ -150,6 +151,7 @@
 .msg_time_send {
   position: absolute;
   right: 0;
+    min-width: 80px;
   bottom: -23px;
   color: rgba(20, 16, 16, 0.5);
   font-size: 10px;
@@ -186,12 +188,12 @@
   display: none;
   position: absolute;
   background: #fff;
-  border: 1px solid #ccc;
+
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   color: #000;
-  min-width: 100px;
+ font-size: 0.9rem;
   transition: opacity 0.3s ease;
   padding-bottom: 3px;
 }
@@ -201,7 +203,8 @@
 }
 
 .msg_cotainer_send .msg-options-menu {
-  left: 0%; /* Adjust the position to be close to the options icon */
+  left: -0%; /* Adjust the position to be close to the options icon */
+
 }
 
 .msg-options-menu.show {
@@ -209,7 +212,7 @@
 }
 
 .msg-options-menu div {
-  padding: 3px 7px;
+  padding: 3px;
   cursor: pointer;
 }
 
