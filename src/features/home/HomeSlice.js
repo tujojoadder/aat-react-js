@@ -67,6 +67,8 @@ unlikeReactions: {},     // To store sent friend requests by user ID
 // Initial state: an array to store online user IDs
   onlineUsers: [],
 
+/*   Message */
+receiver_id: null,
 
 
 
@@ -281,6 +283,13 @@ setUserOffline: (state, action) => {
 },
 
 
+/* Message */
+setReceiverId: (state, action) => {
+  state.receiver_id = action.payload;
+},
+
+
+
 
 
   },
@@ -295,6 +304,7 @@ pageDetails:'', */
 
 export const {
  setGroupUpdate,
+ setReceiverId,
  setUserOffline,
  setUserOnline,
  setLoveReaction,
