@@ -6,20 +6,26 @@ import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setReceiverId } from "../../home/HomeSlice";
 import { useSendMessageMutation } from "../../../services/chatsApi";
+import echo from "../../../echo";
+import { formatPostDate } from "../../../utils/dateUtils";
 
 export default function MessageAnyOne() {
-  const receiverID = useSelector((state) => state.home.receiver_id); // Access receiver_id from Redux
-  const userProfile = useSelector((state) => state.home.profile_picture); // Access user profile picture from Redux
-  const [message, setMessage] = useState(""); // State to store the current message input
-  const [messages, setMessages] = useState([]); // State to store the list of messages
-  const [sendMessage, { isLoading }] = useSendMessageMutation(); // RTK query mutation hook
+  const receiverID = useSelector((state) => state.home.receiver_id);
+  const authId = useSelector((state) => state.home.user_id);
+  const userProfile = useSelector((state) => state.home.profile_picture);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [sendMessage, { isLoading }] = useSendMessageMutation();
 
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  if (id) {
-    dispatch(setReceiverId(id)); // Dispatch action only if id is not null or undefined
-  }
+  useEffect(() => {
+    if (id) {
+      dispatch(setReceiverId(id));
+      setMessages([]);
+    }
+  }, [id, dispatch]);
 
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRef = useRef(null);
@@ -43,36 +49,64 @@ export default function MessageAnyOne() {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-    if (!message.trim()) return; // Prevent sending empty messages
+    e.preventDefault();
+    if (!message.trim()) return;
 
-    setMessage(""); // Clear the input field after sending the message
+    const newMessage = { text: message, sender_id: receiverID }; // Set sender ID for sent message
+
+    setMessage("");
 
     try {
-      // Send the message to the backend and capture the response
       const res = await sendMessage({
         receiver_id: receiverID,
         message,
       }).unwrap();
 
-
-
-      // Update the messages array by appending the new message
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-          message_id: res.data.id, // Unique ID for each message
+          message_id: res.data.id,
           text: res.data.message,
-          time: "8:55 AM, Today", // Placeholder for the time, you can replace this with actual time
+          created_at: formatPostDate(res?.data?.created_at),
+          senderId: res.data.sender_id, // Add sender ID to the message
+          receiverId: res.data.receiver_id, // Add sender ID to the message
         },
       ]);
     } catch (error) {
-      console.error("Error:", error); // Log any error
+      console.error("Error:", error);
     }
   };
 
+  useEffect(() => {
+    echo.private("broadcast-message").listen(".getChatMessage", (e) => {
+      console.log(e);
+
+      // Check if the received message has necessary properties
+
+
+      if (e.chat.data && e.chat.data.message && e.chat.data.receiver_id===authId && id==e.chat.data.sender_id) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            message_id: e.chat.data.id, // Ensure the data has an id property
+            text: e.chat.data.message,
+            created_at: formatPostDate(e.chat.data.created_at),
+            senderId: e.chat.data.sender_id, // Add sender ID from the received message
+            receiverId: e.chat.data.receiver_id, // Add sender ID from the received message
+          },
+        ]);
+      }
+
+
+    });
+
+    return () => {
+      echo.leave("broadcast-message");
+    };
+  }, []);
+
   return (
-    <div className="message-container friend-home main p-0 m-0 border-left border-right">
+    <div className="message-container friend-home  p-0 m-0 border-left border-right">
       <div className="message-header">
         <div
           className="posts m-0 py-2 p-0 border-bottom bg-light rounded"
@@ -109,31 +143,57 @@ export default function MessageAnyOne() {
         <Scrollbar>
           <div id="msg_card_body">
             {messages.map((msg) => (
-                 <div className="current-user-message mr-3">
-                 <div className="d-flex justify-content-end mb-4 my">
-                   <div className="msg_cotainer_send">
-         {msg.text}
-                     <span className="msg_time_send">8:55 AM, Today</span>
-                     <i
-                       className="fa fa-ellipsis-v msg-options-icon "
-                       onClick={(e) => handleOptionClick(e,msg.message_id)}
-                     ></i>
-                     <div
-                       className={`msg-options-menu ${
-                         openMenuId === msg.message_id ? "show" : ""
-                       }`}
-                       id="options-2"
-                       ref={menuRef}
-                     >
-                   
-              
-                       <div>remove</div>
-                       <div>copy</div>
-                     </div>
-                   </div>
-                  
-                 </div>
-               </div>
+              <div
+                key={msg.message_id} // Ensure each message has a unique key
+                className={authId === msg.senderId  ? 'current-user-message pe-3' : 'distance-user-message ps-3'} // Conditional class name
+                 
+              >
+
+                <div
+                  className={`d-flex justify-content-${
+                    msg.senderId === authId ? "end" : "start"
+                  } mb-4 my`}
+                >
+
+{authId === msg.receiverId && id==msg.senderId && ( // Conditionally show the image if authId matches receiverId
+        <div className="img_cont_msg">
+          <img
+            src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+            className="rounded-circle user_img_msg"
+            alt="user-img"
+          />
+        </div>
+      )}
+
+
+
+
+
+
+
+
+                  <div
+                     className={authId === msg.senderId ? 'msg_cotainer_send' : 'msg_cotainer'} 
+                  >
+                    {msg.text}
+                    <span className={authId === msg.senderId ? 'msg_time_send' : 'msg_time'} >{msg.created_at}</span>
+                    <i
+                      className="fa fa-ellipsis-v msg-options-icon"
+                      onClick={(e) => handleOptionClick(e, msg.message_id)}
+                    ></i>
+                    <div
+                      className={`msg-options-menu ${
+                        openMenuId === msg.message_id ? "show" : ""
+                      }`}
+                      id="options-2"
+                      ref={menuRef}
+                    >
+                      <div>remove</div>
+                      <div>copy</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </Scrollbar>
@@ -168,7 +228,7 @@ export default function MessageAnyOne() {
                 <input
                   className="form-control"
                   value={message}
-                  onChange={(e) => setMessage(e.target.value)} // Capture input value
+                  onChange={(e) => setMessage(e.target.value)}
                   style={{
                     border: "1px solid #ccc",
                     borderRadius: "20px",
@@ -187,7 +247,7 @@ export default function MessageAnyOne() {
               <button
                 className="btn btn-primary"
                 type="submit"
-                disabled={isLoading || !message.trim()} // Disable button when loading or message is empty
+                disabled={isLoading || !message.trim()}
                 style={{
                   borderRadius: "50%",
                   padding: "10px",
@@ -196,18 +256,16 @@ export default function MessageAnyOne() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  backgroundColor:
-                    isLoading || !message.trim() ? "#ccc" : "#007bff", // Change button color when disabled
+                  backgroundColor: isLoading || !message.trim() ? "#ccc" : "#007bff",
                   border: "none",
                   color: "#fff",
                   fontSize: "18px",
                   transition: "background-color 0.3s ease",
-                  cursor:
-                    isLoading || !message.trim() ? "not-allowed" : "pointer", // Show not-allowed cursor when disabled
+                  cursor: isLoading || !message.trim() ? "not-allowed" : "pointer",
                 }}
               >
                 {isLoading ? (
-                  <i className="fa fa-spinner fa-spin"></i> // Spinner icon during loading
+                  <i className="fa fa-spinner fa-spin"></i>
                 ) : (
                   <i className="fa-regular fa-paper-plane"></i>
                 )}
