@@ -28,7 +28,20 @@ export const chatsApi = createApi({
             }),
           }),
 
-      
+          loadChat: builder.mutation({
+            query: (user) => {
+              return {
+                url: "loadchat",
+                method: "POST",
+                body: user,
+                headers: {
+            
+                    'Authorization': `Bearer ${userToken}`, 
+                },
+              };
+            },
+          }),
+    
 
       
     }),
@@ -36,4 +49,4 @@ export const chatsApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useSendMessageMutation} = chatsApi
+export const { useSendMessageMutation,useLoadChatMutation} = chatsApi

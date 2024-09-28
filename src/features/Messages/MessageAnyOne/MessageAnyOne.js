@@ -5,7 +5,7 @@ import "./MessageAnyOne.css";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setReceiverId } from "../../home/HomeSlice";
-import { useSendMessageMutation } from "../../../services/chatsApi";
+import { useLoadChatMutation, useSendMessageMutation } from "../../../services/chatsApi";
 import echo from "../../../echo";
 import { formatPostDate } from "../../../utils/dateUtils";
 
@@ -18,8 +18,29 @@ export default function MessageAnyOne() {
   const [sendMessage, { isLoading }] = useSendMessageMutation();
 
   const dispatch = useDispatch();
+  const [loadChat, { isError: loadChatError, isSuccess: loadChatSuccess }] = useLoadChatMutation();
   const { id } = useParams();
-
+  useEffect(() => {
+    if (id) {
+      dispatch(setReceiverId(id));
+      setMessages([]); // Reset the messages
+      loadChat({ receiver_id: id })
+        .unwrap()
+        .then((res) => {
+          const formattedMessages = res.chat.map((msg) => ({
+            message_id: msg.id,
+            text: msg.message,
+            created_at: formatPostDate(msg.created_at),
+            senderId: msg.sender_id,
+            receiverId: msg.receiver_id,
+          }));
+          setMessages(formattedMessages);
+        })
+        .catch((error) => {
+          console.error("Error loading chat:", error);
+        });
+    }
+  }, [id, dispatch, loadChat]);
   useEffect(() => {
     if (id) {
       dispatch(setReceiverId(id));
