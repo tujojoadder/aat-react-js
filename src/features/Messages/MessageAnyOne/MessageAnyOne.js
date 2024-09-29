@@ -26,7 +26,7 @@ export default function MessageAnyOne() {
   const dispatch = useDispatch();
 
   const { ref: requestRef, inView: inViewRequests } = useInView({
-    threshold: 0,
+    threshold: 0.7,
     triggerOnce: false,
   });
   const [friendRequestPage, setFriendRequestPage] = useState(1);
@@ -85,7 +85,8 @@ export default function MessageAnyOne() {
           !messages.some((request) => request.id === newRequest.id)
       );
       if (newRequests.length > 0) {
-        setMessages((prevRequests) => [...prevRequests, ...newRequests]);
+        setMessages((prevRequests) => [...newRequests, ...prevRequests]); // Prepend old messages
+
       }
     }
   }, [
@@ -201,12 +202,6 @@ useEffect(() => {
     console.log(messages);
   }
 
-
-
-
-
-
-
   const messageEndRef = useRef(null); // Create a ref for the last message
 
   // Scroll to the bottom when messages change
@@ -252,7 +247,16 @@ useEffect(() => {
       <div className="message-body pt-3 " style={{ overflowX: "hidden" }}>
         <Scrollbar>
           <div id="msg_card_body" style={{ overflowX: "hidden" }}>
+          <div
+              ref={requestRef}
+              className="infinite-scroll-trigger"
+          
+            >
+              {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
+            </div>
             {messages.map((msg) => (
+
+              
               <div
                 key={msg.id} // Ensure each message has a unique key
                 className={
@@ -311,15 +315,9 @@ useEffect(() => {
               </div>
             ))}
 
-<div ref={messageEndRef} />
+            <div ref={messageEndRef} />
 
-            <div
-              ref={requestRef}
-              className="infinite-scroll-trigger"
-              style={{ height: "7vh", minHeight: "40px" }}
-            >
-              {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
-            </div>
+           
           </div>
         </Scrollbar>
       </div>
