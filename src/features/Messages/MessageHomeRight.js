@@ -18,8 +18,7 @@ export default function FriendRightAllFriends() {
   const [friendRequestPage, setFriendRequestPage] = useState(1);
   const [allFriendRequest, setAllFriendRequest] = useState([]);
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
-  const [paddingBottom, setPaddingBottom] = useState("30vh"); // Default padding
-
+ 
   /* Fetching Request data */
   const {
     data: useGetAuthUserfriendRequestQueryData,

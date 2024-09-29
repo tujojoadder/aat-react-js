@@ -5,127 +5,27 @@ import "./MessageAnyOne.css";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setReceiverId } from "../../home/HomeSlice";
-import { useLoadChatMutation, useLoadChatQuery, useSendMessageMutation } from "../../../services/chatsApi";
+import { useSendMessageMutation } from "../../../services/chatsApi";
 import echo from "../../../echo";
 import { formatPostDate } from "../../../utils/dateUtils";
-import { useInView } from "react-intersection-observer";
-import Spinner from "../../Spinner/Spinner";
-
+z
 export default function MessageAnyOne() {
-  const { id } = useParams();
   const receiverID = useSelector((state) => state.home.receiver_id);
   const authId = useSelector((state) => state.home.user_id);
   const userProfile = useSelector((state) => state.home.profile_picture);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [sendMessage, { isLoading }] = useSendMessageMutation();
+
   const dispatch = useDispatch();
+  const { id } = useParams();
 
-
-
-  
-
-  const { ref: requestRef, inView: inViewRequests } = useInView({
-    threshold: 0,
-    triggerOnce: false,
-  });
-  const [friendRequestPage, setFriendRequestPage] = useState(1);
-
-  const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
- 
-  const {
-    data: useGetAuthUserfriendRequestQueryData,
-    isSuccess: useGetAuthUserfriendRequestQuerySuccess,
-    isLoading: useGetAuthUserfriendRequestQueryLoading,
-    isError: useGetAuthUserfriendRequestQueryError,
-    isFetching: useGetAuthUserfriendRequestQueryFetching,
-    refetch: useGetAuthUserfriendRequestQueryRefetch,
-  } = useLoadChatQuery({ page: friendRequestPage,receiver_id: id });
-
-
-  if (useGetAuthUserfriendRequestQuerySuccess) {
-    console.log(useGetAuthUserfriendRequestQueryData)
-  }
-
- // Reset messages and page when receiverID or id changes
- useEffect(() => {
-  // Reset messages and start from the first page
-  setMessages([]);
-  setFriendRequestPage(1);
-  setHasMoreFriendRequest(true);
-}, [id, receiverID]);
- useEffect(() => {
-  if (
-    inViewRequests &&
-    !useGetAuthUserfriendRequestQueryFetching &&
-    !useGetAuthUserfriendRequestQueryError &&
-    hasMoreFriendRequest &&
-    useGetAuthUserfriendRequestQuerySuccess
-  ) {
-    console.log("Updating friendRequestPage:", friendRequestPage + 1);
-    setFriendRequestPage((prevPage) => prevPage + 1);
-  }
-}, [
-  inViewRequests,
-  useGetAuthUserfriendRequestQueryFetching,
-  useGetAuthUserfriendRequestQueryError,
-  hasMoreFriendRequest,
-  useGetAuthUserfriendRequestQuerySuccess,
-]);
-
-useEffect(() => {
-  if (
-    useGetAuthUserfriendRequestQuerySuccess &&
-    useGetAuthUserfriendRequestQueryData?.chat.data
-  ) {
-    if (useGetAuthUserfriendRequestQueryData.chat.data.length < 3) {
-      setHasMoreFriendRequest(false);
+  useEffect(() => {
+    if (id) {
+      dispatch(setReceiverId(id));
+      setMessages([]);
     }
-    const newRequests = useGetAuthUserfriendRequestQueryData.chat.data.filter(
-      (newRequest) =>
-        !messages.some(
-          (request) => request.id === newRequest.id
-        )
-    );
-    if (newRequests.length > 0) {
-      setMessages((prevRequests) => [
-        ...prevRequests,
-        ...newRequests,
-      ]);
-    }
-  }
-}, [
-  useGetAuthUserfriendRequestQuerySuccess,
-  useGetAuthUserfriendRequestQueryData,
-]);
-
-
-/* 
-useEffect(() => {
-  if (id) {
- 
-        const formattedMessages = allFriendRequest.chat.data.map((msg) => ({
-          message_id: msg.id,
-          text: msg.message,
-          created_at: formatPostDate(msg.created_at),
-          senderId: msg.sender_id,
-          receiverId: msg.receiver_id,
-        }));
-        setMessages(formattedMessages);
-      
-   
-  }
-}, [id, dispatch]);
-useEffect(() => {
-  if (id) {
-    dispatch(setReceiverId(id));
-    setMessages([]);
-  }
-}, [id, dispatch]);
- */
-
-
-
+  }, [id, dispatch]);
 
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRef = useRef(null);
@@ -205,11 +105,6 @@ useEffect(() => {
     };
   }, []);
 
-
-  if (useGetAuthUserfriendRequestQuerySuccess) {
-    console.log(messages)
-  }
-
   return (
     <div className="message-container friend-home  p-0 m-0 border-left border-right">
       <div className="message-header">
@@ -244,23 +139,23 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="message-body pt-3 "  style={{ overflowX:'hidden' }}>
+      <div className="message-body pt-3">
         <Scrollbar>
-          <div id="msg_card_body"  style={{ overflowX:'hidden' }}>
+          <div id="msg_card_body">
             {messages.map((msg) => (
               <div
-                key={msg.id} // Ensure each message has a unique key
-                className={authId === msg.sender_id  ? 'current-user-message pe-3' : 'distance-user-message ps-3'} // Conditional class name
+                key={msg.message_id} // Ensure each message has a unique key
+                className={authId === msg.senderId  ? 'current-user-message pe-3' : 'distance-user-message ps-3'} // Conditional class name
                  
               >
 
                 <div
                   className={`d-flex justify-content-${
-                    msg.sender_id === authId ? "end" : "start"
+                    msg.senderId === authId ? "end" : "start"
                   } mb-4 my`}
                 >
 
-{authId === msg.receiverId && id==msg.sender_id && ( // Conditionally show the image if authId matches receiverId
+{authId === msg.receiverId && id==msg.senderId && ( // Conditionally show the image if authId matches receiverId
         <div className="img_cont_msg">
           <img
             src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
@@ -278,17 +173,17 @@ useEffect(() => {
 
 
                   <div
-                     className={authId === msg.sender_id ? 'msg_cotainer_send' : 'msg_cotainer'} 
+                     className={authId === msg.senderId ? 'msg_cotainer_send' : 'msg_cotainer'} 
                   >
-                    {msg.message}
-                    <span className={authId === msg.senderId ? 'msg_time_send' : 'msg_time'} >{formatPostDate(msg.created_at)}</span>
+                    {msg.text}
+                    <span className={authId === msg.senderId ? 'msg_time_send' : 'msg_time'} >{msg.created_at}</span>
                     <i
                       className="fa fa-ellipsis-v msg-options-icon"
-                      onClick={(e) => handleOptionClick(e, msg.id)}
+                      onClick={(e) => handleOptionClick(e, msg.message_id)}
                     ></i>
                     <div
                       className={`msg-options-menu ${
-                        openMenuId === msg.id ? "show" : ""
+                        openMenuId === msg.message_id ? "show" : ""
                       }`}
                       id="options-2"
                       ref={menuRef}
@@ -300,17 +195,6 @@ useEffect(() => {
                 </div>
               </div>
             ))}
-  <div
-                  ref={requestRef}
-                  className="infinite-scroll-trigger"
-                  style={{ height: "7vh", minHeight: "40px" }}
-                >
-                  {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
-                </div>
-
-
-
-
           </div>
         </Scrollbar>
       </div>

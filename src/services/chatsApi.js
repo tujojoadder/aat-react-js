@@ -28,20 +28,18 @@ export const chatsApi = createApi({
             }),
           }),
 
-          loadChat: builder.mutation({
-            query: (user) => {
-              return {
-                url: "loadchat",
-                method: "POST",
-                body: user,
-                headers: {
-            
-                    'Authorization': `Bearer ${userToken}`, 
-                },
-              };
-            },
-          }),
-    
+          
+
+    /*    get specific group posts */
+    loadChat: builder.query({
+      query: ({ page = 1, receiver_id }) =>
+        `loadchat?page=${page}&receiver_id=${receiver_id}`, // Updated to include id
+    }),
+
+
+
+
+
 
       
     }),
@@ -49,4 +47,4 @@ export const chatsApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useSendMessageMutation,useLoadChatMutation} = chatsApi
+export const { useSendMessageMutation,useLoadChatQuery} = chatsApi
