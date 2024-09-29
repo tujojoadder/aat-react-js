@@ -5,7 +5,11 @@ import "./MessageAnyOne.css";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setReceiverId } from "../../home/HomeSlice";
-import { useLoadChatMutation, useLoadChatQuery, useSendMessageMutation } from "../../../services/chatsApi";
+import {
+  useLoadChatMutation,
+  useLoadChatQuery,
+  useSendMessageMutation,
+} from "../../../services/chatsApi";
 import echo from "../../../echo";
 import { formatPostDate } from "../../../utils/dateUtils";
 import { useInView } from "react-intersection-observer";
@@ -21,10 +25,6 @@ export default function MessageAnyOne() {
   const [sendMessage, { isLoading }] = useSendMessageMutation();
   const dispatch = useDispatch();
 
-
-
-  
-
   const { ref: requestRef, inView: inViewRequests } = useInView({
     threshold: 0,
     triggerOnce: false,
@@ -32,7 +32,7 @@ export default function MessageAnyOne() {
   const [friendRequestPage, setFriendRequestPage] = useState(1);
 
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
- 
+
   const {
     data: useGetAuthUserfriendRequestQueryData,
     isSuccess: useGetAuthUserfriendRequestQuerySuccess,
@@ -40,67 +40,60 @@ export default function MessageAnyOne() {
     isError: useGetAuthUserfriendRequestQueryError,
     isFetching: useGetAuthUserfriendRequestQueryFetching,
     refetch: useGetAuthUserfriendRequestQueryRefetch,
-  } = useLoadChatQuery({ page: friendRequestPage,receiver_id: id });
-
+  } = useLoadChatQuery({ page: friendRequestPage, receiver_id: id });
 
   if (useGetAuthUserfriendRequestQuerySuccess) {
-    console.log(useGetAuthUserfriendRequestQueryData)
+    console.log(useGetAuthUserfriendRequestQueryData);
   }
 
- // Reset messages and page when receiverID or id changes
- useEffect(() => {
-  // Reset messages and start from the first page
-  setMessages([]);
-  setFriendRequestPage(1);
-  setHasMoreFriendRequest(true);
-}, [id, receiverID]);
- useEffect(() => {
-  if (
-    inViewRequests &&
-    !useGetAuthUserfriendRequestQueryFetching &&
-    !useGetAuthUserfriendRequestQueryError &&
-    hasMoreFriendRequest &&
-    useGetAuthUserfriendRequestQuerySuccess
-  ) {
-    console.log("Updating friendRequestPage:", friendRequestPage + 1);
-    setFriendRequestPage((prevPage) => prevPage + 1);
-  }
-}, [
-  inViewRequests,
-  useGetAuthUserfriendRequestQueryFetching,
-  useGetAuthUserfriendRequestQueryError,
-  hasMoreFriendRequest,
-  useGetAuthUserfriendRequestQuerySuccess,
-]);
-
-useEffect(() => {
-  if (
-    useGetAuthUserfriendRequestQuerySuccess &&
-    useGetAuthUserfriendRequestQueryData?.chat.data
-  ) {
-    if (useGetAuthUserfriendRequestQueryData.chat.data.length < 3) {
-      setHasMoreFriendRequest(false);
+  // Reset messages and page when receiverID or id changes
+  useEffect(() => {
+    // Reset messages and start from the first page
+    setMessages([]);
+    setFriendRequestPage(1);
+    setHasMoreFriendRequest(true);
+  }, [id, receiverID]);
+  useEffect(() => {
+    if (
+      inViewRequests &&
+      !useGetAuthUserfriendRequestQueryFetching &&
+      !useGetAuthUserfriendRequestQueryError &&
+      hasMoreFriendRequest &&
+      useGetAuthUserfriendRequestQuerySuccess
+    ) {
+      console.log("Updating friendRequestPage:", friendRequestPage + 1);
+      setFriendRequestPage((prevPage) => prevPage + 1);
     }
-    const newRequests = useGetAuthUserfriendRequestQueryData.chat.data.filter(
-      (newRequest) =>
-        !messages.some(
-          (request) => request.id === newRequest.id
-        )
-    );
-    if (newRequests.length > 0) {
-      setMessages((prevRequests) => [
-        ...prevRequests,
-        ...newRequests,
-      ]);
+  }, [
+    inViewRequests,
+    useGetAuthUserfriendRequestQueryFetching,
+    useGetAuthUserfriendRequestQueryError,
+    hasMoreFriendRequest,
+    useGetAuthUserfriendRequestQuerySuccess,
+  ]);
+
+  useEffect(() => {
+    if (
+      useGetAuthUserfriendRequestQuerySuccess &&
+      useGetAuthUserfriendRequestQueryData?.chat.data
+    ) {
+      if (useGetAuthUserfriendRequestQueryData.chat.data.length < 3) {
+        setHasMoreFriendRequest(false);
+      }
+      const newRequests = useGetAuthUserfriendRequestQueryData.chat.data.filter(
+        (newRequest) =>
+          !messages.some((request) => request.id === newRequest.id)
+      );
+      if (newRequests.length > 0) {
+        setMessages((prevRequests) => [...prevRequests, ...newRequests]);
+      }
     }
-  }
-}, [
-  useGetAuthUserfriendRequestQuerySuccess,
-  useGetAuthUserfriendRequestQueryData,
-]);
+  }, [
+    useGetAuthUserfriendRequestQuerySuccess,
+    useGetAuthUserfriendRequestQueryData,
+  ]);
 
-
-/* 
+  /* 
 useEffect(() => {
   if (id) {
  
@@ -123,9 +116,6 @@ useEffect(() => {
   }
 }, [id, dispatch]);
  */
-
-
-
 
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRef = useRef(null);
@@ -183,8 +173,12 @@ useEffect(() => {
 
       // Check if the received message has necessary properties
 
-
-      if (e.chat.data && e.chat.data.message && e.chat.data.receiver_id===authId && id==e.chat.data.sender_id) {
+      if (
+        e.chat.data &&
+        e.chat.data.message &&
+        e.chat.data.receiver_id === authId &&
+        id == e.chat.data.sender_id
+      ) {
         setMessages((prevMessages) => [
           ...prevMessages,
           {
@@ -196,8 +190,6 @@ useEffect(() => {
           },
         ]);
       }
-
-
     });
 
     return () => {
@@ -205,11 +197,24 @@ useEffect(() => {
     };
   }, []);
 
-
   if (useGetAuthUserfriendRequestQuerySuccess) {
-    console.log(messages)
+    console.log(messages);
   }
 
+
+
+
+
+
+
+  const messageEndRef = useRef(null); // Create a ref for the last message
+
+  // Scroll to the bottom when messages change
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "auto" });
+    }
+  }, [messages]); // Trigger on messages change
   return (
     <div className="message-container friend-home  p-0 m-0 border-left border-right">
       <div className="message-header">
@@ -244,44 +249,49 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="message-body pt-3 "  style={{ overflowX:'hidden' }}>
+      <div className="message-body pt-3 " style={{ overflowX: "hidden" }}>
         <Scrollbar>
-          <div id="msg_card_body"  style={{ overflowX:'hidden' }}>
+          <div id="msg_card_body" style={{ overflowX: "hidden" }}>
             {messages.map((msg) => (
               <div
                 key={msg.id} // Ensure each message has a unique key
-                className={authId === msg.sender_id  ? 'current-user-message pe-3' : 'distance-user-message ps-3'} // Conditional class name
-                 
+                className={
+                  authId === msg.sender_id
+                    ? "current-user-message pe-3"
+                    : "distance-user-message ps-3"
+                } // Conditional class name
               >
-
                 <div
                   className={`d-flex justify-content-${
                     msg.sender_id === authId ? "end" : "start"
                   } mb-4 my`}
                 >
-
-{authId === msg.receiverId && id==msg.sender_id && ( // Conditionally show the image if authId matches receiverId
-        <div className="img_cont_msg">
-          <img
-            src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-            className="rounded-circle user_img_msg"
-            alt="user-img"
-          />
-        </div>
-      )}
-
-
-
-
-
-
-
+                  {authId === msg.receiverId &&
+                    id == msg.sender_id && ( // Conditionally show the image if authId matches receiverId
+                      <div className="img_cont_msg">
+                        <img
+                          src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                          className="rounded-circle user_img_msg"
+                          alt="user-img"
+                        />
+                      </div>
+                    )}
 
                   <div
-                     className={authId === msg.sender_id ? 'msg_cotainer_send' : 'msg_cotainer'} 
+                    className={
+                      authId === msg.sender_id
+                        ? "msg_cotainer_send"
+                        : "msg_cotainer"
+                    }
                   >
                     {msg.message}
-                    <span className={authId === msg.senderId ? 'msg_time_send' : 'msg_time'} >{formatPostDate(msg.created_at)}</span>
+                    <span
+                      className={
+                        authId === msg.senderId ? "msg_time_send" : "msg_time"
+                      }
+                    >
+                      {formatPostDate(msg.created_at)}
+                    </span>
                     <i
                       className="fa fa-ellipsis-v msg-options-icon"
                       onClick={(e) => handleOptionClick(e, msg.id)}
@@ -300,17 +310,16 @@ useEffect(() => {
                 </div>
               </div>
             ))}
-  <div
-                  ref={requestRef}
-                  className="infinite-scroll-trigger"
-                  style={{ height: "7vh", minHeight: "40px" }}
-                >
-                  {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
-                </div>
 
+<div ref={messageEndRef} />
 
-
-
+            <div
+              ref={requestRef}
+              className="infinite-scroll-trigger"
+              style={{ height: "7vh", minHeight: "40px" }}
+            >
+              {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
+            </div>
           </div>
         </Scrollbar>
       </div>
@@ -372,12 +381,14 @@ useEffect(() => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  backgroundColor: isLoading || !message.trim() ? "#ccc" : "#007bff",
+                  backgroundColor:
+                    isLoading || !message.trim() ? "#ccc" : "#007bff",
                   border: "none",
                   color: "#fff",
                   fontSize: "18px",
                   transition: "background-color 0.3s ease",
-                  cursor: isLoading || !message.trim() ? "not-allowed" : "pointer",
+                  cursor:
+                    isLoading || !message.trim() ? "not-allowed" : "pointer",
                 }}
               >
                 {isLoading ? (
