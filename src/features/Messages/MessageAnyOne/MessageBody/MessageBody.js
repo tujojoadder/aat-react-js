@@ -22,7 +22,7 @@ export default function MessageBody({ userId }) {
   } = useLoadChatQuery({ page: friendRequestPage, receiver_id: userId });
 
   const { ref: requestRef, inView: inViewRequests } = useInView({
-    threshold: 0.7,
+    threshold: 0.9,
     triggerOnce: false,
   });
 
@@ -82,6 +82,13 @@ export default function MessageBody({ userId }) {
     setOpenMenuId(openMenuId === id ? null : id);
   };
 
+  useEffect(() => {
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   const handleClickOutside = (e) => {
     if (menuRef.current && !menuRef.current.contains(e.target)) {
       setOpenMenuId(null);
@@ -100,7 +107,9 @@ export default function MessageBody({ userId }) {
     <div className="message-body" style={{ overflowX: 'hidden' }}>
       <Scrollbar>
         <div id="msg_card_body" style={{ overflowX: 'hidden' }}>
-          <div ref={requestRef} className="infinite-scroll-trigger"></div>
+          <div ref={requestRef} className="infinite-scroll-trigger" >
+            
+          </div>
           <div className="py-2"></div>
           {messages.map((msg) => (
             <div

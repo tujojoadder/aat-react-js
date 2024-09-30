@@ -1,20 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import SendMessage from "../SendMessages/SendMessage";
-import { Scrollbar } from "react-scrollbars-custom";
+
 import "./MessageAnyOne.css";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setReceiverId } from "../../home/HomeSlice";
-import {
-  useLoadChatMutation,
-  useLoadChatQuery,
-  useSendMessageMutation,
-} from "../../../services/chatsApi";
 import echo from "../../../echo";
 import { formatPostDate } from "../../../utils/dateUtils";
-import { useInView } from "react-intersection-observer";
-import Spinner from "../../Spinner/Spinner";
+
 import MessageBody from "./MessageBody/MessageBody";
+import { useSendMessageMutation } from "../../../services/chatsApi";
 
 export default function MessageAnyOne() {
   const { id } = useParams();
@@ -25,75 +18,6 @@ export default function MessageAnyOne() {
   const [messages, setMessages] = useState([]);
   const [sendMessage, { isLoading }] = useSendMessageMutation();
   const dispatch = useDispatch();
-
-  const { ref: requestRef, inView: inViewRequests } = useInView({
-    threshold: 0.7,
-    triggerOnce: false,
-  });
-  const [friendRequestPage, setFriendRequestPage] = useState(1);
-
-  const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
-
-  const {
-    data: useGetAuthUserfriendRequestQueryData,
-    isSuccess: useGetAuthUserfriendRequestQuerySuccess,
-    isLoading: useGetAuthUserfriendRequestQueryLoading,
-    isError: useGetAuthUserfriendRequestQueryError,
-    isFetching: useGetAuthUserfriendRequestQueryFetching,
-    refetch: useGetAuthUserfriendRequestQueryRefetch,
-  } = useLoadChatQuery({ page: friendRequestPage, receiver_id: id });
-
-  if (useGetAuthUserfriendRequestQuerySuccess) {
-    console.log(useGetAuthUserfriendRequestQueryData);
-  }
-
-  // Reset messages and page when receiverID or id changes
-  useEffect(() => {
-    // Reset messages and start from the first page
-    setMessages([]);
-    setFriendRequestPage(1);
-    setHasMoreFriendRequest(true);
-  }, [id, receiverID]);
-  useEffect(() => {
-    if (
-      inViewRequests &&
-      !useGetAuthUserfriendRequestQueryFetching &&
-      !useGetAuthUserfriendRequestQueryError &&
-      hasMoreFriendRequest &&
-      useGetAuthUserfriendRequestQuerySuccess
-    ) {
-      console.log("Updating friendRequestPage:", friendRequestPage + 1);
-      setFriendRequestPage((prevPage) => prevPage + 1);
-    }
-  }, [
-    inViewRequests,
-    useGetAuthUserfriendRequestQueryFetching,
-    useGetAuthUserfriendRequestQueryError,
-    hasMoreFriendRequest,
-    useGetAuthUserfriendRequestQuerySuccess,
-  ]);
-
-  useEffect(() => {
-    if (
-      useGetAuthUserfriendRequestQuerySuccess &&
-      useGetAuthUserfriendRequestQueryData?.chat.data
-    ) {
-      if (useGetAuthUserfriendRequestQueryData.chat.data.length < 3) {
-        setHasMoreFriendRequest(false);
-      }
-      const newRequests = useGetAuthUserfriendRequestQueryData.chat.data.filter(
-        (newRequest) =>
-          !messages.some((request) => request.id === newRequest.id)
-      );
-      if (newRequests.length > 0) {
-        setMessages((prevRequests) => [...newRequests, ...prevRequests]); // Prepend old messages
-
-      }
-    }
-  }, [
-    useGetAuthUserfriendRequestQuerySuccess,
-    useGetAuthUserfriendRequestQueryData,
-  ]);
 
   /* 
 useEffect(() => {
@@ -119,26 +43,8 @@ useEffect(() => {
 }, [id, dispatch]);
  */
 
-  const [openMenuId, setOpenMenuId] = useState(null);
-  const menuRef = useRef(null);
 
-  const handleClickOutside = (e) => {
-    if (menuRef.current && !menuRef.current.contains(e.target)) {
-      setOpenMenuId(null);
-    }
-  };
 
-  const handleOptionClick = (e, id) => {
-    e.stopPropagation();
-    setOpenMenuId(openMenuId === id ? null : id);
-  };
-
-  useEffect(() => {
-    window.addEventListener("click", handleClickOutside);
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -199,18 +105,8 @@ useEffect(() => {
     };
   }, []);
 
-  if (useGetAuthUserfriendRequestQuerySuccess) {
-    console.log(messages);
-  }
 
-  const messageEndRef = useRef(null); // Create a ref for the last message
 
-  // Scroll to the bottom when messages change
-  useEffect(() => {
-    if (messageEndRef.current && ((friendRequestPage==2))) {
-      messageEndRef.current.scrollIntoView({ behavior: "auto" });
-    }
-  }, [messages]); // Trigger on messages change
   return (
     <div className="message-container friend-home  p-0 m-0 border-left border-right">
       <div className="message-header">
