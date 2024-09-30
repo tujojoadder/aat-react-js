@@ -206,7 +206,7 @@ useEffect(() => {
 
   // Scroll to the bottom when messages change
   useEffect(() => {
-    if (messageEndRef.current) {
+    if (messageEndRef.current && ((friendRequestPage==2))) {
       messageEndRef.current.scrollIntoView({ behavior: "auto" });
     }
   }, [messages]); // Trigger on messages change
@@ -244,7 +244,7 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="message-body pt-3 " style={{ overflowX: "hidden" }}>
+      <div className="message-body  " style={{ overflowX: "hidden" }}>
         <Scrollbar>
           <div id="msg_card_body" style={{ overflowX: "hidden" }}>
           <div
@@ -252,8 +252,9 @@ useEffect(() => {
               className="infinite-scroll-trigger"
           
             >
-              {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
+   
             </div>
+            <div className="py-2"></div>
             {messages.map((msg) => (
 
               
