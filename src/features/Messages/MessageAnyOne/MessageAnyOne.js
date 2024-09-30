@@ -14,6 +14,7 @@ import echo from "../../../echo";
 import { formatPostDate } from "../../../utils/dateUtils";
 import { useInView } from "react-intersection-observer";
 import Spinner from "../../Spinner/Spinner";
+import MessageBody from "./MessageBody/MessageBody";
 
 export default function MessageAnyOne() {
   const { id } = useParams();
@@ -244,84 +245,7 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="message-body  " style={{ overflowX: "hidden" }}>
-        <Scrollbar>
-          <div id="msg_card_body" style={{ overflowX: "hidden" }}>
-          <div
-              ref={requestRef}
-              className="infinite-scroll-trigger"
-          
-            >
-   
-            </div>
-            <div className="py-2"></div>
-            {messages.map((msg) => (
-
-              
-              <div
-                key={msg.id} // Ensure each message has a unique key
-                className={
-                  authId === msg.sender_id
-                    ? "current-user-message pe-3"
-                    : "distance-user-message ps-3"
-                } // Conditional class name
-              >
-                <div
-                  className={`d-flex justify-content-${
-                    msg.sender_id === authId ? "end" : "start"
-                  } mb-4 my`}
-                >
-                  {authId === msg.receiverId &&
-                    id == msg.sender_id && ( // Conditionally show the image if authId matches receiverId
-                      <div className="img_cont_msg">
-                        <img
-                          src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                          className="rounded-circle user_img_msg"
-                          alt="user-img"
-                        />
-                      </div>
-                    )}
-
-                  <div
-                    className={
-                      authId === msg.sender_id
-                        ? "msg_cotainer_send"
-                        : "msg_cotainer"
-                    }
-                  >
-                    {msg.message}
-                    <span
-                      className={
-                        authId === msg.senderId ? "msg_time_send" : "msg_time"
-                      }
-                    >
-                      {formatPostDate(msg.created_at)}
-                    </span>
-                    <i
-                      className="fa fa-ellipsis-v msg-options-icon"
-                      onClick={(e) => handleOptionClick(e, msg.id)}
-                    ></i>
-                    <div
-                      className={`msg-options-menu ${
-                        openMenuId === msg.id ? "show" : ""
-                      }`}
-                      id="options-2"
-                      ref={menuRef}
-                    >
-                      <div>remove</div>
-                      <div>copy</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            <div ref={messageEndRef} />
-
-           
-          </div>
-        </Scrollbar>
-      </div>
+      <MessageBody userId={id}/>
 
       <div className="message-footer">
         <div
