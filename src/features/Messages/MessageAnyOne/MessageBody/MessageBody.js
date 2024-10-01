@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Scrollbar } from 'react-scrollbars-custom';
 import { useLoadChatQuery, useSendMessageMutation } from '../../../../services/chatsApi';
 import { formatPostDate } from '../../../../utils/dateUtils';
+import echo from '../../../../echo';
 
 export default function MessageBody({ userId }) {
   const userProfile = useSelector((state) => state.home.profile_picture);
@@ -132,6 +133,37 @@ export default function MessageBody({ userId }) {
       console.error("Error:", error);
     }
   };
+
+useEffect(() => {
+    echo.private("broadcast-message").listen(".getChatMessage", (e) => {
+      console.log(e);
+
+      // Check if the received message has necessary properties
+
+      if (
+        e.chat.data &&
+        e.chat.data.message &&
+        e.chat.data.receiver_id === authId &&
+        userId == e.chat.data.sender_id
+      ) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            id: e.chat.data.id, // Ensure the data has an id property
+            message: e.chat.data.message,
+            created_at:e.chat.data.created_at,
+            sender_id: e.chat.data.sender_id, // Add sender ID from the received message
+            receiver_id: e.chat.data.receiver_id, // Add sender ID from the received message
+          },
+        ]);
+      }
+    });
+
+    return () => {
+      echo.leave("broadcast-message");
+    };
+  }, []);
+
 
 
   return (
