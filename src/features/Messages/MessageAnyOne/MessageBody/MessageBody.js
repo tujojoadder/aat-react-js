@@ -1,21 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Scrollbar } from 'react-scrollbars-custom';
-import { useLoadChatQuery, useSendMessageMutation, useDeleteMessageMutation } from '../../../../services/chatsApi'; // Import the delete mutation
+import { useLoadChatQuery, useSendMessageMutation } from '../../../../services/chatsApi';
 import { formatPostDate } from '../../../../utils/dateUtils';
 import echo from '../../../../echo';
 
 export default function MessageBody({ userId }) {
   const userProfile = useSelector((state) => state.home.profile_picture);
+
   const authId = useSelector((state) => state.home.user_id);
   const receiverID = useSelector((state) => state.home.receiver_id);
-
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [friendRequestPage, setFriendRequestPage] = useState(1);
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
-  const [deleteMessage] = useDeleteMessageMutation(); // Initialize delete mutation
-
+  const [sendMessage, { isLoading: isLoadingMessage }] =
+    useSendMessageMutation();
   const {
     data: useGetAuthUserfriendRequestQueryData,
     isSuccess: useGetAuthUserfriendRequestQuerySuccess,
@@ -24,18 +24,15 @@ export default function MessageBody({ userId }) {
     isFetching: useGetAuthUserfriendRequestQueryFetching,
     refetch
   } = useLoadChatQuery({ page: friendRequestPage, receiver_id: userId });
-  const [sendMessage, { isLoading: isLoadingMessage }] =
-  useSendMessageMutation();
-  const [openMenuId, setOpenMenuId] = useState(null);
-  const menuRef = useRef(null);
-  const messageEndRef = useRef(null);
 
+  // Reset messages and page when receiverID or userId changes
   useEffect(() => {
     setMessages([]);
     setFriendRequestPage(1);
     setHasMoreFriendRequest(true);
   }, [userId, receiverID]);
 
+  // Fetch older messages when the "Load Older Messages" button is clicked
   const loadOlderMessages = () => {
     if (
       !useGetAuthUserfriendRequestQueryFetching &&
@@ -43,32 +40,38 @@ export default function MessageBody({ userId }) {
       hasMoreFriendRequest &&
       useGetAuthUserfriendRequestQuerySuccess
     ) {
+      console.log('Fetching previous messages...');
       setFriendRequestPage((prevPage) => prevPage + 1);
     }
   };
-
   useEffect(() => {
     if (
       useGetAuthUserfriendRequestQuerySuccess &&
       useGetAuthUserfriendRequestQueryData?.chat?.data
     ) {
       if (useGetAuthUserfriendRequestQueryData.chat.data.length < 3) {
-        setHasMoreFriendRequest(false);
+        setHasMoreFriendRequest(false); // No more older messages to load
       }
       const newMessages = useGetAuthUserfriendRequestQueryData.chat.data
         .filter(
           (newMessage) =>
             !messages.some((message) => message.id === newMessage.id)
         )
-        .reverse();
+        .reverse(); // Reverse the new messages array
+  
       if (newMessages.length > 0) {
-        setMessages((prevMessages) => [...newMessages, ...prevMessages]);
+        setMessages((prevMessages) => [...newMessages, ...prevMessages]); // Prepend older messages
       }
     }
   }, [
     useGetAuthUserfriendRequestQuerySuccess,
     useGetAuthUserfriendRequestQueryData,
   ]);
+  
+
+  const [openMenuId, setOpenMenuId] = useState(null);
+  const menuRef = useRef(null);
+  const messageEndRef = useRef(null); // Create a ref for the last message
 
   const handleOptionClick = (e, id) => {
     e.stopPropagation();
@@ -88,8 +91,9 @@ export default function MessageBody({ userId }) {
     }
   };
 
+  // Scroll to the bottom when new messages are added
   useEffect(() => {
-    if (messageEndRef.current && friendRequestPage === 1) {
+    if (messageEndRef.current && friendRequestPage == 1) {
       messageEndRef.current.scrollIntoView({ behavior: 'auto' });
     }
   }, [messages]);
@@ -97,38 +101,43 @@ export default function MessageBody({ userId }) {
 
 
 
- /*  Send Message */
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!message.trim()) return;
+
+    const newMessage = { text: message, sender_id: receiverID }; // Set sender ID for sent message
+
+    setMessage("");
 
     try {
       const res = await sendMessage({
         receiver_id: receiverID,
         message,
       }).unwrap();
-
+      console.log(res);
       setMessages((prevMessages) => [
         ...prevMessages,
         {
           id: res.data.id,
           message: res.data.message,
           created_at: res?.data?.created_at,
-          sender_id: res.data.sender_id,
-          receiver_id: res.data.receiver_id,
+          sender_id: res.data.sender_id, // Add sender ID to the message
+          receiver_id: res.data.receiver_id, // Add sender ID to the message
         },
       ]);
 
-      setMessage('');
-      refetch();
-    } catch (error)
-    {
-      console.error("Error sending message:", error);
+          // Refetch messages after sending a new one
+          refetch();
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
-
-  useEffect(() => {
+useEffect(() => {
     echo.private("broadcast-message").listen(".getChatMessage", (e) => {
       console.log(e);
 
@@ -150,38 +159,15 @@ export default function MessageBody({ userId }) {
             receiver_id: e.chat.data.receiver_id, // Add sender ID from the received message
           },
         ]);
-
-refetch();
-
       }
     });
-
+  // Refetch messages after sending a new one
+  refetch();
     return () => {
       echo.leave("broadcast-message");
     };
   }, []);
 
-
-
-
-
-
-
-
-
-  // Handle the removal of a message
-  const handleRemoveMessage = async (messageId) => {
-    try {
-      // Call the delete mutation
-      await deleteMessage(messageId).unwrap();
-      
-      // Remove the deleted message from the UI
-      setMessages((prevMessages) => prevMessages.filter((msg) => msg.id !== messageId));
-      refetch();
-    } catch (error) {
-      console.error("Error deleting message:", error);
-    }
-  };
 
 
   return (
@@ -192,7 +178,7 @@ refetch();
           {/* Button to load older messages */}
           {hasMoreFriendRequest &&
             useGetAuthUserfriendRequestQuerySuccess &&
-            messages.length > 0 && (
+            messages.length > 0 && ( // Check if there are messages
               <div className="text-center mb-3">
                 <button
                   onClick={loadOlderMessages}
@@ -214,16 +200,16 @@ refetch();
                 </button>
               </div>
             )}
-
+  
           <div className="py-2"></div>
           {messages.map((msg) => (
             <div
-              key={msg.id}
+              key={msg.id} // Ensure each message has a unique key
               className={
                 authId === msg.sender_id
                   ? 'current-user-message pe-3'
                   : 'distance-user-message ps-3'
-              }
+              } // Conditional class name
             >
               <div
                 className={`d-flex justify-content-${
@@ -239,7 +225,7 @@ refetch();
                     />
                   </div>
                 )}
-
+  
                 <div
                   className={
                     authId === msg.sender_id ? 'msg_cotainer_send' : 'msg_cotainer'
@@ -264,14 +250,14 @@ refetch();
                     id="options-2"
                     ref={menuRef}
                   >
-                    <div onClick={() => handleRemoveMessage(msg.id)}>remove</div>
+                    <div >remove</div>
                     <div>copy</div>
                   </div>
                 </div>
               </div>
             </div>
           ))}
-
+  
           <div ref={messageEndRef} />
         </div>
       </Scrollbar>
@@ -279,7 +265,7 @@ refetch();
     
 {/* Fotter */}
     
-    <div className="message-footer  ">
+    <div className="message-footer">
         <div
           style={{ width: "100%" }}
           className="create-comment shadow-sm border-top bg-body"
