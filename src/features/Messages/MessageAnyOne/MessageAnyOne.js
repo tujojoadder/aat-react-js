@@ -29,6 +29,12 @@ export default function MessageAnyOne() {
     isSuccess,
   } = useGetUserDetailsQuery(id);
 
+
+if (isSuccess) {
+  console.log(profileData);
+}
+
+
   const dispatch = useDispatch();
 
   /* 
@@ -118,17 +124,28 @@ useEffect(() => {
           </NavLink>
 
           <div className="user-pics">
-            <img
-              src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+
+{ profileData?.data?.profile_picture && (
+  <img
+              src={profileData?.data?.profile_picture}
               className="rounded-circle user_img_msg"
               alt="user3"
             />
+)
+
+
+}
+
+
+            
           </div>
           <div className="user-content-text-box">
             <div className="user-names-text" style={{ marginTop: "2px" }}>
               <div className="name-column">
-                <h1 className="full-name-text m-0 p-0">Mohammad</h1>
-                <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
+                <h1 className="full-name-text m-0 p-0">{profileData?.data.user_fname} {profileData?.data?.user_lname}</h1>
+                <p className="user-name-text m-0 p-0">
+  {profileData?.data?.identifier ? `@${profileData.data.identifier}` : ''}
+</p>
               </div>
             </div>
           </div>
@@ -141,7 +158,7 @@ useEffect(() => {
           <ProfileSkeleton />
         </div>
       ) : (
-        <MessageBody minHeight userId={id} />
+        <MessageBody  userId={id} image={profileData?.data?.profile_picture} />
       )}
     </div>
   );

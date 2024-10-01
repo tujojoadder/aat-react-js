@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Scrollbar } from 'react-scrollbars-custom';
 import { useLoadChatQuery, useSendMessageMutation, useDeleteMessageMutation } from '../../../../services/chatsApi'; // Import the delete mutation
 import { formatPostDate } from '../../../../utils/dateUtils';
 import echo from '../../../../echo';
+import { setToastSuccess } from '../../../home/HomeSlice';
 
-export default function MessageBody({ userId }) {
+export default function MessageBody({ userId,image }) {
+
+  const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.home.profile_picture);
   const authId = useSelector((state) => state.home.user_id);
   const receiverID = useSelector((state) => state.home.receiver_id);
@@ -162,7 +165,7 @@ refetch();
       refetch();
 
       
-    });
+    }); 
 
 
 
@@ -194,6 +197,16 @@ refetch();
     }
   };
 
+
+  // Function to handle copying a message to clipboard
+  const handleCopyMessage = (messageText) => {
+    navigator.clipboard.writeText(messageText).then(() => {
+
+      dispatch(setToastSuccess({ toastSuccess: "Message copied" }));
+    }).catch((error) => {
+      console.error('Failed to copy text: ', error);
+    });
+  };
 
   return (
     <>
@@ -244,7 +257,7 @@ refetch();
                 {authId === msg.receiver_id && userId === msg.sender_id && (
                   <div className="img_cont_msg">
                     <img
-                      src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                      src={image}
                       className="rounded-circle user_img_msg"
                       alt="user-img"
                     />
@@ -269,14 +282,14 @@ refetch();
                     onClick={(e) => handleOptionClick(e, msg.id)}
                   ></i>
                   <div
-                    className={`msg-options-menu ${
+                    className={`msg-options-menu py-1 my-2 ${
                       openMenuId === msg.id ? 'show' : ''
                     }`}
                     id="options-2"
                     ref={menuRef}
                   >
                     <div onClick={() => handleRemoveMessage(msg.id)}>remove</div>
-                    <div>copy</div>
+                    <div onClick={() => handleCopyMessage(msg.message)}>copy</div> {/* Copy Option */}
                   </div>
                 </div>
               </div>
