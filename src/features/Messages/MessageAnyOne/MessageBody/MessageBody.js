@@ -156,8 +156,19 @@ refetch();
       }
     });
 
+
+    echo.private("message-deleted").listen("MessageDeleteEvent", (e) => {
+      setMessages((prevMessages) => prevMessages.filter((msg) => msg.id !== e.id));
+      refetch();
+
+      
+    });
+
+
+
     return () => {
       echo.leave("broadcast-message");
+      echo.leave("message-deleted");
     };
   }, []);
 
