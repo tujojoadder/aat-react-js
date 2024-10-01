@@ -279,7 +279,7 @@ refetch();
     
 {/* Fotter */}
     
-    <div className="message-footer">
+    <div className="message-footer  ">
         <div
           style={{ width: "100%" }}
           className="create-comment shadow-sm border-top bg-body"
