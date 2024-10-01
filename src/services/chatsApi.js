@@ -30,14 +30,20 @@ export const chatsApi = createApi({
 
           
 
-    /*    get specific group posts */
+    /*    load messages */
     loadChat: builder.query({
       query: ({ page = 1, receiver_id }) =>
         `loadchat?page=${page}&receiver_id=${receiver_id}`, // Updated to include id
     }),
 
-
-
+ /*    delete messages */
+    deleteMessage: builder.mutation({
+      query: (messageId) => ({
+        url: `/message/delete`, // Assuming the delete endpoint is /message/delete
+        method: 'DELETE',
+        body: { message_id: messageId },
+      }),
+    }),
 
 
 
@@ -47,4 +53,7 @@ export const chatsApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useSendMessageMutation,useLoadChatQuery} = chatsApi
+export const { useSendMessageMutation,
+  useLoadChatQuery,
+  useDeleteMessageMutation
+} = chatsApi
