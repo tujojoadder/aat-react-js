@@ -8,6 +8,9 @@ import { formatPostDate } from "../../../utils/dateUtils";
 
 import MessageBody from "./MessageBody/MessageBody";
 import { useSendMessageMutation } from "../../../services/chatsApi";
+import { useGetUserDetailsQuery } from "../../../services/friendsApi";
+import ProfileSkeleton from "../../Profile/ProfileSkeleton/ProfileSkeleton";
+import Spinner from "../../Spinner/Spinner";
 
 export default function MessageAnyOne() {
   const { id } = useParams();
@@ -16,7 +19,14 @@ export default function MessageAnyOne() {
   const userProfile = useSelector((state) => state.home.profile_picture);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [sendMessage, { isLoading }] = useSendMessageMutation();
+  const [sendMessage, {isFetching:isLoadingMessage }] = useSendMessageMutation();
+  const {
+    data: profileData,
+    isFetching,
+    isError,
+    isSuccess,
+  } = useGetUserDetailsQuery(id);
+  
   const dispatch = useDispatch();
 
   /* 
@@ -104,7 +114,20 @@ useEffect(() => {
       echo.leave("broadcast-message");
     };
   }, []);
+// Handle loading state
 
+
+// Handle error state
+if (isError) {
+  return (
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
+      <p>Something went wrong. Please try again later.</p>
+    </div>
+  );
+}
 
 
   return (
@@ -141,8 +164,16 @@ useEffect(() => {
         </div>
       </div>
 
-      <MessageBody userId={id}/>
 
+
+      {isFetching ? (
+      // Show a loading skeleton or spinner while the data is being fetched
+      <div className="message-body" style={{ overflowX: 'hidden' }}>
+    <ProfileSkeleton/>
+    </div>
+    ) : (
+      <MessageBody minHeight userId={id} />
+    )}
       <div className="message-footer">
         <div
           style={{ width: "100%" }}
@@ -191,7 +222,7 @@ useEffect(() => {
               <button
                 className="btn btn-primary"
                 type="submit"
-                disabled={isLoading || !message.trim()}
+                disabled={isLoadingMessage || !message.trim()}
                 style={{
                   borderRadius: "50%",
                   padding: "10px",
@@ -201,16 +232,16 @@ useEffect(() => {
                   alignItems: "center",
                   justifyContent: "center",
                   backgroundColor:
-                    isLoading || !message.trim() ? "#ccc" : "#007bff",
+                    isLoadingMessage || !message.trim() ? "#ccc" : "#007bff",
                   border: "none",
                   color: "#fff",
                   fontSize: "18px",
                   transition: "background-color 0.3s ease",
                   cursor:
-                    isLoading || !message.trim() ? "not-allowed" : "pointer",
+                    isLoadingMessage || !message.trim() ? "not-allowed" : "pointer",
                 }}
               >
-                {isLoading ? (
+                {isLoadingMessage ? (
                   <i className="fa fa-spinner fa-spin"></i>
                 ) : (
                   <i className="fa-regular fa-paper-plane"></i>

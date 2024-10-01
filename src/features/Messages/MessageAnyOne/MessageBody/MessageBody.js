@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
 import { useSelector } from 'react-redux';
 import { Scrollbar } from 'react-scrollbars-custom';
 import { useLoadChatQuery } from '../../../../services/chatsApi';
@@ -21,11 +20,6 @@ export default function MessageBody({ userId }) {
     refetch: useGetAuthUserfriendRequestQueryRefetch,
   } = useLoadChatQuery({ page: friendRequestPage, receiver_id: userId });
 
-  const { ref: requestRef, inView: inViewRequests } = useInView({
-    threshold: 0.9,
-    triggerOnce: false,
-  });
-
   // Reset messages and page when receiverID or userId changes
   useEffect(() => {
     setMessages([]);
@@ -33,24 +27,18 @@ export default function MessageBody({ userId }) {
     setHasMoreFriendRequest(true);
   }, [userId, receiverID]);
 
-  useEffect(() => {
+  // Fetch older messages when the "Load Older Messages" button is clicked
+  const loadOlderMessages = () => {
     if (
-      inViewRequests &&
       !useGetAuthUserfriendRequestQueryFetching &&
       !useGetAuthUserfriendRequestQueryError &&
       hasMoreFriendRequest &&
       useGetAuthUserfriendRequestQuerySuccess
     ) {
-      console.log('Updating friendRequestPage:', friendRequestPage + 1);
+      console.log('Fetching previous messages...');
       setFriendRequestPage((prevPage) => prevPage + 1);
     }
-  }, [
-    inViewRequests,
-    useGetAuthUserfriendRequestQueryFetching,
-    useGetAuthUserfriendRequestQueryError,
-    hasMoreFriendRequest,
-    useGetAuthUserfriendRequestQuerySuccess,
-  ]);
+  };
 
   useEffect(() => {
     if (
@@ -58,14 +46,14 @@ export default function MessageBody({ userId }) {
       useGetAuthUserfriendRequestQueryData?.chat?.data
     ) {
       if (useGetAuthUserfriendRequestQueryData.chat.data.length < 3) {
-        setHasMoreFriendRequest(true); //intensialy 
+        setHasMoreFriendRequest(false); // No more older messages to load
       }
       const newMessages = useGetAuthUserfriendRequestQueryData.chat.data.filter(
         (newMessage) =>
           !messages.some((message) => message.id === newMessage.id)
       );
       if (newMessages.length > 0) {
-        setMessages((prevMessages) => [...newMessages, ...prevMessages]); // Prepend old messages
+        setMessages((prevMessages) => [...newMessages, ...prevMessages]); // Prepend older messages
       }
     }
   }, [
@@ -83,9 +71,9 @@ export default function MessageBody({ userId }) {
   };
 
   useEffect(() => {
-    window.addEventListener("click", handleClickOutside);
+    window.addEventListener('click', handleClickOutside);
     return () => {
-      window.removeEventListener("click", handleClickOutside);
+      window.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
@@ -95,21 +83,41 @@ export default function MessageBody({ userId }) {
     }
   };
 
-
-  // Scroll to the bottom when messages change
+  // Scroll to the bottom when new messages are added
   useEffect(() => {
-    if (messageEndRef.current && ((useGetAuthUserfriendRequestQueryData?.chat?.current_page === 2)||(useGetAuthUserfriendRequestQueryData?.chat?.current_page === 1))) {
+    if (messageEndRef.current && friendRequestPage == 1) {
       messageEndRef.current.scrollIntoView({ behavior: 'auto' });
     }
-  }, [messages]); // Trigger on messages change
+  }, [messages]);
 
   return (
     <div className="message-body" style={{ overflowX: 'hidden' }}>
       <Scrollbar>
         <div id="msg_card_body" style={{ overflowX: 'hidden' }}>
-          <div ref={requestRef} className="infinite-scroll-trigger" >
-            
-          </div>
+          {/* Button to load older messages */}
+          {hasMoreFriendRequest && useGetAuthUserfriendRequestQuerySuccess && (
+            <div className="text-center mb-3">
+              <button
+                onClick={loadOlderMessages}
+                className="btn btn-primary"
+                disabled={useGetAuthUserfriendRequestQueryFetching}
+              >
+                {useGetAuthUserfriendRequestQueryFetching ? (
+                  <>
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Loading...
+                  </>
+                ) : (
+                  'Load Older Messages'
+                )}
+              </button>
+            </div>
+          )}
+          
           <div className="py-2"></div>
           {messages.map((msg) => (
             <div

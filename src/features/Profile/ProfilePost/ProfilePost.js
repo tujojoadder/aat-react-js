@@ -6,7 +6,9 @@ import TextPost from '../../home/Components/TextPost/TextPost';
 import BPost from '../../home/Components/BPost/BPost';
 import { useGetSpecificUserPostQuery } from '../../../services/profileApi';
 
-export default function ProfilePost({ userId }) {
+export default function ProfilePost({userId}) {
+
+
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(true);
@@ -18,14 +20,18 @@ export default function ProfilePost({ userId }) {
   });
 
   // Fetch posts using RTK Query
-  const { data: userPosts, isFetching, isError, isSuccess } = useGetSpecificUserPostQuery({ page, userId });
+  const { data: userPosts, isFetching, isError, isSuccess } = useGetSpecificUserPostQuery({ page, userId});
 
-  // Reset posts when `userId` changes
+  // Reset posts when `id` changes
   useEffect(() => {
     setAllPosts([]);
     setPage(1);
     setHasMorePosts(true);
   }, [userId]);
+
+  if (isSuccess) {
+    console.log(userPosts);
+  }
 
   // Update post list and avoid duplicates
   useEffect(() => {
