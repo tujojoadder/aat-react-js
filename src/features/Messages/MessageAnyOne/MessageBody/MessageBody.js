@@ -22,7 +22,7 @@ export default function MessageBody({ userId }) {
     isLoading: useGetAuthUserfriendRequestQueryLoading,
     isError: useGetAuthUserfriendRequestQueryError,
     isFetching: useGetAuthUserfriendRequestQueryFetching,
-    refetch: useGetAuthUserfriendRequestQueryRefetch,
+    refetch
   } = useLoadChatQuery({ page: friendRequestPage, receiver_id: userId });
 
   // Reset messages and page when receiverID or userId changes
@@ -129,6 +129,9 @@ export default function MessageBody({ userId }) {
           receiver_id: res.data.receiver_id, // Add sender ID to the message
         },
       ]);
+
+          // Refetch messages after sending a new one
+          refetch();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -158,7 +161,8 @@ useEffect(() => {
         ]);
       }
     });
-
+  // Refetch messages after sending a new one
+  refetch();
     return () => {
       echo.leave("broadcast-message");
     };
