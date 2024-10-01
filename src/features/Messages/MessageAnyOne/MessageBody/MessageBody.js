@@ -1,16 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Scrollbar } from 'react-scrollbars-custom';
-import { useLoadChatQuery } from '../../../../services/chatsApi';
+import { useLoadChatQuery, useSendMessageMutation } from '../../../../services/chatsApi';
 import { formatPostDate } from '../../../../utils/dateUtils';
 
 export default function MessageBody({ userId }) {
+  const userProfile = useSelector((state) => state.home.profile_picture);
+
   const authId = useSelector((state) => state.home.user_id);
   const receiverID = useSelector((state) => state.home.receiver_id);
   const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
   const [friendRequestPage, setFriendRequestPage] = useState(1);
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
-
+  const [sendMessage, { isLoading: isLoadingMessage }] =
+    useSendMessageMutation();
   const {
     data: useGetAuthUserfriendRequestQueryData,
     isSuccess: useGetAuthUserfriendRequestQuerySuccess,
@@ -39,7 +43,6 @@ export default function MessageBody({ userId }) {
       setFriendRequestPage((prevPage) => prevPage + 1);
     }
   };
-
   useEffect(() => {
     if (
       useGetAuthUserfriendRequestQuerySuccess &&
@@ -48,10 +51,13 @@ export default function MessageBody({ userId }) {
       if (useGetAuthUserfriendRequestQueryData.chat.data.length < 3) {
         setHasMoreFriendRequest(false); // No more older messages to load
       }
-      const newMessages = useGetAuthUserfriendRequestQueryData.chat.data.filter(
-        (newMessage) =>
-          !messages.some((message) => message.id === newMessage.id)
-      );
+      const newMessages = useGetAuthUserfriendRequestQueryData.chat.data
+        .filter(
+          (newMessage) =>
+            !messages.some((message) => message.id === newMessage.id)
+        )
+        .reverse(); // Reverse the new messages array
+  
       if (newMessages.length > 0) {
         setMessages((prevMessages) => [...newMessages, ...prevMessages]); // Prepend older messages
       }
@@ -60,6 +66,7 @@ export default function MessageBody({ userId }) {
     useGetAuthUserfriendRequestQuerySuccess,
     useGetAuthUserfriendRequestQueryData,
   ]);
+  
 
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRef = useRef(null);
@@ -90,34 +97,74 @@ export default function MessageBody({ userId }) {
     }
   }, [messages]);
 
+
+
+
+
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+
+    const newMessage = { text: message, sender_id: receiverID }; // Set sender ID for sent message
+
+    setMessage("");
+
+    try {
+      const res = await sendMessage({
+        receiver_id: receiverID,
+        message,
+      }).unwrap();
+      console.log(res);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: res.data.id,
+          message: res.data.message,
+          created_at: res?.data?.created_at,
+          sender_id: res.data.sender_id, // Add sender ID to the message
+          receiver_id: res.data.receiver_id, // Add sender ID to the message
+        },
+      ]);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+
   return (
+    <>
     <div className="message-body" style={{ overflowX: 'hidden' }}>
       <Scrollbar>
         <div id="msg_card_body" style={{ overflowX: 'hidden' }}>
           {/* Button to load older messages */}
-          {hasMoreFriendRequest && useGetAuthUserfriendRequestQuerySuccess && (
-            <div className="text-center mb-3">
-              <button
-                onClick={loadOlderMessages}
-                className="btn btn-primary"
-                disabled={useGetAuthUserfriendRequestQueryFetching}
-              >
-                {useGetAuthUserfriendRequestQueryFetching ? (
-                  <>
-                    <span
-                      className="spinner-border spinner-border-sm me-2"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                    Loading...
-                  </>
-                ) : (
-                  'Load Older Messages'
-                )}
-              </button>
-            </div>
-          )}
-          
+          {hasMoreFriendRequest &&
+            useGetAuthUserfriendRequestQuerySuccess &&
+            messages.length > 0 && ( // Check if there are messages
+              <div className="text-center mb-3">
+                <button
+                  onClick={loadOlderMessages}
+                  className="btn btn-primary"
+                  disabled={useGetAuthUserfriendRequestQueryFetching}
+                >
+                  {useGetAuthUserfriendRequestQueryFetching ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Loading...
+                    </>
+                  ) : (
+                    'Load Older Messages'
+                  )}
+                </button>
+              </div>
+            )}
+  
           <div className="py-2"></div>
           {messages.map((msg) => (
             <div
@@ -142,12 +189,10 @@ export default function MessageBody({ userId }) {
                     />
                   </div>
                 )}
-
+  
                 <div
                   className={
-                    authId === msg.sender_id
-                      ? 'msg_cotainer_send'
-                      : 'msg_cotainer'
+                    authId === msg.sender_id ? 'msg_cotainer_send' : 'msg_cotainer'
                   }
                 >
                   {msg.message}
@@ -176,10 +221,95 @@ export default function MessageBody({ userId }) {
               </div>
             </div>
           ))}
-
+  
           <div ref={messageEndRef} />
         </div>
       </Scrollbar>
     </div>
+    
+{/* Fotter */}
+    
+    <div className="message-footer">
+        <div
+          style={{ width: "100%" }}
+          className="create-comment shadow-sm border-top bg-body"
+        >
+          <form onSubmit={handleSubmit}>
+            <div
+              className="form-group-1 d-flex align-items-center py-md-3"
+              style={{
+                padding: "10px 15px",
+                backgroundColor: "#f0f2f5",
+                boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+                position: "relative",
+              }}
+            >
+              <img
+                src={userProfile}
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  marginRight: "10px",
+                }}
+                alt="profile-pic"
+              />
+              <div style={{ flexGrow: 1, position: "relative" }}>
+                <input
+                  className="form-control"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  style={{
+                    border: "1px solid #ccc",
+                    borderRadius: "20px",
+                    padding: "10px 15px",
+                    height: "auto",
+                    boxSizing: "border-box",
+                    outline: "none",
+                    fontSize: "16px",
+                    backgroundColor: "#fff",
+                    boxShadow: "none",
+                  }}
+                  type="text"
+                  placeholder="Write a message..."
+                />
+              </div>
+              <button
+                className="btn btn-primary"
+                type="submit"
+                disabled={isLoadingMessage || !message.trim()}
+                style={{
+                  borderRadius: "50%",
+                  padding: "10px",
+                  height: "40px",
+                  width: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor:
+                    isLoadingMessage || !message.trim() ? "#ccc" : "#007bff",
+                  border: "none",
+                  color: "#fff",
+                  fontSize: "18px",
+                  transition: "background-color 0.3s ease",
+                  cursor:
+                    isLoadingMessage || !message.trim()
+                      ? "not-allowed"
+                      : "pointer",
+                }}
+              >
+                {isLoadingMessage ? (
+                  <i className="fa fa-spinner fa-spin"></i>
+                ) : (
+                  <i className="fa-regular fa-paper-plane"></i>
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
+    
   );
+  
 }
