@@ -250,7 +250,7 @@ useEffect(() => {
                     id="options-2"
                     ref={menuRef}
                   >
-                    <div>remove</div>
+                    <div >remove</div>
                     <div>copy</div>
                   </div>
                 </div>
