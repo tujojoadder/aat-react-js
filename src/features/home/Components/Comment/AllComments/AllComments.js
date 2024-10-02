@@ -91,10 +91,10 @@ export default function AllComments({ postId }) {
  {allFriendRequest.length === 0 ? (
         <div className="col-12 text-center">No records</div>
       ) : (
-        allFriendRequest.map((profile) => {
+        allFriendRequest.map((comment) => {
          
           return (
-           <TextComment/>
+           <TextComment comment={comment}  />
           );
         })
       )}

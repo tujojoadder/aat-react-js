@@ -13,7 +13,7 @@ import AllComments from "../Comment/AllComments/AllComments";
 
 export default function ImagePost({ post }) {
   
-  console.log(post);
+
 /*   Love and Unlike  */
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();

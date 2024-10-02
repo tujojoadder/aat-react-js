@@ -196,10 +196,8 @@ const TextPost = ({ post }) => {
             </div>
 
             <div className="content-icons pe-3">
-              
-
- {/*   Love and Unlike */}
- <i
+              {/*   Love and Unlike */}
+              <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
@@ -219,11 +217,6 @@ const TextPost = ({ post }) => {
                   <span className="ps-1">{post.totalUnlike}</span>
                 )}
               </i>
-
-
-
-
-
 
               <i className="far fa-comment blue ps-md-3 ms-1"> 1.6k</i>
               <i className="fa-solid fa-chevron-up ps-md-3 me-2"></i>

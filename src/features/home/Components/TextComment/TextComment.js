@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import image from "./logo.jpg";
 import "./TextComment.css";
 import ReplyComment from "../ReplyComment/ReplyComment";
+import { formatPostDate } from "../../../../utils/dateUtils";
 
-export default function TextComment() {
+export default function TextComment({comment}) {
 /* Text */
 const [isExpanded, setIsExpanded] = useState(false);
-const fullText ="Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente iste praesentium atque aperiam deserunt ipsam delectus, animi similique obcaecati repellendus. Quae aperiam dolorum corrupti voluptatibus a consectetur repellendus provident aliqui";
-const previewText = fullText.substring(0, 175);
+  // Check if the comment text exists
+  const fullText = comment?.comment_text || ""; // Default to an empty string if undefined
+  const previewText = fullText.length > 175 ? fullText.substring(0, 175) : fullText;
+
 
 const toggleText = () => {
   setIsExpanded(!isExpanded);
@@ -44,19 +47,24 @@ const toggleText = () => {
     ]);
   };
 
+
   return (
     <div className="posts">
       <div className="user-pics">
-        <img src={image} alt="user3" />
+        <img src={comment?.commenter?.profile_picture} alt="user3" />
       </div>
       <div className="user-content-text-box">
         <div className="user-names-text" style={{ marginTop: "4px" }}>
           <div className="name-column">
-            <h1 className="full-name-text m-0 p-0">Mohammad</h1>
-            <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
+            <h1 className="full-name-text m-0 p-0">{comment?.commenter?.user_fname} {comment?.commenter?.user_lname}</h1>
+            <p className="user-name-text m-0 p-0">@{comment?.commenter?.identifier} </p>
+
           </div>
           <p className="time-text ms-3" style={{ marginTop: "7px" }}>
-            2hrs
+        {/*   {formatPostDate(comment.created_at)} */}
+
+        {comment?.created_at && formatPostDate(comment.created_at)}
+
           </p>
         </div>
 
