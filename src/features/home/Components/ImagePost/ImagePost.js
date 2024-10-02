@@ -9,10 +9,11 @@ import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { setLoveReaction, setUnlikeReactions } from "../../HomeSlice";
 import { useDispatch, useSelector } from "react-redux";
+import AllComments from "../Comment/AllComments/AllComments";
 
 export default function ImagePost({ post }) {
   
-  
+  console.log(post);
 /*   Love and Unlike  */
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
@@ -233,7 +234,7 @@ export default function ImagePost({ post }) {
               <i
                 className="ps-md-3 far fa-comment blue"
                 data-bs-toggle="modal"
-                data-bs-target="#imageModal"
+               data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
                 {" "}
                 1.6k
@@ -244,7 +245,9 @@ export default function ImagePost({ post }) {
           {/* Modal */}
           <div
             className="modal fade"
-            id="imageModal"
+            id={`imageModal-${post.post_id}`}
+
+         
             tabIndex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
@@ -271,13 +274,8 @@ export default function ImagePost({ post }) {
                         className="comments pb-4 px-md-4"
                         style={{ height: "100vh", overflowY: "scroll" }}
                       >
-                        <CommentedImage />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
+                        
+                        <AllComments postId={post.post_id}  />
                         <div style={{ paddingBottom: "20vh" }}></div>
                       </div>
                       <div

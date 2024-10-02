@@ -27,7 +27,9 @@ export const commentApi = createApi({
             }),
           }),
    
-      
+          getCommentsByPostId: builder.query({
+            query: ({postId,page = 1}) => `posts/${postId}/comments?page=${page}`, // Fetch comments for a specific post
+          }),
 
 
 
@@ -37,4 +39,4 @@ export const commentApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useCreateCommentMutation} = commentApi
+export const {useCreateCommentMutation,useGetCommentsByPostIdQuery} = commentApi
