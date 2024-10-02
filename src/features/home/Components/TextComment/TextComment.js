@@ -1,17 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import image from "./logo.jpg";
 import "./TextComment.css";
 import ReplyComment from "../ReplyComment/ReplyComment";
 import { formatPostDate } from "../../../../utils/dateUtils";
+import { useDispatch, useSelector } from "react-redux";
+import { setCommentsLoveReaction, setCommentsUnlikeReactions } from "../../HomeSlice";
+import { useToggleLoveMutation } from "../../../../services/loveApi";
+import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 
 export default function TextComment({comment}) {
+  const [toggleLove] = useToggleLoveMutation();
+  const [toggleUnlike] = useToggleUnlikeMutation();
+const dispatch = useDispatch();
+
+  const commentLoveReactions = useSelector(
+    (state) => state.home.commentLoveReactions[comment?.comment_id]
+  );
+  const commentUnlikeReactions = useSelector(
+    (state) => state.home.commentUnlikeReactions[comment?.comment_id]
+  );
+
+  useEffect(() => {
+    if (comment?.isLove) {
+      dispatch(setCommentsLoveReaction({ commentID: comment?.comment_id, isActive: true })); // Activate love reaction
+    }
+    if (comment?.isUnlike) {
+      dispatch(setCommentsUnlikeReactions({ commentID: comment?.comment_id, isActive: true })); // Activate unlike reaction
+    }
+  }, []);
+
+  const handleLoveClick = async () => {
+    // Optimistic update
+
+    if (commentLoveReactions) {
+      dispatch(setCommentsLoveReaction({ commentID: comment?.comment_id, isActive: false }));
+    } else {
+      dispatch(setCommentsLoveReaction({ commentID: comment?.comment_id, isActive: true })); // Activate love reaction
+    }
+
+    try {
+      await toggleLove({ loveOnType: "comment", loveOnId: comment?.comment_id });
+    } catch (error) {
+      console.error("Failed to toggle love:", error);
+    }
+  };
+
+  const handleUnlikeClick = async () => {
+    // Optimistic update
+
+    if (commentUnlikeReactions) {
+      dispatch(setCommentsUnlikeReactions({ commentID: comment?.comment_id, isActive: false })); // Activate unlike reaction
+    } else {
+      dispatch(setCommentsUnlikeReactions({ commentID: comment?.comment_id, isActive: true })); // Activate unlike reaction
+    }
+
+    try {
+      await toggleUnlike({ unlikeOnType: "comment", unlikeOnId: comment?.comment_id });
+    } catch (error) {
+      console.error("Failed to toggle unlike:", error);
+    }
+  };
+
+
+
 /* Text */
 const [isExpanded, setIsExpanded] = useState(false);
   // Check if the comment text exists
   const fullText = comment?.comment_text || ""; // Default to an empty string if undefined
   const previewText = fullText.length > 175 ? fullText.substring(0, 175) : fullText;
 
-
+  
 const toggleText = () => {
   setIsExpanded(!isExpanded);
 };
@@ -50,9 +108,30 @@ const toggleText = () => {
 
   return (
     <div className="posts">
+    
       <div className="user-pics">
-        <img src={comment?.commenter?.profile_picture} alt="user3" />
-      </div>
+            {!comment?.commenter?.profile_picture && (
+              <div className="profile-pic-skeleton">
+                <div
+                  className="skeleton-box ms-2 me-1"
+                  style={{
+                    height: "50px",
+                    width: "50px",
+                    borderRadius: "50%",
+                    backgroundColor: "#e5e5e5",
+                  }}
+                ></div>
+              </div>
+            )}
+            <img
+           src={comment?.commenter?.profile_picture}
+              alt="user-profile"
+          
+            />
+          </div>
+
+
+
       <div className="user-content-text-box">
         <div className="user-names-text" style={{ marginTop: "4px" }}>
           <div className="name-column">
@@ -87,14 +166,25 @@ const toggleText = () => {
           style={{ padding: "0px" }}
         >
           <i
-            className="far fa-heart red"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            109
-          </i>
-
-          <i className="fa-regular fa-thumbs-down ps-md-3 ms-1"> 536</i>
+                className={`far fa-heart ${
+                  commentLoveReactions ? "fas red-heart" : ""
+                }`}
+                onClick={handleLoveClick}
+              >
+                {comment?.totalLove > 0 && (
+                  <span className="ps-1">{comment?.totalLove}</span>
+                )}
+              </i>
+              <i
+                className={`far fa-thumbs-down ${
+                  commentUnlikeReactions ? "fas black-unlike" : ""
+                }`}
+                onClick={handleUnlikeClick}
+              >
+                {comment?.totalUnlike > 0 && (
+                  <span className="ps-1">{comment?.totalUnlike}</span>
+                )}
+              </i>
 
           <span
             className="ms-3"

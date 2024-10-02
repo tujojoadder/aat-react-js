@@ -221,6 +221,10 @@ const TextPost = ({ post }) => {
               <i className="far fa-comment blue ps-md-3 ms-1"> 1.6k</i>
               <i className="fa-solid fa-chevron-up ps-md-3 me-2"></i>
             </div>
+
+
+
+            
           </div>
 
           {/* Modal */}

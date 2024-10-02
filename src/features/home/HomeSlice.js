@@ -57,10 +57,13 @@ pageError:'',
 
 
 
-/* Love and Unlike */
+/* Love and Unlike for post */
 loveReactions: {}, // To store rejected/canceled friend requests by user ID
 unlikeReactions: {},     // To store sent friend requests by user ID
 
+/* Love and Unlike for Comment */
+commentLoveReactions: {}, // To store rejected/canceled friend requests by user ID
+commentUnlikeReactions: {},     // To store sent friend requests by user ID
 
 
   /* Online  Users */
@@ -253,20 +256,35 @@ setUnlikeReactions: (state, action) => {
 }
 ,
 
-/* 
-totalLove:{},
-totalUnlike:{}
+
+
+/* Love and Unlike for comment */
+/* commentLoveReactions: {}, // To store rejected/canceled friend requests by user ID
+commentUnlikeReactions: {},     // To store sent friend requests by user ID
  */
 
-setTotalLove: (state, action) => {
-  const { postId, isActive,total } = action.payload;
+
+
+setCommentsLoveReaction: (state, action) => {
+  const { commentID, isActive } = action.payload;
   if (isActive) {
-    state.totalLove[postId] = true; // Mark as loved
-    delete state.unlikeReactions[postId]; // Remove the 'unlike' if it was previously active
+    state.commentLoveReactions[commentID] = true; // Mark as loved
+    delete state.commentUnlikeReactions[commentID]; // Remove the 'unlike' if it was previously active
   } else {
-    delete state.loveReactions[postId]; // Remove love reaction if deactivated
+    delete state.commentLoveReactions[commentID]; // Remove love reaction if deactivated
   }
 },
+
+setCommentsUnlikeReactions: (state, action) => {
+  const { commentID, isActive } = action.payload;
+  if (isActive) {
+    state.commentUnlikeReactions[commentID] = true; // Mark as unliked
+    delete state.commentLoveReactions[commentID]; // Remove love reaction if it was previously active
+  } else {
+    delete state.commentUnlikeReactions[commentID]; // Remove unlike reaction if deactivated
+  }
+}
+,
 
 
 
@@ -338,7 +356,9 @@ export const {
   setRequestAccepted,
   setRequestRejected,
   setGroupAudience,
-  setGroupDetails
+  setGroupDetails,
+  setCommentsLoveReaction,
+  setCommentsUnlikeReactions
 } = homeSlice.actions;
 
 export default homeSlice.reducer;
