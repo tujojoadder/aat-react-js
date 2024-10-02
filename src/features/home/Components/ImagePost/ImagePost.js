@@ -296,7 +296,7 @@ export default function ImagePost({ post }) {
                             : "49.9%",
                         }}
                       >
-                        <Comment />
+                        <Comment postId={post.post_id} />
                       </div>
                     </>
                   )}
