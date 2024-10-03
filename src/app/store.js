@@ -27,6 +27,7 @@ import { loveApi } from '../services/loveApi';
 import { unlikeApi } from '../services/unlikeApi';
 import { chatsApi } from '../services/chatsApi';
 import { commentApi } from '../services/commentApi';
+import { repliesApi } from '../services/repliesApi';
 
 // Redux-persist configuration
 const persistConfig = {
@@ -56,6 +57,7 @@ const rootReducer = combineReducers({
   [unlikeApi.reducerPath]: unlikeApi.reducer,
   [chatsApi.reducerPath]: chatsApi.reducer,
   [commentApi.reducerPath]: commentApi.reducer,
+  [repliesApi.reducerPath]: repliesApi.reducer,
   
 });
 
@@ -84,6 +86,7 @@ export const store = configureStore({
       unlikeApi.middleware,
       chatsApi.middleware,
       commentApi.middleware,
+      repliesApi.middleware,
     ),
 });
 
