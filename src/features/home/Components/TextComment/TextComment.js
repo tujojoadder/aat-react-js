@@ -8,8 +8,10 @@ import { setCommentsLoveReaction, setCommentsUnlikeReactions } from "../../HomeS
 import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { useCreateCommentReplyMutation } from "../../../../services/repliesApi";
+import AllReply from "../ReplyComment/AllReply/AllReply";
 
 export default function TextComment({ comment }) {
+ 
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
   const [createReply, { isLoading: isSubmitting }] = useCreateCommentReplyMutation();
@@ -214,9 +216,9 @@ if (res?.data?.message) {
         )}
 
         {/* Render reply comments */}
-        {showAllReplies && replyComments.map((reply) => (
-          <ReplyComment key={reply?.id} text={reply.text} />
-        ))}
+        {showAllReplies  &&
+          <AllReply commentId={comment.comment_id}  />
+        }
 
         <div className="view-replay-section">
           

@@ -1,11 +1,28 @@
 import React, { useState } from "react";
 import image from "./logo.jpg";
 import "./ReplyComment.css";
+import { formatPostDate } from "../../../../utils/dateUtils";
+import { useDispatch, useSelector } from "react-redux";
+import { setReplyLoveReaction, setReplyUnlikeReactions } from "../../HomeSlice";
+import { useToggleLoveMutation } from "../../../../services/loveApi";
+import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 
-export default function TextComment() {
+export default function ReplyComment({comment}) {
+  const dispatch = useDispatch();
+  
+  const [toggleLove] = useToggleLoveMutation();
+  const [toggleUnlike] = useToggleUnlikeMutation();
+  const replyLoveReactions = useSelector(
+    (state) => state.home.replyLoveReactions[comment?.reply_id]
+  );
+  const replyUnlikeReactions = useSelector(
+    (state) => state.home.replyUnlikeReactions[comment?.reply_id]
+  );
+
+
 /* Text */
 const [isExpanded, setIsExpanded] = useState(false);
-const fullText =" এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেরূপ নূহ ও তাঁর পরবর্তী নবীদের (নবীদের) প্রতি ওয়াহী প্রেরণ করেছিলাম।’’ (সূরাহ্ আন-নিসা ৪/১৬৩) ১.এ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যেএ মর্মে আল্লাহ্ তা’আলার বাণীঃ ’’নিশ্চয় আমি আপনার প্রতি সেরূপ ওয়াহী প্রেরণ করেছি যে";
+const fullText =comment.reply_text;
 const previewText = fullText.substring(0, 175);
 
 const toggleText = () => {
@@ -33,30 +50,67 @@ const toggleText = () => {
     setReplyText(event.target.value);
   };
 
+
+
+
+
+  const handleLoveClick = async () => {
+    // Optimistic update
+
+    if (replyLoveReactions) {
+      dispatch(setReplyLoveReaction({ replyID: comment.reply_id, isActive: false }));
+    } else {
+      dispatch(setReplyLoveReaction({ replyID: comment.reply_id, isActive: true })); // Activate love reaction
+    }
+
+    try {
+      await toggleLove({ loveOnType: "reply", loveOnId: comment.reply_id });
+    } catch (error) {
+      console.error("Failed to toggle love:", error);
+    }
+  };
+
+
+  const handleUnlikeClick = async () => {
+    if (replyUnlikeReactions) {
+      dispatch(setReplyUnlikeReactions({ replyID: comment?.reply_id, isActive: false }));
+    } else {
+      dispatch(setReplyUnlikeReactions({ replyID: comment?.reply_id, isActive: true }));
+    }
+
+    try {
+      await toggleUnlike({ unlikeOnType: "reply", unlikeOnId: comment?.reply_id });
+    } catch (error) {
+      console.error("Failed to toggle unlike:", error);
+    }
+  };
+
   return (
     <div className="mt-2">
       <div className="d-flex bd-highlight ">
         <div className="bd-highlight me-1">
           <img
             style={{ height: "45px", width: "45px", borderRadius: "50%" }}
-            src={image}
+            src={comment.replied_by.profile_picture}
             alt="user3"
           />
         </div>
         <div className=" bd-highlight">
           {" "}
-          <div className="name-column">
-            <h1 className="full-name-text m-0 p-0">Mohammad</h1>
-            <p className="user-name-text m-0 p-0">@eric_alvareeric</p>
+          <div className="name-column">  
+            <h1 className="full-name-text m-0 p-0">{comment.replied_by.user_fname} {comment.replied_by.user_lname}</h1>
+            <p className="user-name-text m-0 p-0">@{comment.replied_by.identifier}</p>
           </div>
         </div>
         <div className="ms-auto bd-highlight">
-          <p className="time-text">2hrs</p>
+          <p className="time-text">
+          {comment?.created_at && formatPostDate(comment.created_at)}
+              </p>
         </div>
       </div>
 
       <div className="user-content-text ms-2">
-        <p style={{ margin: "0px" }}>
+        <p style={{ margin: "0px" }} className="mt-2">
         {isExpanded ? fullText : previewText}
           {fullText.length > 175 && (
             <span
@@ -69,16 +123,18 @@ const toggleText = () => {
       </div>
 
       <div className="content-icons-text pt-1 pb-2 pe-3 ps-2 d-flex align-items-center" style={{ padding: "0px" }}>
-        <i
-          className="far fa-heart red"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          109
-        </i>
-
-        <i className="fa-regular fa-thumbs-down ps-md-3 ms-1"> 536</i>
-
+      <i
+            className={`far fa-heart ${replyLoveReactions ? "fas red-heart" : ""}`}
+            onClick={handleLoveClick}
+          >
+            {comment?.totalLove > 0 && <span className="ps-1">{comment?.totalLove}</span>}
+          </i>
+          <i
+            className={`far fa-thumbs-down ${replyUnlikeReactions ? "fas black-unlike" : ""}`}
+            onClick={handleUnlikeClick}
+          >
+            {comment?.totalUnlike > 0 && <span className="ps-1">{comment?.totalUnlike}</span>}
+          </i>
         <span
           className="ms-3"
           style={{ cursor: "pointer" }}

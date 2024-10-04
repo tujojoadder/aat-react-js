@@ -255,9 +255,9 @@ export default function ImagePost({ post }) {
             style={{ overflowY: "hidden" }}
           >
             <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header shadow-sm p-3 bg-body rounded">
-                  <h5 className="modal-title fs-5" id="exampleModalLabel">
+              <div className="modal-content ">
+                <div className="modal-header shadow-sm p-3 bg-body rounded border-bottom">
+                  <h5 className="modal-title fs-5 " id="exampleModalLabel">
                     Comments
                   </h5>
                   <button

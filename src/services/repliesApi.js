@@ -28,10 +28,19 @@ export const repliesApi = createApi({
           }),
 
 
+          getRepliesByCommentId: builder.query({
+            query: ({commentId,page = 1}) => `comments/${commentId}/replies?page=${page}`, // Fetch comments for a specific post
+          }),
+
+
       
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useCreateCommentReplyMutation} = repliesApi
+export const {useCreateCommentReplyMutation,
+    useGetRepliesByCommentIdQuery
+
+
+} = repliesApi

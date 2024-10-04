@@ -65,6 +65,12 @@ unlikeReactions: {},     // To store sent friend requests by user ID
 commentLoveReactions: {}, // To store rejected/canceled friend requests by user ID
 commentUnlikeReactions: {},     // To store sent friend requests by user ID
 
+/* Love and Unlike for Replies */
+replyLoveReactions: {}, // To store rejected/canceled friend requests by user ID
+replyUnlikeReactions: {},     // To store sent friend requests by user ID
+
+
+
 
   /* Online  Users */
 // Initial state: an array to store online user IDs
@@ -286,6 +292,40 @@ setCommentsUnlikeReactions: (state, action) => {
 }
 ,
 
+/* replyLoveReactions: {}, // To store rejected/canceled friend requests by user ID
+replyUnlikeReactions: {},     // To store sent friend requests by user ID
+
+ */
+
+setReplyLoveReaction: (state, action) => {
+  const { replyID, isActive } = action.payload;
+  if (isActive) {
+    state.replyLoveReactions[replyID] = true; // Mark as loved
+    delete state.replyUnlikeReactions[replyID]; // Remove the 'unlike' if it was previously active
+  } else {
+    delete state.replyLoveReactions[replyID]; // Remove love reaction if deactivated
+  }
+},
+
+setReplyUnlikeReactions: (state, action) => {
+  const { replyID, isActive } = action.payload;
+  if (isActive) {
+    state.replyUnlikeReactions[replyID] = true; // Mark as unliked
+    delete state.replyLoveReactions[replyID]; // Remove love reaction if it was previously active
+  } else {
+    delete state.replyUnlikeReactions[replyID]; // Remove unlike reaction if deactivated
+  }
+}
+,
+
+
+
+
+
+
+
+
+
 
 
 
@@ -322,6 +362,8 @@ pageDetails:'', */
 
 export const {
  setGroupUpdate,
+ setReplyLoveReaction,
+ setReplyUnlikeReactions,
  setReceiverId,
  setUserOffline,
  setUserOnline,
