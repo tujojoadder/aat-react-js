@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReplyComment from "../ReplyComment";
 import Spinner from "../../../../Spinner/Spinner";
 import { useGetRepliesByCommentIdQuery } from "../../../../../services/repliesApi";
+import CommentSpinner from "../../Comment/CommentSpinner/CommentSpinner";
 
 export default function AllReply({ commentId }) {
   const [friendRequestPage, setFriendRequestPage] = useState(1);
@@ -15,6 +16,7 @@ export default function AllReply({ commentId }) {
     isLoading: isRepliesLoading,
     isError: isRepliesError,
     isFetching: isRepliesFetching,
+    refetch
   } = useGetRepliesByCommentIdQuery({ commentId, page: friendRequestPage });
 console.log(repliesData);
   useEffect(() => {
@@ -49,17 +51,19 @@ console.log(repliesData);
     setFriendRequestPage((prevPage) => prevPage + 1);
   };
 
+    // Handle reply success
+    const handleReplySuccess = () => {
+        refetch(); // Refresh the replies data
+      };
   return (
     <>
-      {allFriendRequest.length === 0 ? (
-        <div className="col-12 text-center">No records</div>
-      ) : (
+      {allFriendRequest.length >0 &&
         allFriendRequest.map((comment) => {
-          return <ReplyComment key={comment.reply_id} comment={comment} />;
-        })
+          return <ReplyComment key={comment.reply_id} comment={comment} onReplySuccess={handleReplySuccess}  />;
+        }
       )}
 
-      {isRepliesLoading && <Spinner />}
+      {isRepliesLoading && <CommentSpinner size="25px" color="#ff69b3" />}
 
       {hasMoreFriendRequest && !isRepliesLoading && (
         <div className="text-center mt-2">

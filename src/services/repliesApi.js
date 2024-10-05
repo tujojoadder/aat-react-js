@@ -28,6 +28,16 @@ export const repliesApi = createApi({
           }),
 
 
+          createReplyReplies: builder.mutation({
+            query: ({ commentId, reply_text,parent_reply_id }) => ({
+              url: `/reply/${commentId}/replies`,
+              method: 'POST',
+              body: { reply_text,parent_reply_id},
+            }),
+          }),
+
+
+
           getRepliesByCommentId: builder.query({
             query: ({commentId,page = 1}) => `comments/${commentId}/replies?page=${page}`, // Fetch comments for a specific post
           }),
@@ -40,7 +50,8 @@ export const repliesApi = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {useCreateCommentReplyMutation,
-    useGetRepliesByCommentIdQuery
+    useGetRepliesByCommentIdQuery,
+    useCreateReplyRepliesMutation
 
 
 } = repliesApi

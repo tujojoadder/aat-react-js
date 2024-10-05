@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import CommentedImage from "../../../../CommentedMedia/CommentedImage/CommentedImage";
 import TextComment from "../../TextComment/TextComment";
 import { useGetCommentsByPostIdQuery } from "../../../../../services/commentApi";
 import { useInView } from "react-intersection-observer";
-import Spinner from "../../../../Spinner/Spinner";
+import CommentSpinner from "../CommentSpinner/CommentSpinner";
 
 export default function AllComments({ postId }) {
   const { ref: requestRef, inView: inViewRequests } = useInView({
@@ -25,9 +24,28 @@ export default function AllComments({ postId }) {
     refetch: useGetAuthUserfriendRequestQueryRefetch,
   } = useGetCommentsByPostIdQuery({ postId, page: friendRequestPage });
 
-  if (useGetAuthUserfriendRequestQuerySuccess) {
-    console.log(useGetAuthUserfriendRequestQueryData);
-  }
+  useEffect(() => {
+    if (useGetAuthUserfriendRequestQuerySuccess && useGetAuthUserfriendRequestQueryData?.data) {
+      // Check if there are new comments and update the state
+      if (useGetAuthUserfriendRequestQueryData.data.length < 3) {
+        setHasMoreFriendRequest(false);
+      }
+      
+      const newRequests = useGetAuthUserfriendRequestQueryData.data.filter(
+        (newRequest) =>
+          !allFriendRequest.some(
+            (request) => request.comment_id === newRequest.comment_id
+          )
+      );
+
+      if (newRequests.length > 0) {
+        setAllFriendRequest((prevRequests) => [
+          ...prevRequests,
+          ...newRequests,
+        ]);
+      }
+    }
+  }, [useGetAuthUserfriendRequestQuerySuccess, useGetAuthUserfriendRequestQueryData]);
 
   useEffect(() => {
     if (
@@ -37,7 +55,6 @@ export default function AllComments({ postId }) {
       hasMoreFriendRequest &&
       useGetAuthUserfriendRequestQuerySuccess
     ) {
-      console.log("Updating friendRequestPage:", friendRequestPage + 1);
       setFriendRequestPage((prevPage) => prevPage + 1);
     }
   }, [
@@ -48,47 +65,24 @@ export default function AllComments({ postId }) {
     useGetAuthUserfriendRequestQuerySuccess,
   ]);
 
-  useEffect(() => {
-    if (
-      useGetAuthUserfriendRequestQuerySuccess &&
-      useGetAuthUserfriendRequestQueryData?.data
-    ) {
-      if (useGetAuthUserfriendRequestQueryData.data.length < 3) {
-        setHasMoreFriendRequest(false);
-      }
-      const newRequests = useGetAuthUserfriendRequestQueryData.data.filter(
-        (newRequest) =>
-          !allFriendRequest.some(
-            (request) => request.comment_id === newRequest.comment_id
-          )
-      );
-      if (newRequests.length > 0) {
-        setAllFriendRequest((prevRequests) => [
-          ...prevRequests,
-          ...newRequests,
-        ]);
-      }
-    }
-  }, [
-    useGetAuthUserfriendRequestQuerySuccess,
-    useGetAuthUserfriendRequestQueryData,
-  ]);
-
   return (
     <>
-      {allFriendRequest.length === 0 ? (
-        <div className="col-12 text-center">No records</div>
+      {allFriendRequest.length > 0 ? (
+        allFriendRequest.map((comment) => (
+          <TextComment key={comment.comment_id} comment={comment} />
+        ))
       ) : (
-        allFriendRequest.map((comment) => {
-          return <TextComment comment={comment} />;
-        })
+        !useGetAuthUserfriendRequestQueryLoading && (
+          <div className="col-12 text-center"><h4 className="mt-5"> No Commnets</h4></div>
+        )
       )}
+
       <div
         ref={requestRef}
         className="infinite-scroll-trigger"
         style={{ height: "7vh", minHeight: "40px" }}
       >
-        {useGetAuthUserfriendRequestQueryLoading && <Spinner />}
+        {useGetAuthUserfriendRequestQueryFetching && <CommentSpinner  size="25px" color="#ff69b3" />}
       </div>
     </>
   );
