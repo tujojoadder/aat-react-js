@@ -29,11 +29,9 @@ export default function MessageAnyOne() {
     isSuccess,
   } = useGetUserDetailsQuery(id);
 
-
-if (isSuccess) {
-  console.log(profileData);
-}
-
+  if (isSuccess) {
+    console.log(profileData);
+  }
 
   const dispatch = useDispatch();
 
@@ -63,7 +61,6 @@ useEffect(() => {
     }
   }, [id, dispatch]);
 
- 
   /* useEffect(() => {
     echo.private("broadcast-message").listen(".getChatMessage", (e) => {
       console.log(e);
@@ -124,28 +121,25 @@ useEffect(() => {
           </NavLink>
 
           <div className="user-pics">
-
-{ profileData?.data?.profile_picture && (
-  <img
-              src={profileData?.data?.profile_picture}
-              className="rounded-circle user_img_msg"
-              alt="user3"
-            />
-)
-
-
-}
-
-
-            
+            {profileData?.data?.profile_picture && (
+              <img
+                src={profileData?.data?.profile_picture}
+                className="rounded-circle user_img_msg"
+                alt="user3"
+              />
+            )}
           </div>
           <div className="user-content-text-box">
             <div className="user-names-text" style={{ marginTop: "2px" }}>
               <div className="name-column">
-                <h1 className="full-name-text m-0 p-0">{profileData?.data.user_fname} {profileData?.data?.user_lname}</h1>
+                <h1 className="full-name-text m-0 p-0">
+                  {profileData?.data.user_fname} {profileData?.data?.user_lname}
+                </h1>
                 <p className="user-name-text m-0 p-0">
-  {profileData?.data?.identifier ? `@${profileData.data.identifier}` : ''}
-</p>
+                  {profileData?.data?.identifier
+                    ? `@${profileData.data.identifier}`
+                    : ""}
+                </p>
               </div>
             </div>
           </div>
@@ -158,7 +152,7 @@ useEffect(() => {
           <ProfileSkeleton />
         </div>
       ) : (
-        <MessageBody  userId={id} image={profileData?.data?.profile_picture} />
+        <MessageBody userId={id} image={profileData?.data?.profile_picture} />
       )}
     </div>
   );

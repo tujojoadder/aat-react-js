@@ -13,9 +13,15 @@ import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { useCreateCommentReplyMutation } from "../../../../services/repliesApi";
 import AllReply from "../ReplyComment/AllReply/AllReply";
 
-export default function TextComment({ comment }) {
-
-  
+export default function TextComment({ comment, type }) {
+  const { profile_picture, user_fname, user_lname, identifier } = useSelector(
+    (state) => ({
+      profile_picture: state.home.profile_picture,
+      user_fname: state.home.user_fname,
+      user_lname: state.home.user_lname,
+      identifier: state.home.identifier,
+    })
+  );
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
   const [createReply, { isLoading: isSubmitting }] =
@@ -156,35 +162,63 @@ export default function TextComment({ comment }) {
 
   return (
     <div className="posts">
-      <div className="user-pics">
-        {!comment?.commenter?.profile_picture && (
-          <div className="profile-pic-skeleton">
-            <div
-              className="skeleton-box ms-2 me-1"
-              style={{
-                height: "50px",
-                width: "50px",
-                borderRadius: "50%",
-                backgroundColor: "#e5e5e5",
-              }}
-            ></div>
-          </div>
-        )}
-        <img src={comment?.commenter?.profile_picture} alt="user-profile" />
-      </div>
+      {type === "user" ? (
+        <div className="user-pics">
+         
+          
+         <img
+               style={{backgroundColor:'lightgray'}}
+                src={`${profile_picture}`}
+                alt={"Profile Image"}
+                
+              />
+        
+        </div>
+      ) : (
+        <div className="user-pics">
+          {!comment?.commenter?.profile_picture && (
+            <div className="profile-pic-skeleton">
+              <div
+                className="skeleton-box ms-2 me-1"
+                style={{
+                  height: "50px",
+                  width: "50px",
+                  borderRadius: "50%",
+                  backgroundColor: "#e5e5e5",
+                }}
+              ></div>
+            </div>
+          )}
+
+          <img src={profile_picture} alt="user-profile" />
+        </div>
+      )}
 
       <div className="user-content-text-box">
         <div className="user-names-text" style={{ marginTop: "4px" }}>
           <div className="name-column">
             <h1 className="full-name-text m-0 p-0">
-              {comment?.commenter?.user_fname} {comment?.commenter?.user_lname}
+              <h1 className="full-name-text m-0 p-0">
+                {type === "user"
+                  ? `${user_fname} ${user_lname}`
+                  : `${comment?.commenter?.user_fname} ${comment?.commenter?.user_lname}`}
+              </h1>
             </h1>
             <p className="user-name-text m-0 p-0">
-              @{comment?.commenter?.identifier}
+             
+              {type === "user"
+                  ? `@${identifier}`
+                  : `@${comment?.commenter?.identifier}`}
             </p>
           </div>
           <p className="time-text ms-3" style={{ marginTop: "7px" }}>
-            {comment?.created_at && formatPostDate(comment.created_at)}
+          {type === "user"
+    ? `now`
+    : comment?.created_at && formatPostDate(comment.created_at)}
+
+
+
+
           </p>
         </div>
 

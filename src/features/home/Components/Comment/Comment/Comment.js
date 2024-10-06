@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useCreateCommentMutation } from '../../../../../services/commentApi';
+import { triggerRefetch } from '../../../HomeSlice';
 
 export default function Comment({ postId }) {
+
+  const dispatch = useDispatch();
+  
   const [commentText, setCommentText] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
@@ -22,6 +26,9 @@ export default function Comment({ postId }) {
       // Call mutation to post the comment
       await createComment({ postId, comment_text: commentText }).unwrap();
       setCommentText(''); // Clear the input after successful submission
+      // Dispatch refetch trigger
+      dispatch(triggerRefetch()); // Trigger refetch in AllComments
+    
     } catch (error) {
       console.error('Failed to post comment:', error);
     }

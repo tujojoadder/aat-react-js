@@ -79,6 +79,7 @@ replyUnlikeReactions: {},     // To store sent friend requests by user ID
 /*   Message */
 receiver_id: null,
 
+shouldRefetch: false,
 
 
 };
@@ -347,6 +348,10 @@ setReceiverId: (state, action) => {
 },
 
 
+triggerRefetch: (state) => {
+  state.shouldRefetch = !state.shouldRefetch; // Toggling state
+},
+
 
 
 
@@ -362,6 +367,7 @@ pageDetails:'', */
 
 export const {
  setGroupUpdate,
+ triggerRefetch,
  setReplyLoveReaction,
  setReplyUnlikeReactions,
  setReceiverId,
