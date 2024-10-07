@@ -12,6 +12,7 @@ export default function AllComments({ postId }) {
     threshold: 0,
     triggerOnce: false,
   });
+  const isReplySucess = useSelector((state) => state.home.isReplySucess); // Listen to refetch trigger
   const shouldRefetch = useSelector((state) => state.home.shouldRefetch); // Listen to refetch trigger
   const [friendRequestPage, setFriendRequestPage] = useState(1);
   const [allFriendRequest, setAllFriendRequest] = useState([]);
@@ -29,12 +30,29 @@ export default function AllComments({ postId }) {
     refetch,
   } = useGetCommentsByPostIdQuery({ postId, page: friendRequestPage });
 
+
+if (useGetAuthUserfriendRequestQuerySuccess) {
+  console.log(useGetAuthUserfriendRequestQueryData)
+}
+
+  // Reset everything and refetch on component mount or when postId changes
+  useEffect(() => {
+    // Reset pagination and comments state when component mounts or postId changes
+    setFriendRequestPage(1);
+    setAllFriendRequest([]);
+    setHasMoreFriendRequest(true);
+    setBroadcastedComments([]);
+    
+    // Refetch the comments when the component mounts or postId changes
+    refetch();
+  }, [postId, refetch]);
+
+  // Fetch comments data and update state
   useEffect(() => {
     if (
       useGetAuthUserfriendRequestQuerySuccess &&
       useGetAuthUserfriendRequestQueryData?.data
     ) {
-      // Check if there are new comments and update the state
       if (useGetAuthUserfriendRequestQueryData.data.length < 3) {
         setHasMoreFriendRequest(false);
       }
@@ -55,7 +73,7 @@ export default function AllComments({ postId }) {
     }
   }, [
     useGetAuthUserfriendRequestQuerySuccess,
-    useGetAuthUserfriendRequestQueryData,
+    useGetAuthUserfriendRequestQueryData,refetch
   ]);
 
   useEffect(() => {
@@ -89,10 +107,10 @@ export default function AllComments({ postId }) {
     };
   }, [authId]);
 
-  // Refetch comments whenever shouldRefetch changes
+  // Refetch comments whenever shouldRefetch, isReplySucess, or postId changes
   useEffect(() => {
     refetch(); // This will refetch the comments
-  }, [shouldRefetch, refetch]);
+  }, [shouldRefetch, isReplySucess, postId, refetch]);
 
   return (
     <>

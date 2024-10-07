@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setCommentsLoveReaction,
   setCommentsUnlikeReactions,
+  setIsReplySucess,
+  triggerRefetch,
 } from "../../HomeSlice";
 import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
@@ -14,14 +16,10 @@ import { useCreateCommentReplyMutation } from "../../../../services/repliesApi";
 import AllReply from "../ReplyComment/AllReply/AllReply";
 
 export default function TextComment({ comment, type }) {
-  const { profile_picture, user_fname, user_lname, identifier } = useSelector(
-    (state) => ({
-      profile_picture: state.home.profile_picture,
-      user_fname: state.home.user_fname,
-      user_lname: state.home.user_lname,
-      identifier: state.home.identifier,
-    })
-  );
+  const profile_picture = useSelector((state) => state.home.profile_picture);
+  const user_fname = useSelector((state) => state.home.user_fname);
+  const user_lname = useSelector((state) => state.home.user_lname);
+  const identifier = useSelector((state) => state.home.identifier);
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
   const [createReply, { isLoading: isSubmitting }] =
@@ -132,12 +130,10 @@ export default function TextComment({ comment, type }) {
         });
 
         if (res?.data?.message) {
-          // Optionally add the new reply to the local state
-          setReplyComments((prev) => [
-            ...prev,
-            { id: res?.id, text: replyText },
-          ]);
-
+         setShowAllReplies(true);
+          dispatch(setIsReplySucess()); // Trigger refetch in AllComments
+          dispatch(triggerRefetch()); // Trigger refetch in AllComments
+    
           // Clear the input box after submission
           setReplyText("");
           setShowReplyInput(false);
@@ -164,15 +160,11 @@ export default function TextComment({ comment, type }) {
     <div className="posts">
       {type === "user" ? (
         <div className="user-pics">
-         
-          
-         <img
-               style={{backgroundColor:'lightgray'}}
-                src={`${profile_picture}`}
-                alt={"Profile Image"}
-                
-              />
-        
+          <img
+            style={{ backgroundColor: "lightgray" }}
+            src={`${profile_picture}`}
+            alt={"Profile Image"}
+          />
         </div>
       ) : (
         <div className="user-pics">
@@ -205,20 +197,15 @@ export default function TextComment({ comment, type }) {
               </h1>
             </h1>
             <p className="user-name-text m-0 p-0">
-             
               {type === "user"
-                  ? `@${identifier}`
-                  : `@${comment?.commenter?.identifier}`}
+                ? `@${identifier}`
+                : `@${comment?.commenter?.identifier}`}
             </p>
           </div>
           <p className="time-text ms-3" style={{ marginTop: "7px" }}>
-          {type === "user"
-    ? `now`
-    : comment?.created_at && formatPostDate(comment.created_at)}
-
-
-
-
+            {type === "user"
+              ? `now`
+              : comment?.created_at && formatPostDate(comment.created_at)}
           </p>
         </div>
 
@@ -329,12 +316,15 @@ export default function TextComment({ comment, type }) {
               marginTop: "10px",
             }}
           >
-            {comment?.replies_count > 0 && (
-              <span>View all replies ({comment?.replies_count})</span>
-            )}
+         
+  <span>View all replies ({comment?.replies_count})</span>
+
+
           </button>
         </div>
       </div>
     </div>
   );
 }
+
+

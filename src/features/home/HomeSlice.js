@@ -79,8 +79,8 @@ replyUnlikeReactions: {},     // To store sent friend requests by user ID
 /*   Message */
 receiver_id: null,
 
-shouldRefetch: false,
-
+shouldRefetch: false,//comment
+isReplySucess:false
 
 };
 
@@ -347,12 +347,15 @@ setReceiverId: (state, action) => {
   state.receiver_id = action.payload;
 },
 
-
+ /* Comment */
 triggerRefetch: (state) => {
   state.shouldRefetch = !state.shouldRefetch; // Toggling state
 },
 
-
+/*  Reply refresh */
+setIsReplySucess: (state) => {
+  state.isReplySucess = !state.isReplySucess; // Toggling state
+},
 
 
   },
@@ -367,6 +370,7 @@ pageDetails:'', */
 
 export const {
  setGroupUpdate,
+ setIsReplySucess,
  triggerRefetch,
  setReplyLoveReaction,
  setReplyUnlikeReactions,

@@ -3,8 +3,13 @@ import ReplyComment from "../ReplyComment";
 import Spinner from "../../../../Spinner/Spinner";
 import { useGetRepliesByCommentIdQuery } from "../../../../../services/repliesApi";
 import CommentSpinner from "../../Comment/CommentSpinner/CommentSpinner";
+import { useSelector } from "react-redux";
+import echo from "../../../../../echo";
 
 export default function AllReply({ commentId }) {
+  const shouldRefetch = useSelector((state) => state.home.shouldRefetch); // Listen to refetch trigger
+  const authId = useSelector((state) => state.home.user_id);
+  const isReplySucess = useSelector((state) => state.home.isReplySucess); // Listen to refetch trigger
   const [friendRequestPage, setFriendRequestPage] = useState(1);
   const [allFriendRequest, setAllFriendRequest] = useState([]);
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
@@ -16,14 +21,11 @@ export default function AllReply({ commentId }) {
     isLoading: isRepliesLoading,
     isError: isRepliesError,
     isFetching: isRepliesFetching,
-    refetch
+    refetch,
   } = useGetRepliesByCommentIdQuery({ commentId, page: friendRequestPage });
-console.log(repliesData);
+  console.log(repliesData);
   useEffect(() => {
-    if (
-      isRepliesSuccess &&
-      repliesData?.data
-    ) {
+    if (isRepliesSuccess && repliesData?.data) {
       // Update hasMoreFriendRequest based on data length
       if (repliesData.data.length < 3) {
         setHasMoreFriendRequest(false);
@@ -51,17 +53,30 @@ console.log(repliesData);
     setFriendRequestPage((prevPage) => prevPage + 1);
   };
 
-    // Handle reply success
-    const handleReplySuccess = () => {
-        refetch(); // Refresh the replies data
-      };
+  // Listen for broadcasted comments
+  useEffect(() => {
+    echo.private("broadcast-reply").listen(".getReply", (e) => {
+      /*    if (e.comment.commenter_id === authId) {
+        setBroadcastedComments((prevComments) => [e.comment, ...prevComments]); // Add new comment to the start of the list
+      } */
+      console.log(e);
+    });
+
+    return () => {
+      echo.leave("broadcast-reply");
+    };
+  }, [authId]);
+
+/*   useEffect(() => {
+    refetch(); // This will refetch the comments
+  }, [isReplySucess, refetch, shouldRefetch]); */
+
   return (
     <>
-      {allFriendRequest.length >0 &&
+      {allFriendRequest.length > 0 &&
         allFriendRequest.map((comment) => {
-          return <ReplyComment key={comment.reply_id} comment={comment} onReplySuccess={handleReplySuccess}  />;
-        }
-      )}
+          return <ReplyComment key={comment.reply_id} comment={comment} />;
+        })}
 
       {isRepliesLoading && <CommentSpinner size="25px" color="#ff69b3" />}
 
