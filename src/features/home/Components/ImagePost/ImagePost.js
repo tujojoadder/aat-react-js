@@ -272,31 +272,14 @@ export default function ImagePost({ post }) {
                   {isModalOpen && (
                     <>
                       <div
-                        className="comments pb-4 px-md-4"
+                        className="comments pb-4 "
                         style={{ height: "100vh", overflowY: "scroll" }}
                       >
                         <RootComment thePostId={post.post_id}  />
                      {/*    <AllComments postId={post.post_id}  /> */}
                         <div style={{ paddingBottom: "20vh" }}></div>
                       </div>
-                      <div
-                        className="card-footer p-0 m-0"
-                        style={{
-                          position: "fixed",
-                          bottom: "0",
-                          width: isXSmall
-                            ? "100%"
-                            : isSmall
-                            ? "74.8%"
-                            : isMid
-                            ? "59.8%"
-                            : isLg
-                            ? "49.9%"
-                            : "49.9%",
-                        }}
-                      >
-                        <Comment postId={post.post_id} />
-                      </div>
+                      
                     </>
                   )}
                 </div>

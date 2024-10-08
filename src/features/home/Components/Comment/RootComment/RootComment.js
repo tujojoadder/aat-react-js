@@ -1,9 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AllComments from "../AllComments/AllComments";
 import AllReply from "../../ReplyComment/AllReply/AllReply";
 import { useSelector } from "react-redux";
+import Comment from "../Comment/Comment";
 
 export default function RootComment({ thePostId }) {
+  const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
+  const [isSmall, setIsSmall] = useState(
+    window.innerWidth > 650 && window.innerWidth <= 950
+  );
+  const [isMid, setIsMid] = useState(
+    window.innerWidth > 950 && window.innerWidth <= 1200
+  );
+  const [isLg, setIsLg] = useState(window.innerWidth > 1200);
+  const updateWidth = () => {
+    setIsXSmall(window.innerWidth <= 650);
+    setIsSmall(window.innerWidth > 650 && window.innerWidth <= 950);
+    setIsMid(window.innerWidth > 950 && window.innerWidth <= 1200);
+    setIsLg(window.innerWidth > 1200);
+  };
+
+  useEffect(() => {
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => {
+      window.removeEventListener("resize", updateWidth);
+    };
+  }, []);
+
   const [show, setShow] = useState("comment");
   const commentId = useSelector((state) => state.home.commentId);
   // Function to show comments
@@ -18,12 +42,34 @@ export default function RootComment({ thePostId }) {
 
   return (
     <>
-      {commentId}
+
+    <div className=" px-md-4">
       {/* Conditional rendering based on the show state */}
       {show === "comment" && (
         <AllComments postId={thePostId} showReplies={showReplies} />
       )}
       {show === "reply" && <AllReply showComments={showComments} />}
+      </div>
+
+      
+      <div
+        className="card-footer p-0 m-0"
+        style={{
+            position: "fixed",
+            bottom: "0",
+            width: isXSmall
+              ? "100%"
+              : isSmall
+              ? "74.8%"
+              : isMid
+              ? "59.8%"
+              : isLg
+              ? "49.9%"
+              : "49.9%",
+          }}
+      >
+        <Comment postId={""} />
+      </div>
     </>
   );
 }
