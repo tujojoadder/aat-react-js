@@ -8,7 +8,7 @@ import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { useCreateReplyRepliesMutation } from "../../../../services/repliesApi";
 
-export default function ReplyComment({ comment,onReplySuccess }) {
+export default function ReplyComment({ comment }) {
   const dispatch = useDispatch();
   const [replyComments, setReplyComments] = useState([]);
   const [createReply, { isLoading: isSubmitting }] =
@@ -103,8 +103,7 @@ export default function ReplyComment({ comment,onReplySuccess }) {
             ...prev,
             { id: res?.id, text: replyText },
           ]);
-         /*  onReplySuccess(); */
-          // Clear the input box after submission
+       
           setReplyText("");
           setShowReplyInput(false);
         }

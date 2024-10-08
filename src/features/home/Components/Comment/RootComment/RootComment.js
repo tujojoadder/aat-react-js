@@ -3,8 +3,10 @@ import AllComments from "../AllComments/AllComments";
 import AllReply from "../../ReplyComment/AllReply/AllReply";
 import { useSelector } from "react-redux";
 import Comment from "../Comment/Comment";
+import Reply from "../../ReplyComment/Reply/Reply";
 
 export default function RootComment({ thePostId }) {
+    const commentId = useSelector((state) => state.home.commentId);
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
     window.innerWidth > 650 && window.innerWidth <= 950
@@ -29,7 +31,7 @@ export default function RootComment({ thePostId }) {
   }, []);
 
   const [show, setShow] = useState("comment");
-  const commentId = useSelector((state) => state.home.commentId);
+
   // Function to show comments
   const showComments = () => {
     setShow("comment");
@@ -68,7 +70,18 @@ export default function RootComment({ thePostId }) {
               : "49.9%",
           }}
       >
-        <Comment postId={""} />
+       
+
+
+{/* Conditional rendering based on the show state */}
+{show === "comment" && (
+         <Comment postId={thePostId} />
+      )}
+      {show === "reply" && <Reply/>}
+
+
+
+
       </div>
     </>
   );

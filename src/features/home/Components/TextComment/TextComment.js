@@ -15,14 +15,12 @@ import { useCreateCommentReplyMutation } from "../../../../services/repliesApi";
 import AllReply from "../ReplyComment/AllReply/AllReply";
 
 export default function TextComment({ comment, type,showReplies }) {
-  const { profile_picture, user_fname, user_lname, identifier } = useSelector(
-    (state) => ({
-      profile_picture: state.home.profile_picture,
-      user_fname: state.home.user_fname,
-      user_lname: state.home.user_lname,
-      identifier: state.home.identifier,
-    })
-  );
+ // Select each state property separately
+const profile_picture = useSelector((state) => state.home.profile_picture);
+const user_fname = useSelector((state) => state.home.user_fname);
+const user_lname = useSelector((state) => state.home.user_lname);
+const identifier = useSelector((state) => state.home.identifier);
+
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
   const [createReply, { isLoading: isSubmitting }] =
@@ -271,12 +269,55 @@ export default function TextComment({ comment, type,showReplies }) {
             onClick={handleReplyClick}
           >
             Reply
+
+            {comment?.reply_count > 0 && (
+              <span> ({comment?.reply_count})</span>
+            )}
           </span>
         </div>
 
         {/* Reply input and button section */}
         {showReplyInput && (
-        <h1>Hello</h1>
+        <div className="reply-input-box me-md-3 mb-3 mt-1 me-sm-1 d-flex align-items-center">
+        <input
+          type="text"
+          placeholder="Write a reply..."
+          className="form-control reply-input"
+          value={replyText}
+          onChange={handleInputChange}
+          disabled={isSubmitting} // Disable input while submitting
+          style={{
+            border: "1px solid #ccc",
+            borderRadius: "20px",
+            padding: "10px 15px",
+            height: "auto",
+            boxSizing: "border-box",
+            outline: "none",
+            fontSize: "16px",
+            backgroundColor: "#fff",
+            boxShadow: "none",
+            flexGrow: 1,
+          }}
+        />
+        <button
+          className="btn btn-primary d-flex align-items-center justify-content-center"
+          onClick={handleReplySubmit}
+          disabled={!replyText.trim() || isSubmitting} // Disable button while submitting or if no text
+          style={{
+            borderRadius: "20px",
+            padding: "7px 13px",
+            backgroundColor:
+              isSubmitting || !replyText.trim() ? "#ccc" : "#007bff",
+            border: "none",
+            color: "#fff",
+            cursor:
+              isSubmitting || !replyText.trim() ? "not-allowed" : "pointer",
+            transition: "background-color 0.3s ease",
+          }}
+        >
+          {isSubmitting ? <span>Sending...</span> : <span>Send</span>}
+        </button>
+      </div>
         )}
 
         {/* Render reply comments */}

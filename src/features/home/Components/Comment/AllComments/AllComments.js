@@ -6,13 +6,13 @@ import CommentSpinner from "../CommentSpinner/CommentSpinner";
 import { useSelector } from "react-redux";
 import echo from "../../../../../echo";
 
-export default function AllComments({ postId,showReplies }) {
+export default function AllComments({ postId, showReplies }) {
   const authId = useSelector((state) => state.home.user_id);
   const { ref: requestRef, inView: inViewRequests } = useInView({
     threshold: 0,
     triggerOnce: false,
   });
-  const shouldRefetch = useSelector((state) => state.home.shouldRefetch); // Listen to refetch trigger
+
   const [friendRequestPage, setFriendRequestPage] = useState(1);
   const [allFriendRequest, setAllFriendRequest] = useState([]);
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
@@ -21,43 +21,70 @@ export default function AllComments({ postId,showReplies }) {
 
   /* Fetching Request data */
   const {
-    data: useGetAuthUserfriendRequestQueryData,
-    isSuccess: useGetAuthUserfriendRequestQuerySuccess,
-    isLoading: useGetAuthUserfriendRequestQueryLoading,
-    isError: useGetAuthUserfriendRequestQueryError,
-    isFetching: useGetAuthUserfriendRequestQueryFetching,
-    refetch,
-  } = useGetCommentsByPostIdQuery({ postId, page: friendRequestPage });
+    data: useGetAuthUserfriendRequestQueryData,  // the fetched data
+    isSuccess: useGetAuthUserfriendRequestQuerySuccess,  // check if fetch was successful
+    isLoading: useGetAuthUserfriendRequestQueryLoading,  // loading state
+    isError: useGetAuthUserfriendRequestQueryError,  // error state
+    isFetching: useGetAuthUserfriendRequestQueryFetching,  // check if still fetching (after initial load)
+    refetch  // function to manually trigger refetch
+  } = useGetCommentsByPostIdQuery(
+    { postId, page: friendRequestPage },  // pass your postId and page parameters
+    {
+      refetchOnMountOrArgChange: true,  // Ensures data is refetched when the component mounts or if postId/page changes
+      refetchOnFocus: true,  // Refetches when window gains focus
+    }
+  );
+  
 
+ /*  // Handle new comments broadcast via Echo
   useEffect(() => {
-    if (
-      useGetAuthUserfriendRequestQuerySuccess &&
-      useGetAuthUserfriendRequestQueryData?.data
-    ) {
-      // Check if there are new comments and update the state
-      if (useGetAuthUserfriendRequestQueryData.data.length < 3) {
-        setHasMoreFriendRequest(false);
+    echo.private("broadcast-comment").listen(".getComment", (e) => {
+      if (e.comment.commenter_id === authId) {
+        setBroadcastedComments((prevComments) => [e.comment, ...prevComments]); // Add new comment to the start of the list
       }
+    });
 
-      const newRequests = useGetAuthUserfriendRequestQueryData.data.filter(
-        (newRequest) =>
-          !allFriendRequest.some(
-            (request) => request.comment_id === newRequest.comment_id
-          )
-      );
+    return () => {
+      echo.leave("broadcast-comment");
+    };
+  }, [authId]);
+ */
+  // Update the state when new data is fetched
+  useEffect(() => {
+    if (useGetAuthUserfriendRequestQuerySuccess && useGetAuthUserfriendRequestQueryData?.data) {
+      // If refetching from page 1, reset the existing data
+      if (friendRequestPage === 1) {
+        setAllFriendRequest([...useGetAuthUserfriendRequestQueryData.data]);
+      } else {
+        // Filter and append only new comments
+        const newRequests = useGetAuthUserfriendRequestQueryData.data.filter(
+          (newRequest) =>
+            !allFriendRequest.some(
+              (request) => request.comment_id === newRequest.comment_id
+            )
+        );
 
-      if (newRequests.length > 0) {
-        setAllFriendRequest((prevRequests) => [
-          ...prevRequests,
-          ...newRequests,
-        ]);
+        if (newRequests.length > 0) {
+          setAllFriendRequest((prevRequests) => [
+            ...prevRequests,
+            ...newRequests,
+          ]);
+        }
+
+        // If we get fewer results than the page limit, stop fetching more
+        if (useGetAuthUserfriendRequestQueryData.data.length < 3) {
+          setHasMoreFriendRequest(false);
+        }
       }
     }
   }, [
     useGetAuthUserfriendRequestQuerySuccess,
     useGetAuthUserfriendRequestQueryData,
+    friendRequestPage,
+    allFriendRequest,
   ]);
 
+  // Load more data when in view
   useEffect(() => {
     if (
       inViewRequests &&
@@ -76,23 +103,14 @@ export default function AllComments({ postId,showReplies }) {
     useGetAuthUserfriendRequestQuerySuccess,
   ]);
 
-  // Listen for broadcasted comments
+  // Refetch data when shouldRefetch changes
   useEffect(() => {
-    echo.private("broadcast-comment").listen(".getComment", (e) => {
-      if (e.comment.commenter_id === authId) {
-        setBroadcastedComments((prevComments) => [e.comment, ...prevComments]); // Add new comment to the start of the list
-      }
-    });
-
-    return () => {
-      echo.leave("broadcast-comment");
-    };
-  }, [authId]);
-
-  // Refetch comments whenever shouldRefetch changes
-  useEffect(() => {
-    refetch(); // This will refetch the comments
-  }, [shouldRefetch, refetch]);
+ 
+      setFriendRequestPage(1);  // Reset to page 1
+      setAllFriendRequest([]);  // Clear previous comments
+      refetch();  // Trigger the refetch
+    
+  }, [refetch]);
 
   return (
     <>
@@ -113,6 +131,7 @@ export default function AllComments({ postId,showReplies }) {
             </div>
           )}
 
+      {/* Infinite scroll trigger */}
       <div
         ref={requestRef}
         className="infinite-scroll-trigger"

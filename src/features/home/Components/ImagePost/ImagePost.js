@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import TextComment from "../TextComment/TextComment";
-import Comment from "../Comment/Comment/Comment";
-import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImage";
 import "./ImagePost.css";
 import { formatPostDate } from "../../../../utils/dateUtils";
 import ImagePostSkeleton from "./ImagePostSkeleton/ImagePostSkeleton";
@@ -9,16 +6,11 @@ import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { setLoveReaction, setUnlikeReactions } from "../../HomeSlice";
 import { useDispatch, useSelector } from "react-redux";
-import AllComments from "../Comment/AllComments/AllComments";
 import RootComment from "../Comment/RootComment/RootComment";
-
 export default function ImagePost({ post }) {
-  
-
-/*   Love and Unlike  */
+  /*   Love and Unlike  */
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
-
   const dispatch = useDispatch();
   // Redux selectors for request status
   const loveReactions = useSelector(
@@ -68,37 +60,11 @@ export default function ImagePost({ post }) {
     }
   };
 
-
-
-
-
-
-  const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
-  const [isSmall, setIsSmall] = useState(
-    window.innerWidth > 650 && window.innerWidth <= 950
-  );
-  const [isMid, setIsMid] = useState(
-    window.innerWidth > 950 && window.innerWidth <= 1200
-  );
-  const [isLg, setIsLg] = useState(window.innerWidth > 1200);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false);
   const modalRef = useRef(null);
-  const updateWidth = () => {
-    setIsXSmall(window.innerWidth <= 650);
-    setIsSmall(window.innerWidth > 650 && window.innerWidth <= 950);
-    setIsMid(window.innerWidth > 950 && window.innerWidth <= 1200);
-    setIsLg(window.innerWidth > 1200);
-  };
-  useEffect(() => {
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => {
-      window.removeEventListener("resize", updateWidth);
-    };
-  }, []);
 
   // Update state for modal open/close
   useEffect(() => {
@@ -128,8 +94,6 @@ export default function ImagePost({ post }) {
   const handleProfilePicLoad = () => {
     setIsProfilePicLoaded(true);
   };
-
-  
 
   return (
     <div className="posts mx-2">
@@ -206,9 +170,8 @@ export default function ImagePost({ post }) {
               </div>
             </div>
             <div className="content-icons px-2">
-              
-            {/*   Love and Unlike */}
-            <i
+              {/*   Love and Unlike */}
+              <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
@@ -229,13 +192,10 @@ export default function ImagePost({ post }) {
                 )}
               </i>
 
-
-
-
               <i
                 className="ps-md-3 far fa-comment blue"
                 data-bs-toggle="modal"
-               data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
+                data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
                 {" "}
                 1.6k
@@ -247,8 +207,6 @@ export default function ImagePost({ post }) {
           <div
             className="modal fade"
             id={`imageModal-${post.post_id}`}
-
-         
             tabIndex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
@@ -275,11 +233,10 @@ export default function ImagePost({ post }) {
                         className="comments pb-4 "
                         style={{ height: "100vh", overflowY: "scroll" }}
                       >
-                        <RootComment thePostId={post.post_id}  />
-                     {/*    <AllComments postId={post.post_id}  /> */}
+                        <RootComment thePostId={post.post_id} />
+
                         <div style={{ paddingBottom: "20vh" }}></div>
                       </div>
-                      
                     </>
                   )}
                 </div>

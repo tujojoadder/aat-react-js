@@ -28,10 +28,7 @@ export default function AllReply({showComments}) {
     isFetching: isRepliesFetching,
     refetch
   } = useGetRepliesByCommentIdQuery({ commentId, page: friendRequestPage });
- // Refetch when the component is first rendered (when switching to 'reply')
- useEffect(() => {
-  refetch();
-}, [refetch]);
+
   useEffect(() => {
     if (isRepliesSuccess && repliesData?.data) {
       if (repliesData.data.length < 3) {
@@ -57,11 +54,10 @@ export default function AllReply({showComments}) {
     setFriendRequestPage((prevPage) => prevPage + 1);
   };
 
-  // Handle reply success
-  const handleReplySuccess = () => {
-    refetch();
-  };
-
+ // Refetch when the component is first rendered (when switching to 'reply')
+ useEffect(() => {
+  refetch();
+}, [refetch]);
 
   return (
     <>
@@ -76,7 +72,7 @@ export default function AllReply({showComments}) {
           <ReplyComment
             key={comment.reply_id}
             comment={comment}
-            onReplySuccess={handleReplySuccess}
+           
           />
         ))}
 
