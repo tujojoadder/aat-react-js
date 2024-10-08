@@ -26,9 +26,9 @@ export default function Comment({ postId }) {
       // Call mutation to post the comment
       await createComment({ postId, comment_text: commentText }).unwrap();
       setCommentText(''); // Clear the input after successful submission
-      // Dispatch refetch trigger
+/*       // Dispatch refetch trigger
       dispatch(triggerRefetch()); // Trigger refetch in AllComments
-    
+     */
     } catch (error) {
       console.error('Failed to post comment:', error);
     }
