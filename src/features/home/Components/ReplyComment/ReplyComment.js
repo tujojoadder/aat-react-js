@@ -25,9 +25,8 @@ export default function ReplyComment({ comment,onReplySuccess }) {
 
   /* Text */
   const [isExpanded, setIsExpanded] = useState(false);
-  const fullText = comment.reply_text;
+  const fullText = comment?.reply_text || ''; // Default to an empty string if undefined
   const previewText = fullText.substring(0, 175);
-
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };
@@ -121,7 +120,7 @@ export default function ReplyComment({ comment,onReplySuccess }) {
         <div className="bd-highlight me-1">
           <img
             style={{ height: "45px", width: "45px", borderRadius: "50%" }}
-            src={comment.replied_by.profile_picture}
+            src={comment?.replied_by.profile_picture}
             alt="user3"
           />
         </div>
@@ -129,10 +128,10 @@ export default function ReplyComment({ comment,onReplySuccess }) {
           {" "}
           <div className="name-column">
             <h1 className="full-name-text m-0 p-0">
-              {comment.replied_by.user_fname} {comment.replied_by.user_lname}
+              {comment?.replied_by.user_fname} {comment?.replied_by.user_lname}
             </h1>
             <p className="user-name-text m-0 p-0">
-              @{comment.replied_by.identifier}
+              @{comment?.replied_by.identifier}
             </p>
           </div>
         </div>
