@@ -3,11 +3,21 @@ import ReplyComment from "../ReplyComment";
 import Spinner from "../../../../Spinner/Spinner";
 import { useGetRepliesByCommentIdQuery } from "../../../../../services/repliesApi";
 import CommentSpinner from "../../Comment/CommentSpinner/CommentSpinner";
+import { useSelector } from "react-redux";
+import MidScreenBack from "../../../../SmallScreenBack/MidScreenBack";
+import SmallScreenBack from "../../../../SmallScreenBack/SmallScreenBack";
+import LargeScreenBack from "../../../../LargeScreenBack/LargeScreenBack";
+import LargeScreenProfileBack from "../../../../LargeScreenBack/LargeScreenProfileBack";
+import SmallScreenCommnetBack from "../../Comment/CommentsButton/SmallScreenCommnetBack";
+import MidScreenCommentback from "../../Comment/CommentsButton/MidScreenCommentback";
+import LargeScreenCommentBack from "../../Comment/CommentsButton/LargeScreenCommentBack";
 
-export default function AllReply({ commentId }) {
+export default function AllReply({showComments}) {
+  const commentId = useSelector((state) => state.home.commentId);
   const [friendRequestPage, setFriendRequestPage] = useState(1);
   const [allFriendRequest, setAllFriendRequest] = useState([]);
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
+
 
   // Fetching reply data based on the current page
   const {
@@ -18,25 +28,21 @@ export default function AllReply({ commentId }) {
     isFetching: isRepliesFetching,
     refetch
   } = useGetRepliesByCommentIdQuery({ commentId, page: friendRequestPage });
-console.log(repliesData);
+ // Refetch when the component is first rendered (when switching to 'reply')
+ useEffect(() => {
+  refetch();
+}, [refetch]);
   useEffect(() => {
-    if (
-      isRepliesSuccess &&
-      repliesData?.data
-    ) {
-      // Update hasMoreFriendRequest based on data length
+    if (isRepliesSuccess && repliesData?.data) {
       if (repliesData.data.length < 3) {
         setHasMoreFriendRequest(false);
       }
-
-      // Filter and update the reply list with new replies
       const newRequests = repliesData.data.filter(
         (newRequest) =>
           !allFriendRequest.some(
             (request) => request.reply_id === newRequest.reply_id
           )
       );
-
       if (newRequests.length > 0) {
         setAllFriendRequest((prevRequests) => [
           ...prevRequests,
@@ -51,17 +57,28 @@ console.log(repliesData);
     setFriendRequestPage((prevPage) => prevPage + 1);
   };
 
-    // Handle reply success
-    const handleReplySuccess = () => {
-        refetch(); // Refresh the replies data
-      };
+  // Handle reply success
+  const handleReplySuccess = () => {
+    refetch();
+  };
+
+
   return (
     <>
-      {allFriendRequest.length >0 &&
-        allFriendRequest.map((comment) => {
-          return <ReplyComment key={comment.reply_id} comment={comment} onReplySuccess={handleReplySuccess}  />;
-        }
-      )}
+      {/* Header Section with Back Button and Replies Title */}
+<SmallScreenCommnetBack showComments={showComments} />
+    <MidScreenCommentback showComments={showComments} />
+<LargeScreenCommentBack showComments={showComments} />
+
+      {/* List of replies */}
+      {allFriendRequest.length > 0 &&
+        allFriendRequest.map((comment) => (
+          <ReplyComment
+            key={comment.reply_id}
+            comment={comment}
+            onReplySuccess={handleReplySuccess}
+          />
+        ))}
 
       {isRepliesLoading && <CommentSpinner size="25px" color="#ff69b3" />}
 

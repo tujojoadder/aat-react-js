@@ -6,7 +6,7 @@ import CommentSpinner from "../CommentSpinner/CommentSpinner";
 import { useSelector } from "react-redux";
 import echo from "../../../../../echo";
 
-export default function AllComments({ postId }) {
+export default function AllComments({ postId,showReplies }) {
   const authId = useSelector((state) => state.home.user_id);
   const { ref: requestRef, inView: inViewRequests } = useInView({
     threshold: 0,
@@ -105,7 +105,7 @@ export default function AllComments({ postId }) {
       {/* Render the existing comments */}
       {allFriendRequest.length > 0
         ? allFriendRequest.map((comment) => (
-            <TextComment key={comment.comment_id} comment={comment} />
+            <TextComment key={comment.comment_id} comment={comment} showReplies={showReplies} />
           ))
         : !useGetAuthUserfriendRequestQueryLoading && (
             <div className="col-12 text-center">

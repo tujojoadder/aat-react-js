@@ -10,6 +10,7 @@ import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { setLoveReaction, setUnlikeReactions } from "../../HomeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AllComments from "../Comment/AllComments/AllComments";
+import RootComment from "../Comment/RootComment/RootComment";
 
 export default function ImagePost({ post }) {
   
@@ -274,8 +275,8 @@ export default function ImagePost({ post }) {
                         className="comments pb-4 px-md-4"
                         style={{ height: "100vh", overflowY: "scroll" }}
                       >
-                        
-                        <AllComments postId={post.post_id}  />
+                        <RootComment thePostId={post.post_id}  />
+                     {/*    <AllComments postId={post.post_id}  /> */}
                         <div style={{ paddingBottom: "20vh" }}></div>
                       </div>
                       <div

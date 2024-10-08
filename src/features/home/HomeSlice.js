@@ -81,6 +81,14 @@ receiver_id: null,
 
 shouldRefetch: false,
 
+commentId:'aa'
+
+
+
+
+
+
+
 
 };
 
@@ -352,6 +360,17 @@ triggerRefetch: (state) => {
   state.shouldRefetch = !state.shouldRefetch; // Toggling state
 },
 
+/* Comments */
+    /* Profile state reducers */
+    setCommentId: (state, action) => {
+      state.commentId = action.payload;
+    },
+
+
+
+
+
+
 
 
 
@@ -367,6 +386,7 @@ pageDetails:'', */
 
 export const {
  setGroupUpdate,
+ setCommentId,
  triggerRefetch,
  setReplyLoveReaction,
  setReplyUnlikeReactions,

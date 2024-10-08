@@ -103,7 +103,7 @@ export default function ReplyComment({ comment,onReplySuccess }) {
             ...prev,
             { id: res?.id, text: replyText },
           ]);
-          onReplySuccess();
+         /*  onReplySuccess(); */
           // Clear the input box after submission
           setReplyText("");
           setShowReplyInput(false);
