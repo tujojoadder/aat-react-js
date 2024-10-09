@@ -12,12 +12,11 @@ import SmallScreenCommnetBack from "../../Comment/CommentsButton/SmallScreenComm
 import MidScreenCommentback from "../../Comment/CommentsButton/MidScreenCommentback";
 import LargeScreenCommentBack from "../../Comment/CommentsButton/LargeScreenCommentBack";
 
-export default function AllReply({showComments}) {
+export default function AllReply({ showComments }) {
   const commentId = useSelector((state) => state.home.commentId);
   const [friendRequestPage, setFriendRequestPage] = useState(1);
   const [allFriendRequest, setAllFriendRequest] = useState([]);
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
-
 
   // Fetching reply data based on the current page
   const {
@@ -26,7 +25,7 @@ export default function AllReply({showComments}) {
     isLoading: isRepliesLoading,
     isError: isRepliesError,
     isFetching: isRepliesFetching,
-    refetch
+    refetch,
   } = useGetRepliesByCommentIdQuery({ commentId, page: friendRequestPage });
 
   useEffect(() => {
@@ -54,26 +53,22 @@ export default function AllReply({showComments}) {
     setFriendRequestPage((prevPage) => prevPage + 1);
   };
 
- // Refetch when the component is first rendered (when switching to 'reply')
- useEffect(() => {
-  refetch();
-}, [refetch]);
+  // Refetch when the component is first rendered (when switching to 'reply')
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <>
       {/* Header Section with Back Button and Replies Title */}
-<SmallScreenCommnetBack showComments={showComments} />
-    <MidScreenCommentback showComments={showComments} />
-<LargeScreenCommentBack showComments={showComments} />
+      <SmallScreenCommnetBack showComments={showComments} />
+      <MidScreenCommentback showComments={showComments} />
+      <LargeScreenCommentBack showComments={showComments} />
 
       {/* List of replies */}
       {allFriendRequest.length > 0 &&
         allFriendRequest.map((comment) => (
-          <ReplyComment
-            key={comment.reply_id}
-            comment={comment}
-           
-          />
+          <ReplyComment key={comment.reply_id} comment={comment} />
         ))}
 
       {isRepliesLoading && <CommentSpinner size="25px" color="#ff69b3" />}

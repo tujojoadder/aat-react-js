@@ -46,10 +46,19 @@ export default function AllComments({ postId, showReplies }) {
         // Reset comments if it's the first page
         setAllComments(commentsData.data);
       } else {
+
+        const old = commentsData.data.filter(
+          (newRequest) =>
+            !allComments.some(
+              (request) => request.comment_id === newRequest.comment_id
+            )
+        );
+
         // Append comments if more pages are being fetched
         setAllComments((prevComments) => [
+
           ...prevComments,
-          ...commentsData.data,
+          ...old,
         ]);
       }
 

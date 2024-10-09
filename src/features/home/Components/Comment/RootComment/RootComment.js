@@ -44,7 +44,7 @@ export default function RootComment({ thePostId }) {
 
   return (
     <>
-
+   
     <div className=" px-md-4">
       {/* Conditional rendering based on the show state */}
       {show === "comment" && (
