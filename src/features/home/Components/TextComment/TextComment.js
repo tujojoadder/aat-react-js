@@ -335,8 +335,8 @@ const identifier = useSelector((state) => state.home.identifier);
               marginTop: "10px",
             }}
           >
-            {comment?.replies_count > 0 && (
-              <span>View all replies ({comment?.replies_count})</span>
+            {comment?.reply_count > 0 && (
+              <span>View all replies ({comment?.reply_count})</span>
             )}
           </button>
         </div>

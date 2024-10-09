@@ -8,7 +8,6 @@ import echo from "../../../../../echo";
 
 export default function AllComments({ postId, showReplies }) {
   const authId = useSelector((state) => state.home.user_id);
-  const shouldRefetch = useSelector((state) => state.home.shouldRefetch); // Refetch trigger
   const [currentPage, setCurrentPage] = useState(1);
   const [allComments, setAllComments] = useState([]); // All comments from API
   const [broadcastedComments, setBroadcastedComments] = useState([]); // Real-time comments
@@ -73,6 +72,7 @@ export default function AllComments({ postId, showReplies }) {
 
     channel.listen(".getComment", (e) => {
       if (e.comment.commenter_id === authId) {
+        console.log(e);
         setBroadcastedComments((prevComments) => [e.comment, ...prevComments]);
       }
     });
@@ -84,11 +84,11 @@ export default function AllComments({ postId, showReplies }) {
 
   // Refetch comments when the refetch trigger is activated
   useEffect(() => {
-    if (shouldRefetch) {
+   
       refetch();
       setCurrentPage(1); // Reset the page to start from the beginning
-    }
-  }, [shouldRefetch, refetch]);
+    
+  }, [ refetch]);
 
   // Render the component
   return (
@@ -96,7 +96,7 @@ export default function AllComments({ postId, showReplies }) {
       {/* Render broadcasted comments (real-time updates) */}
       {broadcastedComments.length > 0 &&
         broadcastedComments.map((comment) => (
-          <TextComment  comment={comment} type="user" />
+          <TextComment  comment={comment} type="user"  showReplies={showReplies} />
         ))}
 
       {/* Render fetched comments */}
