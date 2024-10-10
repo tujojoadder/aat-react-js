@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import CommentedBothPosts from "../../../../CommentedMedia/CommentedBothposts/CommentedBothPosts";
 import "./GroupBPost.css";
-import { formatPostDate } from "../../../../../utils/dateUtils";
+import { formatLargeNumber, formatPostDate } from "../../../../../utils/dateUtils";
 import TextComment from "../../TextComment/TextComment";
 import Comment from "../../Comment/Comment/Comment";
 import ImagePostSkeleton from "../../ImagePost/ImagePostSkeleton/ImagePostSkeleton";
@@ -9,70 +9,61 @@ import { useToggleLoveMutation } from "../../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../../services/unlikeApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoveReaction, setUnlikeReactions } from "../../../HomeSlice";
+import RootComment from "../../Comment/RootComment/RootComment";
 
 export default function GroupBPost({ post }) {
+  /*   Love and Unlike  */
+  const [toggleLove] = useToggleLoveMutation();
+  const [toggleUnlike] = useToggleUnlikeMutation();
 
-/*   Love and Unlike  */
-const [toggleLove] = useToggleLoveMutation();
-const [toggleUnlike] = useToggleUnlikeMutation();
+  const dispatch = useDispatch();
+  // Redux selectors for request status
+  const loveReactions = useSelector(
+    (state) => state.home.loveReactions[post.post_id]
+  );
+  const unlikeReactions = useSelector(
+    (state) => state.home.unlikeReactions[post.post_id]
+  );
 
-const dispatch = useDispatch();
-// Redux selectors for request status
-const loveReactions = useSelector(
-  (state) => state.home.loveReactions[post.post_id]
-);
-const unlikeReactions = useSelector(
-  (state) => state.home.unlikeReactions[post.post_id]
-);
+  useEffect(() => {
+    if (post.isLove) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
+    if (post.isUnlike) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
+  }, []);
+  const handleLoveClick = async () => {
+    // Optimistic update
 
-useEffect(() => {
-  if (post.isLove) {
-    dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
-  }
-  if (post.isUnlike) {
-    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
-  }
-}, []);
-const handleLoveClick = async () => {
-  // Optimistic update
+    if (loveReactions) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
+    } else {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
 
-  if (loveReactions) {
-    dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
-  } else {
-    dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
-  }
+    try {
+      await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle love:", error);
+    }
+  };
 
-  try {
-    await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
-  } catch (error) {
-    console.error("Failed to toggle love:", error);
-  }
-};
+  const handleUnlikeClick = async () => {
+    // Optimistic update
 
-const handleUnlikeClick = async () => {
-  // Optimistic update
+    if (unlikeReactions) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
+    } else {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
 
-  if (unlikeReactions) {
-    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
-  } else {
-    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
-  }
-
-  try {
-    await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
-  } catch (error) {
-    console.error("Failed to toggle unlike:", error);
-  }
-};
-
-
-
-
-
-
-
-
-
+    try {
+      await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle unlike:", error);
+    }
+  };
 
   /* Image load handling  */
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -174,7 +165,6 @@ const handleUnlikeClick = async () => {
                 height: "50px",
                 width: "50px",
                 borderRadius: "15%",
-              
               }}
             />
             {/*   User Image */}
@@ -188,10 +178,9 @@ const handleUnlikeClick = async () => {
                 height: "30px",
                 width: "30px",
                 borderRadius: "50%",
-                position:'relative',
-                top:'-25px',
-                left:'25px'
-               
+                position: "relative",
+                top: "-25px",
+                left: "25px",
               }}
             />
           </div>
@@ -203,9 +192,9 @@ const handleUnlikeClick = async () => {
                   {post.group.group_name}
                 </h1>
 
-               {/*  User Identifire */}
+                {/*  User Identifire */}
                 <p className="user-name-text m-0 p-0">
-                @{post.author.identifier}
+                  @{post.author.identifier}
                 </p>
               </div>
               <p
@@ -264,16 +253,15 @@ const handleUnlikeClick = async () => {
             </div>
 
             <div className="content-icons  px-2 ">
-             
- {/*   Love and Unlike */}
- <i
+          {/*   Love and Unlike */}
+          <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
                 onClick={handleLoveClick}
               >
                 {post.totalLove > 0 && (
-                  <span className="ps-1">{post.totalLove}</span>
+                  <span className="ps-1">{ formatLargeNumber(post.totalLove)}</span>
                 )}
               </i>
               <i
@@ -283,36 +271,39 @@ const handleUnlikeClick = async () => {
                 onClick={handleUnlikeClick}
               >
                 {post.totalUnlike > 0 && (
-                  <span className="ps-1">{post.totalUnlike}</span>
+                  <span className="ps-1">{  formatLargeNumber(post.totalUnlike) }</span>
                 )}
               </i>
 
 
-
-
-
-
-
-              <i className="ps-md-3 far fa-comment blue "> 1.6k</i>
+              {/* Comments */}
+              <i
+                className="ps-md-3 far fa-comment blue"
+                data-bs-toggle="modal"
+                data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
+              >
+                  {post.total_comments > 0 && (
+                  <span className="ps-1"> {formatLargeNumber(post.total_comments) } </span>
+                )}
+              </i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
             </div>
           </div>
-
           {/* Modal */}
           <div
-            style={{ overflowY: "hidden" }}
-            className="modal fade "
-            id="BPostModal"
+            className="modal fade"
+            id={`imageModal-${post.post_id}`}
             tabIndex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
             ref={modalRef}
+            style={{ overflowY: "hidden" }}
           >
-            <div className="modal-dialog ">
+            <div className="modal-dialog">
               <div className="modal-content ">
-                <div className="modal-header shadow-sm p-3 bg-body rounded">
-                  <h5 className="modal-title fs-5" id="exampleModalLabel">
-                    bb Comment
+                <div className="modal-header shadow-sm p-3 bg-body rounded border-bottom">
+                  <h5 className="modal-title fs-5 " id="exampleModalLabel">
+                    Comments
                   </h5>
                   <button
                     type="button"
@@ -321,45 +312,16 @@ const handleUnlikeClick = async () => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div className="modal-body ">
+                <div className="modal-body">
                   {isModalOpen && (
                     <>
                       <div
-                        className="comments px-md-4 "
-                        style={{
-                          height: "100vh",
-                          overflowY: "scroll",
-                          overflowX: "hidden",
-                        }}
+                        className="comments pb-4 "
+                        style={{ height: "100vh", overflowY: "scroll" }}
                       >
-                        <CommentedBothPosts />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        <TextComment />
-                        {/* Needed */}
+                        <RootComment thePostId={post.post_id} />
+
                         <div style={{ paddingBottom: "20vh" }}></div>
-                      </div>
-                      {/* Footer */}
-                      <div
-                        className="card-footer p-0 m-0"
-                        style={{
-                          position: "fixed",
-                          bottom: "0px",
-                          width: isXSmall
-                            ? "100%"
-                            : isSmall
-                            ? "74.8%"
-                            : isMid
-                            ? "59.8%"
-                            : isLg
-                            ? "49.9%"
-                            : "49.9%",
-                        }}
-                      >
-                        <Comment />
                       </div>
                     </>
                   )}

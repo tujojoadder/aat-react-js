@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import "./GroupTextPost.css";
-import { formatPostDate } from "../../../../../utils/dateUtils";
+import { formatLargeNumber, formatPostDate } from "../../../../../utils/dateUtils";
 import TextComment from "../../TextComment/TextComment";
 import Comment from "../../Comment/Comment/Comment";
 import CommentedText from "../../../../CommentedMedia/CommentedText/CommentedText";
@@ -11,6 +11,7 @@ import { useToggleLoveMutation } from "../../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../../services/unlikeApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoveReaction, setUnlikeReactions } from "../../../HomeSlice";
+import RootComment from "../../Comment/RootComment/RootComment";
 
 const GroupTextPost = ({ post }) => {
 
@@ -246,7 +247,7 @@ const handleUnlikeClick = async () => {
                 onClick={handleLoveClick}
               >
                 {post.totalLove > 0 && (
-                  <span className="ps-1">{post.totalLove}</span>
+                  <span className="ps-1">{ formatLargeNumber(post.totalLove)}</span>
                 )}
               </i>
               <i
@@ -256,61 +257,64 @@ const handleUnlikeClick = async () => {
                 onClick={handleUnlikeClick}
               >
                 {post.totalUnlike > 0 && (
-                  <span className="ps-1">{post.totalUnlike}</span>
+                  <span className="ps-1">{  formatLargeNumber(post.totalUnlike) }</span>
                 )}
               </i>
 
 
-
-
-
-          <i className="far fa-comment blue ps-md-3 ms-1"> 1.6k</i>
-          <i className="fa-solid fa-chevron-up ps-md-3 me-2"></i>
-        </div>
-      </div>
-
-      {/* Modal */}
-      <div
-        className="modal fade"
-        id="textModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-        ref={modalRef}
-      >
-        <div className="modal-dialog modal-xl modal-dialog-scrollable">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                {post.author.user_fname} {post.author.user_lname}
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <TextComment post={post} />
-              <CommentedText />
-              <SendMessage />
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
+              {/* Comments */}
+              <i
+                className="ps-md-3 far fa-comment blue"
+                data-bs-toggle="modal"
+                data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Save changes
-              </button>
+                  {post.total_comments > 0 && (
+                  <span className="ps-1"> {formatLargeNumber(post.total_comments) } </span>
+                )}
+              </i>
+              <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
             </div>
           </div>
-        </div>
-      </div>
+          {/* Modal */}
+          <div
+            className="modal fade"
+            id={`imageModal-${post.post_id}`}
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+            ref={modalRef}
+            style={{ overflowY: "hidden" }}
+          >
+            <div className="modal-dialog">
+              <div className="modal-content ">
+                <div className="modal-header shadow-sm p-3 bg-body rounded border-bottom">
+                  <h5 className="modal-title fs-5 " id="exampleModalLabel">
+                    Comments
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  {isModalOpen && (
+                    <>
+                      <div
+                        className="comments pb-4 "
+                        style={{ height: "100vh", overflowY: "scroll" }}
+                      >
+                        <RootComment thePostId={post.post_id} />
+
+                        <div style={{ paddingBottom: "20vh" }}></div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
       </>
       )}
     </div>
