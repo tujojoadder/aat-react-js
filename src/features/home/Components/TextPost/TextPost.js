@@ -5,7 +5,7 @@ import Comment from "../Comment/Comment/Comment";
 import "./TextPost.css";
 import CommentedText from "../../../CommentedMedia/CommentedText/CommentedText";
 import SendMessage from "../../../Messages/SendMessages/SendMessage";
-import { formatPostDate } from "../../../../utils/dateUtils";
+import { formatLargeNumber, formatPostDate } from "../../../../utils/dateUtils";
 import TextPostSkeleton from "./TextPostSkeleton/TextPostSkeleton";
 import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
@@ -205,7 +205,7 @@ const TextPost = ({ post }) => {
                 onClick={handleLoveClick}
               >
                 {post.totalLove > 0 && (
-                  <span className="ps-1">{post.totalLove}</span>
+      <span className="ps-1">{ formatLargeNumber(post.totalLove)}</span>
                 )}
               </i>
               <i
@@ -215,7 +215,7 @@ const TextPost = ({ post }) => {
                 onClick={handleUnlikeClick}
               >
                 {post.totalUnlike > 0 && (
-                  <span className="ps-1">{post.totalUnlike}</span>
+                  <span className="ps-1">{  formatLargeNumber(post.totalUnlike) }</span>
                 )}
               </i>
 
@@ -228,7 +228,7 @@ const TextPost = ({ post }) => {
                 data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
                   {post.total_comments > 0 && (
-                  <span className="ps-1">{post.total_comments}</span>
+                   <span className="ps-1"> {formatLargeNumber(post.total_comments) } </span>
                 )}
               </i>
 

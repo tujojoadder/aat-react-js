@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ImagePost.css";
-import { formatPostDate } from "../../../../utils/dateUtils";
+import { formatLargeNumber, formatPostDate } from "../../../../utils/dateUtils";
 import ImagePostSkeleton from "./ImagePostSkeleton/ImagePostSkeleton";
 import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
@@ -178,7 +178,7 @@ export default function ImagePost({ post }) {
                 onClick={handleLoveClick}
               >
                 {post.totalLove > 0 && (
-                  <span className="ps-1">{post.totalLove}</span>
+                  <span className="ps-1">{ formatLargeNumber(post.totalLove)}</span>
                 )}
               </i>
               <i
@@ -188,7 +188,7 @@ export default function ImagePost({ post }) {
                 onClick={handleUnlikeClick}
               >
                 {post.totalUnlike > 0 && (
-                  <span className="ps-1">{post.totalUnlike}</span>
+                  <span className="ps-1">{  formatLargeNumber(post.totalUnlike) }</span>
                 )}
               </i>
 
@@ -200,7 +200,7 @@ export default function ImagePost({ post }) {
                 data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
                   {post.total_comments > 0 && (
-                  <span className="ps-1">{post.total_comments}</span>
+                  <span className="ps-1"> {formatLargeNumber(post.total_comments) } </span>
                 )}
               </i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
