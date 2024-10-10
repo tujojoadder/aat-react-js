@@ -5,12 +5,13 @@ import TextComment from "../../home/Components/ReplyComment/ReplyComment";
 import "./IChannelTextPost.css";
 import CommentedText from "../../CommentedMedia/CommentedText/CommentedText";
 import SendMessage from "../../Messages/SendMessages/SendMessage";
-import { formatPostDate } from "../../../utils/dateUtils";
+import { formatLargeNumber, formatPostDate } from "../../../utils/dateUtils";
 import TextPostSkeleton from "../../home/Components/TextPost/TextPostSkeleton/TextPostSkeleton";
 import { useToggleLoveMutation } from "../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../services/unlikeApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoveReaction, setUnlikeReactions } from "../../home/HomeSlice";
+import RootComment from "../../home/Components/Comment/RootComment/RootComment";
 
 const IChannelTextPost = ({ post }) => {
   /*   Love and Unlike  */
@@ -197,14 +198,15 @@ const IChannelTextPost = ({ post }) => {
 
             <div className="content-icons pe-3">
               {/*   Love and Unlike */}
-              <i
+             {/*   Love and Unlike */}
+             <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
                 onClick={handleLoveClick}
               >
                 {post.totalLove > 0 && (
-                  <span className="ps-1">{post.totalLove}</span>
+                  <span className="ps-1">{ formatLargeNumber(post.totalLove)}</span>
                 )}
               </i>
               <i
@@ -214,37 +216,39 @@ const IChannelTextPost = ({ post }) => {
                 onClick={handleUnlikeClick}
               >
                 {post.totalUnlike > 0 && (
-                  <span className="ps-1">{post.totalUnlike}</span>
+                  <span className="ps-1">{  formatLargeNumber(post.totalUnlike) }</span>
                 )}
               </i>
 
 
-
-
-
-              
-
-              <i className="far fa-comment blue ps-md-3 ms-1"> 1.6k</i>
-              <i className="fa-solid fa-chevron-up ps-md-3 me-2"></i>
+              {/* Comments */}
+              <i
+                className="ps-md-3 far fa-comment blue"
+                data-bs-toggle="modal"
+                data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
+              >
+                  {post.total_comments > 0 && (
+                  <span className="ps-1"> {formatLargeNumber(post.total_comments) } </span>
+                )}
+              </i>
+              <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
             </div>
           </div>
-
-
-
           {/* Modal */}
           <div
             className="modal fade"
-            id="textModal"
+            id={`imageModal-${post.post_id}`}
             tabIndex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
             ref={modalRef}
+            style={{ overflowY: "hidden" }}
           >
-            <div className="modal-dialog modal-xl modal-dialog-scrollable">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">
-                    {post.iaccount.iaccount_name}
+            <div className="modal-dialog">
+              <div className="modal-content ">
+                <div className="modal-header shadow-sm p-3 bg-body rounded border-bottom">
+                  <h5 className="modal-title fs-5 " id="exampleModalLabel">
+                    Comments
                   </h5>
                   <button
                     type="button"
@@ -254,21 +258,18 @@ const IChannelTextPost = ({ post }) => {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <TextComment post={post} />
-                  <CommentedText />
-                  <SendMessage />
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="button" className="btn btn-primary">
-                    Save changes
-                  </button>
+                  {isModalOpen && (
+                    <>
+                      <div
+                        className="comments pb-4 "
+                        style={{ height: "100vh", overflowY: "scroll" }}
+                      >
+                        <RootComment thePostId={post.post_id} />
+
+                        <div style={{ paddingBottom: "20vh" }}></div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

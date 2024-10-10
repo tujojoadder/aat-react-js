@@ -114,7 +114,7 @@ export default function ReplyComment({ comment }) {
   };
 
   return (
-    <div className="mt-2">
+    <div className="mt-2 px-2">
       <div className="d-flex bd-highlight ">
         <div className="bd-highlight me-1">
           <img

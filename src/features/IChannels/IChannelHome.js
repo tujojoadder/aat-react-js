@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import "./IChannelHome.css";
 import Spinner from "../Spinner/Spinner";
@@ -22,9 +20,9 @@ export default function IChannelHome() {
   const { data, isFetching, isError, isSuccess } =
     useGetRandomIaccountPostQuery(page);
 
-    if (isSuccess) {
-      console.log(data);
-    }
+  if (isSuccess) {
+    console.log(data);
+  }
 
   useEffect(() => {
     if (isSuccess && data?.data) {
@@ -57,11 +55,15 @@ export default function IChannelHome() {
         <div className="post-wrapper">
           {allPosts.map((post) => (
             <div key={post.post_id} className="post-container">
-
-
-{post.text_post && post.image_post && <IChannelBPost post={post} />} 
-{post.text_post && !post.image_post && <IChannelTextPost post={post} />}
-{!post.text_post && post.image_post && <IChannelImagePost post={post} />}
+              {post.text_post && post.image_post && (
+                <IChannelBPost post={post} />
+              )}
+              {post.text_post && !post.image_post && (
+                <IChannelTextPost post={post} />
+              )}
+              {!post.text_post && post.image_post && (
+                <IChannelImagePost post={post} />
+              )}
             </div>
           ))}
 
