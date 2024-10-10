@@ -27,16 +27,10 @@ export default function AllComments({ postId, showReplies }) {
     isFetching: isCommentsFetching,
     isError: isCommentsError,
     refetch,
-  } = useGetCommentsByPostIdQuery(
-    { postId, page: currentPage },
-    {
-      refetchOnMountOrArgChange: true,
-      refetchOnFocus: true,
-    }
-  );
+  } = useGetCommentsByPostIdQuery({ postId, page: currentPage });
 
   if (isCommentsSuccess) {
-    console.log(commentsData)
+    console.log(commentsData);
   }
 
   // Update comments state when new data is successfully fetched
@@ -46,7 +40,6 @@ export default function AllComments({ postId, showReplies }) {
         // Reset comments if it's the first page
         setAllComments(commentsData.data);
       } else {
-
         const old = commentsData.data.filter(
           (newRequest) =>
             !allComments.some(
@@ -55,11 +48,7 @@ export default function AllComments({ postId, showReplies }) {
         );
 
         // Append comments if more pages are being fetched
-        setAllComments((prevComments) => [
-
-          ...prevComments,
-          ...old,
-        ]);
+        setAllComments((prevComments) => [...prevComments, ...old]);
       }
 
       // Check if there are more comments to fetch
@@ -93,11 +82,9 @@ export default function AllComments({ postId, showReplies }) {
 
   // Refetch comments when the refetch trigger is activated
   useEffect(() => {
-    if (shouldRefetch) {
-      refetch();
-      setCurrentPage(1); // Reset the page to start from the beginning
-    }
-  }, [shouldRefetch, refetch]);
+    refetch();
+    setCurrentPage(1); // Reset the page to start from the beginning
+  }, [refetch]);
 
   // Render the component
   return (
@@ -105,17 +92,17 @@ export default function AllComments({ postId, showReplies }) {
       {/* Render broadcasted comments (real-time updates) */}
       {broadcastedComments.length > 0 &&
         broadcastedComments.map((comment) => (
-          <TextComment  comment={comment} showReplies={showReplies} type="user" />
+          <TextComment
+            comment={comment}
+            showReplies={showReplies}
+            type="user"
+          />
         ))}
 
       {/* Render fetched comments */}
       {allComments.length > 0
         ? allComments.map((comment) => (
-            <TextComment
-             
-              comment={comment}
-              showReplies={showReplies}
-            />
+            <TextComment comment={comment} showReplies={showReplies} />
           ))
         : !isCommentsLoading && (
             <div className="col-12 text-center">
@@ -128,9 +115,7 @@ export default function AllComments({ postId, showReplies }) {
         ref={requestRef}
         className="infinite-scroll-trigger"
         style={{ height: "7vh", minHeight: "40px" }}
-      >
-
-      </div>
+      ></div>
     </>
   );
 }

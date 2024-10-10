@@ -7,11 +7,14 @@ import { useInView } from "react-intersection-observer";
 import SmallScreenCommnetBack from "../../Comment/CommentsButton/SmallScreenCommnetBack";
 import MidScreenCommentback from "../../Comment/CommentsButton/MidScreenCommentback";
 import LargeScreenCommentBack from "../../Comment/CommentsButton/LargeScreenCommentBack";
+import echo from "../../../../../echo";
 
 export default function AllReply({ showComments }) {
+  const authId = useSelector((state) => state.home.user_id);
   const commentId = useSelector((state) => state.home.commentId);
   const [friendRequestPage, setFriendRequestPage] = useState(1); // Current page state
   const [allFriendRequest, setAllFriendRequest] = useState([]); // All replies state
+  const [broadcastedReply, setBroadcastedReply] = useState([]); // Real-time comments
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true); // Infinite scroll control
 
   const { ref: replyRequestRef, inView: inViewReplyRequests } = useInView({
@@ -56,6 +59,21 @@ export default function AllReply({ showComments }) {
     }
   }, [inViewReplyRequests, hasMoreFriendRequest, isRepliesFetching]);
 
+  // Handle real-time broadcasted comments
+  useEffect(() => {
+    const channel = echo.private("broadcast-reply");
+    channel.listen(".getReply", (e) => {
+      console.log(e);
+      if (e.reply.replied_by_id === authId) {
+        setBroadcastedReply((prevComments) => [e.reply, ...prevComments]);
+      }
+    });
+
+    return () => {
+      echo.leave("broadcast-comment");
+    };
+  }, [authId]);
+
   // Refetch when the component is first rendered (when switching to 'reply')
   useEffect(() => {
     refetch(); // Initial fetch
@@ -75,6 +93,20 @@ export default function AllReply({ showComments }) {
         </div>
       )}
 
+      {/* Render broadcasted comments (real-time updates) */}
+
+{broadcastedReply.length > 0 &&
+        broadcastedReply.map((reply) => (
+          <ReplyComment
+            comment={reply}
+            key={reply.reply_id} 
+            type="user"
+          />
+        ))}
+
+
+
+
       {/* List of replies */}
       {allFriendRequest.length > 0 &&
         allFriendRequest.map((comment) => (
@@ -87,9 +119,7 @@ export default function AllReply({ showComments }) {
           ref={replyRequestRef}
           className="infinite-scroll-trigger"
           style={{ height: "7vh", minHeight: "40px" }}
-        >
-          
-        </div>
+        ></div>
       )}
 
       {/* Infinite scroll trigger element */}

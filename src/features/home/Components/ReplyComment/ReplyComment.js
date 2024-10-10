@@ -8,8 +8,13 @@ import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { useCreateReplyRepliesMutation } from "../../../../services/repliesApi";
 
-export default function ReplyComment({ comment }) {
+export default function ReplyComment({ comment, type }) {
   const dispatch = useDispatch();
+  const profile_picture = useSelector((state) => state.home.profile_picture);
+  const user_fname = useSelector((state) => state.home.user_fname);
+  const user_lname = useSelector((state) => state.home.user_lname);
+  const identifier = useSelector((state) => state.home.identifier);
+
   const [replyComments, setReplyComments] = useState([]);
   const [createReply, { isLoading: isSubmitting }] =
     useCreateReplyRepliesMutation();
@@ -21,11 +26,10 @@ export default function ReplyComment({ comment }) {
   const replyUnlikeReactions = useSelector(
     (state) => state.home.replyUnlikeReactions[comment?.reply_id]
   );
-  
 
   /* Text */
   const [isExpanded, setIsExpanded] = useState(false);
-  const fullText = comment?.reply_text || ''; // Default to an empty string if undefined
+  const fullText = comment?.reply_text || ""; // Default to an empty string if undefined
   const previewText = fullText.substring(0, 175);
   const toggleText = () => {
     setIsExpanded(!isExpanded);
@@ -103,7 +107,7 @@ export default function ReplyComment({ comment }) {
             ...prev,
             { id: res?.id, text: replyText },
           ]);
-       
+
           setReplyText("");
           setShowReplyInput(false);
         }
@@ -118,25 +122,39 @@ export default function ReplyComment({ comment }) {
       <div className="d-flex bd-highlight ">
         <div className="bd-highlight me-1">
           <img
-            style={{ height: "45px", width: "45px", borderRadius: "50%" }}
-            src={comment?.replied_by.profile_picture}
+            style={{ height: "39px", width: "39px", borderRadius: "50%" }}
+            src={
+              type === "user"
+                ? profile_picture
+                : comment?.replied_by.profile_picture
+            }
             alt="user3"
           />
         </div>
+
         <div className=" bd-highlight">
           {" "}
           <div className="name-column">
-            <h1 className="full-name-text m-0 p-0">
-              {comment?.replied_by.user_fname} {comment?.replied_by.user_lname}
+            <h1 className="full-name-text m-0 p-0" style={{fontSize:'0.9rem'}}>
+              {type === "user"
+                ? `${user_fname} ${user_lname}`
+                : `${comment?.replied_by?.user_fname} ${comment?.replied_by?.user_lname}`}
             </h1>
-            <p className="user-name-text m-0 p-0">
-              @{comment?.replied_by.identifier}
+            <p className="user-name-text m-0 p-0 ">
+
+              {type === "user"
+                ? `@${identifier}`
+                : `@${comment?.replied_by?.identifier}`}
             </p>
           </div>
         </div>
         <div className="ms-auto bd-highlight">
           <p className="time-text">
-            {comment?.created_at && formatPostDate(comment.created_at)}
+          {type === "user"
+              ? `now`
+              : comment?.created_at && formatPostDate(comment.created_at)}
+
+          
           </p>
         </div>
       </div>
