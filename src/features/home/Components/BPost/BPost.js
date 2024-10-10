@@ -11,6 +11,7 @@ import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoveReaction, setUnlikeReactions } from "../../HomeSlice";
+import RootComment from "../Comment/RootComment/RootComment";
 
 export default function BPost({ post }) {
 
@@ -265,85 +266,60 @@ export default function BPost({ post }) {
 
 
 
-
-
-
-
-
-          <i className="ps-md-3 far fa-comment blue "> 1.6k</i>
+{/* Comments */}
+<i
+                className="ps-md-3 far fa-comment blue"
+                data-bs-toggle="modal"
+                data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
+              >
+                  {post.total_comments > 0 && (
+                  <span className="ps-1">{post.total_comments}</span>
+                )}
+              </i>
           <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
         </div>
       </div>
 
+     
       {/* Modal */}
       <div
-        style={{ overflowY: "hidden" }}
-        className="modal fade "
-        id="BPostModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-        ref={modalRef}
-      >
-        <div className="modal-dialog ">
-          <div className="modal-content ">
-            <div className="modal-header shadow-sm p-3 bg-body rounded">
-              <h5 className="modal-title fs-5" id="exampleModalLabel">
-                bb Comment
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body ">
-              {isModalOpen && (
-                <>
-                  <div
-                    className="comments px-md-4 "
-                    style={{
-                      height: "100vh",
-                      overflowY: "scroll",
-                      overflowX: "hidden",
-                    }}
-                  >
-                    <CommentedBothPosts />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    <TextComment />
-                    {/* Needed */}
-                    <div style={{ paddingBottom: "20vh" }}></div>
-                  </div>
-                  {/* Footer */}
-                  <div
-                    className="card-footer p-0 m-0"
-                    style={{
-                      position: "fixed",
-                      bottom: "0px",
-                      width: isXSmall
-                        ? "100%"
-                        : isSmall
-                        ? "74.8%"
-                        : isMid
-                        ? "59.8%"
-                        : isLg
-                        ? "49.9%"
-                        : "49.9%",
-                    }}
-                  >
-                    <Comment />
-                  </div>
-                </>
-              )}
+            className="modal fade"
+            id={`imageModal-${post.post_id}`}
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+            ref={modalRef}
+          >
+             <div className="modal-dialog">
+              <div className="modal-content ">
+                <div className="modal-header shadow-sm p-3 bg-body rounded border-bottom">
+                  <h5 className="modal-title fs-5 " id="exampleModalLabel">
+                    Comments
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  {isModalOpen && (
+                    <>
+                      <div
+                        className="comments pb-4 "
+                        style={{ height: "100vh", overflowY: "scroll" }}
+                      >
+                        <RootComment thePostId={post.post_id} />
+
+                        <div style={{ paddingBottom: "20vh" }}></div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
       </>
       )}
     </div>

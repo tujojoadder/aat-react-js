@@ -74,7 +74,7 @@ export default function Reply() {
           <button
             className="btn btn-primary"
             type="submit"
-            style={{ borderRadius: '50%', padding: '10px', height: '40px', width: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#007bff', border: 'none', color: '#fff', fontSize: '18px', transition: 'background-color 0.3s ease' }}
+            style={{ borderRadius: '50%', padding: '10px', height: '40px', width: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#292e27', border: 'none', color: '#fff', fontSize: '18px', transition: 'background-color 0.3s ease' }}
             disabled={isSubmitting} // Disable button while loading
           >
             <i className="fa-regular fa-paper-plane"></i>

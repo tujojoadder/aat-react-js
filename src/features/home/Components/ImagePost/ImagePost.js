@@ -192,13 +192,16 @@ export default function ImagePost({ post }) {
                 )}
               </i>
 
+
+              {/* Comments */}
               <i
                 className="ps-md-3 far fa-comment blue"
                 data-bs-toggle="modal"
                 data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
-                {" "}
-                1.6k
+                  {post.total_comments > 0 && (
+                  <span className="ps-1">{post.total_comments}</span>
+                )}
               </i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
             </div>

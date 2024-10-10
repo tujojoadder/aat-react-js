@@ -14,12 +14,12 @@ import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { useCreateCommentReplyMutation } from "../../../../services/repliesApi";
 import AllReply from "../ReplyComment/AllReply/AllReply";
 
-export default function TextComment({ comment, type,showReplies }) {
- // Select each state property separately
-const profile_picture = useSelector((state) => state.home.profile_picture);
-const user_fname = useSelector((state) => state.home.user_fname);
-const user_lname = useSelector((state) => state.home.user_lname);
-const identifier = useSelector((state) => state.home.identifier);
+export default function TextComment({ comment, type, showReplies }) {
+  // Select each state property separately
+  const profile_picture = useSelector((state) => state.home.profile_picture);
+  const user_fname = useSelector((state) => state.home.user_fname);
+  const user_lname = useSelector((state) => state.home.user_lname);
+  const identifier = useSelector((state) => state.home.identifier);
 
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
@@ -150,31 +150,22 @@ const identifier = useSelector((state) => state.home.identifier);
   const handleReplyClick = () => {
     dispatch(setCommentId(comment.comment_id));
     showReplies();
-   /*  setShowReplyInput(!showReplyInput); */
-
+    /*  setShowReplyInput(!showReplyInput); */
   };
 
   const handleInputChange = (event) => {
     setReplyText(event.target.value);
   };
 
-  const handleViewRepliesClick = () => {
-    setShowAllReplies(!showAllReplies); // Toggle showing all replies
-  };
-
   return (
     <div className="posts">
       {type === "user" ? (
         <div className="user-pics">
-         
-          
-         <img
-               style={{backgroundColor:'lightgray'}}
-                src={`${profile_picture}`}
-                alt={"Profile Image"}
-                
-              />
-        
+          <img
+            style={{ backgroundColor: "lightgray" }}
+            src={`${profile_picture}`}
+            alt={"Profile Image"}
+          />
         </div>
       ) : (
         <div className="user-pics">
@@ -207,20 +198,15 @@ const identifier = useSelector((state) => state.home.identifier);
               </h1>
             </h1>
             <p className="user-name-text m-0 p-0">
-             
               {type === "user"
-                  ? `@${identifier}`
-                  : `@${comment?.commenter?.identifier}`}
+                ? `@${identifier}`
+                : `@${comment?.commenter?.identifier}`}
             </p>
           </div>
           <p className="time-text ms-3" style={{ marginTop: "7px" }}>
-          {type === "user"
-    ? `now`
-    : comment?.created_at && formatPostDate(comment.created_at)}
-
-
-
-
+            {type === "user"
+              ? `now`
+              : comment?.created_at && formatPostDate(comment.created_at)}
           </p>
         </div>
 
@@ -269,64 +255,57 @@ const identifier = useSelector((state) => state.home.identifier);
             onClick={handleReplyClick}
           >
             Reply
-
-            {comment?.reply_count > 0 && (
-              <span> ({comment?.reply_count})</span>
-            )}
           </span>
         </div>
 
         {/* Reply input and button section */}
         {showReplyInput && (
-        <div className="reply-input-box me-md-3 mb-3 mt-1 me-sm-1 d-flex align-items-center">
-        <input
-          type="text"
-          placeholder="Write a reply..."
-          className="form-control reply-input"
-          value={replyText}
-          onChange={handleInputChange}
-          disabled={isSubmitting} // Disable input while submitting
-          style={{
-            border: "1px solid #ccc",
-            borderRadius: "20px",
-            padding: "10px 15px",
-            height: "auto",
-            boxSizing: "border-box",
-            outline: "none",
-            fontSize: "16px",
-            backgroundColor: "#fff",
-            boxShadow: "none",
-            flexGrow: 1,
-          }}
-        />
-        <button
-          className="btn btn-primary d-flex align-items-center justify-content-center"
-          onClick={handleReplySubmit}
-          disabled={!replyText.trim() || isSubmitting} // Disable button while submitting or if no text
-          style={{
-            borderRadius: "20px",
-            padding: "7px 13px",
-            backgroundColor:
-              isSubmitting || !replyText.trim() ? "#ccc" : "#007bff",
-            border: "none",
-            color: "#fff",
-            cursor:
-              isSubmitting || !replyText.trim() ? "not-allowed" : "pointer",
-            transition: "background-color 0.3s ease",
-          }}
-        >
-          {isSubmitting ? <span>Sending...</span> : <span>Send</span>}
-        </button>
-      </div>
+          <div className="reply-input-box me-md-3 mb-3 mt-1 me-sm-1 d-flex align-items-center">
+            <input
+              type="text"
+              placeholder="Write a reply..."
+              className="form-control reply-input"
+              value={replyText}
+              onChange={handleInputChange}
+              disabled={isSubmitting} // Disable input while submitting
+              style={{
+                border: "1px solid #ccc",
+                borderRadius: "20px",
+                padding: "10px 15px",
+                height: "auto",
+                boxSizing: "border-box",
+                outline: "none",
+                fontSize: "16px",
+                backgroundColor: "#fff",
+                boxShadow: "none",
+                flexGrow: 1,
+              }}
+            />
+            <button
+              className="btn btn-primary d-flex align-items-center justify-content-center"
+              onClick={handleReplySubmit}
+              disabled={!replyText.trim() || isSubmitting} // Disable button while submitting or if no text
+              style={{
+                borderRadius: "20px",
+                padding: "7px 13px",
+                backgroundColor:
+                  isSubmitting || !replyText.trim() ? "#ccc" : "#007bff",
+                border: "none",
+                color: "#fff",
+                cursor:
+                  isSubmitting || !replyText.trim() ? "not-allowed" : "pointer",
+                transition: "background-color 0.3s ease",
+              }}
+            >
+              {isSubmitting ? <span>Sending...</span> : <span>Send</span>}
+            </button>
+          </div>
         )}
-
-        {/* Render reply comments */}
-        {showAllReplies && <AllReply commentId={comment.comment_id} />}
 
         <div className="view-replay-section">
           <button
             className="view-replies-button"
-            onClick={handleViewRepliesClick}
+            onClick={handleReplyClick}
             style={{
               background: "none",
               border: "none",
@@ -335,8 +314,8 @@ const identifier = useSelector((state) => state.home.identifier);
               marginTop: "10px",
             }}
           >
-            {comment?.replies_count > 0 && (
-              <span>View all replies ({comment?.replies_count})</span>
+            {comment?.reply_count > 0 && (
+              <span>View all replies ({comment?.reply_count})</span>
             )}
           </button>
         </div>

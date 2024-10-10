@@ -105,7 +105,7 @@ export default function AllComments({ postId, showReplies }) {
       {/* Render broadcasted comments (real-time updates) */}
       {broadcastedComments.length > 0 &&
         broadcastedComments.map((comment) => (
-          <TextComment  comment={comment} type="user" />
+          <TextComment  comment={comment} showReplies={showReplies} type="user" />
         ))}
 
       {/* Render fetched comments */}
@@ -129,7 +129,7 @@ export default function AllComments({ postId, showReplies }) {
         className="infinite-scroll-trigger"
         style={{ height: "7vh", minHeight: "40px" }}
       >
-        {isCommentsFetching && <CommentSpinner size="25px" color="#ff69b3" />}
+
       </div>
     </>
   );

@@ -1,37 +1,38 @@
 import React, { useEffect, useState } from "react";
 import ReplyComment from "../ReplyComment";
-import Spinner from "../../../../Spinner/Spinner";
-import { useGetRepliesByCommentIdQuery } from "../../../../../services/repliesApi";
 import CommentSpinner from "../../Comment/CommentSpinner/CommentSpinner";
+import { useGetRepliesByCommentIdQuery } from "../../../../../services/repliesApi";
 import { useSelector } from "react-redux";
-import MidScreenBack from "../../../../SmallScreenBack/MidScreenBack";
-import SmallScreenBack from "../../../../SmallScreenBack/SmallScreenBack";
-import LargeScreenBack from "../../../../LargeScreenBack/LargeScreenBack";
-import LargeScreenProfileBack from "../../../../LargeScreenBack/LargeScreenProfileBack";
+import { useInView } from "react-intersection-observer";
 import SmallScreenCommnetBack from "../../Comment/CommentsButton/SmallScreenCommnetBack";
 import MidScreenCommentback from "../../Comment/CommentsButton/MidScreenCommentback";
 import LargeScreenCommentBack from "../../Comment/CommentsButton/LargeScreenCommentBack";
 
 export default function AllReply({ showComments }) {
   const commentId = useSelector((state) => state.home.commentId);
-  const [friendRequestPage, setFriendRequestPage] = useState(1);
-  const [allFriendRequest, setAllFriendRequest] = useState([]);
-  const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
+  const [friendRequestPage, setFriendRequestPage] = useState(1); // Current page state
+  const [allFriendRequest, setAllFriendRequest] = useState([]); // All replies state
+  const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true); // Infinite scroll control
+
+  const { ref: replyRequestRef, inView: inViewReplyRequests } = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  });
 
   // Fetching reply data based on the current page
   const {
     data: repliesData,
     isSuccess: isRepliesSuccess,
     isLoading: isRepliesLoading,
-    isError: isRepliesError,
     isFetching: isRepliesFetching,
     refetch,
   } = useGetRepliesByCommentIdQuery({ commentId, page: friendRequestPage });
 
+  // When the replies data is fetched successfully
   useEffect(() => {
     if (isRepliesSuccess && repliesData?.data) {
       if (repliesData.data.length < 3) {
-        setHasMoreFriendRequest(false);
+        setHasMoreFriendRequest(false); // No more replies to fetch
       }
       const newRequests = repliesData.data.filter(
         (newRequest) =>
@@ -48,14 +49,16 @@ export default function AllReply({ showComments }) {
     }
   }, [isRepliesSuccess, repliesData]);
 
-  // Handler for loading more replies
-  const handleLoadMore = () => {
-    setFriendRequestPage((prevPage) => prevPage + 1);
-  };
+  // Infinite scroll trigger: Load more replies when inView is true
+  useEffect(() => {
+    if (inViewReplyRequests && hasMoreFriendRequest && !isRepliesFetching) {
+      setFriendRequestPage((prevPage) => prevPage + 1); // Increment page
+    }
+  }, [inViewReplyRequests, hasMoreFriendRequest, isRepliesFetching]);
 
   // Refetch when the component is first rendered (when switching to 'reply')
   useEffect(() => {
-    refetch();
+    refetch(); // Initial fetch
   }, [refetch]);
 
   return (
@@ -65,24 +68,37 @@ export default function AllReply({ showComments }) {
       <MidScreenCommentback showComments={showComments} />
       <LargeScreenCommentBack showComments={showComments} />
 
+      {/* Show initial spinner only for first page */}
+      {isRepliesLoading && friendRequestPage === 1 && (
+        <div className="text-center mt-2">
+          <CommentSpinner size="25px" color="#ff69b3" />
+        </div>
+      )}
+
       {/* List of replies */}
       {allFriendRequest.length > 0 &&
         allFriendRequest.map((comment) => (
           <ReplyComment key={comment.reply_id} comment={comment} />
         ))}
 
-      {isRepliesLoading && <CommentSpinner size="25px" color="#ff69b3" />}
-
-      {hasMoreFriendRequest && !isRepliesLoading && (
-        <div className="text-center mt-2">
-          <button
-            className="btn btn-primary"
-            onClick={handleLoadMore}
-            disabled={isRepliesFetching}
-          >
-            Load More
-          </button>
+      {/* Infinite scroll spinner: Only for subsequent pages */}
+      {friendRequestPage > 1 && isRepliesFetching && (
+        <div
+          ref={replyRequestRef}
+          className="infinite-scroll-trigger"
+          style={{ height: "7vh", minHeight: "40px" }}
+        >
+          
         </div>
+      )}
+
+      {/* Infinite scroll trigger element */}
+      {!isRepliesFetching && hasMoreFriendRequest && (
+        <div
+          ref={replyRequestRef}
+          className="infinite-scroll-trigger"
+          style={{ height: "7vh", minHeight: "40px" }}
+        />
       )}
     </>
   );
