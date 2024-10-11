@@ -24,21 +24,13 @@ export default function MyProfile() {
 
   const scrollRef = useRef(null);
   /*  // Using useSelector to retrieve the profile details from Redux state */
-  const {
-    profile_picture,
-    user_fname,
-    user_lname,
-    email,
-    identifier,
-    cover_photo,
-  } = useSelector((state) => ({
-    profile_picture: state.home.profile_picture,
-    user_fname: state.home.user_fname,
-    user_lname: state.home.user_lname,
-    email: state.home.email,
-    identifier: state.home.identifier,
-    cover_photo: state.home.cover_photo,
-  }));
+  const profile_picture = useSelector((state) => state.home.profile_picture);
+const user_fname = useSelector((state) => state.home.user_fname);
+const user_lname = useSelector((state) => state.home.user_lname);
+const email = useSelector((state) => state.home.email);
+const identifier = useSelector((state) => state.home.identifier);
+const cover_photo = useSelector((state) => state.home.cover_photo);
+
   const [currentTab, setCurrentTab] = useState("More");
   const handleTabClick = (tabName) => {
     // Check if the screen size is less than 992px (Bootstrap's large size threshold)

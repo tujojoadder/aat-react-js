@@ -81,10 +81,10 @@ receiver_id: null,
 
 shouldRefetch: false,
 
-commentId:'aa'
+commentId:'',
 
 
-
+totalComments: {}, // Initial state for total comments by post ID
 
 
 
@@ -367,6 +367,10 @@ triggerRefetch: (state) => {
     },
 
 
+    setTotalComments: (state, action) => {
+      const { postId, totalComments } = action.payload;
+      state.totalComments[postId] = totalComments; // Store total comments by post ID
+    }
 
 
 
@@ -386,6 +390,7 @@ pageDetails:'', */
 
 export const {
  setGroupUpdate,
+ setTotalComments,
  setCommentId,
  triggerRefetch,
  setReplyLoveReaction,
