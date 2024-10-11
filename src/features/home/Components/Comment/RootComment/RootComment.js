@@ -6,7 +6,7 @@ import Comment from "../Comment/Comment";
 import Reply from "../../ReplyComment/Reply/Reply";
 
 export default function RootComment({ thePostId }) {
-    const commentId = useSelector((state) => state.home.commentId);
+  const commentId = useSelector((state) => state.home.commentId);
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
     window.innerWidth > 650 && window.innerWidth <= 950
@@ -44,44 +44,33 @@ export default function RootComment({ thePostId }) {
 
   return (
     <>
-   
-    <div className=" px-md-4">
-      {/* Conditional rendering based on the show state */}
-      {show === "comment" && (
-        <AllComments postId={thePostId} showReplies={showReplies} />
-      )}
-      {show === "reply" && <AllReply showComments={showComments} />}
+      <div className=" px-md-4">
+        {/* Conditional rendering based on the show state */}
+        {show === "comment" && (
+          <AllComments postId={thePostId} showReplies={showReplies} />
+        )}
+        {show === "reply" && <AllReply showComments={showComments} />}
       </div>
 
-      
       <div
         className="card-footer p-0 m-0"
         style={{
-            position: "fixed",
-            bottom: "0",
-            width: isXSmall
-              ? "100%"
-              : isSmall
-              ? "74.8%"
-              : isMid
-              ? "59.8%"
-              : isLg
-              ? "49.9%"
-              : "49.9%",
-          }}
+          position: "fixed",
+          bottom: "0",
+          width: isXSmall
+            ? "100%"
+            : isSmall
+            ? "74.8%"
+            : isMid
+            ? "59.8%"
+            : isLg
+            ? "49.9%"
+            : "49.9%",
+        }}
       >
-       
-
-
-{/* Conditional rendering based on the show state */}
-{show === "comment" && (
-         <Comment postId={thePostId} />
-      )}
-      {show === "reply" && <Reply/>}
-
-
-
-
+        {/* Conditional rendering based on the show state */}
+        {show === "comment" && <Comment postId={thePostId} />}
+        {show === "reply" && <Reply />}
       </div>
     </>
   );

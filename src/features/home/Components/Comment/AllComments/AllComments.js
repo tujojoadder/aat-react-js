@@ -89,6 +89,7 @@ export default function AllComments({ postId, showReplies }) {
   // Render the component
   return (
     <>
+    <div className="pb-5">
       {/* Render broadcasted comments (real-time updates) */}
       {broadcastedComments.length > 0 &&
         broadcastedComments.map((comment) => (
@@ -114,8 +115,10 @@ export default function AllComments({ postId, showReplies }) {
       <div
         ref={requestRef}
         className="infinite-scroll-trigger"
-        style={{ height: "7vh", minHeight: "40px" }}
+       
       ></div>
+
+</div>
     </>
   );
 }

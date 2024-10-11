@@ -86,6 +86,7 @@ export default function AllReply({ showComments }) {
       <MidScreenCommentback showComments={showComments} />
       <LargeScreenCommentBack showComments={showComments} />
 
+<div className="pb-5">
       {/* Show initial spinner only for first page */}
       {isRepliesLoading && friendRequestPage === 1 && (
         <div className="text-center mt-2">
@@ -95,17 +96,10 @@ export default function AllReply({ showComments }) {
 
       {/* Render broadcasted comments (real-time updates) */}
 
-{broadcastedReply.length > 0 &&
+      {broadcastedReply.length > 0 &&
         broadcastedReply.map((reply) => (
-          <ReplyComment
-            comment={reply}
-            key={reply.reply_id} 
-            type="user"
-          />
+          <ReplyComment comment={reply} key={reply.reply_id} type="user" />
         ))}
-
-
-
 
       {/* List of replies */}
       {allFriendRequest.length > 0 &&
@@ -118,7 +112,7 @@ export default function AllReply({ showComments }) {
         <div
           ref={replyRequestRef}
           className="infinite-scroll-trigger"
-          style={{ height: "7vh", minHeight: "40px" }}
+        
         ></div>
       )}
 
@@ -127,9 +121,17 @@ export default function AllReply({ showComments }) {
         <div
           ref={replyRequestRef}
           className="infinite-scroll-trigger"
-          style={{ height: "7vh", minHeight: "40px" }}
+          
         />
       )}
+
+</div>
+
+
+
+
+
+
     </>
   );
 }
