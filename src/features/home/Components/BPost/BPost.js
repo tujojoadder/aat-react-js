@@ -5,18 +5,27 @@ import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
 import CommentedBothPosts from "../../../CommentedMedia/CommentedBothposts/CommentedBothPosts";
 import "./BPost.css";
-import { formatPostDate } from "../../../../utils/dateUtils";
+import { formatLargeNumber, formatPostDate } from "../../../../utils/dateUtils";
 import ImagePostSkeleton from "../ImagePost/ImagePostSkeleton/ImagePostSkeleton";
 import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoveReaction, setUnlikeReactions } from "../../HomeSlice";
+import {
+  setLoveReaction,
+  setTotalComments,
+  setUnlikeReactions,
+} from "../../HomeSlice";
 import RootComment from "../Comment/RootComment/RootComment";
+import echo from "../../../../echo";
 
 export default function BPost({ post }) {
+  // Get totalComments from Redux state; fallback to post.total_comments if not available
+  const totalComments = useSelector(
+    (state) => state.home.totalComments[post.post_id] || post.total_comments
+  );
+  const authId = useSelector((state) => state.home.user_id);
 
-
- /*  Love Unlike  */
+  /*  Love Unlike  */
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
 
@@ -69,20 +78,10 @@ export default function BPost({ post }) {
     }
   };
 
+  /* Image load handling  */
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false); // State to track profile picture load
 
-
-
-
-
-
-
-
-
-  
-    /* Image load handling  */
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
-    const [isProfilePicLoaded, setIsProfilePicLoaded] = useState(false); // State to track profile picture load
-  
   /* comment width */
   const [isXSmall, setIsXSmall] = useState(window.innerWidth <= 650);
   const [isSmall, setIsSmall] = useState(
@@ -148,14 +147,37 @@ export default function BPost({ post }) {
   const handleProfilePicLoad = () => {
     setIsProfilePicLoaded(true);
   };
-  
+
+  /* Broadcast totalComments */
+  useEffect(() => {
+    const channel = echo.private("broadcast-reply");
+    channel.listen(".getReply", (e) => {
+      // Check if the reply belongs to the current post
+      if (
+        e.reply.post_id === post.post_id &&
+        e.reply.replied_by_id === authId
+      ) {
+        dispatch(
+          setTotalComments({
+            postId: post.post_id,
+            totalComments: e.reply.total_comment,
+          })
+        );
+      }
+    });
+
+    return () => {
+      echo.leave("broadcast-reply");
+    };
+  }, [dispatch, authId, post.post_id]);
+
   return (
     <div className="posts mx-2 ">
-         {!post ? (
+      {!post ? (
         <ImagePostSkeleton />
       ) : (
         <>
-      <div className="user-pics">
+          <div className="user-pics">
             {!isProfilePicLoaded && (
               <div className="profile-pic-skeleton">
                 <div
@@ -170,43 +192,45 @@ export default function BPost({ post }) {
               </div>
             )}
             <img
-          src={`${post.author.profile_picture}`}
-          alt="user-profile"
+              src={`${post.author.profile_picture}`}
+              alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
             />
           </div>
-      <div className="user-contents-text-box">
-        <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
-          <div className="name-column">
-            <h1 className="full-name-text m-0 p-0">
-              {post.author.user_fname} {post.author.user_lname}
-            </h1>
-            <p className="user-name-text m-0 p-0">@{post.author.identifier}</p>
-          </div>
-          <p
-            className="time-text ms-3"
-            style={{ marginTop: "10px", maxWidth: "150px" }}
-          >
-            {formatPostDate(post.created_at)}
-          </p>
-        </div>
-
-        <div className="user-contents pb-2">
-          <p style={{ margin: "0px" }}>
-            {isExpanded ? fullText : previewText}
-            {fullText.length > 175 && (
-              <span
-                onClick={toggleText}
-                style={{ color: "blue", cursor: "pointer" }}
+          <div className="user-contents-text-box">
+            <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
+              <div className="name-column">
+                <h1 className="full-name-text m-0 p-0">
+                  {post.author.user_fname} {post.author.user_lname}
+                </h1>
+                <p className="user-name-text m-0 p-0">
+                  @{post.author.identifier}
+                </p>
+              </div>
+              <p
+                className="time-text ms-3"
+                style={{ marginTop: "10px", maxWidth: "150px" }}
               >
-                {isExpanded ? " See less" : "... See more"}
-              </span>
-            )}
-          </p>
-        </div>
+                {formatPostDate(post.created_at)}
+              </p>
+            </div>
 
-        <div className="user-contents">
+            <div className="user-contents pb-2">
+              <p style={{ margin: "0px" }}>
+                {isExpanded ? fullText : previewText}
+                {fullText.length > 175 && (
+                  <span
+                    onClick={toggleText}
+                    style={{ color: "blue", cursor: "pointer" }}
+                  >
+                    {isExpanded ? " See less" : "... See more"}
+                  </span>
+                )}
+              </p>
+            </div>
+
+            <div className="user-contents">
               {!isImageLoaded && (
                 <div className="image-skeleton">
                   <div
@@ -239,11 +263,9 @@ export default function BPost({ post }) {
               </div>
             </div>
 
-        <div className="content-icons  px-2 ">
-        
-
- {/*   Love and Unlike */}
- <i
+            <div className="content-icons  px-2 ">
+              {/*   Love and Unlike */}
+              <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
@@ -264,25 +286,25 @@ export default function BPost({ post }) {
                 )}
               </i>
 
-
-
-{/* Comments */}
-<i
+              {/* Comments */}
+              <i
                 className="ps-md-3 far fa-comment blue"
                 data-bs-toggle="modal"
                 data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
-                  {post.total_comments > 0 && (
-                  <span className="ps-1">{post.total_comments}</span>
+                {totalComments > 0 && (
+                  <span className="ps-1">
+                    {" "}
+                    {formatLargeNumber(totalComments)}{" "}
+                  </span>
                 )}
               </i>
-          <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
-        </div>
-      </div>
+              <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
+            </div>
+          </div>
 
-     
-      {/* Modal */}
-      <div
+          {/* Modal */}
+          <div
             className="modal fade"
             id={`imageModal-${post.post_id}`}
             tabIndex="-1"
@@ -290,7 +312,7 @@ export default function BPost({ post }) {
             aria-hidden="true"
             ref={modalRef}
           >
-             <div className="modal-dialog">
+            <div className="modal-dialog">
               <div className="modal-content ">
                 <div className="modal-header shadow-sm p-3 bg-body rounded border-bottom">
                   <h5 className="modal-title fs-5 " id="exampleModalLabel">
@@ -320,7 +342,7 @@ export default function BPost({ post }) {
               </div>
             </div>
           </div>
-      </>
+        </>
       )}
     </div>
   );

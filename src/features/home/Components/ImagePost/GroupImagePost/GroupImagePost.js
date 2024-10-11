@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import "./GroupImagePost.css";
-import { formatLargeNumber, formatPostDate } from "../../../../../utils/dateUtils";
+import {
+  formatLargeNumber,
+  formatPostDate,
+} from "../../../../../utils/dateUtils";
 import ImagePostSkeleton from "../ImagePostSkeleton/ImagePostSkeleton";
 import CommentedImage from "../../../../CommentedMedia/CommentedImage/CommentedImage";
 import TextComment from "../../TextComment/TextComment";
@@ -9,12 +12,19 @@ import Comment from "../../Comment/Comment/Comment";
 import { useToggleLoveMutation } from "../../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../../services/unlikeApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoveReaction, setUnlikeReactions } from "../../../HomeSlice";
+import { setLoveReaction, setTotalComments, setUnlikeReactions } from "../../../HomeSlice";
 import RootComment from "../../Comment/RootComment/RootComment";
+import echo from "../../../../../echo";
 
 export default function GroupImagePost({ post }) {
-  /*   Love and Unlike  */
+  // Get totalComments from Redux state; fallback to post.total_comments if not available
+  const totalComments = useSelector(
+    (state) => state.home.totalComments[post.post_id] || post.total_comments
+  );
+  const authId = useSelector((state) => state.home.user_id);
 
+
+  /*   Love and Unlike  */
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
 
@@ -127,6 +137,31 @@ export default function GroupImagePost({ post }) {
     setIsProfilePicLoaded(true);
   };
 
+  
+  /* Broadcast totalComments */
+  useEffect(() => {
+    const channel = echo.private("broadcast-reply");
+    channel.listen(".getReply", (e) => {
+      // Check if the reply belongs to the current post
+      if (
+        e.reply.post_id === post.post_id &&
+        e.reply.replied_by_id === authId
+      ) {
+        dispatch(
+          setTotalComments({
+            postId: post.post_id,
+            totalComments: e.reply.total_comment,
+          })
+        );
+      }
+    });
+
+    return () => {
+      echo.leave("broadcast-reply");
+    };
+  }, [dispatch, authId, post.post_id]);
+
+
   return (
     <div className="posts mx-2">
       {!post ? (
@@ -228,15 +263,17 @@ export default function GroupImagePost({ post }) {
               </div>
             </div>
             <div className="content-icons px-2">
-                 {/*   Love and Unlike */}
-                 <i
+              {/*   Love and Unlike */}
+              <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
                 onClick={handleLoveClick}
               >
                 {post.totalLove > 0 && (
-                  <span className="ps-1">{ formatLargeNumber(post.totalLove)}</span>
+                  <span className="ps-1">
+                    {formatLargeNumber(post.totalLove)}
+                  </span>
                 )}
               </i>
               <i
@@ -246,10 +283,11 @@ export default function GroupImagePost({ post }) {
                 onClick={handleUnlikeClick}
               >
                 {post.totalUnlike > 0 && (
-                  <span className="ps-1">{  formatLargeNumber(post.totalUnlike) }</span>
+                  <span className="ps-1">
+                    {formatLargeNumber(post.totalUnlike)}
+                  </span>
                 )}
               </i>
-
 
               {/* Comments */}
               <i
@@ -257,8 +295,11 @@ export default function GroupImagePost({ post }) {
                 data-bs-toggle="modal"
                 data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
-                  {post.total_comments > 0 && (
-                  <span className="ps-1"> {formatLargeNumber(post.total_comments) } </span>
+                {totalComments > 0 && (
+                  <span className="ps-1">
+                    {" "}
+                    {formatLargeNumber(totalComments)}{" "}
+                  </span>
                 )}
               </i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>

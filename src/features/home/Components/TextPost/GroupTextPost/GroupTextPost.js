@@ -1,7 +1,9 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import "./GroupTextPost.css";
-import { formatLargeNumber, formatPostDate } from "../../../../../utils/dateUtils";
+import {
+  formatLargeNumber,
+  formatPostDate,
+} from "../../../../../utils/dateUtils";
 import TextComment from "../../TextComment/TextComment";
 import Comment from "../../Comment/Comment/Comment";
 import CommentedText from "../../../../CommentedMedia/CommentedText/CommentedText";
@@ -10,75 +12,69 @@ import TextPostSkeleton from "../TextPostSkeleton/TextPostSkeleton";
 import { useToggleLoveMutation } from "../../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../../services/unlikeApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoveReaction, setUnlikeReactions } from "../../../HomeSlice";
+import { setLoveReaction, setTotalComments, setUnlikeReactions } from "../../../HomeSlice";
 import RootComment from "../../Comment/RootComment/RootComment";
+import echo from "../../../../../echo";
 
 const GroupTextPost = ({ post }) => {
+  // Get totalComments from Redux state; fallback to post.total_comments if not available
+  const totalComments = useSelector(
+    (state) => state.home.totalComments[post.post_id] || post.total_comments
+  );
+  const authId = useSelector((state) => state.home.user_id);
 
+  /*   Love and Unlike  */
+  const [toggleLove] = useToggleLoveMutation();
+  const [toggleUnlike] = useToggleUnlikeMutation();
 
-/*   Love and Unlike  */
-const [toggleLove] = useToggleLoveMutation();
-const [toggleUnlike] = useToggleUnlikeMutation();
+  const dispatch = useDispatch();
+  // Redux selectors for request status
+  const loveReactions = useSelector(
+    (state) => state.home.loveReactions[post.post_id]
+  );
+  const unlikeReactions = useSelector(
+    (state) => state.home.unlikeReactions[post.post_id]
+  );
 
-const dispatch = useDispatch();
-// Redux selectors for request status
-const loveReactions = useSelector(
-  (state) => state.home.loveReactions[post.post_id]
-);
-const unlikeReactions = useSelector(
-  (state) => state.home.unlikeReactions[post.post_id]
-);
+  useEffect(() => {
+    if (post.isLove) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
+    if (post.isUnlike) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
+  }, []);
+  const handleLoveClick = async () => {
+    // Optimistic update
 
-useEffect(() => {
-  if (post.isLove) {
-    dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
-  }
-  if (post.isUnlike) {
-    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
-  }
-}, []);
-const handleLoveClick = async () => {
-  // Optimistic update
+    if (loveReactions) {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
+    } else {
+      dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
+    }
 
-  if (loveReactions) {
-    dispatch(setLoveReaction({ postId: post.post_id, isActive: false }));
-  } else {
-    dispatch(setLoveReaction({ postId: post.post_id, isActive: true })); // Activate love reaction
-  }
+    try {
+      await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle love:", error);
+    }
+  };
 
-  try {
-    await toggleLove({ loveOnType: "post", loveOnId: post.post_id });
-  } catch (error) {
-    console.error("Failed to toggle love:", error);
-  }
-};
+  const handleUnlikeClick = async () => {
+    // Optimistic update
 
-const handleUnlikeClick = async () => {
-  // Optimistic update
+    if (unlikeReactions) {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
+    } else {
+      dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
+    }
 
-  if (unlikeReactions) {
-    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: false })); // Activate unlike reaction
-  } else {
-    dispatch(setUnlikeReactions({ postId: post.post_id, isActive: true })); // Activate unlike reaction
-  }
-
-  try {
-    await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
-  } catch (error) {
-    console.error("Failed to toggle unlike:", error);
-  }
-};
-
-
-
-
-
-
-
-
-
-
-
+    try {
+      await toggleUnlike({ unlikeOnType: "post", unlikeOnId: post.post_id });
+    } catch (error) {
+      console.error("Failed to toggle unlike:", error);
+    }
+  };
 
   /* Image load handling  */
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -149,29 +145,51 @@ const handleUnlikeClick = async () => {
     setIsProfilePicLoaded(true);
   };
 
+  /* Broadcast totalComments */
+  useEffect(() => {
+    const channel = echo.private("broadcast-reply");
+    channel.listen(".getReply", (e) => {
+      // Check if the reply belongs to the current post
+      if (
+        e.reply.post_id === post.post_id &&
+        e.reply.replied_by_id === authId
+      ) {
+        dispatch(
+          setTotalComments({
+            postId: post.post_id,
+            totalComments: e.reply.total_comment,
+          })
+        );
+      }
+    });
+
+    return () => {
+      echo.leave("broadcast-reply");
+    };
+  }, [dispatch, authId, post.post_id]);
+
   return (
     <div className="posts mx-2">
-
-{!post ? (
+      {!post ? (
         <TextPostSkeleton />
       ) : (
         <>
-      <div className="user-pics">
-        {!isProfilePicLoaded && (
-          <div className="profile-pic-skeleton">
-            <div
-              className="skeleton-box ms-2 me-1"
-              style={{
-                height: "50px",
-                width: "50px",
-                borderRadius: "50%",
-                backgroundColor: "#e5e5e5",
-              }}
-            ></div>
-          </div>
-        )}
-        {/* Group Cover Photo */}
-        <img
+          <div className="user-pics">
+            {!isProfilePicLoaded && (
+              <div className="profile-pic-skeleton">
+                <div
+                  className="skeleton-box ms-2 me-1"
+                  style={{
+                    height: "50px",
+                    width: "50px",
+                    borderRadius: "50%",
+                    backgroundColor: "#e5e5e5",
+                  }}
+                ></div>
+              </div>
+            )}
+            {/* Group Cover Photo */}
+            <img
               src={`${post.group.group_picture}`}
               alt="user-profile"
               onLoad={handleProfilePicLoad}
@@ -180,7 +198,6 @@ const handleUnlikeClick = async () => {
                 height: "50px",
                 width: "50px",
                 borderRadius: "15%",
-              
               }}
             />
             {/*   User Image */}
@@ -194,60 +211,60 @@ const handleUnlikeClick = async () => {
                 height: "30px",
                 width: "30px",
                 borderRadius: "50%",
-                position:'relative',
-                top:'-25px',
-                left:'25px'
-               
+                position: "relative",
+                top: "-25px",
+                left: "25px",
               }}
             />
-      </div>
+          </div>
 
-      <div className="user-contents-text-box">
-        <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
-          <div className="name-column ">
-       {/*  Group Name */}
-       <h1 className="full-name-text m-0 p-0">
+          <div className="user-contents-text-box">
+            <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
+              <div className="name-column ">
+                {/*  Group Name */}
+                <h1 className="full-name-text m-0 p-0">
                   {post.group.group_name}
                 </h1>
 
-               {/*  User Identifire */}
+                {/*  User Identifire */}
                 <p className="user-name-text m-0 p-0">
-                @{post.author.identifier}
+                  @{post.author.identifier}
                 </p>
-          </div>
-          <p
-            className="time-text ms-3 "
-            style={{ marginTop: "10px", maxWidth: "150px" }}
-          >
-            {formatPostDate(post.created_at)}
-          </p>
-        </div>
-
-        <div className="user-contents">
-          <p style={{ margin: "0px" }}>
-            {isExpanded ? fullText : previewText}
-            {fullText.length > 175 && (
-              <span
-                onClick={toggleText}
-                style={{ color: "blue", cursor: "pointer" }}
+              </div>
+              <p
+                className="time-text ms-3 "
+                style={{ marginTop: "10px", maxWidth: "150px" }}
               >
-                {isExpanded ? " See less" : "... See more"}
-              </span>
-            )}
-          </p>
-        </div>
+                {formatPostDate(post.created_at)}
+              </p>
+            </div>
 
-        <div className="content-icons pe-3">
-  
- {/*   Love and Unlike */}
- <i
+            <div className="user-contents">
+              <p style={{ margin: "0px" }}>
+                {isExpanded ? fullText : previewText}
+                {fullText.length > 175 && (
+                  <span
+                    onClick={toggleText}
+                    style={{ color: "blue", cursor: "pointer" }}
+                  >
+                    {isExpanded ? " See less" : "... See more"}
+                  </span>
+                )}
+              </p>
+            </div>
+
+            <div className="content-icons pe-3">
+              {/*   Love and Unlike */}
+              <i
                 className={`far fa-heart ${
                   loveReactions ? "fas red-heart" : ""
                 }`}
                 onClick={handleLoveClick}
               >
                 {post.totalLove > 0 && (
-                  <span className="ps-1">{ formatLargeNumber(post.totalLove)}</span>
+                  <span className="ps-1">
+                    {formatLargeNumber(post.totalLove)}
+                  </span>
                 )}
               </i>
               <i
@@ -257,10 +274,11 @@ const handleUnlikeClick = async () => {
                 onClick={handleUnlikeClick}
               >
                 {post.totalUnlike > 0 && (
-                  <span className="ps-1">{  formatLargeNumber(post.totalUnlike) }</span>
+                  <span className="ps-1">
+                    {formatLargeNumber(post.totalUnlike)}
+                  </span>
                 )}
               </i>
-
 
               {/* Comments */}
               <i
@@ -268,8 +286,11 @@ const handleUnlikeClick = async () => {
                 data-bs-toggle="modal"
                 data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
-                  {post.total_comments > 0 && (
-                  <span className="ps-1"> {formatLargeNumber(post.total_comments) } </span>
+                {totalComments > 0 && (
+                  <span className="ps-1">
+                    {" "}
+                    {formatLargeNumber(totalComments)}{" "}
+                  </span>
                 )}
               </i>
               <i className="fa-solid fa-chevron-up ps-md-3 pe-4"></i>
@@ -315,7 +336,7 @@ const handleUnlikeClick = async () => {
               </div>
             </div>
           </div>
-      </>
+        </>
       )}
     </div>
   );
