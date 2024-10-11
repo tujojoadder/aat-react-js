@@ -104,27 +104,12 @@ export default function ImagePost({ post }) {
     setIsProfilePicLoaded(true);
   };
 
-/* 
-  // Handle real-time broadcasted comments
-  useEffect(() => {
-  const channel = echo.private("broadcast-reply");
-  channel.listen(".getReply", (e) => {
-    console.log(e.reply);
-
-    // Check if the reply belongs to the current post
-    if (e.reply.post_id === post.post_id) {
-      dispatch(setTotalComments({ postId: post.post_id, totalComments: e.reply.total_comment }));
-    }
-  });
-
-  return () => {
-    echo.leave("broadcast-reply");
-  };
-}, [dispatch, authId, post.post_id]);
- */
 
 
 useEffect(() => {
+
+
+  
   const channel = echo.private("broadcast-reply");
   channel.listen(".getReply", (e) => {
     console.log(e.reply);
@@ -139,6 +124,8 @@ useEffect(() => {
     echo.leave("broadcast-reply");
   };
 }, [dispatch, authId, post.post_id]);
+
+
 
 
 
