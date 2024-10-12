@@ -31,7 +31,12 @@ export default function GroupSuggestion() {
     isError: isErrorAdminGroups,
     isSuccess: isSuccessAdminGroups,
   } = useGetGroupSuggestionQuery(pageAdmin);
-
+    // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
+    useEffect(() => {
+      setPageAdmin(1);
+      setAllAdminGroups([]);
+      setHasMoreAdminGroups(true);
+    }, []);
   // Effect to process fetched admin groups data
   useEffect(() => {
     if (isSuccessAdminGroups && adminGroupsData?.data) {
@@ -69,6 +74,8 @@ export default function GroupSuggestion() {
     hasMoreAdminGroups,
     isSuccessAdminGroups,
   ]);
+
+
 
   return (
     <div

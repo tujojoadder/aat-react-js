@@ -39,8 +39,6 @@ if (isSuccessAdminGroups) {
     setPageAdmin(1);
     setAllAdminGroups([]);
     setHasMoreAdminGroups(true);
-
-
   }, []);
 
   // Effect to process fetched admin groups data

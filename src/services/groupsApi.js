@@ -18,7 +18,7 @@ export const groupsApi = createApi({
       return headers;
     },
   }),
-  tagTypes:['Tasks'],
+  tagTypes: ["Create", "Join"],
   endpoints: (builder) => ({
     //Create groups
     createGroup: builder.mutation({
@@ -27,32 +27,33 @@ export const groupsApi = createApi({
         method: "POST",
         body: groupData,
       }),
-      invalidatesTags:['Tasks'],
+      invalidatesTags: ["Create"],
     }),
 
     // Define your API slice
     getJoinedGroupsButNotAdmin: builder.query({
       // Accept a parameter for the page number
       query: (page = 1) => `/groups/joined-not-admin?page=${page}`,
+      providesTags: ['Join'],
     }),
-   // Define your API slice
-   getJoinedGroupsButNotAdminRight: builder.query({
-    // Accept a parameter for the page number
-    query: (page = 1) => `/groups/joined-not-admin-right?page=${page}`,
-  }),
+    // Define your API slice
+    getJoinedGroupsButNotAdminRight: builder.query({
+      // Accept a parameter for the page number
+      query: (page = 1) => `/groups/joined-not-admin-right?page=${page}`,
+    }),
 
     // Define your API slice
-getGroupsWhereAdmin: builder.query({
-  // Remove the page parameter since pagination is no longer needed
-  query: (page = 1) => `/groups/joined-admin?page=${page}`,
-  providesTags:['Tasks'],
-}),
-
+    getGroupsWhereAdmin: builder.query({
+      // Remove the page parameter since pagination is no longer needed
+      query: (page = 1) => `/groups/joined-admin?page=${page}`,
+      providesTags: ["Create"],
+    }),
 
     // Define your API slice
     getGroupSuggestion: builder.query({
       // Accept a parameter for the page number
       query: (page = 1) => `/groups/suggestions?page=${page}`,
+      providesTags:["Join"],
     }),
 
     //get specific group details
@@ -93,12 +94,11 @@ getGroupsWhereAdmin: builder.query({
       query: (page = 1) => `group/randomposts?page=${page}`, // Updated to include id
     }),
 
-
     /* updateGroupName */
     updateGroupName: builder.mutation({
       query: ({ groupId, name }) => ({
         url: `groups/${groupId}/update/name`,
-        method: 'PUT',
+        method: "PUT",
         body: { name },
       }),
     }),
@@ -107,92 +107,91 @@ getGroupsWhereAdmin: builder.query({
     updateGroupDetails: builder.mutation({
       query: ({ groupId, details }) => ({
         url: `groups/${groupId}/update/details`,
-        method: 'PUT',
+        method: "PUT",
         body: { details },
       }),
     }),
 
-
     addGroupAdmin: builder.mutation({
       query: ({ groupId, newMember }) => ({
         url: `/groups/${groupId}/add-admin/${newMember}`,
-        method: 'POST',
+        method: "POST",
       }),
     }),
-
 
     kickOutMember: builder.mutation({
       query: ({ groupId, memberId }) => ({
         url: `/groups/${groupId}/kick-out-member/${memberId}`, // Adjusted to use URL params
-        method: 'DELETE',
+        method: "DELETE",
       }),
     }),
 
     joinPublicGroup: builder.mutation({
       query: (groupId) => ({
         url: `groups/join/${groupId}`,
-        method: 'POST',
+        method: "POST",
       }),
+      invalidatesTags: ['Join'],
     }),
     leaveGroup: builder.mutation({
       query: (groupId) => ({
         url: `groups/leave/${groupId}`,
-        method: 'POST',
+        method: "POST",
       }),
+      invalidatesTags:['Create','Join']
+      
     }),
 
     joinPrivateGroup: builder.mutation({
       query: (groupId) => ({
         url: `groups/join-request-private/${groupId}`,
-        method: 'POST',
+        method: "POST",
       }),
     }),
     cancelJoinRequest: builder.mutation({
       query: (groupId) => ({
         url: `groups/cancel-join-request/${groupId}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
     }),
 
-/*     see all group join   request with user details  */
-getUsersWithJoinRequests: builder.query({
-  query: ({ memberPage = 1, groupId }) => 
-    `group/join-requests?page=${memberPage}&groupId=${groupId}`,
-}),
+    /*     see all group join   request with user details  */
+    getUsersWithJoinRequests: builder.query({
+      query: ({ memberPage = 1, groupId }) =>
+        `group/join-requests?page=${memberPage}&groupId=${groupId}`,
+    }),
 
-/* make decision for join group request */
-manageJoinGroupRequest: builder.mutation({
-  query: ({groupId,decision,sender_id}) => {
-    return {
-      url: "/managejoingrouprequest",
-      method: "POST",
-      body: {groupId,decision,sender_id},
-    };
-  },
-}),
-
+    /* make decision for join group request */
+    manageJoinGroupRequest: builder.mutation({
+      query: ({ groupId, decision, sender_id }) => {
+        return {
+          url: "/managejoingrouprequest",
+          method: "POST",
+          body: { groupId, decision, sender_id },
+        };
+      },
+    }),
 
     /*    get specific group posts approval requests*/
     getSpecificApprovalRwquestedGroupPosts: builder.query({
       query: ({ page = 1, groupId }) =>
         `getspecificgrouppostapprovalrequestes?page=${page}&id=${groupId}`, // Updated to include id
     }),
-  /*   approvePost group post */
+    /*   approvePost group post */
 
     approvePost: builder.mutation({
       query: ({ groupId, postId }) => ({
         url: `/groups/${groupId}/posts/${postId}/approve`,
-        method: 'POST',
+        method: "POST",
       }),
     }),
 
     rejectPostApproval: builder.mutation({
       query: ({ groupId, postId }) => ({
         url: `/groups/${groupId}/posts/${postId}/reject`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
     }),
-
   }),
 });
 

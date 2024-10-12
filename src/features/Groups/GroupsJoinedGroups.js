@@ -11,8 +11,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function GroupsJoinedGroups() {
-  const groupUpdate = useSelector((state) => state.home.groupUpdate);
-
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
   const [pageJoined, setPageJoined] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
@@ -30,6 +28,7 @@ export default function GroupsJoinedGroups() {
     isFetching: isFetchingJoinedGroups,
     isError: isErrorJoinedGroups,
     isSuccess: isSuccessJoinedGroups,
+    
   } = useGetJoinedGroupsButNotAdminQuery(pageJoined);
 
   // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
@@ -37,7 +36,10 @@ export default function GroupsJoinedGroups() {
     setPageJoined(1);
     setAllPosts([]);
     setHasMorePosts(true);
-  }, [groupUpdate]);
+  }, []);
+
+
+
 
   // Effect to process fetched joined (not admin) groups data
   useEffect(() => {
