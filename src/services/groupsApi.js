@@ -18,6 +18,7 @@ export const groupsApi = createApi({
       return headers;
     },
   }),
+  tagTypes:['Tasks'],
   endpoints: (builder) => ({
     //Create groups
     createGroup: builder.mutation({
@@ -26,6 +27,7 @@ export const groupsApi = createApi({
         method: "POST",
         body: groupData,
       }),
+      invalidatesTags:['Tasks'],
     }),
 
     // Define your API slice
@@ -43,6 +45,7 @@ export const groupsApi = createApi({
 getGroupsWhereAdmin: builder.query({
   // Remove the page parameter since pagination is no longer needed
   query: (page = 1) => `/groups/joined-admin?page=${page}`,
+  providesTags:['Tasks'],
 }),
 
 

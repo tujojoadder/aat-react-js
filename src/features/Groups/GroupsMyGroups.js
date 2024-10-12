@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function GroupsMyGroups() {
-  const groupUpdate = useSelector((state) => state.home.groupUpdate);
 
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
   const [pageAdmin, setPageAdmin] = useState(1);
@@ -30,18 +29,19 @@ export default function GroupsMyGroups() {
     isFetching: isFetchingAdminGroups,
     isError: isErrorAdminGroups,
     isSuccess: isSuccessAdminGroups,
-    refetch: refetchAdmin,
+    refetch
   } = useGetGroupsWhereAdminQuery(pageAdmin);
-
+if (isSuccessAdminGroups) {
+  console.log(adminGroupsData);
+}
   // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
   useEffect(() => {
     setPageAdmin(1);
     setAllAdminGroups([]);
     setHasMoreAdminGroups(true);
 
-    // Refetch data for groups where the user is an admin
-    refetchAdmin();
-  }, [groupUpdate]);
+
+  }, []);
 
   // Effect to process fetched admin groups data
   useEffect(() => {
