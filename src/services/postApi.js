@@ -28,16 +28,6 @@ export const postApi = createApi({
       }),
 
 
-/* Create Post user */     
-userPostInsert: builder.mutation({
-  query: (data) => {
-    return {
-      url: "/post/create",
-      method: "POST",
-      body: data,
-    };
-  },
-}),
 
 
 /* Create Group Post */   
@@ -83,7 +73,7 @@ userIAccountPostInsert: builder.mutation({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useUserPostInsertMutation,
+export const { 
   useUserIAccountPostInsertMutation,
   useUserPagePostInsertMutation,
   useGetPostsQuery,

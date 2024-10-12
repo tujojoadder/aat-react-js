@@ -40,10 +40,12 @@ const MyProfileImageContainer = () => {
     isSuccess: useGetSpecificUserPhotoQueryIsSuccess,
   } = useGetAuthUserPhotoQuery({ photoPage });
 
-  /* if (useGetSpecificUserPhotoQueryIsSuccess) {
-    console.log("photo" + useGetSpecificUserPhotoQueryData);
-  }
- */
+   // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
+   useEffect(() => {
+    setPhotoPage(1);
+    setAllPhotos([]);
+    setHasMorePhotos(true);
+  }, []);
   // Effect to process fetched data
   useEffect(() => {
     if (

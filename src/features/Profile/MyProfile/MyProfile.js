@@ -20,16 +20,14 @@ import MyProfileFollowingContainer from "./MyProfileFollowingContainer/MyProfile
 import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
 
 export default function MyProfile() {
-
-
   const scrollRef = useRef(null);
   /*  // Using useSelector to retrieve the profile details from Redux state */
   const profile_picture = useSelector((state) => state.home.profile_picture);
-const user_fname = useSelector((state) => state.home.user_fname);
-const user_lname = useSelector((state) => state.home.user_lname);
-const email = useSelector((state) => state.home.email);
-const identifier = useSelector((state) => state.home.identifier);
-const cover_photo = useSelector((state) => state.home.cover_photo);
+  const user_fname = useSelector((state) => state.home.user_fname);
+  const user_lname = useSelector((state) => state.home.user_lname);
+  const email = useSelector((state) => state.home.email);
+  const identifier = useSelector((state) => state.home.identifier);
+  const cover_photo = useSelector((state) => state.home.cover_photo);
 
   const [currentTab, setCurrentTab] = useState("More");
   const handleTabClick = (tabName) => {
@@ -79,7 +77,7 @@ const cover_photo = useSelector((state) => state.home.cover_photo);
     backgroundSize: "cover",
     backgroundPosition: "center",
     minHeight: "calc(100px + 15vw)",
-    backgroundColor: "lightgrey" // Added for debugging
+    backgroundColor: "lightgrey", // Added for debugging
   };
 
   return (
@@ -87,11 +85,12 @@ const cover_photo = useSelector((state) => state.home.cover_photo);
       className="friend-home main border-start border-end mb-1 m-0 p-0"
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
-
-  
-  <SmallScreenBack/>
-
-        <div ref={scrollRef} className="header__wrapper m-0 p-0" style={{ overflowY: 'scroll', height: '100vh' }}>
+      <SmallScreenBack />
+      <div
+        ref={scrollRef}
+        className="header__wrapper m-0 p-0"
+        style={{ overflowY: "scroll", height: "100vh" }}
+      >
         <div style={backgroundImageStyle}>
           <ProfileHomeBack text="My account" />
         </div>
@@ -99,10 +98,9 @@ const cover_photo = useSelector((state) => state.home.cover_photo);
           <div className="left__col">
             <div className="img__container">
               <img
-               style={{backgroundColor:'lightgray'}}
+                style={{ backgroundColor: "lightgray" }}
                 src={`${profile_picture}`}
                 alt={"Profile Image"}
-                
               />
 
               <span></span>
@@ -217,8 +215,7 @@ const cover_photo = useSelector((state) => state.home.cover_photo);
               id="post"
               className="post-container-secssion mb-md-4 tab-pane fade show active"
             >
-
-             <MyProfilePost/> 
+              <MyProfilePost />
             </div>
 
             {/* Image Section */}
@@ -226,7 +223,7 @@ const cover_photo = useSelector((state) => state.home.cover_photo);
               id="image"
               className="image-container-secssion mb-md-4 px-md-3 pt-3 tab-pane fade"
             >
-              <MyProfileImageContainer/>
+              <MyProfileImageContainer />
             </div>
 
             {/* About Section */}
@@ -241,18 +238,16 @@ const cover_photo = useSelector((state) => state.home.cover_photo);
 
             {/* Follower Section */}
             <div id="follower" className="p-md-3 tab-pane fade">
-              <MyProfileFollowerContainer/>
+              <MyProfileFollowerContainer />
             </div>
             {/* Following Section */}
             <div id="following" className="p-md-3 tab-pane fade">
-              <MyProfileFollowingContainer/>
+              <MyProfileFollowingContainer />
             </div>
           </div>
         </div>
       </div>
       <CustomScrollBar scrollRef={scrollRef} /> {/* Include CustomScrollBar */}
-
     </div>
-
   );
 }

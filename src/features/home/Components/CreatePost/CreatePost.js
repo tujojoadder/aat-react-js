@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./CreatePost.css";
-import { useUserPostInsertMutation } from "../../../../services/postApi";
+import { useUserPostInsertMutation } from "../../../../services/profileApi";
 import { handleApiError } from "../../../handleApiError/handleApiError";
 import { useDispatch } from "react-redux";
 import { setToastSuccess } from "../../HomeSlice";

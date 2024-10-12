@@ -22,9 +22,12 @@ export default function MyProfilePost() {
   // Fetch posts using RTK Query
   const { data: userPosts, isFetching, isError, isSuccess } = useGetAuthUserPostQuery({ page });
 
- if (isSuccess) {
-  console.log(userPosts)
- }
+   // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
+   useEffect(() => {
+    setPage(1);
+    setAllPosts([]);
+    setHasMorePosts(true);
+  }, []);
   // Update post list and avoid duplicates
   useEffect(() => {
     if (isSuccess && userPosts?.data) {
