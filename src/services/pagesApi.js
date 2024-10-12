@@ -19,6 +19,7 @@ export const pagesApi = createApi({
     },
   }),
 
+  tagTypes: ["Create","Join"],
   endpoints: (builder) => ({
     createPage: builder.mutation({
       query: (pageData) => ({
@@ -26,19 +27,23 @@ export const pagesApi = createApi({
         method: "POST",
         body: pageData,
       }),
+      invalidatesTags: ["Create"],
     }),
 
     // get pages where auth user is admin
     getPagesWhereAdmin: builder.query({
       query: (page = 1) => `get-pages-where-admin?page=${page}`, // Adjust the endpoint URL as needed
+      providesTags:["Create"]
     }),
     // get liked pages
     getLikedPages: builder.query({
       query: (page = 1) => `get-pages-liked?page=${page}`, // Adjust the endpoint URL as needed
+      providesTags:["Join"]
     }),
     // get liked pages
     getPageSuggestion: builder.query({
       query: (page = 1) => `get-pages-suggestion?page=${page}`, // Adjust the endpoint URL as needed
+      providesTags :['Join']
     }),
 
     //get specific group details
@@ -67,21 +72,23 @@ export const pagesApi = createApi({
     joinPage: builder.mutation({
       query: (pageId) => ({
         url: `page/join/${pageId}`,
-        method: 'POST',
+        method: "POST",
       }),
+      invalidatesTags:["Join"]
     }),
     leavePage: builder.mutation({
       query: (pageId) => ({
         url: `page/leave/${pageId}`,
-        method: 'POST',
+        method: "POST",
       }),
+      invalidatesTags:["Join"]
     }),
 
     /* updatePageName */
     updatePageName: builder.mutation({
       query: ({ pageId, name }) => ({
         url: `pages/${pageId}/update/name`,
-        method: 'PUT',
+        method: "PUT",
         body: { name },
       }),
     }),
@@ -90,7 +97,7 @@ export const pagesApi = createApi({
     updatePageDetails: builder.mutation({
       query: ({ pageId, details }) => ({
         url: `pages/${pageId}/update/details`,
-        method: 'PUT',
+        method: "PUT",
         body: { details },
       }),
     }),
@@ -98,53 +105,47 @@ export const pagesApi = createApi({
     updatePageLocation: builder.mutation({
       query: ({ pageId, location }) => ({
         url: `pages/${pageId}/update/location`,
-        method: 'PUT',
+        method: "PUT",
         body: { location },
       }),
     }),
 
-       /* updateGroupDetails */
-       updatePagePhone: builder.mutation({
-        query: ({ pageId, phone }) => ({
-          url: `pages/${pageId}/update/phone`,
-          method: 'PUT',
-          body: { phone },
-        }),
+    /* updateGroupDetails */
+    updatePagePhone: builder.mutation({
+      query: ({ pageId, phone }) => ({
+        url: `pages/${pageId}/update/phone`,
+        method: "PUT",
+        body: { phone },
       }),
-         /* updateGroupDetails */
-         updatePageEmail: builder.mutation({
-          query: ({ pageId, email }) => ({
-            url: `pages/${pageId}/update/email`,
-            method: 'PUT',
-            body: { email },
-          }),
-        }),
-    
+    }),
+    /* updateGroupDetails */
+    updatePageEmail: builder.mutation({
+      query: ({ pageId, email }) => ({
+        url: `pages/${pageId}/update/email`,
+        method: "PUT",
+        body: { email },
+      }),
+    }),
 
- /* get member of page on manage*/
- getAllPageMemberForManage: builder.query({
-  query: ({ memberPage = 1, pageId }) =>
-    `getspecificpagememberformanage?page=${memberPage}&id=${pageId}`, // Updated to include id
-}),
+    /* get member of page on manage*/
+    getAllPageMemberForManage: builder.query({
+      query: ({ memberPage = 1, pageId }) =>
+        `getspecificpagememberformanage?page=${memberPage}&id=${pageId}`, // Updated to include id
+    }),
 
+    addPageAdmin: builder.mutation({
+      query: ({ pageId, newMember }) => ({
+        url: `/page/${pageId}/add-admin/${newMember}`,
+        method: "POST",
+      }),
+    }),
 
-
-addPageAdmin: builder.mutation({
-  query: ({ pageId, newMember }) => ({
-    url: `/page/${pageId}/add-admin/${newMember}`,
-    method: 'POST',
-  }),
-}),
-
-
-kickOutPageMember: builder.mutation({
-  query: ({ pageId, memberId }) => ({
-    url: `/page/${pageId}/kick-out-member/${memberId}`, // Adjusted to use URL params
-    method: 'DELETE',
-  }),
-}),
-
-    
+    kickOutPageMember: builder.mutation({
+      query: ({ pageId, memberId }) => ({
+        url: `/page/${pageId}/kick-out-member/${memberId}`, // Adjusted to use URL params
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 

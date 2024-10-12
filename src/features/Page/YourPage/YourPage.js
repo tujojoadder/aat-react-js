@@ -12,7 +12,6 @@ import PageSmallScreenCard from "../PageSmallScreenCard/PageSmallScreenCard.js";
 import PageLargeScreenCard from "../PageLargeScreenCard/PageLargeScreenCard.js";
 
 export default function YourPage() {
-  const groupUpdate = useSelector((state) => state.home.groupUpdate);
 
   const isSmallScreen = useMediaQuery({ query: "(max-width: 767px)" });
   const [pageNumber, setpageNumber] = useState(1);
@@ -31,24 +30,17 @@ export default function YourPage() {
     isFetching: isFetchingAdminGroups,
     isError: isErrorAdminGroups,
     isSuccess: isSuccessAdminGroups,
-    refetch: refetchAdmin,
+   
   } = useGetPagesWhereAdminQuery(pageNumber);
 
-  if (isErrorAdminGroups) {
-    console.log(adminGroupsData)
-  }
-  if (isSuccessAdminGroups) {
-    console.log(adminGroupsData)
-  }
+  
   // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
   useEffect(() => {
     setpageNumber(1);
     setAllAdminGroups([]);
     setHasMoreAdminGroups(true);
 
-    // Refetch data for pages where the user is an admin
-    refetchAdmin();
-  }, [groupUpdate]);
+  }, []);
 
   // Effect to process fetched admin groups data
   useEffect(() => {

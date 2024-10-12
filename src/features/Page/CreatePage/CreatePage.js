@@ -36,7 +36,7 @@ const navigate=useNavigate();
         category: formData.category,
       }).unwrap();
         // Handle success
-        navigate("/");
+        navigate("/page/created");
         dispatch(setToastSuccess({ toastSuccess: "Page Created Successfully" }));
     } catch (err) {
       // Handle error
