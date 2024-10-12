@@ -18,6 +18,7 @@ export const iaccountsApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Create","JoinOrLeave"],
   endpoints: (builder) => ({
     createIAccount: builder.mutation({
       query: (iAccountData) => ({
@@ -25,6 +26,7 @@ export const iaccountsApi = createApi({
         method: "POST",
         body: iAccountData,
       }),
+      invalidatesTags:['Create']
     }),
 
     /*  get random post */
@@ -35,11 +37,13 @@ export const iaccountsApi = createApi({
     // get pages where auth user is admin
     getYourIaccounts: builder.query({
       query: (page = 1) => `get-your-iaccounts?page=${page}`, // Adjust the endpoint URL as needed
+      providesTags:['Create']
     }),
 
     // get following iaccounts
     getLikedIaccounts: builder.query({
       query: (page = 1) => `get-iaccounts-liked?page=${page}`, // Adjust the endpoint URL as needed
+      providesTags:['JoinOrLeave']
     }),
 
     //get specific group details
@@ -47,13 +51,11 @@ export const iaccountsApi = createApi({
       query: (id) => `/iaccountdetails/${id}`, // Make sure this endpoint exists in your backend
     }),
 
-
-
- /*    get specific group posts */
- getSpecificIaccountPost: builder.query({
-  query: ({ page = 1, iChannelId }) =>
-    `getspecificiaccountposts?page=${page}&id=${iChannelId}`, // Updated to include id
-}),
+    /*    get specific group posts */
+    getSpecificIaccountPost: builder.query({
+      query: ({ page = 1, iChannelId }) =>
+        `getspecificiaccountposts?page=${page}&id=${iChannelId}`, // Updated to include id
+    }),
 
     /*    get specific usrer images for ichannel */
     getSpecificIChannelPhoto: builder.query({
@@ -61,35 +63,35 @@ export const iaccountsApi = createApi({
         `getspecificichannelphotos?page=${photoPage}&id=${iChannelId}`, // Updated to include id
     }),
 
-   /* get specific iaccount frien for profile */
-   getSpecificIaccountFollowerFriend: builder.query({
-    query: ({ followerPage = 1, iChannelId }) => `getspecificiaccountfollowerids?page=${followerPage}&id=${iChannelId}`, // Updated to include id
+    /* get specific iaccount frien for profile */
+    getSpecificIaccountFollowerFriend: builder.query({
+      query: ({ followerPage = 1, iChannelId }) =>
+        `getspecificiaccountfollowerids?page=${followerPage}&id=${iChannelId}`, // Updated to include id
     }),
     joinIChannel: builder.mutation({
       query: (iChannelId) => ({
         url: `iaccount/join/${iChannelId}`,
-        method: 'POST',
+        method: "POST",
       }),
+      invalidatesTags:['JoinOrLeave']
     }),
 
     leaveIChannel: builder.mutation({
       query: (iChannelId) => ({
         url: `iaccount/leave/${iChannelId}`,
-        method: 'POST',
+        method: "POST",
       }),
+      invalidatesTags:['JoinOrLeave']
     }),
 
     /* updateGroupName */
     updatIAccountName: builder.mutation({
       query: ({ iChannelId, name }) => ({
         url: `iaccount/${iChannelId}/update/name`,
-        method: 'PUT',
+        method: "PUT",
         body: { name },
       }),
     }),
-
-
-
   }),
 });
 

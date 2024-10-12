@@ -32,24 +32,16 @@ export default function YourIChannels() {
     isFetching: isFetchingAdminGroups,
     isError: isErrorAdminGroups,
     isSuccess: isSuccessAdminGroups,
-    refetch: refetchAdmin,
+    
   } = useGetYourIaccountsQuery(pageNumber);
 
-  if (isErrorAdminGroups) {
-    console.log(adminGroupsData)
-  }
-  if (isSuccessAdminGroups) {
-    console.log(adminGroupsData)
-  }
+ 
   // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
   useEffect(() => {
     setpageNumber(1);
     setAllAdminGroups([]);
     setHasMoreAdminGroups(true);
-
-    // Refetch data for pages where the user is an admin
-    refetchAdmin();
-  }, [groupUpdate]);
+  }, []);
 
   // Effect to process fetched admin groups data
   useEffect(() => {

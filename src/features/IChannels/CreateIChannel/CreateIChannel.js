@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './CreateIChannel.css';
 import IChannelCreateBack from '../iChannelBack/iChannelCreateBack/IChannelCreateBack';
 import { useCreateIAccountMutation } from '../../../services/iaccountsApi';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateIChannel() {
   const [iChannel, setIChannel] = useState('');
   const [createIAccount, { isLoading, isError, isSuccess, error }] = useCreateIAccountMutation();
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
+const navigate=useNavigate();
   // Handle the "Create iChannel" button submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +18,7 @@ export default function CreateIChannel() {
     
     try {
       await createIAccount({ iaccount_name: iChannel }).unwrap();
+      navigate('/ichannel/created');
       setSuccessMessage('iAccount created successfully!');
       setIChannel('');  // Reset the input field after success
     } catch (err) {
