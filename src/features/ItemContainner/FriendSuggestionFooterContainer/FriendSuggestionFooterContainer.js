@@ -26,8 +26,16 @@ export default function FriendSuggestionFooterContainer() {
     isSuccess: useGetFriendSuggestionQuerySuccess,
     isFetching: useGetFriendSuggestionQueryIsFetching,
     isError: useGetFriendSuggestionQueryError,
-    refetch: useGetFriendSuggestionQueryRefetch,
+    
   } = useGetFriendSuggestionQuery({ friendSuggestionPage });
+
+useEffect(() => {
+  setFriendSuggestionPage(1);
+  setAllFriendSuggestions([]);
+  setHasMoreFriendSuggestions(true);
+
+}, []);
+
 
   // Define media queries
   const isSmallScreen = useMediaQuery({ query: '(max-height: 600px)' });

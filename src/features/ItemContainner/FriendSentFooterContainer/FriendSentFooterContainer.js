@@ -27,8 +27,16 @@ export default function FriendSentFooterContainer() {
       isLoading: useGetAuthUserfriendRequestQueryLoading,
       isError: useGetAuthUserfriendRequestQueryError,
       isFetching: useGetAuthUserfriendRequestQueryFetching,
-      refetch: useGetAuthUserfriendRequestQueryRefetch,
+     
     } = useGetAuthUserSentRequestQuery({ friendRequestPage });
+
+useEffect(() => {
+  setFriendRequestPage(1);
+  setAllFriendRequest([]);
+  setHasMoreFriendRequest(true);
+
+}, []);
+
 
     // Define media queries
     const isSmallScreen = useMediaQuery({ query: '(max-height: 600px)' });
@@ -49,7 +57,7 @@ export default function FriendSentFooterContainer() {
         hasMoreFriendRequest &&
         useGetAuthUserfriendRequestQuerySuccess
       ) {
-        console.log('Updating friendRequestPage:', friendRequestPage + 1);
+
         setFriendRequestPage((prevPage) => prevPage + 1);
       }
     }, [

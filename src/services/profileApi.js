@@ -75,7 +75,7 @@ export const profileApi = createApi({
     /*    get specific usrer images for profile */
     getAuthUserPhoto: builder.query({
       query: ({ photoPage = 1 }) => `getauthuserphotos?page=${photoPage}`, // Updated to include id
-      providesTags:["CreatePost"]
+      providesTags:['CreatePost']
     }),
 
     /* get specific usrer images for profile */
