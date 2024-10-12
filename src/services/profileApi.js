@@ -81,6 +81,7 @@ export const profileApi = createApi({
     /* get specific usrer images for profile */
     getAuthUserFriend: builder.query({
       query: ({ friendPage = 1 }) => `getauthuserfriendids?page=${friendPage}`, // Updated to include id
+      providesTags:['AcceptFriendRequest']
     }),
 
     /* get all followers for specific user on profile*/

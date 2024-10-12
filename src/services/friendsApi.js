@@ -28,6 +28,7 @@ export const friendsApi = createApi({
           method: "GET",
         };
       },
+      providesTags:['RequestOrCancel']
     }),
 
     //get specific user details

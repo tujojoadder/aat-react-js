@@ -1,9 +1,9 @@
-
-import React, { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { useGetAuthUserFriendQuery } from '../../../../services/profileApi';
-import MyRelativeIds from '../MyRelativeIds/MyRelativeIds';
-import Spinner from '../../../Spinner/Spinner';
+import React, { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { useGetAuthUserFriendQuery } from "../../../../services/profileApi";
+import MyRelativeIds from "../MyRelativeIds/MyRelativeIds";
+import Spinner from "../../../Spinner/Spinner";
+import { useGetAuthUserFriendsQuery } from "../../../../services/friendsApi";
 
 export default function MyProfileFriendsContainer() {
   const [friendPage, setFriendPage] = useState(1);
@@ -16,55 +16,79 @@ export default function MyProfileFriendsContainer() {
     triggerOnce: false,
   });
 
-
   // Fetch data using dynamic query
-  const { 
-    data: useGetSpecificUserFriendQueryData, 
-    isFetching: useGetSpecificUserFriendQueryIsFetching, 
-    isError: useGetSpecificUserFriendQueryIsError, 
-    isSuccess: useGetSpecificUserFriendQueryIsSuccess 
-  } = useGetAuthUserFriendQuery({ friendPage});
+  const {
+    data: useGetSpecificUserFriendQueryData,
+    isFetching: useGetSpecificUserFriendQueryIsFetching,
+    isError: useGetSpecificUserFriendQueryIsError,
+    isSuccess: useGetSpecificUserFriendQueryIsSuccess,
+  } = useGetAuthUserFriendsQuery({ friendPage });
 
-
+  useEffect(() => {
+    setFriendPage(1);
+    setAllFriends([]);
+    setHasMoreFriends(true);
+  }, []);
 
   // Effect to process fetched data
   useEffect(() => {
-    if (useGetSpecificUserFriendQueryIsSuccess && useGetSpecificUserFriendQueryData?.data) {
+    if (
+      useGetSpecificUserFriendQueryIsSuccess &&
+      useGetSpecificUserFriendQueryData?.data
+    ) {
       if (useGetSpecificUserFriendQueryData.data.length === 0) {
         setHasMoreFriends(false);
       } else {
         const newFriends = useGetSpecificUserFriendQueryData.data.filter(
-          (newFriend) => !allFriends.some((friend) => friend.user_id === newFriend.user_id)
+          (newFriend) =>
+            !allFriends.some((friend) => friend.user_id === newFriend.user_id)
         );
         if (newFriends.length > 0) {
           setAllFriends((prevFriends) => [...prevFriends, ...newFriends]);
         }
       }
     }
-  }, [useGetSpecificUserFriendQueryData, useGetSpecificUserFriendQueryIsSuccess, allFriends]);
+  }, [
+    useGetSpecificUserFriendQueryData,
+    useGetSpecificUserFriendQueryIsSuccess,
+    allFriends,
+  ]);
 
   // Effect to handle infinite scroll logic
   useEffect(() => {
-    if (friendInView && !useGetSpecificUserFriendQueryIsFetching && !useGetSpecificUserFriendQueryIsError && hasMoreFriends) {
+    if (
+      friendInView &&
+      !useGetSpecificUserFriendQueryIsFetching &&
+      !useGetSpecificUserFriendQueryIsError &&
+      hasMoreFriends
+    ) {
       setFriendPage((prevPage) => prevPage + 1);
     }
-  }, [friendInView, useGetSpecificUserFriendQueryIsFetching, useGetSpecificUserFriendQueryIsError, hasMoreFriends]);
+  }, [
+    friendInView,
+    useGetSpecificUserFriendQueryIsFetching,
+    useGetSpecificUserFriendQueryIsError,
+    hasMoreFriends,
+  ]);
 
   return (
     <div>
-      <div className="container py-4" style={{ border: 'none' }}>
+      <div className="container py-4" style={{ border: "none" }}>
         <div className="row">
-
-        {allFriends.length === 0 && !useGetSpecificUserFriendQueryIsFetching && <h4 className="text-center" style={{color:'#592529'}}>No Friends to show</h4>}
+          {allFriends.length === 0 &&
+            !useGetSpecificUserFriendQueryIsFetching && (
+              <h4 className="text-center" style={{ color: "#592529" }}>
+                No Friends to show
+              </h4>
+            )}
 
           {allFriends.map((friend, index) => (
             <div className="col-12 mb-2" key={index}>
-              <MyRelativeIds 
+              <MyRelativeIds
                 user_id={friend.user_id}
                 name={`${friend.user_fname} ${friend.user_lname}`} // Combine first and last name
                 image={friend.profile_picture}
                 handle={friend.identifier}
-                
               />
             </div>
           ))}
@@ -74,7 +98,7 @@ export default function MyProfileFriendsContainer() {
         <div
           ref={friendRef}
           className="loading-trigger"
-             style={{height:'7vh',minHeight:'40px'}}
+          style={{ height: "7vh", minHeight: "40px" }}
         >
           {useGetSpecificUserFriendQueryIsFetching && <Spinner />}
         </div>
