@@ -93,10 +93,12 @@ export const friendsApi = createApi({
           body: { sender_id, decision },
         };
       },
+      invalidatesTags:['AcceptFriendRequest']
     }),
- /* get specific usrer images for profile */
- getAuthUserFriend: builder.query({
+ /*sss--> getAuthUserFriends */ 
+ getAuthUserFriends: builder.query({
   query: ({ friendPage = 1 }) => `getauthuserfriendids?page=${friendPage}`, // Updated to include id
+  providesTags:['AcceptFriendRequest']
 }),
 
   }),
@@ -106,13 +108,14 @@ export const friendsApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useManageFriendRequestMutation,
+  useGetAuthUserFriendsQuery,
   useGetAuthUserSentRequestQuery,
   useGetFriendSuggestionQuery,
   useGetAuthUserfriendRequestQuery,
   useCancelFriendRequestMutation,
   useSendFriendRequestMutation,
   useGetUserDetailsQuery,
-  useGetAuthUserFriendQuery,
+  
   useFriendSuggestionhomeQuery,
   useUserPostInsertMutation,
   useGetPostsQuery,

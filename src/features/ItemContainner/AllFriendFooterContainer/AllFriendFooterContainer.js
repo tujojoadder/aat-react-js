@@ -1,18 +1,14 @@
-
-
-import React, { useEffect, useRef, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { useGetAuthUserfriendRequestQuery } from '../../../services/friendsApi';
-import { NavLink, useLocation, useParams } from 'react-router-dom';
-import Spinner from '../../Spinner/Spinner';
-import { Scrollbar } from 'react-scrollbars-custom';
-import FriendRequestItemSm from '../SmallScreenItem/FriendRequestItemSm/FriendRequestItemSm';
-import { useMediaQuery } from 'react-responsive';
-import { useGetAuthUserFriendQuery } from '../../../services/profileApi';
-import AllFriendItemSm from '../SmallScreenItem/AllFriendItemSm/AllFriendItemSm';
+import React, { useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { useGetAuthUserFriendsQuery } from "../../../services/friendsApi";
+import { NavLink, useLocation, useParams } from "react-router-dom";
+import Spinner from "../../Spinner/Spinner";
+import { Scrollbar } from "react-scrollbars-custom";
+import FriendRequestItemSm from "../SmallScreenItem/FriendRequestItemSm/FriendRequestItemSm";
+import { useMediaQuery } from "react-responsive";
+import AllFriendItemSm from "../SmallScreenItem/AllFriendItemSm/AllFriendItemSm";
 
 export default function AllFriendFooterContainer() {
- 
   const location = useLocation();
   const { ref: requestRef, inView: inViewRequests } = useInView({
     threshold: 0,
@@ -22,7 +18,7 @@ export default function AllFriendFooterContainer() {
   const [friendRequestPage, setFriendRequestPage] = useState(1);
   const [allFriendRequest, setAllFriendRequest] = useState([]);
   const [hasMoreFriendRequest, setHasMoreFriendRequest] = useState(true);
-  const [paddingBottom, setPaddingBottom] = useState('30vh'); // Default padding
+  const [paddingBottom, setPaddingBottom] = useState("30vh"); // Default padding
 
   /* Fetching Request data */
   const {
@@ -31,23 +27,24 @@ export default function AllFriendFooterContainer() {
     isLoading: useGetAuthUserfriendRequestQueryLoading,
     isError: useGetAuthUserfriendRequestQueryError,
     isFetching: useGetAuthUserfriendRequestQueryFetching,
-    refetch: useGetAuthUserfriendRequestQueryRefetch,
-  } = useGetAuthUserFriendQuery({ friendPage:friendRequestPage });
+  } = useGetAuthUserFriendsQuery({ friendPage: friendRequestPage });
 
+useEffect(() => {
+  setFriendRequestPage(1);
+  setAllFriendRequest([]);
+  setHasMoreFriendRequest(true);
+}, []);
 
-if (useGetAuthUserfriendRequestQuerySuccess) {
-    console.log(useGetAuthUserfriendRequestQueryData);
-}
 
 
   // Define media queries
-  const isSmallScreen = useMediaQuery({ query: '(max-height: 600px)' });
+  const isSmallScreen = useMediaQuery({ query: "(max-height: 600px)" });
 
   useEffect(() => {
     if (isSmallScreen) {
-      setPaddingBottom('35vh');
+      setPaddingBottom("35vh");
     } else {
-      setPaddingBottom('20vh');
+      setPaddingBottom("20vh");
     }
   }, [isSmallScreen]);
 
@@ -59,7 +56,7 @@ if (useGetAuthUserfriendRequestQuerySuccess) {
       hasMoreFriendRequest &&
       useGetAuthUserfriendRequestQuerySuccess
     ) {
-      console.log('Updating friendRequestPage:', friendRequestPage + 1);
+      console.log("Updating friendRequestPage:", friendRequestPage + 1);
       setFriendRequestPage((prevPage) => prevPage + 1);
     }
   }, [
@@ -81,8 +78,7 @@ if (useGetAuthUserfriendRequestQuerySuccess) {
       const newRequests = useGetAuthUserfriendRequestQueryData.data.filter(
         (newRequest) =>
           !allFriendRequest.some(
-            (request) =>
-              request.user_id === newRequest.user_id
+            (request) => request.user_id === newRequest.user_id
           )
       );
       if (newRequests.length > 0) {
@@ -98,7 +94,7 @@ if (useGetAuthUserfriendRequestQuerySuccess) {
   ]);
 
   return (
-    <div style={{ paddingBottom: paddingBottom }} >
+    <div style={{ paddingBottom: paddingBottom }}>
       {allFriendRequest.length === 0 ? (
         <div className="col-12 text-center">No records</div>
       ) : (
@@ -120,7 +116,7 @@ if (useGetAuthUserfriendRequestQuerySuccess) {
       <div
         ref={requestRef}
         className="infinite-scroll-trigger"
-        style={{ height: '7vh', minHeight: '40px' }}
+        style={{ height: "7vh", minHeight: "40px" }}
       >
         {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
       </div>
