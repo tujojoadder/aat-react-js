@@ -16,12 +16,7 @@ export default function GroupMember({ groupId }) {
     triggerOnce: false,
   });
 
-    //Reset friends if id change
-    useEffect(() => {
-        setMemberPage(1);
-      setAllFriends([]);
-      setHasMoreFriends(true);
-    }, [groupId]);
+
 
   // Fetch data using dynamic query
   const { 
@@ -30,14 +25,13 @@ export default function GroupMember({ groupId }) {
     isError: useGetSpecificUserFriendQueryIsError, 
     isSuccess: useGetSpecificUserFriendQueryIsSuccess 
   } = useGetAllGroupMemberQuery({ memberPage, groupId });
+    //Reset friends if id change
+    useEffect(() => {
+      setMemberPage(1);
+    setAllFriends([]);
+    setHasMoreFriends(true);
+  }, []);
 
-/*   // Log query data for debugging
-  useEffect(() => {
-    if (useGetSpecificUserFriendQueryIsSuccess) {
-      console.log(useGetSpecificUserFriendQueryData);
-    }
-  }, [useGetSpecificUserFriendQueryIsSuccess, useGetSpecificUserFriendQueryData]);
- */
   // Effect to process fetched data
   useEffect(() => {
     if (useGetSpecificUserFriendQueryIsSuccess && useGetSpecificUserFriendQueryData?.data) {

@@ -18,7 +18,8 @@ export const groupsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Create", "Join"],
+  
+  tagTypes: ["Create", "Join","CreatePost","AcceptJoinRequest"],
   endpoints: (builder) => ({
     //Create groups
     createGroup: builder.mutation({
@@ -41,6 +42,25 @@ export const groupsApi = createApi({
       // Accept a parameter for the page number
       query: (page = 1) => `/groups/joined-not-admin-right?page=${page}`,
     }),
+      /*    get specific group posts */
+      getSpecificGroupPost: builder.query({
+        query: ({ page = 1, groupId }) =>
+          `getspecificgroupposts?page=${page}&id=${groupId}`, // Updated to include id
+        providesTags:['CreatePost']
+      }),
+  
+    /* Create Group Post */   
+userGroupPostInsert: builder.mutation({
+  query: (data) => {
+    return {
+      url: "/group/post/create",
+      method: "POST",
+      body: data,
+    };
+  },
+  invalidatesTags:['CreatePost']
+}),
+
 
     // Define your API slice
     getGroupsWhereAdmin: builder.query({
@@ -67,27 +87,27 @@ export const groupsApi = createApi({
         `getspecificuserfriendids?page=${friendPage}&id=${groupId}`, // Updated to include id
     }),
 
-    /*    get specific group posts */
-    getSpecificGroupPost: builder.query({
-      query: ({ page = 1, groupId }) =>
-        `getspecificgroupposts?page=${page}&id=${groupId}`, // Updated to include id
-    }),
+    
 
+  
     /*    get specific usrer images for profile */
     getSpecificGroupPhoto: builder.query({
       query: ({ photoPage = 1, groupId }) =>
         `getspecificgroupphotos?page=${photoPage}&id=${groupId}`, // Updated to include id
+      providesTags:['CreatePost']
     }),
 
     /* get member of group*/
     getAllGroupMember: builder.query({
       query: ({ memberPage = 1, groupId }) =>
         `getspecificgroupmember?page=${memberPage}&id=${groupId}`, // Updated to include id
+      providesTags:['AcceptJoinRequest']
     }),
     /* get member of group for manage*/
     getAllGroupMemberManage: builder.query({
       query: ({ memberPage = 1, groupId }) =>
         `getspecificgroupmembermanage?page=${memberPage}&id=${groupId}`, // Updated to include id
+      providesTags:['AcceptJoinRequest']
     }),
     /*  get random post */
     getRandomGroupPost: builder.query({
@@ -170,6 +190,7 @@ export const groupsApi = createApi({
           body: { groupId, decision, sender_id },
         };
       },
+      invalidatesTags:['AcceptJoinRequest']
     }),
 
     /*    get specific group posts approval requests*/
@@ -200,6 +221,7 @@ export const groupsApi = createApi({
 export const {
   useUpdateGroupDetailsMutation,
   useRejectPostApprovalMutation,
+  useUserGroupPostInsertMutation,
   useApprovePostMutation,
   useGetSpecificApprovalRwquestedGroupPostsQuery,
   useManageJoinGroupRequestMutation,

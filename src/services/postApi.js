@@ -30,17 +30,6 @@ export const postApi = createApi({
 
 
 
-/* Create Group Post */   
-userGroupPostInsert: builder.mutation({
-  query: (data) => {
-    return {
-      url: "/group/post/create",
-      method: "POST",
-      body: data,
-    };
-  },
-}),
-
 /* Create Page Post */   
 userPagePostInsert: builder.mutation({
   query: (data) => {
@@ -77,4 +66,4 @@ export const {
   useUserIAccountPostInsertMutation,
   useUserPagePostInsertMutation,
   useGetPostsQuery,
-  useUserGroupPostInsertMutation } = postApi
+   } = postApi

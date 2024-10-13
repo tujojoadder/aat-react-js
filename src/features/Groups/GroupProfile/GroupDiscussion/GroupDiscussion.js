@@ -23,13 +23,15 @@ export default function GroupDiscussion({ groupId,joinStatus }) {
 
   // Fetch posts using RTK Query
   const { data: userPosts, isFetching, isError, isSuccess } = useGetSpecificGroupPostQuery({ page, groupId });
-
+if (isSuccess) {
+  console.log(userPosts)
+}
   // Reset posts when `groupId` changes
   useEffect(() => {
     setAllPosts([]);
     setPage(1);
     setHasMorePosts(true);
-  }, [groupId]);
+  }, []);
 
   // Update post list and avoid duplicates
   useEffect(() => {

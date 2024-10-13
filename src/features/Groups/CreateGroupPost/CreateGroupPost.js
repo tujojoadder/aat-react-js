@@ -2,8 +2,9 @@ import React, { useRef, useState } from "react";
 import { handleApiError } from "../../handleApiError/handleApiError";
 import { useDispatch } from "react-redux";
 import { setToastSuccess } from "../../home/HomeSlice";
-import { useUserGroupPostInsertMutation } from "../../../services/postApi";
+
 import { useNavigate } from "react-router-dom";
+import { useUserGroupPostInsertMutation } from "../../../services/groupsApi";
 
 export default function CreateGroupPost({ groupId }) {
   const fileInputRef = useRef(null);
