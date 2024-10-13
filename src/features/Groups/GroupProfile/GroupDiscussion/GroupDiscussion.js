@@ -22,7 +22,7 @@ export default function GroupDiscussion({ groupId,joinStatus }) {
   });
 
   // Fetch posts using RTK Query
-  const { data: userPosts, isFetching, isError, isSuccess } = useGetSpecificGroupPostQuery({ page, groupId });
+  const { data: userPosts, isFetching, isError, isSuccess,refetch } = useGetSpecificGroupPostQuery({ page, groupId });
 if (isSuccess) {
   console.log(userPosts)
 }
@@ -68,10 +68,17 @@ if (isSuccess) {
   if (isError) {
     return <p className="text-center">Failed to load posts. Please try again later.</p>;
   }
+  const handleSuccess=()=>{
+    setAllPosts([]);
+    setPage(1);
+    setHasMorePosts(true);
+    refetch();
+
+  }
 
   return (
     <div className="post-wrapper">
-      {joinStatus &&  <CreateGroupPost groupId={groupId}/>}
+      {joinStatus &&  <CreateGroupPost groupId={groupId} handleSuccess={handleSuccess}/>}
 
 
 

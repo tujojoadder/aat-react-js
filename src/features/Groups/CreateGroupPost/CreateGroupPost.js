@@ -6,7 +6,7 @@ import { setToastSuccess } from "../../home/HomeSlice";
 import { useNavigate } from "react-router-dom";
 import { useUserGroupPostInsertMutation } from "../../../services/groupsApi";
 
-export default function CreateGroupPost({ groupId }) {
+export default function CreateGroupPost({ groupId,handleSuccess }) {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [textValue, setTextValue] = useState("");
@@ -93,8 +93,8 @@ export default function CreateGroupPost({ groupId }) {
       if (res.data) {
         console.log(res.data);
         handleReset(); // Clear form after successful submission
-        navigate(`/groups/${groupId}`);
-
+        handleSuccess();
+      
 
       } else if (res.error) {
         console.log(res.error);

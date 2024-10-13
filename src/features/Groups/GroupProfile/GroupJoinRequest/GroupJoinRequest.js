@@ -18,12 +18,12 @@ export default function GroupJoinRequest({ groupId }) {
     triggerOnce: false,
   });
 
-    //Reset friends if id change
+    //Reset 
     useEffect(() => {
         setMemberPage(1);
       setAllFriends([]);
       setHasMoreFriends(true);
-    }, [groupId]);
+    }, []);
 
   // Fetch data using dynamic query
   const { 

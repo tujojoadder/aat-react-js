@@ -19,7 +19,7 @@ export const groupsApi = createApi({
     },
   }),
   
-  tagTypes: ["Create", "Join","CreatePost","AcceptJoinRequest"],
+  tagTypes: ["Create", "Join","CreatePost","AcceptJoinRequest","ApprovePostOrReject"],
   endpoints: (builder) => ({
     //Create groups
     createGroup: builder.mutation({
@@ -46,7 +46,8 @@ export const groupsApi = createApi({
       getSpecificGroupPost: builder.query({
         query: ({ page = 1, groupId }) =>
           `getspecificgroupposts?page=${page}&id=${groupId}`, // Updated to include id
-        providesTags:['CreatePost']
+        providesTags:['CreatePost','ApprovePostOrReject'],
+        
       }),
   
     /* Create Group Post */   
@@ -179,6 +180,7 @@ userGroupPostInsert: builder.mutation({
     getUsersWithJoinRequests: builder.query({
       query: ({ memberPage = 1, groupId }) =>
         `group/join-requests?page=${memberPage}&groupId=${groupId}`,
+      providesTags:['AcceptJoinRequest']
     }),
 
     /* make decision for join group request */
@@ -197,6 +199,7 @@ userGroupPostInsert: builder.mutation({
     getSpecificApprovalRwquestedGroupPosts: builder.query({
       query: ({ page = 1, groupId }) =>
         `getspecificgrouppostapprovalrequestes?page=${page}&id=${groupId}`, // Updated to include id
+      providesTags:['ApprovePostOrReject']
     }),
     /*   approvePost group post */
 
@@ -205,6 +208,7 @@ userGroupPostInsert: builder.mutation({
         url: `/groups/${groupId}/posts/${postId}/approve`,
         method: "POST",
       }),
+      invalidatesTags:['ApprovePostOrReject']
     }),
 
     rejectPostApproval: builder.mutation({
@@ -212,6 +216,7 @@ userGroupPostInsert: builder.mutation({
         url: `/groups/${groupId}/posts/${postId}/reject`,
         method: "DELETE",
       }),
+      invalidatesTags:['ApprovePostOrReject']
     }),
   }),
 });
