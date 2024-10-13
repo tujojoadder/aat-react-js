@@ -2,8 +2,9 @@
 import React, { useRef, useState } from "react";
 import { handleApiError } from "../../handleApiError/handleApiError";
 import { useDispatch } from "react-redux";
-import { useUserPagePostInsertMutation } from "../../../services/postApi";
+
 import { useNavigate } from "react-router-dom";
+import { useUserPagePostInsertMutation } from "../../../services/pagesApi";
 
 export default function CreatePagePost({ pageId }) {
   const fileInputRef = useRef(null);

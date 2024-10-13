@@ -34,10 +34,10 @@ export default function PagePost({ pageId, isAdmin }) {
 
   // Reset posts when `pageId` changes
   useEffect(() => {
-    setAllPosts([]);
     setPage(1);
+    setAllPosts([]);
     setHasMorePosts(true);
-  }, [pageId]);
+  }, []);
 
   // Update post list and avoid duplicates
   useEffect(() => {

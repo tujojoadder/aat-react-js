@@ -19,7 +19,7 @@ export const pagesApi = createApi({
     },
   }),
 
-  tagTypes: ["Create","Join"],
+  tagTypes: ["Create","Join","CreatePost"],
   endpoints: (builder) => ({
     createPage: builder.mutation({
       query: (pageData) => ({
@@ -29,6 +29,17 @@ export const pagesApi = createApi({
       }),
       invalidatesTags: ["Create"],
     }),
+    /* Create Page Post */   
+userPagePostInsert: builder.mutation({
+  query: (data) => {
+    return {
+      url: "/page/post/create",
+      method: "POST",
+      body: data,
+    };
+  },
+  invalidatesTags:['CreatePost']
+}),
 
     // get pages where auth user is admin
     getPagesWhereAdmin: builder.query({
@@ -55,12 +66,14 @@ export const pagesApi = createApi({
     getSpecificPagePost: builder.query({
       query: ({ page = 1, pageId }) =>
         `getspecificpageposts?page=${page}&id=${pageId}`, // Updated to include id
+      providesTags:['CreatePost']
     }),
 
     /*    get specific usrer images for profile */
     getSpecificPagePhoto: builder.query({
       query: ({ photoPage = 1, pageId }) =>
         `getspecificpagephotos?page=${photoPage}&id=${pageId}`, // Updated to include id
+      providesTags:['CreatePost']
     }),
 
     /* get member of page*/
@@ -153,6 +166,7 @@ export const pagesApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreatePageMutation,
+  useUserPagePostInsertMutation,
   useAddPageAdminMutation,
   useKickOutPageMemberMutation,
   useGetAllPageMemberForManageQuery,
