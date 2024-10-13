@@ -73,6 +73,7 @@ export default function Homeleft() {
                       <div className="col-12 mb-2">
                         <SuggestionContainer
                         user_id={`${profile.user_id}`}
+                        
                           name={`${profile.user_fname} ${profile.user_lname}`}
                           handle={`@${profile.identifier}`}
                           image={profile.profile_picture || "default_image_url_here"}
