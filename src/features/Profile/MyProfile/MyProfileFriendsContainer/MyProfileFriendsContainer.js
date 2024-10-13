@@ -23,7 +23,10 @@ export default function MyProfileFriendsContainer() {
     isError: useGetSpecificUserFriendQueryIsError,
     isSuccess: useGetSpecificUserFriendQueryIsSuccess,
   } = useGetAuthUserFriendsQuery({ friendPage });
-
+  if (useGetSpecificUserFriendQueryIsSuccess) {
+  console.log(useGetSpecificUserFriendQueryData);
+  }
+  
   useEffect(() => {
     setFriendPage(1);
     setAllFriends([]);
