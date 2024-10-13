@@ -2,8 +2,9 @@
 import React, { useRef, useState } from "react";
 import { handleApiError } from "../../handleApiError/handleApiError";
 import { useDispatch } from "react-redux";
-import {  useUserIAccountPostInsertMutation } from "../../../services/postApi";
+
 import { useNavigate } from "react-router-dom";
+import { useUserIAccountPostInsertMutation } from "../../../services/iaccountsApi";
 
 export default function CreateIChannelPosts({ iChannelId }) {
   const fileInputRef = useRef(null);

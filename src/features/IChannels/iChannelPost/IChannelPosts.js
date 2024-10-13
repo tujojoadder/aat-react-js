@@ -32,10 +32,10 @@ export default function IChannelPosts({ iChannelId, isCreator }) {
 
   // Reset posts when `iChannelId` changes
   useEffect(() => {
-    setAllPosts([]);
     setPage(1);
+    setAllPosts([]);
     setHasMorePosts(true);
-  }, [iChannelId]);
+  }, []);
 
   // Update post list and avoid duplicates
   useEffect(() => {

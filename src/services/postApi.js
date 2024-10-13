@@ -32,16 +32,6 @@ export const postApi = createApi({
 
 
 
-/* Create iAccount Post */   
-userIAccountPostInsert: builder.mutation({
-  query: (data) => {
-    return {
-      url: "/iaccount/post/create",
-      method: "POST",
-      body: data,
-    };
-  },
-}),
 
 
 
@@ -54,7 +44,7 @@ userIAccountPostInsert: builder.mutation({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const { 
-  useUserIAccountPostInsertMutation,
+  
 
   useGetPostsQuery,
    } = postApi

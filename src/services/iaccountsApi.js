@@ -18,7 +18,7 @@ export const iaccountsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Create","JoinOrLeave"],
+  tagTypes: ["Create","JoinOrLeave","CreatePost"],
   endpoints: (builder) => ({
     createIAccount: builder.mutation({
       query: (iAccountData) => ({
@@ -28,6 +28,17 @@ export const iaccountsApi = createApi({
       }),
       invalidatesTags:['Create']
     }),
+/* Create iAccount Post */   
+userIAccountPostInsert: builder.mutation({
+  query: (data) => {
+    return {
+      url: "/iaccount/post/create",
+      method: "POST",
+      body: data,
+    };
+  },
+  invalidatesTags:['CreatePost']
+}),
 
     /*  get random post */
     getRandomIaccountPost: builder.query({
@@ -51,16 +62,18 @@ export const iaccountsApi = createApi({
       query: (id) => `/iaccountdetails/${id}`, // Make sure this endpoint exists in your backend
     }),
 
-    /*    get specific group posts */
+    /*    get specific ichannel posts */
     getSpecificIaccountPost: builder.query({
       query: ({ page = 1, iChannelId }) =>
         `getspecificiaccountposts?page=${page}&id=${iChannelId}`, // Updated to include id
+      providesTags:['CreatePost']
     }),
 
     /*    get specific usrer images for ichannel */
     getSpecificIChannelPhoto: builder.query({
       query: ({ photoPage = 1, iChannelId }) =>
         `getspecificichannelphotos?page=${photoPage}&id=${iChannelId}`, // Updated to include id
+      providesTags:['CreatePost']
     }),
 
     /* get specific iaccount frien for profile */
@@ -100,6 +113,7 @@ export const iaccountsApi = createApi({
 export const {
   useCreateIAccountMutation,
   useUpdatIAccountNameMutation,
+  useUserIAccountPostInsertMutation,
   useJoinIChannelMutation,
   useLeaveIChannelMutation,
   useGetSpecificIaccountFollowerFriendQuery,

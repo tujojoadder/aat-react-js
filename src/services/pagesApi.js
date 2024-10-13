@@ -19,7 +19,7 @@ export const pagesApi = createApi({
     },
   }),
 
-  tagTypes: ["Create","Join","CreatePost"],
+  tagTypes: ["Create","Join","CreatePost","KickOrMakeAdmin"],
   endpoints: (builder) => ({
     createPage: builder.mutation({
       query: (pageData) => ({
@@ -80,6 +80,7 @@ userPagePostInsert: builder.mutation({
     getAllPageMember: builder.query({
       query: ({ memberPage = 1, pageId }) =>
         `getspecificpagemember?page=${memberPage}&id=${pageId}`, // Updated to include id
+      providesTags:['KickOrMakeAdmin']
     }),
 
     joinPage: builder.mutation({
@@ -144,6 +145,7 @@ userPagePostInsert: builder.mutation({
     getAllPageMemberForManage: builder.query({
       query: ({ memberPage = 1, pageId }) =>
         `getspecificpagememberformanage?page=${memberPage}&id=${pageId}`, // Updated to include id
+      providesTags:['KickOrMakeAdmin']
     }),
 
     addPageAdmin: builder.mutation({
@@ -151,6 +153,7 @@ userPagePostInsert: builder.mutation({
         url: `/page/${pageId}/add-admin/${newMember}`,
         method: "POST",
       }),
+      invalidatesTags:['KickOrMakeAdmin']
     }),
 
     kickOutPageMember: builder.mutation({
@@ -158,6 +161,7 @@ userPagePostInsert: builder.mutation({
         url: `/page/${pageId}/kick-out-member/${memberId}`, // Adjusted to use URL params
         method: "DELETE",
       }),
+      invalidatesTags:['KickOrMakeAdmin']
     }),
   }),
 });

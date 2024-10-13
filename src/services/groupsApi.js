@@ -19,7 +19,7 @@ export const groupsApi = createApi({
     },
   }),
   
-  tagTypes: ["Create", "Join","CreatePost","AcceptJoinRequest","ApprovePostOrReject"],
+  tagTypes: ["Create", "Join","CreatePost","AcceptJoinRequest","ApprovePostOrReject","KickOrMakeAdmin"],
   endpoints: (builder) => ({
     //Create groups
     createGroup: builder.mutation({
@@ -102,13 +102,13 @@ userGroupPostInsert: builder.mutation({
     getAllGroupMember: builder.query({
       query: ({ memberPage = 1, groupId }) =>
         `getspecificgroupmember?page=${memberPage}&id=${groupId}`, // Updated to include id
-      providesTags:['AcceptJoinRequest']
+      providesTags:['AcceptJoinRequest','KickOrMakeAdmin']
     }),
     /* get member of group for manage*/
     getAllGroupMemberManage: builder.query({
       query: ({ memberPage = 1, groupId }) =>
         `getspecificgroupmembermanage?page=${memberPage}&id=${groupId}`, // Updated to include id
-      providesTags:['AcceptJoinRequest']
+      providesTags:['AcceptJoinRequest','KickOrMakeAdmin']
     }),
     /*  get random post */
     getRandomGroupPost: builder.query({
@@ -138,6 +138,7 @@ userGroupPostInsert: builder.mutation({
         url: `/groups/${groupId}/add-admin/${newMember}`,
         method: "POST",
       }),
+      invalidatesTags:['KickOrMakeAdmin']
     }),
 
     kickOutMember: builder.mutation({
@@ -145,6 +146,7 @@ userGroupPostInsert: builder.mutation({
         url: `/groups/${groupId}/kick-out-member/${memberId}`, // Adjusted to use URL params
         method: "DELETE",
       }),
+      invalidatesTags:['KickOrMakeAdmin']
     }),
 
     joinPublicGroup: builder.mutation({
