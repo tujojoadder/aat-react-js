@@ -54,56 +54,7 @@ export default function SuggestionItemSm({
   };
 
   const renderButton = () => {
-    if (type === 'friend_request') {
-      return (
-        <>
-          <div className="add-delete-button me-2">
-            <button
-              onClick={handleCancelButton}
-              className="btn-delete-friend"
-              type="button"
-              style={{
-                backgroundColor: cancelingRequest ? "#c4c4c4" : "#d9534f",
-                color: cancelingRequest ? "#888" : "white",
-                outline: "none",
-                boxShadow: "none",
-                border: "none",
-                cursor: cancelingRequest ? "not-allowed" : "pointer",
-              }}
-              disabled={cancelingRequest}
-            >
-              {cancelingRequest ? (
-                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              ) : (
-                <i className="fa-solid fa-xmark"></i>
-              )}
-            </button>
-          </div>
-          <div className="add-friend-button">
-            <button
-              onClick={handleAddButton}
-              className="btn-add-friend btn-primary"
-              type="button"
-              style={{
-                backgroundColor: sendingRequest ? "#c4c4c4" : "#0275d8",
-                color: sendingRequest ? "#888" : "white",
-                outline: "none",
-                boxShadow: "none",
-                border: "none",
-                cursor: sendingRequest ? "not-allowed" : "pointer",
-              }}
-              disabled={sendingRequest}
-            >
-              {sendingRequest ? (
-                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              ) : (
-                "Confirm"
-              )}
-            </button>
-          </div>
-        </>
-      );
-    } else {
+   
       return (
         <div className="add-friend-button">
           {requestSent ? (
@@ -153,7 +104,7 @@ export default function SuggestionItemSm({
           )}
         </div>
       );
-    }
+    
   };
 
   return (
