@@ -173,6 +173,15 @@ export const profileApi = createApi({
         body: { image_id },
       }),
     }),
+    unfriendUser: builder.mutation({
+      query: ({ useridtoremove }) => ({
+          url: 'friends/unfriend', // Keep it simple without appending the ID in the URL
+          method: 'DELETE', // Assuming you use DELETE to unfriend
+          body: { useridtoremove }, // Send the user ID in the request body
+      }),
+  }),
+  
+
   }),
 });
 
@@ -180,6 +189,7 @@ export const profileApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useSetFProfileMutation,
+  useUnfriendUserMutation,
   useSetMProfileMutation,
   useUserPostInsertMutation,
   useSetCoverPhotoMutation,
