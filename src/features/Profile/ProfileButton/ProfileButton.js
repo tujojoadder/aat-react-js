@@ -19,13 +19,10 @@ export default function ProfileButton({ user_id, type }) {
   const [getAddButton, setGetAddButton] = useState(false);
   const [getUnfriend, setGetUnfriend] = useState(false);
   const [unfriendUser, { isLoading, isError, isSuccess, error }] =
-  useUnfriendUserMutation();
-
-
+    useUnfriendUserMutation();
 
   // Redux selectors for request status
   const requestSent = useSelector((state) => state.home.sentRequests[user_id]);
-
 
   const requestRejected = useSelector(
     (state) => state.home.rejectedRequests[user_id]
@@ -104,7 +101,6 @@ export default function ProfileButton({ user_id, type }) {
         );
 
         dispatch(setRequestAccepted({ userId: user_id }));
-       
       } else if (res.error) {
         handleApiError(res.error, dispatch);
       }
@@ -127,8 +123,8 @@ export default function ProfileButton({ user_id, type }) {
       if (res.data) {
         dispatch(setToastSuccess({ toastSuccess: "Friend request rejected" }));
         dispatch(setRequestRejected({ userId: user_id }));
-      
-      setGetUnfriend(false);
+
+        setGetUnfriend(false);
         setGetAddButton(true);
       } else if (res.error) {
         handleApiError(res.error, dispatch);
@@ -140,24 +136,20 @@ export default function ProfileButton({ user_id, type }) {
     }
   };
 
-  
-
   const handleUnfriend = async () => {
-    console.log('Unfriending user with ID:', user_id); // Log the user ID
+    console.log("Unfriending user with ID:", user_id); // Log the user ID
     try {
-        await unfriendUser({ useridtoremove: user_id }).unwrap(); // Pass the user ID in an object
-        setGetUnfriend(false);
-        setGetAddButton(true);
-        console.log('Unfriended successfully');
+      await unfriendUser({ useridtoremove: user_id }).unwrap(); // Pass the user ID in an object
+      setGetUnfriend(false);
+      setGetAddButton(true);
+      console.log("Unfriended successfully");
     } catch (err) {
-        console.error('Failed to unfriend:', err);
-        // Optionally, you can dispatch an error message to show in the UI
+      console.error("Failed to unfriend:", err);
+      // Optionally, you can dispatch an error message to show in the UI
     }
-};
+  };
 
-
-
-       /* type === "received" */
+  /* type === "received" */
 
   // Determine button display based on request type or sent status
   if (type === "received") {
@@ -198,9 +190,7 @@ export default function ProfileButton({ user_id, type }) {
           </button>
         </div>
       );
-    } 
-    
-    else if(type === "received" && getAddButton) {
+    } else if (type === "received" && getAddButton) {
       if (requestSent) {
         return (
           <button
@@ -251,7 +241,7 @@ export default function ProfileButton({ user_id, type }) {
           </button>
         );
       }
-    }else{
+    } else {
       return (
         <button
           onClick={handleUnfriend}
@@ -276,20 +266,11 @@ export default function ProfileButton({ user_id, type }) {
         </button>
       );
     }
-  
-    
 
-
-
-
-
-
-
-          /* type === "sended" */
-    
+    /* type === "sended" */
   } else if (type === "sended") {
     // Render Cancel button if request has been sent
-    
+
     return !requestRejected ? (
       <button
         onClick={handleCancelButton}
@@ -338,30 +319,61 @@ export default function ProfileButton({ user_id, type }) {
         </button>
       </>
     );
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
- 
+  } else if (type === "not_friend") {
 
-
-
+  /*  Not Friend */
+    return requestSent ? (
+      <button
+        onClick={handleCancelButton}
+        className="btn-cancel-request"
+        type="button"
+        disabled={cancelingRequest}
+        style={{
+          backgroundColor: cancelingRequest ? "#c4c4c4" : "#999999",
+          color: cancelingRequest ? "#888" : "white",
+          cursor: cancelingRequest ? "not-allowed" : "pointer",
+        }}
+      >
+        {cancelingRequest ? (
+          <span
+            className="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        ) : (
+          "Cancel Request"
+        )}
+      </button>
+    ) : (
+      <>
+        <button
+          onClick={handleAddButton}
+          className="btn-add-friend"
+          type="button"
+          disabled={sendingRequest}
+          style={{
+            backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
+            cursor: sendingRequest ? "not-allowed" : "pointer",
+          }}
+        >
+          {sendingRequest ? (
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          ) : (
+            <>
+              <i className="fas fa-user-plus"></i> Add
+            </>
+          )}
+        </button>
+      </>
+    );
   } 
   
-  
-  
-  
-  
-  
-  
+ /*  friend */
+
   
   else {
     // Render Add Friend button for non-friends
