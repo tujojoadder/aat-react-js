@@ -21,6 +21,9 @@ export default function ProfileButton({ user_id, type }) {
   const [unfriendUser, { isLoading, isError, isSuccess, error }] =
     useUnfriendUserMutation();
 
+
+const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
+
   // Redux selectors for request status
   const requestSent = useSelector((state) => state.home.sentRequests[user_id]);
 
@@ -55,6 +58,7 @@ export default function ProfileButton({ user_id, type }) {
         );
         dispatch(setRequestSent({ userId: user_id }));
         setAddButtonVisible(false);
+      
       } else if (res.error) {
         handleApiError(res.error, dispatch);
       }
@@ -142,6 +146,7 @@ export default function ProfileButton({ user_id, type }) {
       await unfriendUser({ useridtoremove: user_id }).unwrap(); // Pass the user ID in an object
       setGetUnfriend(false);
       setGetAddButton(true);
+      settypeFriendShowButton(false);
       console.log("Unfriended successfully");
     } catch (err) {
       console.error("Failed to unfriend:", err);
@@ -377,12 +382,11 @@ export default function ProfileButton({ user_id, type }) {
   
   else {
     // Render Add Friend button for non-friends
-    return (
+    return typeFriendShowButton ? (
       <button
-        onClick={handleAddButton}
+        onClick={handleUnfriend}
         className="btn-add-friend"
         type="button"
-        disabled={sendingRequest}
         style={{
           backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
           cursor: sendingRequest ? "not-allowed" : "pointer",
@@ -396,10 +400,56 @@ export default function ProfileButton({ user_id, type }) {
           ></span>
         ) : (
           <>
-            <i className="fas fa-user-plus"></i> Add
+            <i className="fas fa-user-minus"></i> Unfriend
           </>
         )}
       </button>
+    ) : requestSent ? (
+      <button
+        onClick={handleCancelButton}
+        className="btn-cancel-request"
+        type="button"
+        disabled={cancelingRequest}
+        style={{
+          backgroundColor: cancelingRequest ? "#c4c4c4" : "#999999",
+          color: cancelingRequest ? "#888" : "white",
+          cursor: cancelingRequest ? "not-allowed" : "pointer",
+        }}
+      >
+        {cancelingRequest ? (
+          <span
+            className="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        ) : (
+          "Cancel Request"
+        )}
+      </button>
+    ) : (
+      <button
+          onClick={handleAddButton}
+          className="btn-add-friend"
+          type="button"
+          disabled={sendingRequest}
+          style={{
+            backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
+            cursor: sendingRequest ? "not-allowed" : "pointer",
+          }}
+        >
+          {sendingRequest ? (
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          ) : (
+            <>
+              <i className="fas fa-user-plus"></i> Add
+            </>
+          )}
+        </button>
     );
+    
   }
 }
