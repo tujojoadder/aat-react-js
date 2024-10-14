@@ -18,7 +18,7 @@ export const friendsApi = createApi({
       return headers;
     },
   }),
-  tagTypes:["RequestOrCancel","AcceptFriendRequest"],
+  tagTypes: ["RequestOrCancel", "AcceptFriendRequest", "Unfriend"],
   endpoints: (builder) => ({
     //get friend sugestion 5 record for home
     friendSuggestionhome: builder.query({
@@ -28,13 +28,19 @@ export const friendsApi = createApi({
           method: "GET",
         };
       },
-      providesTags:['RequestOrCancel']
+      providesTags: ["RequestOrCancel",'Unfriend'],
     }),
 
     //get specific user details
 
     getUserDetails: builder.query({
       query: (id) => `/userdetails/${id}`, // Make sure this endpoint exists in your backend
+    }),
+
+    /*   is Friend or not */
+    getFriendState: builder.query({
+      query: (id) => `friend-state/${id}`, // Assuming your API endpoint is '/api/friend-state/:id'
+      providesTags: ["AcceptFriendRequest", "RequestOrCancel",'Unfriend'],
     }),
 
     /* Send Friend Request */
@@ -46,7 +52,7 @@ export const friendsApi = createApi({
           body: receiver_id,
         };
       },
-      invalidatesTags:['RequestOrCancel']
+      invalidatesTags: ["RequestOrCancel"],
     }),
 
     /* cancel Friend Request */
@@ -58,21 +64,21 @@ export const friendsApi = createApi({
           body: receiver_id,
         };
       },
-      invalidatesTags:['RequestOrCancel']
+      invalidatesTags: ["RequestOrCancel"],
     }),
 
     /* get specific usrer friend list */
     getAuthUserfriendRequest: builder.query({
       query: ({ friendRequestPage = 1 }) =>
         `auth-friend-requests?page=${friendRequestPage}`,
+      providesTags:['Unfriend','AcceptFriendRequest']
     }),
 
     /* get all sented request auuth user did pendding*/
     getAuthUserSentRequest: builder.query({
       query: ({ friendRequestPage = 1 }) =>
         `sentfriendrequest?page=${friendRequestPage}`,
-      providesTags:['RequestOrCancel']
-      
+      providesTags: ["RequestOrCancel"],
     }),
 
     /* <<<<---- Friend Request Page ----->>>> */
@@ -82,7 +88,7 @@ export const friendsApi = createApi({
     getFriendSuggestion: builder.query({
       query: ({ friendSuggestionPage = 1 }) =>
         `getsuggestionfriends?page=${friendSuggestionPage}`,
-      providesTags:['RequestOrCancel']
+      providesTags: ["RequestOrCancel",'Unfriend'],
     }),
 
     /* Send Friend Request */
@@ -94,13 +100,23 @@ export const friendsApi = createApi({
           body: { sender_id, decision },
         };
       },
-      invalidatesTags:['AcceptFriendRequest']
+      invalidatesTags: ["AcceptFriendRequest"],
     }),
- /*sss--> getAuthUserFriends */ 
- getAuthUserFriends: builder.query({
-  query: ({ friendPage = 1 }) => `getauthuserfriendids?page=${friendPage}`, // Updated to include id
-  providesTags:['AcceptFriendRequest']
-}),
+    /*sss--> getAuthUserFriends */
+    getAuthUserFriends: builder.query({
+      query: ({ friendPage = 1 }) => `getauthuserfriendids?page=${friendPage}`, // Updated to include id
+      providesTags: ["AcceptFriendRequest",'Unfriend'],
+    }),
+
+    unfriendUser: builder.mutation({
+      query: ({ useridtoremove }) => ({
+          url: 'friends/unfriend', // Keep it simple without appending the ID in the URL
+          method: 'DELETE', // Assuming you use DELETE to unfriend
+          body: { useridtoremove }, // Send the user ID in the request body
+      }),
+      invalidatesTags:['Unfriend']
+  }),
+
 
   }),
 });
@@ -109,6 +125,7 @@ export const friendsApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useManageFriendRequestMutation,
+  useUnfriendUserMutation,
   useGetAuthUserFriendsQuery,
   useGetAuthUserSentRequestQuery,
   useGetFriendSuggestionQuery,
@@ -116,7 +133,7 @@ export const {
   useCancelFriendRequestMutation,
   useSendFriendRequestMutation,
   useGetUserDetailsQuery,
-  
+  useGetFriendStateQuery,
   useFriendSuggestionhomeQuery,
   useUserPostInsertMutation,
   useGetPostsQuery,

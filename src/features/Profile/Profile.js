@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import ProfileSkeleton from "./ProfileSkeleton/ProfileSkeleton";
 import ProfileHomeBack from "./ProfileHomeBack/ProfileHomeBack";
 import ProfilePost from "./ProfilePost/ProfilePost";
-import { useGetUserDetailsQuery } from "../../services/friendsApi";
+import { useGetFriendStateQuery, useGetUserDetailsQuery } from "../../services/friendsApi";
 import ImageContainer from "../Friends/ImageContainer/ImageContainer";
 import FriendsContainer from "./FriendsContainer/FriendsContainer";
 import FollowerContainer from "./FollowerContainer/FollowerContainer";
@@ -18,6 +18,19 @@ import MidScreenBack from "../SmallScreenBack/MidScreenBack";
 import ProfileButton from "./ProfileButton/ProfileButton";
 export default function Profile() {
   const { id } = useParams();
+
+  const {
+    data: friendState,
+    error: friendError,
+    isLoading: friendLoading,
+    isSuccess:friendSuccess
+  } = useGetFriendStateQuery(id);
+
+  if (friendSuccess) {
+  console.log(friendState.friend_state)
+  }
+
+
   const scrollRef = useRef(null);
   const [currentTab, setCurrentTab] = useState("More");
 
@@ -97,9 +110,9 @@ export default function Profile() {
     isError,
     isSuccess,
   } = useGetUserDetailsQuery(id);
-if (isSuccess) {
-  console.log(profileData)
-}
+  if (isSuccess) {
+    console.log(profileData);
+  }
   // Handle loading state
   if (isFetching) return <ProfileSkeleton />;
 
@@ -125,187 +138,185 @@ if (isSuccess) {
   };
 
   return (
-    <div
-      className="friend-home main border-start border-end mb-1 m-0 p-0"
-      style={{ backgroundColor: "white", minHeight: "100vh" }}
-    >
-      <div
-        ref={scrollRef}
-        className="header__wrapper m-0 p-0"
-        style={{ overflowY: "scroll", height: "100vh" }}
-      >
-        {/*    Back buttons */}
-        <SmallScreenBack
-          text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`}
-        />
-        <MidScreenBack
-          text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`}
-        />
-        <LargeScreenProfile
-          text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`}
-        />
-        <div style={backgroundImageStyle}></div>
+<>{isSuccess && friendSuccess && (<div
+  className="friend-home main border-start border-end mb-1 m-0 p-0"
+  style={{ backgroundColor: "white", minHeight: "100vh" }}
+>
+  <div
+    ref={scrollRef}
+    className="header__wrapper m-0 p-0"
+    style={{ overflowY: "scroll", height: "100vh" }}
+  >
+    {/*    Back buttons */}
+    <SmallScreenBack
+      text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`}
+    />
+    <MidScreenBack
+      text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`}
+    />
+    <LargeScreenProfile
+      text={`${profileData?.data?.user_fname} ${profileData?.data?.user_lname}`}
+    />
+    <div style={backgroundImageStyle}></div>
 
-        {/* Header of profile */}
-        <div className="cols__container">
-          <div className="left__col">
-            <div className="img__container">
-              <img
-                src={`${profileData?.data?.profile_picture}`}
-                style={{ backgroundColor: "lightgray" }}
-                alt="Profile"
-              />
+    {/* Header of profile */}
+    <div className="cols__container">
+      <div className="left__col">
+        <div className="img__container">
+          <img
+            src={`${profileData?.data?.profile_picture}`}
+            style={{ backgroundColor: "lightgray" }}
+            alt="Profile"
+          />
+        </div>
+        <h2>
+          {profileData?.data?.user_fname} {profileData?.data?.user_lname}
+        </h2>
+        <p>@{profileData?.data?.identifier}</p>
+      </div>
+      <div className="right__col">
+        <nav>
+          <div className="d-flex justify-content-center justify-content-sm-end">
+            {/*  massage and Manage will stay for admin */}
+
+            <div className="mx-4">
+<ProfileButton type={friendState.friend_state} user_id={id} />
             </div>
-            <h2>
-              {profileData?.data?.user_fname} {profileData?.data?.user_lname}
-            </h2>
-            <p>@{profileData?.data?.identifier}</p>
           </div>
-          <div className="right__col">
-            <nav>
-              <div className="d-flex justify-content-center justify-content-sm-end">
-                {/*  massage and Manage will stay for admin */}
-<ProfileButton type={profileData.friend_state} user_id={id} />
-
-
-
-
-
-
-               
-               
-              </div>
-            </nav>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <ul className="nav nav-tabs mt-3 mx-2 ">
-          <li className="nav-item">
-            <a className="nav-link active" href="#post" data-bs-toggle="tab">
-              Posts
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#image" data-bs-toggle="tab">
-              Photos
-            </a>
-          </li>
-          <li className="nav-item d-none d-lg-block">
-            <a className="nav-link" href="#friends" data-bs-toggle="tab">
-              Friends
-            </a>
-          </li>
-          <li className="nav-item dropdown">
-            <a
-              className="nav-link dropdown-toggle"
-              data-bs-toggle="dropdown"
-              href="#"
-              role="button"
-              aria-expanded="false"
-            >
-              {currentTab}
-            </a>
-            <ul className="dropdown-menu">
-              <li>
-                <a
-                  className="dropdown-item d-lg-none"
-                  href="#friends"
-                  data-bs-toggle="tab"
-                  onClick={() => handleTabClick("Friends")}
-                >
-                  Friends
-                </a>
-              </li>
-              <li>
-                <a
-                  className="dropdown-item"
-                  href="#follower"
-                  data-bs-toggle="tab"
-                  onClick={() => handleTabClick("Follower")}
-                >
-                  Follower
-                </a>
-              </li>
-              <li>
-                <a
-                  className="dropdown-item"
-                  href="#following"
-                  data-bs-toggle="tab"
-                  onClick={() => handleTabClick("Following")}
-                >
-                  Following
-                </a>
-              </li>
-              <li>
-                <a
-                  className="dropdown-item"
-                  href="#about"
-                  data-bs-toggle="tab"
-                  onClick={() => handleTabClick("About")}
-                >
-                  About
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-
-        {/* Tab Content */}
-        <div className="tab-content p-3 px-0">
-          {/* Posts Tab Content */}
-          <div className="tab-pane fade show active" id="post">
-            <h5 className="ms-4 mb-4" color="#65676b">
-              Posts
-            </h5>
-            <ProfilePost userId={id} />
-          </div>
-
-          {/* Photos Tab Content */}
-          <div className="tab-pane fade" id="image">
-            <h5 className="ms-4 mb-1" color="#65676b">
-              Photos
-            </h5>
-
-            <ImageContainer userId={id} />
-          </div>
-
-          {/* Friends Tab Content */}
-          <div className="tab-pane fade" id="friends">
-            <h5 className="ms-4 mb-1" color="#65676b">
-              Friends
-            </h5>
-
-            <FriendsContainer userId={id} />
-          </div>
-
-          {/* Follower Tab Content */}
-          <div className="tab-pane fade" id="follower">
-            <h5 className="ms-4 mb-1" color="#65676b">
-              Follower
-            </h5>
-
-            <FollowerContainer userId={id} />
-          </div>
-
-          {/* Following Tab Content */}
-          <div className="tab-pane fade" id="following">
-            <h5 className="ms-4 mb-1" color="#65676b">
-              Following
-            </h5>
-
-            <FollowingContainer userId={id} />
-          </div>
-
-          {/* About Tab Content */}
-          <div className="tab-pane fade" id="about">
-            <h5 className="ms-4 mb-1" color="#65676b">
-              About
-            </h5>
-            <About />
-          </div>
-        </div>
+        </nav>
       </div>
     </div>
+
+    {/* Tabs */}
+    <ul className="nav nav-tabs mt-3 mx-2 ">
+      <li className="nav-item">
+        <a className="nav-link active" href="#post" data-bs-toggle="tab">
+          Posts
+        </a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="#image" data-bs-toggle="tab">
+          Photos
+        </a>
+      </li>
+      <li className="nav-item d-none d-lg-block">
+        <a className="nav-link" href="#friends" data-bs-toggle="tab">
+          Friends
+        </a>
+      </li>
+      <li className="nav-item dropdown">
+        <a
+          className="nav-link dropdown-toggle"
+          data-bs-toggle="dropdown"
+          href="#"
+          role="button"
+          aria-expanded="false"
+        >
+          {currentTab}
+        </a>
+        <ul className="dropdown-menu">
+          <li>
+            <a
+              className="dropdown-item d-lg-none"
+              href="#friends"
+              data-bs-toggle="tab"
+              onClick={() => handleTabClick("Friends")}
+            >
+              Friends
+            </a>
+          </li>
+          <li>
+            <a
+              className="dropdown-item"
+              href="#follower"
+              data-bs-toggle="tab"
+              onClick={() => handleTabClick("Follower")}
+            >
+              Follower
+            </a>
+          </li>
+          <li>
+            <a
+              className="dropdown-item"
+              href="#following"
+              data-bs-toggle="tab"
+              onClick={() => handleTabClick("Following")}
+            >
+              Following
+            </a>
+          </li>
+          <li>
+            <a
+              className="dropdown-item"
+              href="#about"
+              data-bs-toggle="tab"
+              onClick={() => handleTabClick("About")}
+            >
+              About
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    {/* Tab Content */}
+    <div className="tab-content p-3 px-0">
+      {/* Posts Tab Content */}
+      <div className="tab-pane fade show active" id="post">
+        <h5 className="ms-4 mb-4" color="#65676b">
+          Posts
+        </h5>
+        <ProfilePost userId={id} />
+      </div>
+
+      {/* Photos Tab Content */}
+      <div className="tab-pane fade" id="image">
+        <h5 className="ms-4 mb-1" color="#65676b">
+          Photos
+        </h5>
+
+        <ImageContainer userId={id} />
+      </div>
+
+      {/* Friends Tab Content */}
+      <div className="tab-pane fade" id="friends">
+        <h5 className="ms-4 mb-1" color="#65676b">
+          Friends
+        </h5>
+
+        <FriendsContainer userId={id} />
+      </div>
+
+      {/* Follower Tab Content */}
+      <div className="tab-pane fade" id="follower">
+        <h5 className="ms-4 mb-1" color="#65676b">
+          Follower
+        </h5>
+
+        <FollowerContainer userId={id} />
+      </div>
+
+      {/* Following Tab Content */}
+      <div className="tab-pane fade" id="following">
+        <h5 className="ms-4 mb-1" color="#65676b">
+          Following
+        </h5>
+
+        <FollowingContainer userId={id} />
+      </div>
+
+      {/* About Tab Content */}
+      <div className="tab-pane fade" id="about">
+        <h5 className="ms-4 mb-1" color="#65676b">
+          About
+        </h5>
+        <About />
+      </div>
+    </div>
+  </div>
+</div> )}</>
+
+    
+    
   );
 }

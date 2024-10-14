@@ -4,6 +4,8 @@ import {
   useCancelFriendRequestMutation,
   useSendFriendRequestMutation,
   useManageFriendRequestMutation,
+  useGetFriendStateQuery,
+  useUnfriendUserMutation,
 } from "../../../services/friendsApi";
 import {
   setToastSuccess,
@@ -12,23 +14,26 @@ import {
   setRequestAccepted,
 } from "../../home/HomeSlice";
 import { handleApiError } from "../../handleApiError/handleApiError";
-import { useUnfriendUserMutation } from "../../../services/profileApi";
 
-export default function ProfileButton({ user_id, type }) {
+import { useParams } from "react-router-dom";
+
+export default function ProfileButton({ type }) {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [getAddButton, setGetAddButton] = useState(false);
   const [getUnfriend, setGetUnfriend] = useState(false);
   const [unfriendUser, { isLoading, isError, isSuccess, error }] =
     useUnfriendUserMutation();
 
+ 
 
-const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
+  const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
 
   // Redux selectors for request status
-  const requestSent = useSelector((state) => state.home.sentRequests[user_id]);
+  const requestSent = useSelector((state) => state.home.sentRequests[id]);
 
   const requestRejected = useSelector(
-    (state) => state.home.rejectedRequests[user_id]
+    (state) => state.home.rejectedRequests[id]
   );
 
   // Mutations
@@ -51,14 +56,13 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
   const handleAddButton = async (e) => {
     e.preventDefault();
     try {
-      const res = await sendFriendRequest({ receiver_id: user_id });
+      const res = await sendFriendRequest({ receiver_id: id });
       if (res.data) {
         dispatch(
           setToastSuccess({ toastSuccess: "Friend request sent successfully" })
         );
-        dispatch(setRequestSent({ userId: user_id }));
+        dispatch(setRequestSent({ userId: id }));
         setAddButtonVisible(false);
-      
       } else if (res.error) {
         handleApiError(res.error, dispatch);
       }
@@ -71,14 +75,14 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
   const handleCancelButton = async (e) => {
     e.preventDefault();
     try {
-      const res = await cancelFriendRequest({ receiver_id: user_id });
+      const res = await cancelFriendRequest({ receiver_id: id });
       if (res.data) {
         dispatch(
           setToastSuccess({
             toastSuccess: "Friend request canceled successfully",
           })
         );
-        dispatch(setRequestRejected({ userId: user_id }));
+        dispatch(setRequestRejected({ userId: id }));
         setAddButtonVisible(true);
       } else if (res.error) {
         handleApiError(res.error, dispatch);
@@ -94,7 +98,7 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
     setAcceptLoading(true);
     try {
       const res = await manageFriendRequest({
-        sender_id: user_id,
+        sender_id: id,
         decision: "accepted",
       }).unwrap();
       if (res.data) {
@@ -104,7 +108,7 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
           setToastSuccess({ toastSuccess: "Friend added successfully" })
         );
 
-        dispatch(setRequestAccepted({ userId: user_id }));
+        dispatch(setRequestAccepted({ userId: id }));
       } else if (res.error) {
         handleApiError(res.error, dispatch);
       }
@@ -121,12 +125,12 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
     setRejectLoading(true);
     try {
       const res = await manageFriendRequest({
-        sender_id: user_id,
+        sender_id: id,
         decision: "rejected",
       }).unwrap();
       if (res.data) {
         dispatch(setToastSuccess({ toastSuccess: "Friend request rejected" }));
-        dispatch(setRequestRejected({ userId: user_id }));
+        dispatch(setRequestRejected({ userId: id }));
 
         setGetUnfriend(false);
         setGetAddButton(true);
@@ -141,9 +145,9 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
   };
 
   const handleUnfriend = async () => {
-    console.log("Unfriending user with ID:", user_id); // Log the user ID
+    console.log("Unfriending user with ID:", id); // Log the user ID
     try {
-      await unfriendUser({ useridtoremove: user_id }).unwrap(); // Pass the user ID in an object
+      await unfriendUser({ useridtoremove: id }).unwrap(); // Pass the user ID in an object
       setGetUnfriend(false);
       setGetAddButton(true);
       settypeFriendShowButton(false);
@@ -154,8 +158,7 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
     }
   };
 
-  /* type === "received" */
-
+ 
   // Determine button display based on request type or sent status
   if (type === "received") {
     // Render Confirm/Reject buttons for received requests
@@ -200,7 +203,7 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
         return (
           <button
             onClick={handleCancelButton}
-            className="btn-cancel-request"
+            className="btn-cancel-request p-1"
             type="button"
             disabled={cancelingRequest}
             style={{
@@ -279,7 +282,7 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
     return !requestRejected ? (
       <button
         onClick={handleCancelButton}
-        className="btn-cancel-request"
+        className="btn-cancel-request p-1"
         type="button"
         disabled={cancelingRequest}
         style={{
@@ -325,12 +328,11 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
       </>
     );
   } else if (type === "not_friend") {
-
-  /*  Not Friend */
+    /*  Not Friend */
     return requestSent ? (
       <button
         onClick={handleCancelButton}
-        className="btn-cancel-request"
+        className="btn-cancel-request p-1"
         type="button"
         disabled={cancelingRequest}
         style={{
@@ -375,12 +377,9 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
         </button>
       </>
     );
-  } 
-  
- /*  friend */
+  } else {
 
-  
-  else {
+  /*  friend */
     // Render Add Friend button for non-friends
     return typeFriendShowButton ? (
       <button
@@ -407,7 +406,7 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
     ) : requestSent ? (
       <button
         onClick={handleCancelButton}
-        className="btn-cancel-request"
+        className="btn-cancel-request p-1"
         type="button"
         disabled={cancelingRequest}
         style={{
@@ -428,28 +427,27 @@ const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
       </button>
     ) : (
       <button
-          onClick={handleAddButton}
-          className="btn-add-friend"
-          type="button"
-          disabled={sendingRequest}
-          style={{
-            backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
-            cursor: sendingRequest ? "not-allowed" : "pointer",
-          }}
-        >
-          {sendingRequest ? (
-            <span
-              className="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            ></span>
-          ) : (
-            <>
-              <i className="fas fa-user-plus"></i> Add
-            </>
-          )}
-        </button>
+        onClick={handleAddButton}
+        className="btn-add-friend"
+        type="button"
+        disabled={sendingRequest}
+        style={{
+          backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
+          cursor: sendingRequest ? "not-allowed" : "pointer",
+        }}
+      >
+        {sendingRequest ? (
+          <span
+            className="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        ) : (
+          <>
+            <i className="fas fa-user-plus"></i> Add
+          </>
+        )}
+      </button>
     );
-    
   }
 }
