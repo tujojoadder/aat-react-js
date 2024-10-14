@@ -105,7 +105,7 @@ export const friendsApi = createApi({
     /*sss--> getAuthUserFriends */
     getAuthUserFriends: builder.query({
       query: ({ friendPage = 1 }) => `getauthuserfriendids?page=${friendPage}`, // Updated to include id
-      providesTags: ["AcceptFriendRequest",'Unfriend'],
+      providesTags: ["AcceptFriendRequest",'Unfriend','RequestOrCancel'],
     }),
 
     unfriendUser: builder.mutation({

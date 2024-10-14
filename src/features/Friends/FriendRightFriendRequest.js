@@ -8,6 +8,7 @@ import Spinner from "../Spinner/Spinner";
 import { Scrollbar } from "react-scrollbars-custom";
 import FriendRequestItemSm from "../ItemContainner/SmallScreenItem/FriendRequestItemSm/FriendRequestItemSm";
 import FriendRequestFooter from "../ItemContainner/FriendRightFooterContainer/FriendRequestFooter";
+import Scrollbars from "react-custom-scrollbars";
 
 export default function FriendRightFriendRequest() {
   const location = useLocation();
@@ -70,14 +71,14 @@ export default function FriendRightFriendRequest() {
             {/* Bottom section */}
 
             <h5>Friend Requests</h5>
-            <Scrollbar
+            <Scrollbars
               style={{
                 width: "100%",
                 height: "56vh",
               }}
             >
               <FriendRequestFooter />
-            </Scrollbar>
+            </Scrollbars>
           </div>
         </div>
       </div>
