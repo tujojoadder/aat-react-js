@@ -10,6 +10,7 @@ import {
   setToastSuccess,
   setRequestSent,
   setRequestRejected,
+  setRequestCancel,
 } from "../../../home/HomeSlice";
 import "./SentRequestItemSm.css";
 
@@ -22,9 +23,19 @@ export default function SentRequestItemSm({
 }) {
   const dispatch = useDispatch();
   // Access accepted and rejected requests from Redux state
-  const isRequestAccepted = useSelector((state) => state.home.acceptedRequests[user_id]);
-  const isRequestRejected = useSelector((state) => state.home.rejectedRequests[user_id]);
-  const isRequestSent = useSelector((state) => state.home.sentRequests[user_id]);
+  const isRequestAccepted = useSelector(
+    (state) => state.home.acceptedRequests[user_id]
+  );
+  const isRequestCancel = useSelector(
+    (state) => state.home.cancelRequests[user_id]
+  );
+  const isRequestRejected = useSelector(
+    (state) => state.home.rejectedRequests[user_id]
+  );
+  const isRequestSent = useSelector(
+    (state) => state.home.sentRequests[user_id]
+  );
+  
 
   // Redux selectors for request status
   const requestSent = useSelector((state) => state.home.sentRequests[user_id]);
@@ -48,8 +59,7 @@ export default function SentRequestItemSm({
             toastSuccess: "Friend request canceled successfully",
           })
         );
-        dispatch(setRequestRejected({ userId: user_id }));
-       
+        dispatch(setRequestCancel({ userId: user_id }));
       } else if (res.error) {
         handleApiError(res.error, dispatch);
       }
@@ -67,7 +77,7 @@ export default function SentRequestItemSm({
           setToastSuccess({ toastSuccess: "Friend request sent successfully" })
         );
         dispatch(setRequestSent({ userId: user_id }));
-        setAddButtonVisible(false);
+        
       } else if (res.error) {
         handleApiError(res.error, dispatch);
       }
@@ -110,56 +120,54 @@ export default function SentRequestItemSm({
         <p className="text-muted mb-0 text-truncate">{handle}</p>
       </div>
       <div className="add-friend-button">
+        {isRequestCancel ? (
+          <button
+          onClick={handleAddButton}
+          className="btn-add-friend"
+          type="button"
+          disabled={sendingRequest}
+          style={{
+            backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
+            cursor: sendingRequest ? "not-allowed" : "pointer",
+          }}
+        >
+          {sendingRequest ? (
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          ) : (
+            <>
+              <i className="fas fa-user-plus"></i> Add
+            </>
+          )}
+        </button>
+        ) : (
 
-
-      {!isRequestAccepted && !isRequestRejected && !isRequestSent ? (
-        <button
-            onClick={handleCancelButton}
-            className="btn-add-friend"
-            type="button"
-            disabled={cancelingRequest}
-            style={{
-              width:'140px',
-              backgroundColor: cancelingRequest ? "#c4c4c4" : "#999999",
-              color: cancelingRequest ? "#888" : "white",
-              cursor: cancelingRequest ? "not-allowed" : "pointer",
-            }}
-          >
-            {cancelingRequest ? (
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-            ) : (
-              "Cancel Request"
-            )}
-          </button>
-) : isRequestAccepted ? (
-  <div className="add-friend-button">
-  <button
-    className="btn py-2 btn-md"
-    style={{ backgroundColor: "#28a745", color: "white" }}
-    disabled
-  >
-    Request Accepted
-  </button>
-</div>
-) : (
-  <div className="add-friend-button">
-            <button
-              className="btn py-2 btn-md"
-              style={{ backgroundColor: "#dc3545", color: "white" }}
-              disabled
-            >
-              Request Rejected
-            </button>
-          </div>
-)}
-
-
-
-
+          <button
+          onClick={handleCancelButton}
+          className="btn-add-friend"
+          type="button"
+          disabled={cancelingRequest}
+          style={{
+            width: "140px",
+            backgroundColor: cancelingRequest ? "#c4c4c4" : "#999999",
+            color: cancelingRequest ? "#888" : "white",
+            cursor: cancelingRequest ? "not-allowed" : "pointer",
+          }}
+        >
+          {cancelingRequest ? (
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          ) : (
+            "Cancel Request"
+          )}
+        </button>
+        ) }
       </div>
     </div>
   );

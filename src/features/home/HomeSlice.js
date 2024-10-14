@@ -32,6 +32,7 @@ const initialState = {
   /* Friends Requests */
   acceptedRequests: {}, // To store accepted friend requests by user ID
   rejectedRequests: {}, // To store rejected/canceled friend requests by user ID
+  cancelRequests: {}, // To store rejected/canceled friend requests by user ID
   sentRequests: {},     // To store sent friend requests by user ID
 
 /* Group State */
@@ -173,6 +174,20 @@ export const homeSlice = createSlice({
       const { userId } = action.payload;
       state.sentRequests[userId] = true; // Mark request as sent
       delete state.rejectedRequests[userId]; // Remove from rejected if re-sent
+      delete state.cancelRequests[userId]; // Remove from rejected if re-sent
+    },
+
+    setRequestRejected: (state, action) => {
+      const { userId } = action.payload;
+      state.rejectedRequests[userId] = true; // Mark request as rejected/canceled
+      delete state.sentRequests[userId]; // Remove from sent if canceled
+      delete state.cancelRequests[userId]; // Remove from sent if canceled
+    },
+    setRequestCancel: (state, action) => {
+      const { userId } = action.payload;
+      state.cancelRequests[userId] = true; // Mark request as rejected/canceled
+      delete state.sentRequests[userId]; // Remove from sent if canceled
+      delete state.rejectedRequests[userId]; // Remove from sent if canceled
     },
 
     setRequestAccepted: (state, action) => {
@@ -181,11 +196,6 @@ export const homeSlice = createSlice({
       delete state.sentRequests[userId]; // Remove from sent if accepted
     },
 
-    setRequestRejected: (state, action) => {
-      const { userId } = action.payload;
-      state.rejectedRequests[userId] = true; // Mark request as rejected/canceled
-      delete state.sentRequests[userId]; // Remove from sent if canceled
-    },
 
 /* Group */
 
@@ -417,6 +427,7 @@ export const {
   setIdentifier,
   setCover_photo,
   setGender,
+  setRequestCancel,
   setBirthDate,
   setShow_Modal,
   setModalMessage,
