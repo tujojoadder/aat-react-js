@@ -1,56 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useCancelFriendRequestMutation,
   useSendFriendRequestMutation,
+  useManageFriendRequestMutation,
 } from "../../../services/friendsApi";
 import {
   setToastSuccess,
   setRequestSent,
   setRequestRejected,
+  setRequestAccepted,
 } from "../../home/HomeSlice";
 import { handleApiError } from "../../handleApiError/handleApiError";
 
 export default function ProfileButton({ user_id, type }) {
   const dispatch = useDispatch();
 
+  // Redux selectors for request status
+  const requestSent = useSelector((state) => state.home.sentRequests[user_id]);
+  const requestRejected = useSelector(
+    (state) => state.home.rejectedRequests[user_id]
+  );
+
+  // Mutations
   const [cancelFriendRequest, { isLoading: cancelingRequest }] =
     useCancelFriendRequestMutation();
   const [sendFriendRequest, { isLoading: sendingRequest }] =
     useSendFriendRequestMutation();
+  const [manageFriendRequest] = useManageFriendRequestMutation();
 
   const [isAddButtonVisible, setAddButtonVisible] = useState(false);
+  const [acceptLoading, setAcceptLoading] = useState(false);
+  const [rejectLoading, setRejectLoading] = useState(false);
 
-  // Handle canceling a friend request
-  const handleCancelButton = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await cancelFriendRequest({ receiver_id: user_id });
-      if (res.data) {
-        dispatch(
-          setToastSuccess({
-            toastSuccess: "Friend request canceled successfully",
-          })
-        );
-        dispatch(setRequestRejected({ userId: user_id }));
-        setAddButtonVisible(true);
-      } else if (res.error) {
-        handleApiError(res.error, dispatch);
-      }
-    } catch (error) {
-      handleApiError(error, dispatch);
-    }
-  };
+  useEffect(() => {
+    // Initially show the add button if request has been canceled or not sent
+    setAddButtonVisible(!requestSent && !requestRejected);
+  }, [requestSent, requestRejected]);
 
-  // Handle sending a friend request
+  // Handle Add Friend button
   const handleAddButton = async (e) => {
     e.preventDefault();
     try {
       const res = await sendFriendRequest({ receiver_id: user_id });
       if (res.data) {
-        dispatch(
-          setToastSuccess({ toastSuccess: "Friend request sent successfully" })
-        );
+        dispatch(setToastSuccess({ toastSuccess: "Friend request sent successfully" }));
         dispatch(setRequestSent({ userId: user_id }));
         setAddButtonVisible(false);
       } else if (res.error) {
@@ -61,64 +55,132 @@ export default function ProfileButton({ user_id, type }) {
     }
   };
 
-  // Set initial button visibility based on the type (friendship status)
-  useEffect(() => {
-    if (type === "not_friend") {
-      setAddButtonVisible(true); // Show "Add Friend" button
-    } else if (type === "sended") {
-      setAddButtonVisible(false); // Show "Cancel Request" button
+  // Handle Cancel Request button
+  const handleCancelButton = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await cancelFriendRequest({ receiver_id: user_id });
+      if (res.data) {
+        dispatch(setToastSuccess({ toastSuccess: "Friend request canceled successfully" }));
+        dispatch(setRequestRejected({ userId: user_id }));
+        setAddButtonVisible(true);
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
+      }
+    } catch (error) {
+      handleApiError(error, dispatch);
     }
-  }, [type]);
+  };
 
-  return (
-    <div>
-      {isAddButtonVisible ? (
+  // Handle Accept Request button
+  const handleAcceptRequest = async (e) => {
+    e.preventDefault();
+    setAcceptLoading(true);
+    try {
+      const res = await manageFriendRequest({ sender_id: user_id, decision: "accepted" }).unwrap();
+      if (res.data) {
+        dispatch(setToastSuccess({ toastSuccess: "Friend added successfully" }));
+        dispatch(setRequestAccepted({ userId: user_id }));
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
+      }
+    } catch (error) {
+      handleApiError(error, dispatch);
+    } finally {
+      setAcceptLoading(false);
+    }
+  };
+
+  // Handle Reject Request button
+  const handleRejectRequest = async (e) => {
+    e.preventDefault();
+    setRejectLoading(true);
+    try {
+      const res = await manageFriendRequest({ sender_id: user_id, decision: "rejected" }).unwrap();
+      if (res.data) {
+        dispatch(setToastSuccess({ toastSuccess: "Friend request rejected" }));
+        dispatch(setRequestRejected({ userId: user_id }));
+      } else if (res.error) {
+        handleApiError(res.error, dispatch);
+      }
+    } catch (error) {
+      handleApiError(error, dispatch);
+    } finally {
+      setRejectLoading(false);
+    }
+  };
+
+  // Determine button display based on request type or sent status
+  if (type === "received") {
+    // Render Confirm/Reject buttons for received requests
+    return (
+      <div className="d-flex">
         <button
-          onClick={handleAddButton}
-          className="btn-add-friend"
-          type="button"
-          disabled={sendingRequest}
-          style={{
-            backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
-            cursor: sendingRequest ? "not-allowed" : "pointer",
-          }}
+          className="btn btn-reject-friend me-2"
+          onClick={handleRejectRequest}
+          disabled={rejectLoading}
         >
-          {sendingRequest ? (
-            <span
-              className="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            ></span>
+          {rejectLoading ? (
+            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           ) : (
-            <>
-              <i className="fas fa-user-plus"></i> Add
-            </>
+            "Reject"
           )}
         </button>
-      ) : (
         <button
-          onClick={handleCancelButton}
-          className="btn-add-friend"
-          type="button"
-          disabled={cancelingRequest}
-          style={{
-            width: "140px",
-            backgroundColor: cancelingRequest ? "#c4c4c4" : "#999999",
-            color: cancelingRequest ? "#888" : "white",
-            cursor: cancelingRequest ? "not-allowed" : "pointer",
-          }}
+          className="btn btn-add-friend"
+          onClick={handleAcceptRequest}
+          disabled={acceptLoading}
         >
-          {cancelingRequest ? (
-            <span
-              className="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            ></span>
+          {acceptLoading ? (
+            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           ) : (
-            "Cancel Request"
+            "Confirm"
           )}
         </button>
-      )}
-    </div>
-  );
+      </div>
+    );
+  } else if (requestSent || type === "sended") {
+    // Render Cancel button if request has been sent
+    return (
+      <button
+        onClick={handleCancelButton}
+        className="btn-cancel-request"
+        type="button"
+        disabled={cancelingRequest}
+        style={{
+          backgroundColor: cancelingRequest ? "#c4c4c4" : "#999999",
+          color: cancelingRequest ? "#888" : "white",
+          cursor: cancelingRequest ? "not-allowed" : "pointer",
+        }}
+      >
+        {cancelingRequest ? (
+          <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        ) : (
+          "Cancel Request"
+        )}
+      </button>
+    );
+  } else {
+    // Render Add Friend button for non-friends
+    return (
+      <button
+        onClick={handleAddButton}
+        className="btn-add-friend"
+        type="button"
+        disabled={sendingRequest}
+        style={{
+          backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
+          cursor: sendingRequest ? "not-allowed" : "pointer",
+        }}
+      >
+        {sendingRequest ? (
+          <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        ) : (
+          <>
+            <i className="fas fa-user-plus"></i> Add
+          </>
+        )}
+      </button>
+    );
+  }
 }
