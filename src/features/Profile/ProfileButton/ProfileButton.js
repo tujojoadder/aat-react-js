@@ -12,6 +12,7 @@ import {
   setRequestSent,
   setRequestRejected,
   setRequestAccepted,
+  setRequestCancel,
 } from "../../home/HomeSlice";
 import { handleApiError } from "../../handleApiError/handleApiError";
 
@@ -34,6 +35,9 @@ export default function ProfileButton({ type }) {
 
   const requestRejected = useSelector(
     (state) => state.home.rejectedRequests[id]
+  );
+  const requestCancel = useSelector(
+    (state) => state.home.cancelRequests[id]
   );
 
   // Mutations
@@ -82,7 +86,7 @@ export default function ProfileButton({ type }) {
             toastSuccess: "Friend request canceled successfully",
           })
         );
-        dispatch(setRequestRejected({ userId: id }));
+        dispatch(setRequestCancel({ userId: id }));
         setAddButtonVisible(true);
       } else if (res.error) {
         handleApiError(res.error, dispatch);
@@ -279,7 +283,7 @@ export default function ProfileButton({ type }) {
   } else if (type === "sended") {
     // Render Cancel button if request has been sent
 
-    return !requestRejected ? (
+    return !requestCancel ? (
       <button
         onClick={handleCancelButton}
         className="btn-cancel-request p-1"
