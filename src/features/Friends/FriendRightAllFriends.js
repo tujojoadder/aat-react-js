@@ -74,14 +74,14 @@ export default function FriendRightAllFriends() {
 
                        {/* Bottom section */}
             <h5>Friend lists</h5>
-            <Scrollbar
+            <Scrollbars
               style={{
                 width: "100%",
                 height: "56vh",
               }}
             >
               <AllFriendFooterContainer />
-            </Scrollbar>
+            </Scrollbars>
           </div>
         </div>
       </div>

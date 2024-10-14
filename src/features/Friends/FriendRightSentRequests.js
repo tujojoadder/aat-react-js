@@ -70,7 +70,7 @@ export default function FriendRightSentRequests() {
             {/* Bottom section */}
             
           <h5>Sent Requests</h5>
-          <Scrollbar
+          <Scrollbars
               style={{
                 width: "100%",
                 height: "56vh",
@@ -78,7 +78,7 @@ export default function FriendRightSentRequests() {
               }}
             >
           <FriendSentFooterContainer/>
-          </Scrollbar>
+          </Scrollbars>
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import SmallScreenUnFriendUserCard from "./SmallScreenUnFriendUserCard/SmallScre
 import Spinner from "../Spinner/Spinner";
 import SuggestionItemSm from "../ItemContainner/SmallScreenItem/SuggestionItemSm/SuggestionItemSm";
 import FriendSuggestionFooterContainer from "../ItemContainner/FriendSuggestionFooterContainer/FriendSuggestionFooterContainer";
+import Scrollbars from "react-custom-scrollbars";
 
 export default function FriendRightFriendSuggestions() {
   const location = useLocation();
@@ -71,14 +72,14 @@ export default function FriendRightFriendSuggestions() {
             {/* Bottom section */}
 
             <h5>Friend Suggestions</h5>
-            <Scrollbar
+            <Scrollbars
               style={{
                 width: "100%",
                 height: "56vh",
               }}
             >
               <FriendSuggestionFooterContainer />
-            </Scrollbar>
+            </Scrollbars>
           </div>
         </div>
       </div>
