@@ -209,7 +209,7 @@ const HadithBox = () => {
           <Scrollbar
               style={{
                 width: "100%",
-                height: "56vh",
+               
               }}
             >
         <div className="card-content">
