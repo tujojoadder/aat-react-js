@@ -15,12 +15,12 @@ export default function FriendsContainer({ userId }) {
     triggerOnce: false,
   });
 
-    //Reset friends if id change
-    useEffect(() => {
-      setFriendPage(1);
-      setAllFriends([]);
-      setHasMoreFriends(true);
-    }, [userId]);
+  // Reset friends if id changes
+  useEffect(() => {
+    setFriendPage(1);
+    setAllFriends([]);
+    setHasMoreFriends(true);
+  }, [userId]);
 
   // Fetch data using dynamic query
   const { 
@@ -30,16 +30,9 @@ export default function FriendsContainer({ userId }) {
     isSuccess: useGetSpecificUserFriendQueryIsSuccess 
   } = useGetSpecificUserFriendQuery({ friendPage, userId });
 
-/*   // Log query data for debugging
-  useEffect(() => {
-    if (useGetSpecificUserFriendQueryIsSuccess) {
-      console.log(useGetSpecificUserFriendQueryData);
-    }
-  }, [useGetSpecificUserFriendQueryIsSuccess, useGetSpecificUserFriendQueryData]);
- */
   // Effect to process fetched data
   useEffect(() => {
-    if (useGetSpecificUserFriendQueryIsSuccess && useGetSpecificUserFriendQueryData?.data) {
+    if (useGetSpecificUserFriendQueryIsSuccess && Array.isArray(useGetSpecificUserFriendQueryData?.data)) {
       if (useGetSpecificUserFriendQueryData.data.length === 0) {
         setHasMoreFriends(false);
       } else {
@@ -64,8 +57,9 @@ export default function FriendsContainer({ userId }) {
     <div>
       <div className="container py-4" style={{ border: 'none' }}>
         <div className="row">
-
-        {allFriends.length === 0 && !useGetSpecificUserFriendQueryIsFetching && <h4 className="text-center" style={{color:'#592529'}}>No Friends to show</h4>}
+          {allFriends.length === 0 && !useGetSpecificUserFriendQueryIsFetching && (
+            <h4 className="text-center" style={{ color: '#592529' }}>No Friends to show</h4>
+          )}
 
           {allFriends.map((friend, index) => (
             <div className="col-12 mb-2" key={index}>
@@ -85,7 +79,7 @@ export default function FriendsContainer({ userId }) {
         <div
           ref={friendRef}
           className="loading-trigger"
-             style={{height:'7vh',minHeight:'40px'}}
+          style={{ height: '7vh', minHeight: '40px' }}
         >
           {useGetSpecificUserFriendQueryIsFetching && <Spinner />}
         </div>
