@@ -21,8 +21,12 @@ export default function ProfileButton({ user_id, type }) {
   const [unfriendUser, { isLoading, isError, isSuccess, error }] =
   useUnfriendUserMutation();
 
+
+
   // Redux selectors for request status
   const requestSent = useSelector((state) => state.home.sentRequests[user_id]);
+
+
   const requestRejected = useSelector(
     (state) => state.home.rejectedRequests[user_id]
   );
@@ -153,8 +157,10 @@ export default function ProfileButton({ user_id, type }) {
 
 
 
+       /* type === "received" */
+
   // Determine button display based on request type or sent status
-  if (type === "received" || getAddButton || getUnfriend) {
+  if (type === "received") {
     // Render Confirm/Reject buttons for received requests
 
     if (type === "received" && !getAddButton && !getUnfriend) {
@@ -279,11 +285,12 @@ export default function ProfileButton({ user_id, type }) {
 
 
 
-
+          /* type === "sended" */
     
-  } else if (requestSent || type === "sended") {
+  } else if (type === "sended") {
     // Render Cancel button if request has been sent
-    return (
+    
+    return !requestRejected ? (
       <button
         onClick={handleCancelButton}
         className="btn-cancel-request"
@@ -305,8 +312,58 @@ export default function ProfileButton({ user_id, type }) {
           "Cancel Request"
         )}
       </button>
+    ) : (
+      <>
+        <button
+          onClick={handleAddButton}
+          className="btn-add-friend"
+          type="button"
+          disabled={sendingRequest}
+          style={{
+            backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
+            cursor: sendingRequest ? "not-allowed" : "pointer",
+          }}
+        >
+          {sendingRequest ? (
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          ) : (
+            <>
+              <i className="fas fa-user-plus"></i> Add
+            </>
+          )}
+        </button>
+      </>
     );
-  } else {
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ 
+
+
+
+  } 
+  
+  
+  
+  
+  
+  
+  
+  
+  else {
     // Render Add Friend button for non-friends
     return (
       <button
