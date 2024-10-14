@@ -19,9 +19,10 @@ export default function FriendRequestItemSm({
   const [rejectLoading, setRejectLoading] = useState(false);
 
   // Access accepted and rejected requests from Redux state
-  const acceptedRequests = useSelector((state) => state.home.acceptedRequests);
-  const rejectedRequests = useSelector((state) => state.home.rejectedRequests);
-  const requestSent = useSelector((state) => state.home.sentRequests[user_id]);
+  const isRequestAccepted = useSelector((state) => state.home.acceptedRequests[user_id]);
+  const isRequestRejected = useSelector((state) => state.home.rejectedRequests[user_id]);
+  const isRequestSent = useSelector((state) => state.home.sentRequests[user_id]);
+
   const [
     ManageFriendRequestMutation,
     {
@@ -72,9 +73,7 @@ export default function FriendRequestItemSm({
     }
   };
 
-  // Check if the friend request has been accepted or rejected
-  const isRequestAccepted = acceptedRequests[user_id];
-  const isRequestRejected = rejectedRequests[user_id];
+  
 
   return (
     <div
@@ -103,7 +102,7 @@ export default function FriendRequestItemSm({
         <p className="text-muted mb-0 text-truncate">{handle}</p>
       </div>
       <div className="d-flex">
-        {!isRequestAccepted && !isRequestRejected && !requestSent ? (
+        {!isRequestAccepted && !isRequestRejected && !isRequestSent ? (
           <>
             <div className="add-delete-button me-2">
               <button
