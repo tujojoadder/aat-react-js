@@ -256,7 +256,7 @@ export default function FriendHome() {
             <div
               ref={suggestionRef}
               className="infinite-scroll-trigger"
-              style={{ height: "7vh", minHeight: "40px" }}
+            
             >
               {useGetFriendSuggestionQueryIsFetching && <Spinner />}
             </div>

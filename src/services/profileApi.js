@@ -18,7 +18,7 @@ export const profileApi = createApi({
       return headers;
     },
   }),
-  tagTypes:['CreatePost'],
+  tagTypes: ["CreatePost"],
   endpoints: (builder) => ({
     /* <----  Other's User ---> */
 
@@ -63,25 +63,25 @@ export const profileApi = createApi({
           body: data,
         };
       },
-      invalidatesTags:['CreatePost']
+      invalidatesTags: ["CreatePost"],
     }),
 
     /*    get specific usrer post for profile */
     getAuthUserPost: builder.query({
       query: ({ page = 1 }) => `getauthuserposts?page=${page}`, // Updated to include id
-      providesTags:['CreatePost']
+      providesTags: ["CreatePost"],
     }),
 
     /*    get specific usrer images for profile */
     getAuthUserPhoto: builder.query({
       query: ({ photoPage = 1 }) => `getauthuserphotos?page=${photoPage}`, // Updated to include id
-      providesTags:['CreatePost']
+      providesTags: ["CreatePost"],
     }),
 
     /* get specific usrer images for profile */
     getAuthUserFriend: builder.query({
       query: ({ friendPage = 1 }) => `getauthuserfriendids?page=${friendPage}`, // Updated to include id
-      providesTags:['AcceptFriendRequest']
+      providesTags: ["AcceptFriendRequest"],
     }),
 
     /* get all followers for specific user on profile*/
@@ -132,6 +132,11 @@ export const profileApi = createApi({
       }),
     }),
 
+    /* Get About data */
+    getSpecificUserAbout: builder.query({
+      query: (id) => `/about/${id}`, // API endpoint for fetching user about data
+    }),
+
     /* <---- MProfile -----> */
     /* get mphoto to set */
     getMProfilePhotos: builder.query({
@@ -173,9 +178,6 @@ export const profileApi = createApi({
         body: { image_id },
       }),
     }),
-
-  
-
   }),
 });
 
@@ -183,7 +185,7 @@ export const profileApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useSetFProfileMutation,
-  
+useGetSpecificUserAboutQuery,
   useSetMProfileMutation,
   useUserPostInsertMutation,
   useSetCoverPhotoMutation,

@@ -110,7 +110,7 @@ export default function FriendRequestFooter() {
       <div
         ref={requestRef}
         className="infinite-scroll-trigger"
-        style={{ height: '7vh', minHeight: '40px' }}
+        
       >
         {useGetAuthUserfriendRequestQueryFetching && <Spinner />}
       </div>

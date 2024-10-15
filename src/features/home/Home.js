@@ -101,7 +101,7 @@ if (isSuccess) {
           <div
             ref={ref}
             className="loading-trigger"
-            style={{ minHeight: "30px" }}
+           
           >
             {isFetching && <Spinner />}
           </div>

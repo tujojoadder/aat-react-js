@@ -14,7 +14,7 @@ export default function NoUserSelected() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      height: "100vh",
+      height: "100.1vh",
       textAlign: "center",
       color: "#555",
       fontFamily: "Arial, sans-serif",
@@ -57,7 +57,7 @@ export default function NoUserSelected() {
       {/* Content for large devices */}
       <div
         className="d-none d-lg-block border-start border-end"
-        style={{ height: "101vh" }}
+        style={{ height: "100vh" }}
       >
         <div style={styles.container}>
           <div style={styles.content}>

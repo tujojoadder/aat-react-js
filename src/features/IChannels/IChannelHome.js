@@ -70,7 +70,7 @@ export default function IChannelHome() {
           <div
             ref={ref}
             className="loading-trigger"
-            style={{ minHeight: "30px" }}
+            
           >
             {isFetching && <Spinner />}
           </div>

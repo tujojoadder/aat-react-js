@@ -1,11 +1,15 @@
 import React from "react";
 import "./About.css";
-import { useGetSpecificUserAboutQuery } from "../../../../services/profileApi";
+import { useGetAboutDataQuery } from "../../../../services/profileApi";
 
-export default function About({ userId }) {
+export default function MyAbout({ userId }) {
   const { data, error, isLoading, isSuccess } =
-    useGetSpecificUserAboutQuery(userId);
+    useGetAboutDataQuery();
     
+if (isSuccess) {
+  console.log(data);
+}
+
   return (
     <>
       {isSuccess && (

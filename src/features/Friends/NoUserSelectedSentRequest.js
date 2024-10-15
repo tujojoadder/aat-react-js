@@ -17,7 +17,7 @@ export default function NoUserSelectedSentRequest() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      height: '100vh',
+      height: '100.1vh',
     /*   backgroundColor: '#f9f9f9', */
       textAlign: 'center',
       color: '#555',
@@ -63,7 +63,7 @@ export default function NoUserSelectedSentRequest() {
 
 
       {/* Content for large devices */}
-      <div className="d-none d-lg-block border-start border-end" style={{height:'101vh'}}>
+      <div className="d-none d-lg-block border-start border-end" style={{height:'100vh'}}>
         <div style={styles.container} >
           <div style={styles.content}>
             <i className="fas fa-info-circle" style={styles.icon}></i>

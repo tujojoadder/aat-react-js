@@ -119,7 +119,7 @@ export default function GroupSuggestion() {
           <div
             ref={adminRef}
             className="infinite-scroll-trigger"
-            style={{ height: "7vh", minHeight: "40px" }}
+         
           >
             {isFetchingAdminGroups && <Spinner />}
           </div>

@@ -18,6 +18,7 @@ import MyProfileFriendsContainer from "./MyProfileFriendsContainer/MyProfileFrie
 import MyProfileFollowerContainer from "./MyProfileFollowerContainer/MyProfileFollowerContainer";
 import MyProfileFollowingContainer from "./MyProfileFollowingContainer/MyProfileFollowingContainer";
 import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
+import MyAbout from "../../home/Components/About/MyAbout";
 
 export default function MyProfile() {
   const scrollRef = useRef(null);
@@ -89,7 +90,7 @@ export default function MyProfile() {
       <div
         ref={scrollRef}
         className="header__wrapper m-0 p-0"
-        style={{ overflowY: "scroll", height: "100vh" }}
+        style={{ overflowY: "scroll", overflowX:'hidden' }}
       >
         <div style={backgroundImageStyle}>
           <ProfileHomeBack text="My account" />
@@ -229,7 +230,7 @@ export default function MyProfile() {
             {/* About Section */}
             <div id="about" className="p-3 tab-pane fade">
               <h4 className="ps-2 ">About</h4>
-              <About />
+              <MyAbout/>
             </div>
             {/* Friends Section */}
             <div id="friends" className="tab-pane fade w-100">

@@ -123,7 +123,7 @@ export default function GroupsJoinedGroups() {
           <div
             ref={joinedRef}
             className="infinite-scroll-trigger"
-            style={{ height: "7vh", minHeight: "40px" }}
+           
           >
             {isFetchingJoinedGroups && <Spinner />}
           </div>

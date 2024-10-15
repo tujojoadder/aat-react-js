@@ -94,7 +94,7 @@ export default function PageHome() {
 
       {/* Section 1: Pages where the user is an admin */}
       <div className="admin-groups-section  px-sm-4 px-lg-2 px-3">
-        <h4 className="p-2">Pages you're an admin of</h4>
+        <h4 className="p-2">Suggested for you</h4>
         <div className="row">
           {allAdminGroups.map((page, index) =>
             isSmallScreen ? (

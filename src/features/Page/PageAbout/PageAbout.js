@@ -25,7 +25,7 @@ export default function PageAbout() {
 
   return (
 <>
-    {!pageError && (<div className="page-about pb-5">
+    {!pageError && (<div className="page-about pb-5 mx-3">
       {/* Page Category Section */}
       <div className="about-section mt-2 mb-2">
         <div className="about-item m-0 p-0">
