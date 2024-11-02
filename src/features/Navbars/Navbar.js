@@ -97,13 +97,13 @@ const Navbar = () => {
   return (
     <div
       style={{
-        width: "100%",
+        width: "100.01%",
         height: "100vh",
         minHeight: "300px",
         overflowX: "hidden",
       }}
     >
-      <div className={isNotSm ? "container-sm  " : "ps-2 pe-2"}>
+      <div className={isNotSm ? "container-sm  " : "ps-2 pe-1"}>
         {/* xs NAV BAR */}
         {!isInPathsToHideNav && !isInPathsToHideNavHead && (
           <nav

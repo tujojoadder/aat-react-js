@@ -9,7 +9,7 @@ const userToken = Cookies.get('userToken');
 
 export const commentApi = createApi({
     reducerPath: "commentApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api",
+    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api",
         prepareHeaders: (headers) => {
             if (userToken) {
               headers.set('authorization', `Bearer ${userToken}`)
