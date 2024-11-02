@@ -135,13 +135,15 @@ export default function ReplyComment({ comment, type }) {
         <div className=" bd-highlight">
           {" "}
           <div className="name-column">
-            <h1 className="full-name-text m-0 p-0" style={{fontSize:'0.9rem'}}>
+            <h1
+              className="full-name-text m-0 p-0"
+              style={{ fontSize: "0.9rem" }}
+            >
               {type === "user"
                 ? `${user_fname} ${user_lname}`
                 : `${comment?.replied_by?.user_fname} ${comment?.replied_by?.user_lname}`}
             </h1>
             <p className="user-name-text m-0 p-0 ">
-
               {type === "user"
                 ? `@${identifier}`
                 : `@${comment?.replied_by?.identifier}`}
@@ -150,11 +152,9 @@ export default function ReplyComment({ comment, type }) {
         </div>
         <div className="ms-auto bd-highlight">
           <p className="time-text">
-          {type === "user"
+            {type === "user"
               ? `now`
               : comment?.created_at && formatPostDate(comment.created_at)}
-
-          
           </p>
         </div>
       </div>

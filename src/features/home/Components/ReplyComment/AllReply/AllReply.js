@@ -31,6 +31,9 @@ export default function AllReply({ showComments }) {
     refetch,
   } = useGetRepliesByCommentIdQuery({ commentId, page: friendRequestPage });
 
+if (isRepliesSuccess) {
+  console.log(repliesData)
+}
   // When the replies data is fetched successfully
   useEffect(() => {
     if (isRepliesSuccess && repliesData?.data) {
@@ -86,52 +89,37 @@ export default function AllReply({ showComments }) {
       <MidScreenCommentback showComments={showComments} />
       <LargeScreenCommentBack showComments={showComments} />
 
-<div className="pb-5">
-      {/* Show initial spinner only for first page */}
-      {isRepliesLoading && friendRequestPage === 1 && (
-        <div className="text-center mt-2">
-          <CommentSpinner size="25px" color="#ff69b3" />
-        </div>
-      )}
+      <div className="pb-5">
+        {/* Show initial spinner only for first page */}
+        {isRepliesLoading && friendRequestPage === 1 && (
+          <div className="text-center mt-2">
+            <CommentSpinner size="25px" color="#ff69b3" />
+          </div>
+        )}
 
-      {/* Render broadcasted comments (real-time updates) */}
+        {/* Render broadcasted comments (real-time updates) */}
 
-      {broadcastedReply.length > 0 &&
-        broadcastedReply.map((reply) => (
-          <ReplyComment comment={reply} key={reply.reply_id} type="user" />
-        ))}
+        {broadcastedReply.length > 0 &&
+          broadcastedReply.map((reply) => (
+            <ReplyComment comment={reply} key={reply.reply_id} type="user" />
+          ))}
 
-      {/* List of replies */}
-      {allFriendRequest.length > 0 &&
-        allFriendRequest.map((comment) => (
-          <ReplyComment key={comment.reply_id} comment={comment} />
-        ))}
+        {/* List of replies */}
+        {allFriendRequest.length > 0 &&
+          allFriendRequest.map((comment) => (
+            <ReplyComment key={comment.reply_id} comment={comment} />
+          ))}
 
-      {/* Infinite scroll spinner: Only for subsequent pages */}
-      {friendRequestPage > 1 && isRepliesFetching && (
-        <div
-          ref={replyRequestRef}
-          className="infinite-scroll-trigger"
-        
-        ></div>
-      )}
+        {/* Infinite scroll spinner: Only for subsequent pages */}
+        {friendRequestPage > 1 && isRepliesFetching && (
+          <div ref={replyRequestRef} className="infinite-scroll-trigger"></div>
+        )}
 
-      {/* Infinite scroll trigger element */}
-      {!isRepliesFetching && hasMoreFriendRequest && (
-        <div
-          ref={replyRequestRef}
-          className="infinite-scroll-trigger"
-          
-        />
-      )}
-
-</div>
-
-
-
-
-
-
+        {/* Infinite scroll trigger element */}
+        {!isRepliesFetching && hasMoreFriendRequest && (
+          <div ref={replyRequestRef} className="infinite-scroll-trigger" />
+        )}
+      </div>
     </>
   );
 }
