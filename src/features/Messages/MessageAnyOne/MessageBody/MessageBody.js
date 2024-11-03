@@ -202,7 +202,7 @@ export default function MessageBody({ userId, image }) {
     <>
       <div className="message-body " style={{ overflowX: "hidden" }}>
         <Scrollbar>
-          <div id="msg_card_body" style={{ overflowX: "hidden", marginTop: isExtraSmall ? "20vh" : "3vh", }}>
+          <div id="msg_card_body" style={{ overflowX: "hidden", marginTop: isExtraSmall ? "23vh" : "3vh", }}>
             {/* Button to load older messages */}
             {hasMoreFriendRequest &&
               useGetAuthUserfriendRequestQuerySuccess &&

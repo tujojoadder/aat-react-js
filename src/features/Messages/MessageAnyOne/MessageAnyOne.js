@@ -14,6 +14,7 @@ import Spinner from "../../Spinner/Spinner";
 import { setReceiverId } from "../../home/HomeSlice";
 import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
 import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
+import MessageSmallDeviceHead from "../MessageSmallDeviceHead/MessageSmallDeviceHead";
 
 export default function MessageAnyOne() {
   const { id } = useParams();
@@ -108,7 +109,7 @@ useEffect(() => {
 
   return (
     <>
-      <SmallScreenBack text="Your groups" />
+      <MessageSmallDeviceHead text="Your groups" />
 
       <div className="message-container friend-home  p-0 m-0 border-left border-right">
         <div className="message-header d-none d-sm-block">
