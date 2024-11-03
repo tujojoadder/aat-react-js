@@ -35,6 +35,7 @@ export default function MessageBody({ userId, image }) {
     useSendMessageMutation();
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRef = useRef(null);
+  const inputRef = useRef(null);  // Create a ref for the input
   const messageEndRef = useRef(null);
 
   useEffect(() => {
@@ -103,6 +104,7 @@ export default function MessageBody({ userId, image }) {
 
   /*  Send Message */
   const handleSubmit = async (e) => {
+    inputRef.current.focus();  // Refocus the input to keep the keyboard open
     e.preventDefault();
     if (!message.trim()) return;
 
@@ -124,6 +126,7 @@ export default function MessageBody({ userId, image }) {
       ]);
 
       setMessage("");
+
       refetch();
     } catch (error) {
       console.error("Error sending message:", error);
@@ -329,6 +332,7 @@ export default function MessageBody({ userId, image }) {
                 <input
                   className="form-control"
                   value={message}
+                  ref={inputRef}  // Attach the ref to the input element
                   onChange={(e) => setMessage(e.target.value)}
                   style={{
                     border: "1px solid #ccc",
