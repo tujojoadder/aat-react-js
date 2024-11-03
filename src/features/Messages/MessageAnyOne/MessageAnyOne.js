@@ -107,62 +107,60 @@ useEffect(() => {
   }
 
   return (
-
     <>
-    <SmallScreenBack text="Your groups" />
+      <SmallScreenBack text="Your groups" />
 
-     
-    <div className="message-container friend-home  p-0 m-0 border-left border-right">
-      <div className="message-header d-none d-sm-block">
-        <div
-          className="posts m-0 py-2 p-0 border-bottom bg-light rounded"
-          style={{
-            borderRadius: "0px",
-            backgroundColor: "#ffff",
-            border: "none",
-            minHeight: "65px",
-          }}
-        >
-          <NavLink to={`/message`} className="text-decoration-none">
-            <i className="fa-solid fa-arrow-left text-dark fs-4 p-3 pe-1 d-lg-none"></i>
-          </NavLink>
+      <div className="message-container friend-home  p-0 m-0 border-left border-right">
+        <div className="message-header d-none d-sm-block">
+          <div
+            className="posts m-0 py-2 p-0 border-bottom bg-light rounded"
+            style={{
+              borderRadius: "0px",
+              backgroundColor: "#ffff",
+              border: "none",
+              minHeight: "65px",
+            }}
+          >
+            <NavLink to={`/message`} className="text-decoration-none">
+              <i className="fa-solid fa-arrow-left text-dark fs-4 p-3 pe-1 d-lg-none"></i>
+            </NavLink>
 
-          <div className="user-pics">
-            {profileData?.data?.profile_picture && (
-              <img
-                src={profileData?.data?.profile_picture}
-                className="rounded-circle user_img_msg"
-                alt="user3"
-              />
-            )}
-          </div>
-          <div className="user-content-text-box">
-            <div className="user-names-text" style={{ marginTop: "2px" }}>
-              <div className="name-column">
-                <h1 className="full-name-text m-0 p-0">
-                  {profileData?.data.user_fname} {profileData?.data?.user_lname}
-                </h1>
-                <p className="user-name-text m-0 p-0">
-                  {profileData?.data?.identifier
-                    ? `@${profileData.data.identifier}`
-                    : ""}
-                </p>
+            <div className="user-pics">
+              {profileData?.data?.profile_picture && (
+                <img
+                  src={profileData?.data?.profile_picture}
+                  className="rounded-circle user_img_msg"
+                  alt="user3"
+                />
+              )}
+            </div>
+            <div className="user-content-text-box">
+              <div className="user-names-text" style={{ marginTop: "2px" }}>
+                <div className="name-column">
+                  <h1 className="full-name-text m-0 p-0">
+                    {profileData?.data.user_fname}{" "}
+                    {profileData?.data?.user_lname}
+                  </h1>
+                  <p className="user-name-text m-0 p-0">
+                    {profileData?.data?.identifier
+                      ? `@${profileData.data.identifier}`
+                      : ""}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {isFetching ? (
-        // Show a loading skeleton or spinner while the data is being fetched
-        <div className="message-body" style={{ overflowX: "hidden" }}>
-          <ProfileSkeleton />
-        </div>
-      ) : (
-        <MessageBody userId={id} image={profileData?.data?.profile_picture} />
-      )}
-    </div>
+        {isFetching ? (
+          // Show a loading skeleton or spinner while the data is being fetched
+          <div className="message-body" style={{ overflowX: "hidden" }}>
+            <ProfileSkeleton />
+          </div>
+        ) : (
+          <MessageBody userId={id} image={profileData?.data?.profile_picture} />
+        )}
+      </div>
     </>
-    
   );
 }

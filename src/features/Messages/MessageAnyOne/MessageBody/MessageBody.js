@@ -1,13 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Scrollbar } from 'react-scrollbars-custom';
-import { useLoadChatQuery, useSendMessageMutation, useDeleteMessageMutation } from '../../../../services/chatsApi'; // Import the delete mutation
-import { formatPostDate } from '../../../../utils/dateUtils';
-import echo from '../../../../echo';
-import { setToastSuccess } from '../../../home/HomeSlice';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Scrollbar } from "react-scrollbars-custom";
+import {
+  useLoadChatQuery,
+  useSendMessageMutation,
+  useDeleteMessageMutation,
+} from "../../../../services/chatsApi"; // Import the delete mutation
+import { formatPostDate } from "../../../../utils/dateUtils";
+import echo from "../../../../echo";
+import { setToastSuccess } from "../../../home/HomeSlice";
 
-export default function MessageBody({ userId,image }) {
-
+export default function MessageBody({ userId, image }) {
   const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.home.profile_picture);
   const authId = useSelector((state) => state.home.user_id);
@@ -25,10 +28,10 @@ export default function MessageBody({ userId,image }) {
     isLoading: useGetAuthUserfriendRequestQueryLoading,
     isError: useGetAuthUserfriendRequestQueryError,
     isFetching: useGetAuthUserfriendRequestQueryFetching,
-    refetch
+    refetch,
   } = useLoadChatQuery({ page: friendRequestPage, receiver_id: userId });
   const [sendMessage, { isLoading: isLoadingMessage }] =
-  useSendMessageMutation();
+    useSendMessageMutation();
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRef = useRef(null);
   const messageEndRef = useRef(null);
@@ -79,9 +82,9 @@ export default function MessageBody({ userId,image }) {
   };
 
   useEffect(() => {
-    window.addEventListener('click', handleClickOutside);
+    window.addEventListener("click", handleClickOutside);
     return () => {
-      window.removeEventListener('click', handleClickOutside);
+      window.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
@@ -93,14 +96,11 @@ export default function MessageBody({ userId,image }) {
 
   useEffect(() => {
     if (messageEndRef.current && friendRequestPage === 1) {
-      messageEndRef.current.scrollIntoView({ behavior: 'auto' });
+      messageEndRef.current.scrollIntoView({ behavior: "auto" });
     }
   }, [messages]);
 
-
-
-
- /*  Send Message */
+  /*  Send Message */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!message.trim()) return;
@@ -122,14 +122,12 @@ export default function MessageBody({ userId,image }) {
         },
       ]);
 
-      setMessage('');
+      setMessage("");
       refetch();
-    } catch (error)
-    {
+    } catch (error) {
       console.error("Error sending message:", error);
     }
   };
-
 
   useEffect(() => {
     echo.private("broadcast-message").listen(".getChatMessage", (e) => {
@@ -148,26 +146,22 @@ export default function MessageBody({ userId,image }) {
           {
             id: e.chat.data.id, // Ensure the data has an id property
             message: e.chat.data.message,
-            created_at:e.chat.data.created_at,
+            created_at: e.chat.data.created_at,
             sender_id: e.chat.data.sender_id, // Add sender ID from the received message
             receiver_id: e.chat.data.receiver_id, // Add sender ID from the received message
           },
         ]);
 
-refetch();
-
+        refetch();
       }
     });
 
-
     echo.private("message-deleted").listen("MessageDeleteEvent", (e) => {
-      setMessages((prevMessages) => prevMessages.filter((msg) => msg.id !== e.id));
+      setMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== e.id)
+      );
       refetch();
-
-      
-    }); 
-
-
+    });
 
     return () => {
       echo.leave("broadcast-message");
@@ -175,135 +169,137 @@ refetch();
     };
   }, []);
 
-
-
-
-
-
-
-
-
   // Handle the removal of a message
   const handleRemoveMessage = async (messageId) => {
     try {
       // Call the delete mutation
       await deleteMessage(messageId).unwrap();
-      
+
       // Remove the deleted message from the UI
-      setMessages((prevMessages) => prevMessages.filter((msg) => msg.id !== messageId));
+      setMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== messageId)
+      );
       refetch();
     } catch (error) {
       console.error("Error deleting message:", error);
     }
   };
 
-
   // Function to handle copying a message to clipboard
   const handleCopyMessage = (messageText) => {
-    navigator.clipboard.writeText(messageText).then(() => {
-
-      dispatch(setToastSuccess({ toastSuccess: "Message copied" }));
-    }).catch((error) => {
-      console.error('Failed to copy text: ', error);
-    });
+    navigator.clipboard
+      .writeText(messageText)
+      .then(() => {
+        dispatch(setToastSuccess({ toastSuccess: "Message copied" }));
+      })
+      .catch((error) => {
+        console.error("Failed to copy text: ", error);
+      });
   };
 
   return (
     <>
-    <div className="message-body " style={{ overflowX: 'hidden', }}>
-      <Scrollbar>
-        <div id="msg_card_body" style={{ overflowX: 'hidden',}}>
-          {/* Button to load older messages */}
-          {hasMoreFriendRequest &&
-            useGetAuthUserfriendRequestQuerySuccess &&
-            messages.length > 0 && (
-              <div className="text-center mb-3" style={{}}>
-                <button
-                  onClick={loadOlderMessages}
-                  className="btn btn-primary"
-                  disabled={useGetAuthUserfriendRequestQueryFetching}
-                >
-                  {useGetAuthUserfriendRequestQueryFetching ? (
-                    <>
-                      <span
-                        className="spinner-border spinner-border-sm me-2"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                      Loading...
-                    </>
-                  ) : (
-                    'Load Older Messages'
-                  )}
-                </button>
-              </div>
-            )}
+      <div className="message-body " style={{ overflowX: "hidden" }}>
+        <Scrollbar>
+          <div id="msg_card_body" style={{ overflowX: "hidden",marginTop:'20vh' }}>
+            {/* Button to load older messages */}
+            {hasMoreFriendRequest &&
+              useGetAuthUserfriendRequestQuerySuccess &&
+              messages.length > 0 && (
+                <div className="text-center mb-3" style={{}}>
+                  <button
+                    onClick={loadOlderMessages}
+                    className="btn btn-primary"
+                    disabled={useGetAuthUserfriendRequestQueryFetching}
+                  >
+                    {useGetAuthUserfriendRequestQueryFetching ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        Loading...
+                      </>
+                    ) : (
+                      "Load Older Messages"
+                    )}
+                  </button>
+                </div>
+              )}
 
-          <div className="py-2"></div>
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={
-                authId === msg.sender_id
-                  ? 'current-user-message pe-3'
-                  : 'distance-user-message ps-3'
-              }
-            >
+            <div className="py-2"></div>
+            {messages.map((msg) => (
               <div
-                className={`d-flex justify-content-${
-                  msg.sender_id === authId ? 'end' : 'start'
-                } mb-4 my`}
+                key={msg.id}
+                className={
+                  authId === msg.sender_id
+                    ? "current-user-message pe-3"
+                    : "distance-user-message ps-3"
+                }
               >
-                {authId === msg.receiver_id && userId === msg.sender_id && (
-                  <div className="img_cont_msg">
-                    <img
-                      src={image}
-                      className="rounded-circle user_img_msg"
-                      alt="user-img"
-                    />
-                  </div>
-                )}
-
                 <div
-                  className={
-                    authId === msg.sender_id ? 'msg_cotainer_send' : 'msg_cotainer'
-                  }
+                  className={`d-flex justify-content-${
+                    msg.sender_id === authId ? "end" : "start"
+                  } mb-4 my`}
                 >
-                  {msg.message}
-                  <span
+                  {authId === msg.receiver_id && userId === msg.sender_id && (
+                    <div className="img_cont_msg">
+                      <img
+                        src={image}
+                        className="rounded-circle user_img_msg"
+                        alt="user-img"
+                      />
+                    </div>
+                  )}
+
+                  <div
                     className={
-                      authId === msg.sender_id ? 'msg_time_send' : 'msg_time'
+                      authId === msg.sender_id
+                        ? "msg_cotainer_send"
+                        : "msg_cotainer"
                     }
                   >
-                    {formatPostDate(msg.created_at)}
-                  </span>
-                  <i
-                    className="fa fa-ellipsis-v msg-options-icon"
-                    onClick={(e) => handleOptionClick(e, msg.id)}
-                  ></i>
-                  <div
-                    className={`msg-options-menu py-1 my-2 ${
-                      openMenuId === msg.id ? 'show' : ''
-                    }`}
-                    id="options-2"
-                    ref={menuRef}
-                  >
-                    <div onClick={() => handleRemoveMessage(msg.id)}>remove</div>
-                    <div onClick={() => handleCopyMessage(msg.message)}>copy</div> {/* Copy Option */}
+                    {msg.message}
+                    <span
+                      className={
+                        authId === msg.sender_id ? "msg_time_send" : "msg_time"
+                      }
+                    >
+                      {formatPostDate(msg.created_at)}
+                    </span>
+                    <i
+                      className="fa fa-ellipsis-v msg-options-icon"
+                      onClick={(e) => handleOptionClick(e, msg.id)}
+                    ></i>
+                    <div
+                      className={`msg-options-menu py-1 my-2 ${
+                        openMenuId === msg.id ? "show" : ""
+                      }`}
+                      id="options-2"
+                      ref={menuRef}
+                    >
+                      <div onClick={() => handleRemoveMessage(msg.id)}>
+                        remove
+                      </div>
+                      <div onClick={() => handleCopyMessage(msg.message)}>
+                        copy
+                      </div>{" "}
+                      {/* Copy Option */}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-          <div ref={messageEndRef} />
-        </div>
-      </Scrollbar>
-    </div>
-    
-{/* Fotter */}
-    
-    <div className="message-footer  ">
+            <div ref={messageEndRef} />
+          </div>
+        </Scrollbar>
+      </div>
+
+      {/* Fotter */}
+
+      <div className="message-footer  ">
         <div
           style={{ width: "100%" }}
           className="create-comment shadow-sm border-top bg-body"
@@ -383,7 +379,5 @@ refetch();
         </div>
       </div>
     </>
-    
   );
-  
 }
