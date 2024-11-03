@@ -9,9 +9,10 @@ import {
 import { formatPostDate } from "../../../../utils/dateUtils";
 import echo from "../../../../echo";
 import { setToastSuccess } from "../../../home/HomeSlice";
-
+import { useMediaQuery } from 'react-responsive';
 export default function MessageBody({ userId, image }) {
   const dispatch = useDispatch();
+  const isExtraSmall = useMediaQuery({ maxWidth: 575 });
   const userProfile = useSelector((state) => state.home.profile_picture);
   const authId = useSelector((state) => state.home.user_id);
   const receiverID = useSelector((state) => state.home.receiver_id);
@@ -201,7 +202,7 @@ export default function MessageBody({ userId, image }) {
     <>
       <div className="message-body " style={{ overflowX: "hidden" }}>
         <Scrollbar>
-          <div id="msg_card_body" style={{ overflowX: "hidden",marginTop:'20vh' }}>
+          <div id="msg_card_body" style={{ overflowX: "hidden", marginTop: isExtraSmall ? "20vh" : "3vh", }}>
             {/* Button to load older messages */}
             {hasMoreFriendRequest &&
               useGetAuthUserfriendRequestQuerySuccess &&
