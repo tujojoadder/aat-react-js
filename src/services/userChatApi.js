@@ -4,7 +4,7 @@ const userToken=localStorage.getItem('userToken');
 // Define a service using a base URL and expected endpoints
 export const userChatApi = createApi({
     reducerPath: "userChatApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "http://192.168.0.108:8000/api" }),
     endpoints: (builder) => ({
 
 

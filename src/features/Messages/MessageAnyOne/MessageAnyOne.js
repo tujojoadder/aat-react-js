@@ -12,6 +12,8 @@ import { useGetUserDetailsQuery } from "../../../services/friendsApi";
 import ProfileSkeleton from "../../Profile/ProfileSkeleton/ProfileSkeleton";
 import Spinner from "../../Spinner/Spinner";
 import { setReceiverId } from "../../home/HomeSlice";
+import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
+import MidScreenBack from "../../SmallScreenBack/MidScreenBack";
 
 export default function MessageAnyOne() {
   const { id } = useParams();
@@ -105,8 +107,13 @@ useEffect(() => {
   }
 
   return (
+
+    <>
+    <SmallScreenBack text="Your groups" />
+
+     
     <div className="message-container friend-home  p-0 m-0 border-left border-right">
-      <div className="message-header">
+      <div className="message-header d-none d-sm-block">
         <div
           className="posts m-0 py-2 p-0 border-bottom bg-light rounded"
           style={{
@@ -155,5 +162,7 @@ useEffect(() => {
         <MessageBody userId={id} image={profileData?.data?.profile_picture} />
       )}
     </div>
+    </>
+    
   );
 }

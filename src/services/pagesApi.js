@@ -10,7 +10,7 @@ const userToken = Cookies.get("userToken");
 export const pagesApi = createApi({
   reducerPath: "pagesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:8000/api",
+    baseUrl: "http://192.168.0.108:8000/api",
     prepareHeaders: (headers) => {
       if (userToken) {
         headers.set("authorization", `Bearer ${userToken}`);

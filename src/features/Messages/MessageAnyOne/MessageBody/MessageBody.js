@@ -210,14 +210,14 @@ refetch();
 
   return (
     <>
-    <div className="message-body" style={{ overflowX: 'hidden' }}>
+    <div className="message-body " style={{ overflowX: 'hidden', }}>
       <Scrollbar>
-        <div id="msg_card_body" style={{ overflowX: 'hidden' }}>
+        <div id="msg_card_body" style={{ overflowX: 'hidden',}}>
           {/* Button to load older messages */}
           {hasMoreFriendRequest &&
             useGetAuthUserfriendRequestQuerySuccess &&
             messages.length > 0 && (
-              <div className="text-center mb-3">
+              <div className="text-center mb-3" style={{}}>
                 <button
                   onClick={loadOlderMessages}
                   className="btn btn-primary"
