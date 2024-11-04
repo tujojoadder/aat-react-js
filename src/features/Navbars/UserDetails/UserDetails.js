@@ -31,7 +31,7 @@ export default function UserDetails() {
         >
           <div className="profile-image me-2">
             <img
-              src={`${profile_picture}`}
+              src={ `${process.env.REACT_APP_LARAVEL_URL}/${profile_picture}`}
               alt="user"
               height="45px"
               width="45px"
