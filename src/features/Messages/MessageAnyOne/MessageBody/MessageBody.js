@@ -250,7 +250,7 @@ export default function MessageBody({ userId, image }) {
                   {authId === msg.receiver_id && userId === msg.sender_id && (
                     <div className="img_cont_msg">
                       <img
-                        src={image}
+                        src={`${process.env.REACT_APP_LARAVEL_URL}/${image}`}
                         className="rounded-circle user_img_msg"
                         alt="user-img"
                       />
@@ -319,7 +319,7 @@ export default function MessageBody({ userId, image }) {
               }}
             >
               <img
-                src={userProfile}
+                src={ `${process.env.REACT_APP_LARAVEL_URL}/${userProfile}`}
                 style={{
                   width: "40px",
                   height: "40px",

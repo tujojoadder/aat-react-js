@@ -8,7 +8,7 @@ import { setReceiverId } from "../../home/HomeSlice";
 import { useSendMessageMutation } from "../../../services/chatsApi";
 import echo from "../../../echo";
 import { formatPostDate } from "../../../utils/dateUtils";
-z
+
 export default function MessageAnyOne() {
   const receiverID = useSelector((state) => state.home.receiver_id);
   const authId = useSelector((state) => state.home.user_id);
@@ -215,7 +215,7 @@ export default function MessageAnyOne() {
               }}
             >
               <img
-                src={userProfile}
+                src={`${process.env.REACT_APP_LARAVEL_URL}/${userProfile}`}
                 style={{
                   width: "40px",
                   height: "40px",

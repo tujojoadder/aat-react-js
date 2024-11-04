@@ -129,7 +129,7 @@ useEffect(() => {
             <div className="user-pics">
               {profileData?.data?.profile_picture && (
                 <img
-                  src={profileData?.data?.profile_picture}
+                  src={ `${process.env.REACT_APP_LARAVEL_URL}/${profileData?.data?.profile_picture}` }
                   className="rounded-circle user_img_msg"
                   alt="user3"
                 />

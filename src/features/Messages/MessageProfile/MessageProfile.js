@@ -69,7 +69,7 @@ export default function PageProfile() {
           <div className="left__col">
             <div className="img__container">
               <img
-                src={`${pageData?.data?.page_picture}`}
+                src={`${process.env.REACT_APP_LARAVEL_URL}/${pageData?.data?.page_picture}`}
                 style={{ backgroundColor: "lightgray" }}
                 alt="Profile"
               />
