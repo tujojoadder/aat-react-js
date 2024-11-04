@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import TextComment from "../../home/Components/ReplyComment/ReplyComment";
 import Comment from "../../home/Components/Comment/Comment/Comment";
-import CommentedBothPosts from "../../CommentedMedia/CommentedBothposts/CommentedBothPosts";
+
 import "./IChannelBPost.css";
 import { formatLargeNumber, formatPostDate } from "../../../utils/dateUtils";
 import ImagePostSkeleton from "../../home/Components/ImagePost/ImagePostSkeleton/ImagePostSkeleton";

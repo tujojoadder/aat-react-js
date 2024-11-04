@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import TextComment from "../../home/Components/TextComment/TextComment";
 import Comment from "../../home/Components/Comment/Comment/Comment";
-import CommentedImage from "../../CommentedMedia/CommentedImage/CommentedImage";
 import "./PageImagePost.css";
 import { formatLargeNumber, formatPostDate } from "../../../utils/dateUtils";
 import ImagePostSkeleton from "../../home/Components/ImagePost/ImagePostSkeleton/ImagePostSkeleton";

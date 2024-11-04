@@ -3,7 +3,6 @@ import image from "./logo.jpg";
 import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
 import "./TextPost.css";
-import CommentedText from "../../../CommentedMedia/CommentedText/CommentedText";
 import SendMessage from "../../../Messages/SendMessages/SendMessage";
 import { formatLargeNumber, formatPostDate } from "../../../../utils/dateUtils";
 import TextPostSkeleton from "./TextPostSkeleton/TextPostSkeleton";

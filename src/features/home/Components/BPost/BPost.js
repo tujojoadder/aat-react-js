@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import image from "./logo.jpg";
-import CommentedImage from "../../../CommentedMedia/CommentedImage/CommentedImage";
+
 import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
-import CommentedBothPosts from "../../../CommentedMedia/CommentedBothposts/CommentedBothPosts";
+
 import "./BPost.css";
 import { formatLargeNumber, formatPostDate } from "../../../../utils/dateUtils";
 import ImagePostSkeleton from "../ImagePost/ImagePostSkeleton/ImagePostSkeleton";

@@ -6,7 +6,6 @@ import {
   formatPostDate,
 } from "../../../../../utils/dateUtils";
 import ImagePostSkeleton from "../ImagePostSkeleton/ImagePostSkeleton";
-import CommentedImage from "../../../../CommentedMedia/CommentedImage/CommentedImage";
 import TextComment from "../../TextComment/TextComment";
 import Comment from "../../Comment/Comment/Comment";
 import { useToggleLoveMutation } from "../../../../../services/loveApi";

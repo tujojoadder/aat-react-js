@@ -6,7 +6,7 @@ import {
 } from "../../../../../utils/dateUtils";
 import TextComment from "../../TextComment/TextComment";
 import Comment from "../../Comment/Comment/Comment";
-import CommentedText from "../../../../CommentedMedia/CommentedText/CommentedText";
+
 import SendMessage from "../../../../Messages/SendMessages/SendMessage";
 import TextPostSkeleton from "../TextPostSkeleton/TextPostSkeleton";
 import { useToggleLoveMutation } from "../../../../../services/loveApi";

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import TextComment from "../../home/Components/TextComment/TextComment";
 
 import "./PageTextPost.css";
-import CommentedText from "../../CommentedMedia/CommentedText/CommentedText";
+
 import SendMessage from "../../Messages/SendMessages/SendMessage";
 import { formatLargeNumber, formatPostDate } from "../../../utils/dateUtils";
 import TextPostSkeleton from "../../home/Components/TextPost/TextPostSkeleton/TextPostSkeleton";

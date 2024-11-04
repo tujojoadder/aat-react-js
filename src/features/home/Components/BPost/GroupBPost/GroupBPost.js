@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import CommentedBothPosts from "../../../../CommentedMedia/CommentedBothposts/CommentedBothPosts";
+
 import "./GroupBPost.css";
 import { formatLargeNumber, formatPostDate } from "../../../../../utils/dateUtils";
 import TextComment from "../../TextComment/TextComment";
