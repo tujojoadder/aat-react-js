@@ -145,7 +145,9 @@ export default function GroupProfile() {
 
   // Background styling for the profile cover
   const backgroundImageStyle = {
-    backgroundImage: `url(${groupData?.data?.group_cover})`,
+
+    backgroundImage: `url(${process.env.REACT_APP_LARAVEL_URL}/${groupData?.data?.group_cover})`,
+
     backgroundSize: "cover",
     backgroundPosition: "center",
     minHeight: "calc(100px + 15vw)",

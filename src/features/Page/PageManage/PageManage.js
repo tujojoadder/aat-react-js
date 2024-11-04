@@ -79,7 +79,9 @@ export default function PageManage() {
 
   // Background styling for the profile cover
   const backgroundImageStyle = {
-    backgroundImage: `url(${pageData?.data?.page_cover})`,
+
+    backgroundImage: `url(${process.env.REACT_APP_LARAVEL_URL}/${pageData?.data?.page_cover})`,
+
     backgroundSize: "cover",
     backgroundPosition: "center",
     minHeight: "calc(100px + 15vw)",
@@ -103,7 +105,7 @@ export default function PageManage() {
           <div className="left__col">
             <div className="img__container">
               <img
-                src={  `${process.env.REACT_APP_LARAVEL_URL}/${pageData?.data?.page_picture}`   }
+                src={ `${process.env.REACT_APP_LARAVEL_URL}/${pageData?.data?.page_picture}`}
                 style={{ backgroundColor: "lightgray" }}
                 alt="Profile"
               />

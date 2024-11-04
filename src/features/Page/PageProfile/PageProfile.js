@@ -161,7 +161,9 @@ if (isError) {
 
   // Background styling for the profile cover
   const backgroundImageStyle = {
-    backgroundImage: `url(${pageData?.data?.page_cover})`,
+  
+    backgroundImage: `url(${process.env.REACT_APP_LARAVEL_URL}/${pageData?.data?.page_cover})`,
+
     backgroundSize: "cover",
     backgroundPosition: "center",
     minHeight: "calc(100px + 15vw)",

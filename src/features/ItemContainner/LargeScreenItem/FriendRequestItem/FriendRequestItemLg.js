@@ -82,7 +82,7 @@ export default function FriendRequestItemLg(props) {
             className="text-decoration-none"
           >
             <img
-              src={props.image}
+              src={`${process.env.REACT_APP_LARAVEL_URL}/${props.image }`}
               style={{ height: "20vh", minHeight: "9rem" }}
               alt=""
               className="w-100 card-img-top border-bottom"

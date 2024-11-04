@@ -132,7 +132,7 @@ export default function Profile() {
 
   // Background styling for the profile cover
   const backgroundImageStyle = {
-    backgroundImage: `url(${profileData?.data?.cover_photo})`,
+    backgroundImage: `url(${process.env.REACT_APP_LARAVEL_URL}/${profileData?.data?.cover_photo})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     minHeight: "calc(100px + 15vw)",

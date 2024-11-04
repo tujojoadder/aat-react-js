@@ -74,7 +74,8 @@ export default function MyProfile() {
 
   // Inline style for the background image
   const backgroundImageStyle = {
-    backgroundImage: `url(${cover_photo})`,
+  
+    backgroundImage: `url(${process.env.REACT_APP_LARAVEL_URL}/${cover_photo})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     minHeight: "calc(100px + 15vw)",
