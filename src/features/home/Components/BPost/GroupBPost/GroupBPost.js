@@ -189,7 +189,7 @@ export default function GroupBPost({ post }) {
             )}
             {/* Group Cover Photo */}
             <img
-              src={`${post.group.group_picture}`}
+              src={`${process.env.REACT_APP_LARAVEL_URL}/${post.group.group_picture}`}
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{
@@ -202,7 +202,7 @@ export default function GroupBPost({ post }) {
             {/*   User Image */}
 
             <img
-              src={`${post.author.profile_picture}`}
+              src={`${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}` }
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{
@@ -277,7 +277,7 @@ export default function GroupBPost({ post }) {
                     objectFit: "cover",
                     maxHeight: "500px",
                   }}
-                  src={`${post.image_post.post_url}`}
+                  src={`${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}` }
                   alt="post-content"
                   onLoad={handleImageLoad}
                 />

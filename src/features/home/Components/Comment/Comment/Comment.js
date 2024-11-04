@@ -38,7 +38,7 @@ export default function Comment({ postId }) {
     <div style={{ width: '100%' }} className="create-comment shadow-sm bg-body rounded">
       <form onSubmit={handleSubmit}>
         <div className="form-group-1 d-flex align-items-center py-md-3" style={{ padding: '10px 15px', backgroundColor: '#f0f2f5', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', position: 'relative' }}>
-          <img src={profilePicture} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} alt="profile-pic" />
+          <img src={ `${process.env.REACT_APP_LARAVEL_URL}/${profilePicture}`} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} alt="profile-pic" />
           <div style={{ flexGrow: 1, position: 'relative' }}>
             <input
               className="form-control"

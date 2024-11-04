@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import image from "./logo.jpg";
+
 import "./TextComment.css";
 import ReplyComment from "../ReplyComment/ReplyComment";
 import { formatPostDate } from "../../../../utils/dateUtils";
@@ -163,7 +163,7 @@ export default function TextComment({ comment, type, showReplies }) {
         <div className="user-pics">
           <img
             style={{ backgroundColor: "lightgray" }}
-            src={`${profile_picture}`}
+            src={ `${process.env.REACT_APP_LARAVEL_URL}/${profile_picture}` }
             alt={"Profile Image"}
           />
         </div>
@@ -183,7 +183,7 @@ export default function TextComment({ comment, type, showReplies }) {
             </div>
           )}
 
-          <img src={profile_picture} alt="user-profile" />
+          <img src={ `${process.env.REACT_APP_LARAVEL_URL}/${profile_picture}`} alt="user-profile" />
         </div>
       )}
 

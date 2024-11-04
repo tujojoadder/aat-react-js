@@ -190,7 +190,7 @@ const GroupTextPost = ({ post }) => {
             )}
             {/* Group Cover Photo */}
             <img
-              src={`${post.group.group_picture}`}
+              src={  `${process.env.REACT_APP_LARAVEL_URL}/${post.group.group_picture}`}
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{
@@ -203,7 +203,7 @@ const GroupTextPost = ({ post }) => {
             {/*   User Image */}
 
             <img
-              src={`${post.author.profile_picture}`}
+              src={   `${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}`}
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{

@@ -144,8 +144,8 @@ export default function HadithDayContent({
 
               <div className="user-pics">
                 <img
-                  src={`${profile_picture}`}
-       s           className="rounded-circle user_img_msg"
+                  src={ `${process.env.REACT_APP_LARAVEL_URL}/${profile_picture}`}
+                 className="rounded-circle user_img_msg"
                   alt="user3"
                 />
               </div>

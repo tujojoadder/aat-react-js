@@ -154,7 +154,7 @@ export default function SuggestionContainer({ name, handle, image, isActive, use
                 >
                     <img
                         className="rounded-circle"
-                        src={`${image}`}
+                        src={`${process.env.REACT_APP_LARAVEL_URL}/${image}`}
                         alt="user"
                         height="50px"
                         width="50px"

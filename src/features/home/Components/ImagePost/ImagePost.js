@@ -153,7 +153,7 @@ export default function ImagePost({ post }) {
               </div>
             )}
             <img
-              src={postAuthProfileImage}
+              src={ `${process.env.REACT_APP_LARAVEL_URL}/${postAuthProfileImage}` }
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
@@ -201,7 +201,7 @@ export default function ImagePost({ post }) {
                     maxHeight: "500px",
                   }}
                  
-                  src={postImage}
+                  src={ `${process.env.REACT_APP_LARAVEL_URL}/${postImage}`}
                   alt="post-content"
                   onLoad={handleImageLoad}
                 />

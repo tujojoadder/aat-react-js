@@ -81,7 +81,7 @@ const HadithIteam = ({ type, user_fname, user_lname, hadith, serialNumber, day_h
         <div className="d-flex flex-column bd-highlight">
           <div className="mt-2 mb-1 bd-highlight">
             <img
-             src={`${profile_picture}`}
+             src={`${process.env.REACT_APP_LARAVEL_URL}/${profile_picture}`}
               style={{
                 width: '50px',
                 height: '50px',

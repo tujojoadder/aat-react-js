@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import image from "./logo.jpg";
+
 import "./ReplyComment.css";
 import { formatPostDate } from "../../../../utils/dateUtils";
 import { useDispatch, useSelector } from "react-redux";
@@ -123,11 +123,8 @@ export default function ReplyComment({ comment, type }) {
         <div className="bd-highlight me-1">
           <img
             style={{ height: "39px", width: "39px", borderRadius: "50%" }}
-            src={
-              type === "user"
-                ? profile_picture
-                : comment?.replied_by.profile_picture
-            }
+            src={`${process.env.REACT_APP_LARAVEL_URL}/${type === "user" ? profile_picture : comment?.replied_by.profile_picture}`}
+
             alt="user3"
           />
         </div>

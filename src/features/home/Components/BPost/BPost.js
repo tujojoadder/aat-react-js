@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import image from "./logo.jpg";
 
 import TextComment from "../TextComment/TextComment";
 import Comment from "../Comment/Comment/Comment";
@@ -192,7 +191,7 @@ export default function BPost({ post }) {
               </div>
             )}
             <img
-              src={`${post.author.profile_picture}`}
+              src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}` }
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
@@ -256,7 +255,7 @@ export default function BPost({ post }) {
                     objectFit: "cover",
                     maxHeight: "500px",
                   }}
-                  src={`${post.image_post.post_url}`}
+                  src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}`}
                   alt="post-content"
                   onLoad={handleImageLoad}
                 />
