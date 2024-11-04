@@ -1,7 +1,6 @@
 import React from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import { NavLink, useLocation } from "react-router-dom";
-import SmallScreenUnFriendUserCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
 import FriendsTabs from "./FriendsTabs/FriendsTabs";
 import FriendRequestBack from "./FriendBack/FriendRequestBack/FriendRequestBack";
 import FriendRequestFooter from "../ItemContainner/FriendRightFooterContainer/FriendRequestFooter";

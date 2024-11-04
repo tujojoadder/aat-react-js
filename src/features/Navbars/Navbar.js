@@ -11,7 +11,6 @@ import { Scrollbars } from "react-custom-scrollbars";
 import Homeleft from "../home/Homeleft";
 import "./Navbar.css";
 import Home from "../home/Home";
-import Friends from "../Friends/Friends";
 import FriendRight from "../Friends/FriendRight";
 import FriendHome from "../Friends/FriendHome/FriendHome";
 import FriendRightFriendRequest from "../Friends/FriendRightFriendRequest";

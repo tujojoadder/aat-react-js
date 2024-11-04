@@ -10,7 +10,7 @@ import NotFound from "./features/404/NotFound";
 import Navbar from "./features/Navbars/Navbar";
 import Homeleft from "./features/home/Homeleft";
 import HadithDay from "./features/home/Components/HadithDay/HadithDay";
-import Friends from "./features/Friends/Friends";
+
 import FriendRight from "./features/Friends/FriendRight";
 import FriendHome from "./features/Friends/FriendHome/FriendHome";
 import FriendRightFriendRequest from "./features/Friends/FriendRightFriendRequest";

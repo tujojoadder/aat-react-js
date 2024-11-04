@@ -5,7 +5,6 @@ import { NavLink, useLocation } from "react-router-dom";
 import SendFriendRequest from "../home/Components/SendFriendRequest/SendFriendRequest";
 import { useGetFriendSuggestionQuery } from "../../services/friendsApi";
 import { useInView } from "react-intersection-observer";
-import SmallScreenUnFriendUserCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
 import Spinner from "../Spinner/Spinner";
 import SuggestionItemSm from "../ItemContainner/SmallScreenItem/SuggestionItemSm/SuggestionItemSm";
 import FriendSuggestionFooterContainer from "../ItemContainner/FriendSuggestionFooterContainer/FriendSuggestionFooterContainer";

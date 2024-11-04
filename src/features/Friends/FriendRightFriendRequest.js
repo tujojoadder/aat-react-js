@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./FriendRight.css";
 import { NavLink, useLocation, useParams } from "react-router-dom";
-import SmallScreenUnFriendUserCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
 import { useGetAuthUserfriendRequestQuery } from "../../services/friendsApi";
 import { useInView } from "react-intersection-observer";
 import Spinner from "../Spinner/Spinner";

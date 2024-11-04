@@ -3,7 +3,6 @@ import React from "react";
 import "./FriendRight.css";
 import { Scrollbars } from "react-custom-scrollbars";
 import { NavLink,useLocation, BrowserRouter, Route, Routes } from "react-router-dom";
-import SmallScreenUnFriendUserCard from "./SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
 import SendFriendRequest from "../home/Components/SendFriendRequest/SendFriendRequest";
 import FriendSentFooterContainer from "../ItemContainner/FriendSentFooterContainer/FriendSentFooterContainer";
 import { Scrollbar } from "react-scrollbars-custom";

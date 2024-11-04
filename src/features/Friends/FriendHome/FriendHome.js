@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import SmallScreenUnFriendUserCard from "../SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard";
-import LargeScreenUnFriendUserCard from "../LargeScreenUnFriendUserCard/LargeScreenUnFriendUserCard";
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
 import FriendsTabs from "../FriendsTabs/FriendsTabs";
 import FriendRequestBack from "../FriendBack/FriendRequestBack/FriendRequestBack";

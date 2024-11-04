@@ -2,7 +2,6 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { NavLink, useLocation } from 'react-router-dom';
-import SmallScreenUnFriendUserCard from '../../Friends/SmallScreenUnFriendUserCard/SmallScreenUnFriendUserCard';
 
 export default function NoUserSelectedToMessage() {
   const styles = {
