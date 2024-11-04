@@ -47,7 +47,7 @@ import YourPage from "./features/Page/YourPage/YourPage";
 import YourIChannels from "./features/IChannels/YourIChannels/YourIChannels";
 import IChannelProfile from "./features/IChannels/IChannelProfile/IChannelProfile";
 import CreateIChannel from "./features/IChannels/CreateIChannel/CreateIChannel";
-import IChannelsManage from "./features/IChannels/IChannelsManage/IChannelsManage";
+
 import ProfileManage from "./features/Profile/ProfileManage/ProfileManage";
 import MobileMenu from "./features/MobileMenu/MobileMenu";
 import ConfirmModal from "./features/ConfirmModal/ConfirmModal";
@@ -68,6 +68,7 @@ import GroupsMyGroups from "./features/Groups/GroupsMyGroups";
 import GroupsJoinedGroups from "./features/Groups/GroupsJoinedGroups";
 import PageManageRight from "./features/Page/PageManageRight/PageManageRight";
 import echo from "./echo";
+import IChannelManage from "./features/IChannels/IChannelManage/IChannelManage";
 
 function App() {
 
@@ -404,7 +405,7 @@ function App() {
             <Route
               path="ichannel/:id/manage"
               exact
-              element={<IChannelsManage />}
+              element={<IChannelManage />}
             />
 
             {/* Mobile Menu */}

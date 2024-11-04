@@ -95,7 +95,7 @@ export default function IChannelManage() {
           <div className="left__col">
             <div className="img__container">
               <img
-                src={`${pageData?.data?.iaccount_picture}`}
+                src={`${process.env.REACT_APP_LARAVEL_URL}/${pageData?.data?.iaccount_picture}`  }
                 style={{ backgroundColor: "lightgray" }}
                 alt="Profile"
               />

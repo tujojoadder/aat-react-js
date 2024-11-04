@@ -8,7 +8,7 @@ export default function IChannelLargeScreenCard(props) {
       <div className="card shadow-sm border-0 rounded">
         <div className="card-body p-0 pb-3" style={{ overflow: "hidden", height: "auto" }}>
           <NavLink to={`/ichannel/${props.name}`} className="text-decoration-none">
-            <img style={{ maxHeight: '200px' }} src={props.image} alt="" className="w-100 card-img-top" />
+            <img style={{ maxHeight: '200px' }} src={`${process.env.REACT_APP_LARAVEL_URL}/${props.image}`} alt="" className="w-100 card-img-top" />
           </NavLink>
           <div className="pt-3 px-2">
             <h6 className="mb-0">{props.name}</h6>

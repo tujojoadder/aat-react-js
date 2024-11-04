@@ -187,7 +187,7 @@ export default function IChannelBPost({ post }) {
               </div>
             )}
             <img
-              src={`${post.iaccount.iaccount_picture}`}
+              src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.iaccount.iaccount_picture}`   }
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
@@ -251,7 +251,7 @@ export default function IChannelBPost({ post }) {
                     objectFit: "cover",
                     maxHeight: "500px",
                   }}
-                  src={`${post.image_post.post_url}`}
+                  src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}` }
                   alt="post-content"
                   onLoad={handleImageLoad}
                 />

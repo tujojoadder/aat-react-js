@@ -50,7 +50,7 @@ import YourPage from "../Page/YourPage/YourPage";
 import YourIChannels from "../IChannels/YourIChannels/YourIChannels";
 import IChannelProfile from "../IChannels/IChannelProfile/IChannelProfile";
 import CreateIChannel from "../IChannels/CreateIChannel/CreateIChannel";
-import IChannelsManage from "../IChannels/IChannelsManage/IChannelsManage";
+
 import ProfileManage from "../Profile/ProfileManage/ProfileManage";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import MyPages from "../Page/MyPages/MyPages";

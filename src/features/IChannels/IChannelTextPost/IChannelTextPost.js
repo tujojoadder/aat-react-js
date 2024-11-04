@@ -184,7 +184,7 @@ const IChannelTextPost = ({ post }) => {
               </div>
             )}
             <img
-              src={`${post.iaccount.iaccount_picture}`}
+              src={`${process.env.REACT_APP_LARAVEL_URL}/${post.iaccount.iaccount_picture}`}
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
