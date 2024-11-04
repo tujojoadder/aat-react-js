@@ -123,7 +123,7 @@ const handleSetCoverPhoto = async (e) => {
             <div className="col-12 mb-4" key={index}>
               <div className="image-container">
                 <img
-                  src={photo?.image_url}
+                  src={`${process.env.REACT_APP_LARAVEL_URL}/${photo?.image_url}` }
                   className="img-fluid rounded shadow-sm cursor-pointer"
                   style={{ height: "200px", width: "100%" }}
                   alt={photo.caption || `Photo ${index + 1}`}
@@ -157,7 +157,7 @@ const handleSetCoverPhoto = async (e) => {
               >
                 <div className="modal-body p-0" style={{ marginTop: "7vh" }}>
                   <img
-                    src={modalImage.src}
+                    src={`${process.env.REACT_APP_LARAVEL_URL}/${modalImage.src}`}
                     className="img-fluid w-100"
                     alt={modalImage.alt}
                     style={{ maxHeight: "75vh", objectFit: "contain" }}

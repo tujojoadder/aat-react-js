@@ -168,7 +168,7 @@ export default function Profile() {
               <div className="left__col">
                 <div className="img__container">
                   <img
-                    src={`${profileData?.data?.profile_picture}`}
+                    src={  `${process.env.REACT_APP_LARAVEL_URL}/${profileData?.data?.profile_picture}`    }
                     style={{ backgroundColor: "lightgray" }}
                     alt="Profile"
                   />

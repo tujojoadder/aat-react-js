@@ -135,7 +135,7 @@ const [
             {/* Update col class here */}
             <div className="image-container">
               <img
-                src={photo?.image_url} // Assuming 'url' is the correct key for the image URL
+                src={ `${process.env.REACT_APP_LARAVEL_URL}/${photo?.image_url}` } // Assuming 'url' is the correct key for the image URL
                 className="img-fluid rounded shadow-sm cursor-pointer"
                 style={{ height: "260px", width: "100%" }}
                 alt={photo.caption || `Photo ${index + 1}`}
@@ -173,7 +173,7 @@ const [
             >
               <div className="modal-body p-0" style={{ marginTop: "7vh" }}>
                 <img
-                  src={modalImage.src}
+                  src={`${process.env.REACT_APP_LARAVEL_URL}/${modalImage.src}`}
                   className="img-fluid w-100"
                   alt={modalImage.alt}
                   style={{ maxHeight: "75vh", objectFit: "contain" }}

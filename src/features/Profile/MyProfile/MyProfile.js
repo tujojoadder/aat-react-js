@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./MyProfile.css";
-import image from "./logo.jpg";
+
 import TextPost from "../../home/Components/TextPost/TextPost";
 import { NavLink, useParams } from "react-router-dom";
 
 import ImagePost from "../../home/Components/ImagePost/ImagePost";
 import ImageContainer from "../../Friends/ImageContainer/ImageContainer";
 import About from "../../home/Components/About/About";
-import ProfileFriend from "../ProfileFriends/ProfileFriend/ProfileFriend";
+
 import BPost from "../../home/Components/BPost/BPost";
 import ProfileHomeBack from "../ProfileHomeBack/ProfileHomeBack";
 import { useSelector } from "react-redux";
@@ -100,7 +100,7 @@ export default function MyProfile() {
             <div className="img__container">
               <img
                 style={{ backgroundColor: "lightgray" }}
-                src={`${profile_picture}`}
+                src={`${process.env.REACT_APP_LARAVEL_URL}/${profile_picture}`  }
                 alt={"Profile Image"}
               />
 
