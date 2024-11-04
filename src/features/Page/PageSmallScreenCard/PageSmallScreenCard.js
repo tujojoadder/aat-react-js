@@ -6,7 +6,7 @@ export default function PageSmallScreenCard({pageId,name,handle,image,type}) {
     <NavLink to={`/page/${pageId}`} className="text-decoration-none">
       <div className="friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm rounded">
         <div className="profile-s me-2">
-          <img src={image} alt="user" height="55px" width="55px" />
+          <img src={`${process.env.REACT_APP_LARAVEL_URL}/${image}`} alt="user" height="55px" width="55px" />
         </div>
         <div className="profile-info flex-grow-1">
           <p className="fw-bold mb-0 text-truncate">{name}</p>

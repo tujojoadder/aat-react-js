@@ -185,7 +185,7 @@ useEffect(() => {
               </div>
             )}
             <img
-              src={`${post.page.page_picture}`}
+              src={`${process.env.REACT_APP_LARAVEL_URL}/${post.page.page_picture}` }
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
@@ -249,7 +249,7 @@ useEffect(() => {
                     objectFit: "cover",
                     maxHeight: "500px",
                   }}
-                  src={`${post.image_post.post_url}`}
+                  src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}`  }
                   alt="post-content"
                   onLoad={handleImageLoad}
                 />

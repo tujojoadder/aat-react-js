@@ -197,7 +197,7 @@ const handleUnlikeClick = async () => {
           </div>
         )}
         <img
-          src={`${post.page.page_picture}`}
+          src={  `${process.env.REACT_APP_LARAVEL_URL}/${post.page.page_picture}`}
           alt="user-profile"
           onLoad={handleProfilePicLoad}
           style={{ display: isProfilePicLoaded ? "block" : "none" }}

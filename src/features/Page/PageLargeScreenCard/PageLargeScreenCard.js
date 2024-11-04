@@ -7,7 +7,7 @@ export default function PageLargeScreenCard({pageId,name,handle,image,type}) {
       <div className="card shadow-sm border-0 rounded">
         <div className="card-body p-0 pb-3" style={{ overflow: "hidden", height: "auto" }}>
           <NavLink to={`/page/${pageId}`}  className="text-decoration-none">
-            <img style={{ maxHeight: '160px' }} src={image} alt="" className="w-100 card-img-top" />
+            <img style={{ maxHeight: '160px' }} src={`${process.env.REACT_APP_LARAVEL_URL}/${image}`} alt="" className="w-100 card-img-top" />
           </NavLink>
           <div className="pt-3 px-2">
             <h5 className="mb-0">{name}</h5>

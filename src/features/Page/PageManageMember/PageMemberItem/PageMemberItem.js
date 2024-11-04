@@ -44,7 +44,7 @@ export default function PageMemberItem({ name, isCreator, image, identifier, isA
   return (
     <div className={`friend-request-container d-flex align-items-center mt-2 py-2 shadow-sm rounded`} style={{ maxWidth: '100%' }}>
       <div className="profile-image me-2">
-        <img className="rounded-circle" src={image} alt="user" height="55px" width="55px" />
+        <img className="rounded-circle" src={`${process.env.REACT_APP_LARAVEL_URL}/${image}`} alt="user" height="55px" width="55px" />
       </div>
       <div className="profile-info flex-grow-1">
         <p className="fw-bold mb-0 text-truncate d-flex align-items-center">

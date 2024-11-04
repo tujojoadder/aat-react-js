@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import TextComment from "../../home/Components/TextComment/TextComment";
 import Comment from "../../home/Components/Comment/Comment/Comment";
+
 import "./PageImagePost.css";
 import { formatLargeNumber, formatPostDate } from "../../../utils/dateUtils";
 import ImagePostSkeleton from "../../home/Components/ImagePost/ImagePostSkeleton/ImagePostSkeleton";
@@ -175,7 +176,7 @@ export default function PageImagePost({ post }) {
               </div>
             )}
             <img
-              src={`${post.page.page_picture}`}
+              src={`${process.env.REACT_APP_LARAVEL_URL}/${post.page.page_picture}`}
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
@@ -222,7 +223,7 @@ export default function PageImagePost({ post }) {
                     objectFit: "cover",
                     maxHeight: "500px",
                   }}
-                  src={`${post.image_post.post_url}`}
+                  src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}` }
                   alt="post-content"
                   onLoad={handleImageLoad}
                 />

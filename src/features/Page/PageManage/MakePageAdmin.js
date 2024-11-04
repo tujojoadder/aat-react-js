@@ -11,7 +11,7 @@ export default function MakePageAdmin({ name, handle, image, isActive }) {
       <div className="profile-image me-2">
         <img
           className="rounded-circle"
-          src={image}
+          src={`${process.env.REACT_APP_LARAVEL_URL}/${image}`}
           alt="user"
           height="55px"
           width="55px"
