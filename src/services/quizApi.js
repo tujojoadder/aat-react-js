@@ -9,7 +9,7 @@ const userToken = Cookies.get('userToken');
 
 export const quizApi = createApi({
     reducerPath: "quizApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://192.168.0.108:8000/api",
+    baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_LARAVEL_URL}/api`,
         prepareHeaders: (headers) => {
             if (userToken) {
               headers.set('authorization', `Bearer ${userToken}`)

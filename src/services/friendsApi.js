@@ -10,7 +10,7 @@ const userToken = Cookies.get("userToken");
 export const friendsApi = createApi({
   reducerPath: "friendsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.0.108:8000/api",
+    baseUrl: `${process.env.REACT_APP_LARAVEL_URL}/api`,
     prepareHeaders: (headers) => {
       if (userToken) {
         headers.set("authorization", `Bearer ${userToken}`);

@@ -127,6 +127,11 @@ export default function ImagePost({ post }) {
     };
   }, [dispatch, authId, post.post_id]);
 
+
+
+  const postImage = `${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}`;
+  const postAuthProfileImage = `${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}`;
+
   return (
     <div className="posts mx-2">
       {!post ? (
@@ -148,7 +153,7 @@ export default function ImagePost({ post }) {
               </div>
             )}
             <img
-              src={`${post.author.profile_picture}`}
+              src={postAuthProfileImage}
               alt="user-profile"
               onLoad={handleProfilePicLoad}
               style={{ display: isProfilePicLoaded ? "block" : "none" }}
@@ -195,7 +200,8 @@ export default function ImagePost({ post }) {
                     objectFit: "cover",
                     maxHeight: "500px",
                   }}
-                  src={`${post.image_post.post_url}`}
+                 
+                  src={postImage}
                   alt="post-content"
                   onLoad={handleImageLoad}
                 />
