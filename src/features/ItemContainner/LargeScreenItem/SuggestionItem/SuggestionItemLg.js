@@ -106,7 +106,7 @@ export default function SuggestionItemLg({ name, handle, image, user_id }) {
                         to={`/friends/suggestions/${user_id}`}
                         className="text-decoration-none"
                     >
-                        <img src={image} style={{ height: '20vh', minHeight: '9rem' }} alt="" className="w-100 card-img-top border-bottom" />
+                        <img src={`${process.env.REACT_APP_LARAVEL_URL}/${image}`} style={{ height: '20vh', minHeight: '9rem' }} alt="" className="w-100 card-img-top border-bottom" />
                     </NavLink>
                     <div className="pt-3 px-2">
                         <h5 className="mb-0 text-truncate">{name}</h5>
