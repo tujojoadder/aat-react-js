@@ -169,7 +169,7 @@ export default function GroupProfile() {
           <div className="left__col">
             <div className="img__container">
               <img
-                src={`${groupData?.data?.group_picture}`}
+                src={`${process.env.REACT_APP_LARAVEL_URL}/${groupData?.data?.group_picture}`   }
                 style={{ backgroundColor: "lightgray" }}
                 alt="Profile"
               />

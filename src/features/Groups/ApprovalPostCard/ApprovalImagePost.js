@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import image from "./logo.jpg";
+
 import { formatDate } from 'date-fns';
 import { formatPostDate } from '../../../utils/dateUtils';
 import Removebtn from './ApprovalButton/Removebtn';
@@ -16,7 +16,7 @@ export default function ApprovalImagePost({post}) {
 <div className="posts ">
       <div className="user-pics">
         <img 
-         src={`${post.author.profile_picture}`}
+         src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}`}
         alt="user1" />
       </div>
       <div className="user-content-box ">
@@ -60,7 +60,7 @@ export default function ApprovalImagePost({post}) {
                     objectFit: "cover",
                     maxHeight: "500px",
                   }}
-                  src={`${post.image_post.post_url}`}
+                  src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}` }
                   alt="post-content"
                   onLoad={handleImageLoad}
                 />

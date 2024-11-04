@@ -25,7 +25,7 @@ export default function LargeScreenCard(props) {
         >
           <NavLink to={`/groups/${props.group_id}`} className="text-decoration-none">
             <img
-              src={props.image}
+              src={ `${process.env.REACT_APP_LARAVEL_URL}/${props.image}`}
               alt="Group"
               className="w-100 card-img-top"
               style={{ maxHeight: "200px", objectFit: "cover" }}

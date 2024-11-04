@@ -80,7 +80,7 @@ export default function GroupManage() {
         <div className="cols__container">
           <div className="left__col">
             <div className="img__container">
-              <img src={`${groupData?.data?.group_picture}`} style={{ backgroundColor: "lightgray" }} alt="Group" />
+              <img src={`${process.env.REACT_APP_LARAVEL_URL}/${groupData?.data?.group_picture}`} style={{ backgroundColor: "lightgray" }} alt="Group" />
             </div>
             <h2>{groupData?.data?.group_name}</h2>
             <p>@{groupData?.data?.identifier}</p>

@@ -18,7 +18,7 @@ export default function GroupRightFooterItem(props) {
       <div className="profile-img me-2 px-2">
         <NavLink to={`/groups/mygroup/${props.group_id}`} className="text-decoration-none">
           <img
-            src={props.image}
+            src={ `${process.env.REACT_APP_LARAVEL_URL}/${props.image}`}
             style={{height:'55px',width:'55px',borderRadius:'50%'}}
             alt="Group"
           />

@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from "react";
-import image from "./logo.jpg";
 import { formatPostDate } from "../../../utils/dateUtils";
 import Removebtn from "./ApprovalButton/Removebtn";
 import ApproveBtn from "./ApprovalButton/ApproveBtn";
@@ -41,7 +40,7 @@ const ApprovalTextPost = ({post}) => {
   return (
     <div className="posts " style={{minWidth:'10px'}}>
       <div className="user-pics">
-        <img  src={`${post.author.profile_picture}`}
+        <img  src={`${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}`}
         alt="user3" />
       </div>
       <div className="user-content-text-box">

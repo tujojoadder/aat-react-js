@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import image from "./logo.jpg";
+
 import { formatPostDate } from '../../../utils/dateUtils';
 import ApproveBtn from './ApprovalButton/ApproveBtn';
 import Removebtn from './ApprovalButton/Removebtn';
@@ -25,7 +25,7 @@ export default function ApprovalBothPost({ post }) {
     <div className="posts">
       <div className="user-pics">
         <img 
-          src={post?.author?.profile_picture || image} 
+          src={ `${process.env.REACT_APP_LARAVEL_URL}/${post?.author?.profile_picture}` } 
           alt={post?.author?.user_fname || "user"} 
         />
       </div>
@@ -80,7 +80,7 @@ export default function ApprovalBothPost({ post }) {
                   display: isImageLoaded ? "block" : "none",
                   objectFit: "cover",
                 }}
-                src={post.image_post.post_url}
+                src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}` }
                 alt="content"
                 onLoad={handleImageLoad}
               />
