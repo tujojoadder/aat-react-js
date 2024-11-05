@@ -1,33 +1,32 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./MobileMenu.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MessageSmallDeviceHead from "../Messages/MessageSmallDeviceHead/MessageSmallDeviceHead";
 import FriendHomeBack from "../Friends/FriendBack/FriendHomeBack/FriendHomeBack";
 import MobileMenuBack from "./MobileMenuBack";
+import { setModalMessage, setShow_Modal } from "../home/HomeSlice";
 
 const MobileMenu = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const profile_picture = useSelector((state) => state.home.profile_picture);
   const user_fname = useSelector((state) => state.home.user_fname);
   const user_lname = useSelector((state) => state.home.user_lname);
-
   const identifier = useSelector((state) => state.home.identifier);
 
-  const handleLogout = () => {
-    // Perform logout actions here
-    console.log("Logging out...");
-    // Example: clear local storage, reset state, etc.
-    // Redirect to login page or home page after logout
-    navigate("/login"); // Example redirection after logout
+  /* logout button click handle */
+  const handleClick = () => {
+    dispatch(setShow_Modal({ show_modal: true }));
+    dispatch(setModalMessage({ modal_message: "Do you want to logout?" }));
   };
 
   return (
     <>
-     {/* Back Button */}
-    
-      <div className="sm-menu-page  pb-5">
-      <MobileMenuBack />
+      {/* Back Button */}
+      <div className="sm-menu-page pb-5">
+        <MobileMenuBack />
 
         {/* Menu Items */}
         <div className="menu-items mt-2 px-3">
@@ -63,10 +62,6 @@ const MobileMenu = () => {
             <i className="fa-solid fa-user"></i>
             <span>Profile</span>
           </NavLink>
-          <NavLink to="/settings" className="menu-item">
-            <i className="fa-solid fa-cog"></i>
-            <span>Settings</span>
-          </NavLink>
           <NavLink to="/terms" className="menu-item">
             <i className="fa-solid fa-file-alt"></i>
             <span>Terms</span>
@@ -89,7 +84,7 @@ const MobileMenu = () => {
 
             <div className="profile-info">
               <h3 className="profile-name">
-                {user_fname} {user_lname}
+                {user_fname} {user_lname} 
               </h3>
 
               {identifier && (
@@ -99,14 +94,14 @@ const MobileMenu = () => {
           </div>
 
           {/* Logout Button */}
-          <NavLink
-            to="/privacy"
+          <div
             className="menu-item mb-4"
-            style={{ margin: "auto" }}
+            style={{ margin: "auto", cursor: "pointer" }}
+            onClick={handleClick}  // Attach the handleClick function here
           >
             <i className="fa-solid fa-sign-out-alt"></i>
             <span>Logout</span>
-          </NavLink>
+          </div>
         </div>
       </div>
     </>
