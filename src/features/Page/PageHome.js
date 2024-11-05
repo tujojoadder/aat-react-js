@@ -11,6 +11,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import PageSmallScreenCard from "./PageSmallScreenCard/PageSmallScreenCard.js";
 import PageLargeScreenCard from "./PageLargeScreenCard/PageLargeScreenCard.js";
+import PageHomeBack from "./PageBack/PageHomeBack/PageHomeBack.js";
+import FriendsTabs from "../Friends/FriendsTabs/FriendsTabs.js";
+import PageTabs from "./PageTabs/PageTabs.js";
 
 export default function PageHome() {
   const groupUpdate = useSelector((state) => state.home.groupUpdate);
@@ -87,10 +90,11 @@ export default function PageHome() {
       className="friend-home main m-0 p-0 border-sm-0 border-left border-right"
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
-      {/* Back button */}
-      <SmallScreenBack text="Your groups" />
-      <MidScreenBack text="Your groups" />
-      <div className="sm-back-sm"></div>
+   
+   <div className="d-block d-lg-none">
+          <PageHomeBack />
+          <PageTabs />
+        </div>
 
       {/* Section 1: Pages where the user is an admin */}
       <div className="admin-groups-section  px-sm-4 px-lg-2 px-3">

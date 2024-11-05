@@ -87,8 +87,8 @@ export default function YourPage() {
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
       {/* Back button */}
-      <SmallScreenBack text="Your groups" />
-      <MidScreenBack text="Your groups" />
+      <SmallScreenBack text="Your pages" />
+      <MidScreenBack text="Your pages" />
       <div className="sm-back-sm"></div>
 
       {/* Section 1: Pages where the user is an admin */}
