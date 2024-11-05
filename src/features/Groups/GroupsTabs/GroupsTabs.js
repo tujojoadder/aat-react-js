@@ -8,6 +8,9 @@ const GroupsTabs = () => {
   return (
     <div className="horizontal-pills-nav">
       <div className="horizontal-pills">
+       
+      {/*  Your feed */}
+       
         <NavLink 
           to="/groups"
           className={`text-decoration-none ${location.pathname === '/groups' ? 'active' : ''}`}
@@ -16,6 +19,11 @@ const GroupsTabs = () => {
             Your feed
           </button>
         </NavLink>
+
+
+
+        {/* Suggestios */}
+
         <NavLink 
           to="/groups/suggestions"
           className={`text-decoration-none ${location.pathname === '/groups/suggestions' ? 'active' : ''}`}
@@ -24,14 +32,33 @@ const GroupsTabs = () => {
             Suggestions
           </button>
         </NavLink>
+
+
+      {/* join groups */}
+
         <NavLink 
-          to="/groups/joined"
-          className={`text-decoration-none ${location.pathname === '/groups/joined' ? 'active' : ''}`}
+          to="/groups/joingroup"
+          className={`text-decoration-none ${location.pathname === '/groups/joingroup' ? 'active' : ''}`}
         >
-          <button className={`pill ${location.pathname === '/groups/joined' ? 'active' : ''}`}>
-            Your groups
+          <button className={`pill ${location.pathname === '/groups/joingroup' ? 'active' : ''}`}>
+            Joined groups
           </button>
         </NavLink>
+
+
+      {/* My groups */}
+
+        <NavLink 
+          to="/groups/mygroup"
+          className={`text-decoration-none ${location.pathname === '/groups/mygroup' ? 'active' : ''}`}
+        >
+          <button className={`pill ${location.pathname === '/groups/mygroup' ? 'active' : ''}`}>
+            My groups
+          </button>
+        </NavLink>
+
+
+      {/* Create Group */}
         <NavLink 
           to="/groups/create"
  

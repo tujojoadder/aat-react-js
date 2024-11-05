@@ -11,6 +11,10 @@ import { useGetRandomGroupPostQuery } from "../../services/groupsApi";
 import GroupImagePost from "../home/Components/ImagePost/GroupImagePost/GroupImagePost";
 import GroupTextPost from "../home/Components/TextPost/GroupTextPost/GroupTextPost";
 import GroupBPost from "../home/Components/BPost/GroupBPost/GroupBPost";
+import FriendHomeBack from "../Friends/FriendBack/FriendHomeBack/FriendHomeBack";
+import FriendsTabs from "../Friends/FriendsTabs/FriendsTabs";
+import GroupHomeBack from "./GroupBack/GroupHomeBack/GroupHomeBack";
+import GroupsTabs from "./GroupsTabs/GroupsTabs";
 export default function GroupsHome() {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
@@ -55,6 +59,15 @@ export default function GroupsHome() {
       className="friend-home main border-start border-end mb-1 m-0 p-0"
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
+
+<div className="d-block d-lg-none">
+          <GroupHomeBack />
+          <GroupsTabs />
+        </div>
+
+
+
+
       <div className="center-flex-container flex-item">
         <div className="post-wrapper">
           {allPosts.map((post) => (

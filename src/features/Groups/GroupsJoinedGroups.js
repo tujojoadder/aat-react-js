@@ -89,8 +89,8 @@ export default function GroupsJoinedGroups() {
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
       {/* Back button */}
-      <SmallScreenBack text="Your groups" />
-      <MidScreenBack text="Your groups" />
+      <SmallScreenBack text="Groups you've joined" />
+      <MidScreenBack text="Groups you've joined" />
       <div className="sm-back-sm"></div>
 
       {/* Section: Groups where the user is a member but not an admin */}

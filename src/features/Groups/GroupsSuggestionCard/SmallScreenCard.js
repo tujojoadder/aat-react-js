@@ -18,7 +18,7 @@ export default function SmallScreenCard(props) {
         <NavLink to={`/groups/${props.group_id}`} className="text-decoration-none">
 
           <img
-            src={props.image}
+            src={  `${process.env.REACT_APP_LARAVEL_URL}/${props.image}`}
             alt="Group"
             className="rounded-circle"
             style={{ height: "65px", width: "65px", objectFit: "cover" }}
