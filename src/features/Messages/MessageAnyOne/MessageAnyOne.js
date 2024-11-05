@@ -109,9 +109,13 @@ useEffect(() => {
 
   return (
     <>
-      <MessageSmallDeviceHead text="Your groups" />
+
+      {/* head only for xsm  */}
+      <MessageSmallDeviceHead  profileData={profileData} />
 
       <div className="message-container friend-home  p-0 m-0 border-left border-right">
+       
+       {/*head not for xsm  */}
         <div className="message-header d-none d-sm-block">
           <div
             className="posts m-0 py-2 p-0 border-bottom bg-light rounded"
@@ -159,7 +163,7 @@ useEffect(() => {
             <ProfileSkeleton />
           </div>
         ) : (
-          <MessageBody userId={id} image={profileData?.data?.profile_picture} />
+          <MessageBody userId={id} image={profileData?.data?.profile_picture}  />
         )}
       </div>
     </>
