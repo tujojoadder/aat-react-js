@@ -1,4 +1,3 @@
-
 import { useMediaQuery } from "react-responsive";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -35,7 +34,6 @@ export default function PageHome() {
     isFetching: isFetchingAdminGroups,
     isError: isErrorAdminGroups,
     isSuccess: isSuccessAdminGroups,
-   
   } = useGetPageSuggestionQuery(pageNumber);
 
   // Effect to handle fetching data from page 1 whenever the component mounts or groupUpdate changes
@@ -43,7 +41,6 @@ export default function PageHome() {
     setpageNumber(1);
     setAllAdminGroups([]);
     setHasMoreAdminGroups(true);
-
   }, []);
 
   // Effect to process fetched admin groups data
@@ -90,11 +87,10 @@ export default function PageHome() {
       className="friend-home main m-0 p-0 border-sm-0 border-left border-right"
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
-   
-   <div className="d-block d-lg-none">
-          <PageHomeBack />
-          <PageTabs />
-        </div>
+      <div className="d-block d-lg-none">
+        <PageHomeBack />
+        <PageTabs />
+      </div>
 
       {/* Section 1: Pages where the user is an admin */}
       <div className="admin-groups-section  px-sm-4 px-lg-2 px-3">
@@ -108,7 +104,7 @@ export default function PageHome() {
                 name={page.page_name}
                 handle={page.identifier}
                 image={page.page_picture}
-                type='discover'
+                type="discover"
               />
             ) : (
               <PageLargeScreenCard
@@ -117,7 +113,7 @@ export default function PageHome() {
                 name={page.page_name}
                 handle={page.identifier}
                 image={page.page_picture}
-                type='discover'
+                type="discover"
               />
             )
           )}

@@ -91,13 +91,13 @@ export default function IChannelFollowing() {
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
       {/* Back button */}
-      <SmallScreenBack text="Your groups" />
-      <MidScreenBack text="Your groups" />
+      <SmallScreenBack text="Following channels" />
+      <MidScreenBack text="Following channels" />
       <div className="sm-back-sm"></div>
 
       {/* Section 1: Pages where the user is an admin */}
       <div className="admin-groups-section  px-sm-4 px-lg-2 px-3">
-        <h4 className="p-2">Pages you're an admin of</h4>
+        <h4 className="p-2">You're following of</h4>
         <div className="row">
           {allAdminGroups.map((page, index) =>
             isSmallScreen ? (

@@ -39,9 +39,9 @@ const navigate=useNavigate();
   }, [isError, isSuccess, error]);
 
   return (
-    <div className="main pb-5 m-0 p-0 px-3 mb-5 border-start border-end" style={{ height: '100vh' }}>
+    <div className="main pb-5 m-0 p-0  mb-5 border-start border-end" style={{ height: '100vh' }}>
       <IChannelCreateBack />
-      <div className="body mt-5 pt-5 p-2">
+      <div className="body mt-5 pt-5 p-2 px-3">
         <div className="form-header mt-3">
           <h3>Create an iChannel</h3>
         </div>

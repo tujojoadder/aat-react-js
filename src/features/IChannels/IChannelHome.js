@@ -7,6 +7,8 @@ import { useGetRandomIaccountPostQuery } from "../../services/iaccountsApi";
 import IChannelTextPost from "./IChannelTextPost/IChannelTextPost";
 import IChannelBPost from "./IChannelBPost/IChannelBPost";
 import IChannelImagePost from "./IChannelImagePost/IChannelImagePost";
+import IChannelTabs from "./IChannelTabs/IChannelTabs";
+import IChannelHomeBack from "./IChannelHomeBack/IChannelHomeBack";
 export default function IChannelHome() {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
@@ -51,6 +53,10 @@ export default function IChannelHome() {
       className="friend-home main border-start border-end mb-1 m-0 p-0"
       style={{ backgroundColor: "white", minHeight: "100vh" }}
     >
+      <div className="d-block d-lg-none">
+        <IChannelTabs />
+      </div>
+
       <div className="center-flex-container flex-item">
         <div className="post-wrapper">
           {allPosts.map((post) => (
@@ -67,11 +73,7 @@ export default function IChannelHome() {
             </div>
           ))}
 
-          <div
-            ref={ref}
-            className="loading-trigger"
-            
-          >
+          <div ref={ref} className="loading-trigger">
             {isFetching && <Spinner />}
           </div>
         </div>
