@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function MessageSmallDeviceHead({ profileData }) {
@@ -34,10 +34,12 @@ export default function MessageSmallDeviceHead({ profileData }) {
 
             <div className="user-content-text-box ms-1">
               <div className="user-names-text" style={{ marginTop: "2px" }}>
-                <h1 className="full-name-text m-0 p-0" style={{ fontSize: "1rem" }}>
-                  {profileData?.data?.user_fname }
+                <h1
+                  className="full-name-text m-0 p-0"
+                  style={{ fontSize: "1rem" }}
+                >
+                  {profileData?.data?.user_fname}
                 </h1>
-                
               </div>
             </div>
           </div>

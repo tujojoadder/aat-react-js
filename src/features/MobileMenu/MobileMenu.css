@@ -1,7 +1,8 @@
 .sm-menu-page {
     background-color: #f5f6fa;
     height: 100vh;
-    padding: 20px;
+   padding: 0;
+   margin: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
