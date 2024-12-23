@@ -40,19 +40,32 @@ const HadithBox = () => {
     },
   ] = useDayHadithDetailsMutation();
 
+
+
+
   const handleHeartClick = async () => {
     setShowJoinedGroups(!showJoinedGroups);
     try {
       const res = await DayHadithDetailsMutation();
+      console.log(res); // Log the entire response
       if (res.data) {
-        setLikeDetails(res.data.message[0].likes);
+        setLikeDetails(
+          res?.data?.message?.length > 0 
+            ? res.data.message[0].likes 
+            : [] // Default to an empty array if no valid data
+        );
       } else if (res.error) {
         handleApiError(res.error, dispatch);
       }
     } catch (error) {
       handleApiError(error, dispatch);
+    
     }
   };
+
+
+
+
 
   const [
     setDayHadith,
