@@ -135,6 +135,4 @@ export const {
   useGetUserDetailsQuery,
   useGetFriendStateQuery,
   useFriendSuggestionhomeQuery,
-  useUserPostInsertMutation,
-  useGetPostsQuery,
 } = friendsApi;
