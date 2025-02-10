@@ -37,20 +37,23 @@ if (useGetSpecificUserFriendQueryIsSuccess) {
 
   // Effect to process fetched data
   useEffect(() => {
-    if (useGetSpecificUserFriendQueryIsSuccess && useGetSpecificUserFriendQueryData?.data) {
-      if (useGetSpecificUserFriendQueryData.data.length === 0) {
+    if (useGetSpecificUserFriendQueryIsSuccess && useGetSpecificUserFriendQueryData?.data?.data) {
+      const friendList = useGetSpecificUserFriendQueryData.data.data; // Corrected array access
+  
+      if (friendList.length === 0) { // Use friendList instead of data
         setHasMoreFriends(false);
       } else {
-        const newFriends = useGetSpecificUserFriendQueryData.data.data.filter(
+        const newFriends = friendList.filter(
           (newFriend) => !allFriends.some((friend) => friend.user_id === newFriend.user_id)
         );
+  
         if (newFriends.length > 0) {
           setAllFriends((prevFriends) => [...prevFriends, ...newFriends]);
         }
       }
     }
   }, [useGetSpecificUserFriendQueryData, useGetSpecificUserFriendQueryIsSuccess, allFriends]);
-
+  
   // Effect to handle infinite scroll logic
   useEffect(() => {
     if (friendInView && !useGetSpecificUserFriendQueryIsFetching && !useGetSpecificUserFriendQueryIsError && hasMoreFriends) {
