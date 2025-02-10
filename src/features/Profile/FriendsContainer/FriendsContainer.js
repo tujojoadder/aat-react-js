@@ -30,13 +30,18 @@ export default function FriendsContainer({ userId }) {
     isSuccess: useGetSpecificUserFriendQueryIsSuccess 
   } = useGetSpecificUserFriendQuery({ friendPage, userId });
 
+if (useGetSpecificUserFriendQueryIsSuccess) {
+  console.log(useGetSpecificUserFriendQueryData);
+}
+
+
   // Effect to process fetched data
   useEffect(() => {
-    if (useGetSpecificUserFriendQueryIsSuccess && Array.isArray(useGetSpecificUserFriendQueryData?.data)) {
+    if (useGetSpecificUserFriendQueryIsSuccess && useGetSpecificUserFriendQueryData?.data) {
       if (useGetSpecificUserFriendQueryData.data.length === 0) {
         setHasMoreFriends(false);
       } else {
-        const newFriends = useGetSpecificUserFriendQueryData.data.filter(
+        const newFriends = useGetSpecificUserFriendQueryData.data.data.filter(
           (newFriend) => !allFriends.some((friend) => friend.user_id === newFriend.user_id)
         );
         if (newFriends.length > 0) {
