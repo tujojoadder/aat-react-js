@@ -45,23 +45,22 @@ export const friendsApi = createApi({
 
     /* Send Friend Request */
     sendFriendRequest: builder.mutation({
-      query: (receiver_id) => {
-        return {
-          url: "/sendfriendrequest",
-          method: "POST",
-          body: receiver_id,
-        };
-      },
+      query: (data) => ({
+        url: "/sendfriendrequest",
+        method: "POST",
+        body:data
+      }),
       invalidatesTags: ["RequestOrCancel"],
     }),
+    
 
     /* cancel Friend Request */
     cancelFriendRequest: builder.mutation({
-      query: (receiver_id) => {
+      query: (data) => {
         return {
           url: "/cancelfriendrequest",
           method: "POST",
-          body: receiver_id,
+          body:data,
         };
       },
       invalidatesTags: ["RequestOrCancel"],

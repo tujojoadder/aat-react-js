@@ -20,7 +20,6 @@ export default function SendFriendRequest({
 
   // Redux selectors for request status
   const requestSent = useSelector((state) => state.home.sentRequests[user_id]);
-  const requestRejected = useSelector((state) => state.home.rejectedRequests[user_id]);
 
   // Local state to manage the friend request status
   const [isFriendRequestSent, setIsFriendRequestSent] = useState(friend_request_sent);
@@ -36,7 +35,7 @@ export default function SendFriendRequest({
   const handleAddButton = async (e) => {
     e.preventDefault();
     try {
-      const res = await sendFriendRequest({ receiver_id: user_id });
+      const res = await sendFriendRequest({receiver_id:user_id});
       if (res.data) {
         dispatch(setToastSuccess({ toastSuccess: 'Friend request sent successfully' }));
         dispatch(setRequestSent({ userId: user_id }));
