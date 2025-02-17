@@ -30,15 +30,22 @@ export default function FollowingContainer({ userId }) {
         isSuccess: useGetSpecificUserFollowingQueryIsSuccess 
     } = useGetSpecificUserFollowingQuery({ followingPage, userId });
 
+
+if (useGetSpecificUserFollowingQueryIsSuccess) {
+    console.log(useGetSpecificUserFollowingQueryData.data)
+}
+
+
+
     // Process fetched data
     useEffect(() => {
         if (useGetSpecificUserFollowingQueryIsSuccess && useGetSpecificUserFollowingQueryData?.data) {
-            if (useGetSpecificUserFollowingQueryData.data.length === 0) {
+            if (useGetSpecificUserFollowingQueryData?.data?.length === 0) {
                 setHasMoreFollowing(false);
             } else {
-                const newFollowing = useGetSpecificUserFollowingQueryData.data.filter(
+                const newFollowing = useGetSpecificUserFollowingQueryData?.data.filter(
                     (newFollowingItem) => 
-                        !allFollowing.some((following) => following.following_id === newFollowingItem.following_id)
+                        !allFollowing.some((following) => following.user_id === newFollowingItem.user_id)
                 );
                 
                 if (newFollowing.length > 0) {
@@ -69,10 +76,10 @@ export default function FollowingContainer({ userId }) {
                         allFollowing.map((following, index) => (
                             <div className="col-12 mb-2" key={index}>
                                 <ShowUserFlowing 
-                                    user_id={following.following.user_id}
-                                    name={`${following.following.user_fname} ${following.following.user_lname}`} // Combine first and last name
-                                    image={following.following.profile_picture}
-                                    handle={following.following.identifier}
+                                    user_id={following.user_id}
+                                    name={`${following.user_fname} ${following.user_lname}`} // Combine first and last name
+                                    image={following.profile_picture}
+                                    handle={following.identifier}
                                 />
                             </div>
                         ))
