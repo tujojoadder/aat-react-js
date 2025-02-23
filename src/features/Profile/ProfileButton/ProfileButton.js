@@ -4,7 +4,6 @@ import {
   useCancelFriendRequestMutation,
   useSendFriendRequestMutation,
   useManageFriendRequestMutation,
-  useGetFriendStateQuery,
   useUnfriendUserMutation,
 } from "../../../services/friendsApi";
 import {
@@ -101,14 +100,11 @@ export default function ProfileButton({ type }) {
         sender_id: id,
         decision: "accepted",
       }).unwrap();
-    
-        setGetAddButton(false);
-        setGetUnfriend(true);
-        dispatch(
-          setToastSuccess({ toastSuccess: "Friend added successfully" })
-        );
-        dispatch(setRequestAccepted({ userId: id }));
-      
+
+      setGetAddButton(false);
+      setGetUnfriend(true);
+      dispatch(setToastSuccess({ toastSuccess: "Friend added successfully" }));
+      dispatch(setRequestAccepted({ userId: id }));
     } catch (error) {
       handleApiError(error, dispatch);
     } finally {
@@ -151,11 +147,12 @@ export default function ProfileButton({ type }) {
       // Optionally, you can dispatch an error message to show in the UI
     }
   };
-
-  // Determine button display based on request type or sent status
+console.log("type "+type)
+  // User has recived a request
   if (type === "received") {
-    // Render Confirm/Reject buttons for received requests
-
+    /* Just we get a request and did not do anything that time we
+will get two button (Confirm and Reject Button)  */
+    /* getAddButton true means-->>we unfriend or reject user */
     if (type === "received" && !getAddButton && !getUnfriend) {
       return (
         <div className="d-flex">
@@ -192,6 +189,10 @@ export default function ProfileButton({ type }) {
         </div>
       );
     } else if (type === "received" && getAddButton) {
+
+    /* getAddButton true -->> mans we reject or unfriend user */
+      /* requestSent true -->> means we send a request */
+      /* so we rejcted or unfriend user and also send request (we will get only react button) */
       if (requestSent) {
         return (
           <button
@@ -217,6 +218,7 @@ export default function ProfileButton({ type }) {
           </button>
         );
       } else {
+      /* so we rejcted ot unfriend user and not send request (we will get Add button) */
         return (
           <button
             onClick={handleAddButton}
@@ -242,7 +244,9 @@ export default function ProfileButton({ type }) {
           </button>
         );
       }
-    } else {
+    }
+    /* if we accept the request */
+    else {
       return (
         <button
           onClick={handleUnfriend}
@@ -373,17 +377,18 @@ export default function ProfileButton({ type }) {
   } else {
     /*  friend */
     // Render Add Friend button for non-friends
+    /* handling with state  */
     return typeFriendShowButton ? (
       <button
         onClick={handleUnfriend}
         className="btn-add-friend"
         type="button"
         style={{
-          backgroundColor: sendingRequest ? "#c4c4c4" : "#0d8de5",
-          cursor: sendingRequest ? "not-allowed" : "pointer",
+          backgroundColor: isLoading ? "#c4c4c4" : "#0d8de5",
+          cursor: isLoading ? "not-allowed" : "pointer",
         }}
       >
-        {sendingRequest ? (
+        {isLoading ? (
           <span
             className="spinner-border spinner-border-sm"
             role="status"
