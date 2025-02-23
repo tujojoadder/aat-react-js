@@ -150,7 +150,7 @@ export default function ImagePost({ post }) {
             )}
 
             <NavLink
-              key={post.author.user_id}
+               key={`profile-pic-${post.post_id}`} // Unique key for profile picture
               to={`/friends/suggestions/${post.author.user_id}`}
               className="text-decoration-none"
             >
@@ -167,7 +167,7 @@ export default function ImagePost({ post }) {
               <div className="name-column">
 
               <NavLink
-              key={post.author.user_id}
+               key={`user-name-${post.post_id}`} // Unique key for profile picture
               to={`/friends/suggestions/${post.author.user_id}`}
               className="text-decoration-none"
             >
@@ -177,7 +177,7 @@ export default function ImagePost({ post }) {
                 </NavLink>
 
                 <NavLink
-              key={post.author.user_id}
+               key={`user-identifier-${post.post_id}`} // Unique key for profile picture
               to={`/friends/suggestions/${post.author.user_id}`}
               className="text-decoration-none"
             >

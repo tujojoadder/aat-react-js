@@ -38,10 +38,7 @@ export const friendsApi = createApi({
     }),
 
     /*<<<-----   is Friend or not ------->>> */
-    getFriendState: builder.query({
-      query: (id) => `friend-state/${id}`, // Assuming your API endpoint is '/api/friend-state/:id'
-      providesTags: ["AcceptFriendRequest", "RequestOrCancel",'Unfriend'],
-    }),
+  
 
     /* Send Friend Request */
     sendFriendRequest: builder.mutation({
@@ -132,6 +129,5 @@ export const {
   useCancelFriendRequestMutation,
   useSendFriendRequestMutation,
   useGetUserDetailsQuery,
-  useGetFriendStateQuery,
   useFriendSuggestionhomeQuery,
 } = friendsApi;

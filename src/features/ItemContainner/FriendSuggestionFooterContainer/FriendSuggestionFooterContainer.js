@@ -29,6 +29,11 @@ export default function FriendSuggestionFooterContainer() {
     
   } = useGetFriendSuggestionQuery({ friendSuggestionPage });
 
+
+if (useGetFriendSuggestionQuerySuccess) {
+  console.log(useGetFriendSuggestionQueryData)
+}
+
 useEffect(() => {
   setFriendSuggestionPage(1);
   setAllFriendSuggestions([]);
@@ -102,7 +107,7 @@ useEffect(() => {
                 location.pathname === `/friends/suggestions/${profile.user_id}`;
               return (
                 <SuggestionItemSm
-                  key={profile.friend_request_id}
+                  key={profile.user_id}
                   name={`${profile.user_fname} ${profile.user_lname}`}
                   handle={profile.identifier}
                   image={profile.profile_picture}

@@ -70,7 +70,7 @@ export default function Homeleft() {
                   const isActive = location.pathname === `/profile/${profile.user_id}`;
                   return (
                  
-                      <div className="col-12 mb-2">
+                      <div className="col-12 mb-2" key={profile.user_id}>
                         <SuggestionContainer
                         user_id={`${profile.user_id}`}
                         

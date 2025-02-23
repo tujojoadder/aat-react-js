@@ -4,7 +4,6 @@ import ProfileSkeleton from "./ProfileSkeleton/ProfileSkeleton";
 import ProfileHomeBack from "./ProfileHomeBack/ProfileHomeBack";
 import ProfilePost from "./ProfilePost/ProfilePost";
 import {
-  useGetFriendStateQuery,
   useGetUserDetailsQuery,
 } from "../../services/friendsApi";
 import ImageContainer from "../Friends/ImageContainer/ImageContainer";
@@ -22,16 +21,6 @@ import ProfileButton from "./ProfileButton/ProfileButton";
 export default function Profile() {
   const { id } = useParams();
 
-  const {
-    data: friendState,
-    error: friendError,
-    isLoading: friendLoading,
-    isSuccess: friendSuccess,
-  } = useGetFriendStateQuery(id);
-
-  if (friendSuccess) {
-    console.log(friendState.friend_state);
-  }
 
   const scrollRef = useRef(null);
   const [currentTab, setCurrentTab] = useState("More");
@@ -141,7 +130,7 @@ export default function Profile() {
 
   return (
     <>
-      {isSuccess && friendSuccess && (
+      {isSuccess  && (
         <div
           className="friend-home main border-start border-end mb-1 m-0 p-0"
           style={{ backgroundColor: "white", minHeight: "100vh" }}
@@ -186,7 +175,7 @@ export default function Profile() {
 
                     <div className="mx-4">
                       <ProfileButton
-                        type={friendState.friend_state}
+                        type={profileData?.data?.friend_state}
                         user_id={id}
                       />
                     </div>

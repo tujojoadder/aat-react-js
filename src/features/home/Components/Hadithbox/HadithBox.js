@@ -227,11 +227,11 @@ const HadithBox = () => {
             >
         <div className="card-content">
          
-            <p
+            <div
               className={`card-text ${showJoinedGroups ? "px-0" : "py-2 px-3"}`}
             >
               {content}
-            </p>
+            </div>
          
         </div>
         </Scrollbar>
