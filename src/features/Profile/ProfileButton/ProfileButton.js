@@ -26,8 +26,6 @@ export default function ProfileButton({ type }) {
   const [unfriendUser, { isLoading, isError, isSuccess, error }] =
     useUnfriendUserMutation();
 
- 
-
   const [typeFriendShowButton, settypeFriendShowButton] = useState(true);
 
   // Redux selectors for request status
@@ -36,9 +34,7 @@ export default function ProfileButton({ type }) {
   const requestRejected = useSelector(
     (state) => state.home.rejectedRequests[id]
   );
-  const requestCancel = useSelector(
-    (state) => state.home.cancelRequests[id]
-  );
+  const requestCancel = useSelector((state) => state.home.cancelRequests[id]);
 
   // Mutations
   const [cancelFriendRequest, { isLoading: cancelingRequest }] =
@@ -105,17 +101,14 @@ export default function ProfileButton({ type }) {
         sender_id: id,
         decision: "accepted",
       }).unwrap();
-      if (res.data) {
+    
         setGetAddButton(false);
         setGetUnfriend(true);
         dispatch(
           setToastSuccess({ toastSuccess: "Friend added successfully" })
         );
-
         dispatch(setRequestAccepted({ userId: id }));
-      } else if (res.error) {
-        handleApiError(res.error, dispatch);
-      }
+      
     } catch (error) {
       handleApiError(error, dispatch);
     } finally {
@@ -132,15 +125,12 @@ export default function ProfileButton({ type }) {
         sender_id: id,
         decision: "rejected",
       }).unwrap();
-      if (res.data) {
-        dispatch(setToastSuccess({ toastSuccess: "Friend request rejected" }));
-        dispatch(setRequestRejected({ userId: id }));
 
-        setGetUnfriend(false);
-        setGetAddButton(true);
-      } else if (res.error) {
-        handleApiError(res.error, dispatch);
-      }
+      dispatch(setToastSuccess({ toastSuccess: "Friend request rejected" }));
+      dispatch(setRequestRejected({ userId: id }));
+
+      setGetUnfriend(false);
+      setGetAddButton(true);
     } catch (error) {
       handleApiError(error, dispatch);
     } finally {
@@ -162,7 +152,6 @@ export default function ProfileButton({ type }) {
     }
   };
 
- 
   // Determine button display based on request type or sent status
   if (type === "received") {
     // Render Confirm/Reject buttons for received requests
@@ -382,8 +371,7 @@ export default function ProfileButton({ type }) {
       </>
     );
   } else {
-
-  /*  friend */
+    /*  friend */
     // Render Add Friend button for non-friends
     return typeFriendShowButton ? (
       <button

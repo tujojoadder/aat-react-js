@@ -39,12 +39,10 @@ export default function FriendRequestItemSm({
         sender_id: user_id,
         decision: "accepted",
       }).unwrap();
-      if (res.data) {
+      
         dispatch(setToastSuccess({ toastSuccess: "Friend added successfully" }));
         dispatch(setRequestAccepted({ userId: user_id })); // Update Redux state
-      } else if (res.error) {
-        handleApiError(res.error, dispatch);
-      }
+      
     } catch (error) {
       handleApiError(error, dispatch);
     } finally {

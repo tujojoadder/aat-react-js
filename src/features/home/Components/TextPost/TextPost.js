@@ -9,18 +9,22 @@ import TextPostSkeleton from "./TextPostSkeleton/TextPostSkeleton";
 import { useToggleLoveMutation } from "../../../../services/loveApi";
 import { useToggleUnlikeMutation } from "../../../../services/unlikeApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoveReaction, setTotalComments, setUnlikeReactions } from "../../HomeSlice";
+import {
+  setLoveReaction,
+  setTotalComments,
+  setUnlikeReactions,
+} from "../../HomeSlice";
 import RootComment from "../Comment/RootComment/RootComment";
 import echo from "../../../../echo";
+import { NavLink } from "react-router-dom";
 
 const TextPost = ({ post }) => {
+  // Get totalComments from Redux state; fallback to post.total_comments if not available
+  const totalComments = useSelector(
+    (state) => state.home.totalComments[post.post_id] || post.total_comments
+  );
+  const authId = useSelector((state) => state.home.user_id);
 
-    // Get totalComments from Redux state; fallback to post.total_comments if not available
-    const totalComments = useSelector(
-      (state) => state.home.totalComments[post.post_id] || post.total_comments
-    );
-    const authId = useSelector((state) => state.home.user_id);
-    
   /*  Love Unlike  */
   const [toggleLove] = useToggleLoveMutation();
   const [toggleUnlike] = useToggleUnlikeMutation();
@@ -143,12 +147,10 @@ const TextPost = ({ post }) => {
     setIsProfilePicLoaded(true);
   };
 
-   /* Broadcast totalComments */
-   useEffect(() => {
+  /* Broadcast totalComments */
+  useEffect(() => {
     const channel = echo.private("broadcast-reply");
     channel.listen(".getReply", (e) => {
- 
-
       // Check if the reply belongs to the current post
       if (
         e.reply.post_id === post.post_id &&
@@ -167,7 +169,6 @@ const TextPost = ({ post }) => {
       echo.leave("broadcast-reply");
     };
   }, [dispatch, authId, post.post_id]);
-
 
   return (
     <div className="posts mx-2 ">
@@ -189,23 +190,42 @@ const TextPost = ({ post }) => {
                 ></div>
               </div>
             )}
-            <img
-              src={  `${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}` }
-              alt="user-profile"
-              onLoad={handleProfilePicLoad}
-              style={{ display: isProfilePicLoaded ? "block" : "none" }}
-            />
+            <NavLink
+              key={post.author.user_id}
+              to={`/friends/suggestions/${post.author.user_id}`}
+              className="text-decoration-none"
+            >
+              <img
+                src={`${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}`}
+                alt="user-profile"
+                onLoad={handleProfilePicLoad}
+                style={{ display: isProfilePicLoaded ? "block" : "none" }}
+              />
+            </NavLink>
           </div>
 
           <div className="user-contents-text-box">
             <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
               <div className="name-column ">
-                <h1 className="full-name-text m-0 p-0">
-                  {post.author.user_fname} {post.author.user_lname}
-                </h1>
-                <p className="user-name-text m-0 p-0">
-                  @{post.author.identifier}
-                </p>
+                <NavLink
+                  key={post.author.user_id}
+                  to={`/friends/suggestions/${post.author.user_id}`}
+                  className="text-decoration-none"
+                >
+                  <h1 className="full-name-text m-0 p-0">
+                    {post.author.user_fname} {post.author.user_lname}
+                  </h1>
+                </NavLink>
+
+                <NavLink
+                  key={post.author.user_id}
+                  to={`/friends/suggestions/${post.author.user_id}`}
+                  className="text-decoration-none"
+                >
+                  <p className="user-name-text m-0 p-0">
+                    @{post.author.identifier}
+                  </p>
+                </NavLink>
               </div>
               <p
                 className="time-text ms-3 "
@@ -238,7 +258,9 @@ const TextPost = ({ post }) => {
                 onClick={handleLoveClick}
               >
                 {post.totalLove > 0 && (
-      <span className="ps-1">{ formatLargeNumber(post.totalLove)}</span>
+                  <span className="ps-1">
+                    {formatLargeNumber(post.totalLove)}
+                  </span>
                 )}
               </i>
               <i
@@ -248,19 +270,20 @@ const TextPost = ({ post }) => {
                 onClick={handleUnlikeClick}
               >
                 {post.totalUnlike > 0 && (
-                  <span className="ps-1">{  formatLargeNumber(post.totalUnlike) }</span>
+                  <span className="ps-1">
+                    {formatLargeNumber(post.totalUnlike)}
+                  </span>
                 )}
               </i>
 
+              {/* Comments */}
 
-                  {/* Comments */}
-
-                  <i
+              <i
                 className="ps-md-3 far fa-comment blue"
                 data-bs-toggle="modal"
                 data-bs-target={`#imageModal-${post.post_id}`} // Dynamic ID for modal
               >
-                  {totalComments > 0 && (
+                {totalComments > 0 && (
                   <span className="ps-1">
                     {" "}
                     {formatLargeNumber(totalComments)}{" "}
@@ -268,25 +291,20 @@ const TextPost = ({ post }) => {
                 )}
               </i>
 
-
               <i className="fa-solid fa-chevron-up ps-md-3 me-2"></i>
             </div>
-
-
-
-            
           </div>
 
           {/* Modal */}
           <div
             className="modal fade"
-              id={`imageModal-${post.post_id}`}
+            id={`imageModal-${post.post_id}`}
             tabIndex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
             ref={modalRef}
           >
-             <div className="modal-dialog">
+            <div className="modal-dialog">
               <div className="modal-content ">
                 <div className="modal-header shadow-sm p-3 bg-body rounded border-bottom">
                   <h5 className="modal-title fs-5 " id="exampleModalLabel">

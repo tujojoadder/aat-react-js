@@ -31,12 +31,10 @@ export default function FriendRequestItemLg(props) {
         sender_id: props.user_id,
         decision: "accepted",
       }).unwrap();
-      if (res.data) {
+      
         dispatch(setToastSuccess({ toastSuccess: "Friend added successfully" }));
         dispatch(setRequestAccepted({ userId: props.user_id })); // Update Redux state
-      } else if (res.error) {
-        handleApiError(res.error, dispatch);
-      }
+      
     } catch (error) {
       handleApiError(error, dispatch);
     } finally {
@@ -52,12 +50,10 @@ export default function FriendRequestItemLg(props) {
         sender_id: props.user_id,
         decision: "rejected",
       }).unwrap();
-      if (res.data) {
+      
         dispatch(setToastSuccess({ toastSuccess: "Friend request rejected" }));
         dispatch(setRequestRejected({ userId: props.user_id })); // Update Redux state
-      } else if (res.error) {
-        handleApiError(res.error, dispatch);
-      }
+      
     } catch (error) {
       handleApiError(error, dispatch);
     } finally {

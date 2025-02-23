@@ -37,7 +37,7 @@ export const friendsApi = createApi({
       query: (id) => `/userdetails/${id}`, // Make sure this endpoint exists in your backend
     }),
 
-    /*   is Friend or not */
+    /*<<<-----   is Friend or not ------->>> */
     getFriendState: builder.query({
       query: (id) => `friend-state/${id}`, // Assuming your API endpoint is '/api/friend-state/:id'
       providesTags: ["AcceptFriendRequest", "RequestOrCancel",'Unfriend'],

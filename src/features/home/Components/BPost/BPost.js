@@ -16,6 +16,7 @@ import {
 } from "../../HomeSlice";
 import RootComment from "../Comment/RootComment/RootComment";
 import echo from "../../../../echo";
+import { NavLink } from "react-router-dom";
 
 export default function BPost({ post }) {
   // Get totalComments from Redux state; fallback to post.total_comments if not available
@@ -190,22 +191,43 @@ export default function BPost({ post }) {
                 ></div>
               </div>
             )}
-            <img
-              src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}` }
-              alt="user-profile"
-              onLoad={handleProfilePicLoad}
-              style={{ display: isProfilePicLoaded ? "block" : "none" }}
-            />
+
+            <NavLink
+              key={post.author.user_id}
+              to={`/friends/suggestions/${post.author.user_id}`}
+              className="text-decoration-none"
+            >
+              <img
+                src={`${process.env.REACT_APP_LARAVEL_URL}/${post.author.profile_picture}`}
+                alt="user-profile"
+                onLoad={handleProfilePicLoad}
+                style={{ display: isProfilePicLoaded ? "block" : "none" }}
+              />
+            </NavLink>
           </div>
           <div className="user-contents-text-box">
             <div className="user-names-text pb-1" style={{ marginTop: "2px" }}>
               <div className="name-column">
-                <h1 className="full-name-text m-0 p-0">
-                  {post.author.user_fname} {post.author.user_lname}
-                </h1>
-                <p className="user-name-text m-0 p-0">
-                  @{post.author.identifier}
-                </p>
+                <NavLink
+                  key={post.author.user_id}
+                  to={`/friends/suggestions/${post.author.user_id}`}
+                  className="text-decoration-none"
+                >
+                  {" "}
+                  <h1 className="full-name-text m-0 p-0">
+                    {post.author.user_fname} {post.author.user_lname}
+                  </h1>
+                </NavLink>
+
+                <NavLink
+                  key={post.author.user_id}
+                  to={`/friends/suggestions/${post.author.user_id}`}
+                  className="text-decoration-none"
+                >
+                  <p className="user-name-text m-0 p-0">
+                    @{post.author.identifier}
+                  </p>
+                </NavLink>
               </div>
               <p
                 className="time-text ms-3"
@@ -255,7 +277,7 @@ export default function BPost({ post }) {
                     objectFit: "cover",
                     maxHeight: "500px",
                   }}
-                  src={ `${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}`}
+                  src={`${process.env.REACT_APP_LARAVEL_URL}/${post.image_post.post_url}`}
                   alt="post-content"
                   onLoad={handleImageLoad}
                 />
