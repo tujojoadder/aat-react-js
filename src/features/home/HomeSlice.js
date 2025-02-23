@@ -169,10 +169,11 @@ export const homeSlice = createSlice({
     },
 
     /* Friend Requests reducers */
-
+/*<<--->> if we unfriend anyone we will treat them as cancelRequests  */
     setRequestSent: (state, action) => {
       const { userId } = action.payload;
       state.sentRequests[userId] = true; // Mark request as sent
+      delete state.acceptedRequests[userId]; // Remove from rejected if re-sent
       delete state.rejectedRequests[userId]; // Remove from rejected if re-sent
       delete state.cancelRequests[userId]; // Remove from rejected if re-sent
     },
@@ -180,12 +181,14 @@ export const homeSlice = createSlice({
     setRequestRejected: (state, action) => {
       const { userId } = action.payload;
       state.rejectedRequests[userId] = true; // Mark request as rejected/canceled
+      delete state.acceptedRequests[userId]; // Remove from sent if canceled
       delete state.sentRequests[userId]; // Remove from sent if canceled
       delete state.cancelRequests[userId]; // Remove from sent if canceled
     },
     setRequestCancel: (state, action) => {
       const { userId } = action.payload;
       state.cancelRequests[userId] = true; // Mark request as rejected/canceled
+      delete state.acceptedRequests[userId]; // Remove from sent if canceled
       delete state.sentRequests[userId]; // Remove from sent if canceled
       delete state.rejectedRequests[userId]; // Remove from sent if canceled
     },
@@ -194,6 +197,8 @@ export const homeSlice = createSlice({
       const { userId } = action.payload;
       state.acceptedRequests[userId] = true; // Mark request as accepted
       delete state.sentRequests[userId]; // Remove from sent if accepted
+      delete state.rejectedRequests[userId]; // Remove from sent if accepted
+      delete state.cancelRequests[userId]; // Remove from sent if accepted
     },
 
 
