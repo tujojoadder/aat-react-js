@@ -33,64 +33,53 @@ const initialState = {
   acceptedRequests: {}, // To store accepted friend requests by user ID
   rejectedRequests: {}, // To store rejected/canceled friend requests by user ID
   cancelRequests: {}, // To store rejected/canceled friend requests by user ID
-  sentRequests: {},     // To store sent friend requests by user ID
+  sentRequests: {}, // To store sent friend requests by user ID
 
-/* Group State */
-audience: '',
-groupDetails: '',
+  /* follow */
+  isFollowing: {},
+  /* Group State */
+  audience: "",
+  groupDetails: "",
 
- // State that will trigger refetch
-groupUpdate: false, 
-//for store admin groups
-adminGroups: [],
+  // State that will trigger refetch
+  groupUpdate: false,
+  //for store admin groups
+  adminGroups: [],
 
+  /* <--- Page ---> */
+  pagePhone: "",
+  pageCategory: "",
+  pageLocation: "",
+  pageEmail: "",
+  pageDetails: "",
+  // State that will trigger refetch
+  pageUpdate: false,
+  pageError: "",
 
+  /* Love and Unlike for post */
+  loveReactions: {}, // To store rejected/canceled friend requests by user ID
+  unlikeReactions: {}, // To store sent friend requests by user ID
 
-/* <--- Page ---> */
-pagePhone: '',
-pageCategory: '',
-pageLocation: '',
-pageEmail:'',
-pageDetails:'',
- // State that will trigger refetch
- pageUpdate: false, 
-pageError:'',
+  /* Love and Unlike for Comment */
+  commentLoveReactions: {}, // To store rejected/canceled friend requests by user ID
+  commentUnlikeReactions: {}, // To store sent friend requests by user ID
 
-
-
-/* Love and Unlike for post */
-loveReactions: {}, // To store rejected/canceled friend requests by user ID
-unlikeReactions: {},     // To store sent friend requests by user ID
-
-/* Love and Unlike for Comment */
-commentLoveReactions: {}, // To store rejected/canceled friend requests by user ID
-commentUnlikeReactions: {},     // To store sent friend requests by user ID
-
-/* Love and Unlike for Replies */
-replyLoveReactions: {}, // To store rejected/canceled friend requests by user ID
-replyUnlikeReactions: {},     // To store sent friend requests by user ID
-
-
-
+  /* Love and Unlike for Replies */
+  replyLoveReactions: {}, // To store rejected/canceled friend requests by user ID
+  replyUnlikeReactions: {}, // To store sent friend requests by user ID
 
   /* Online  Users */
-// Initial state: an array to store online user IDs
+  // Initial state: an array to store online user IDs
   onlineUsers: [],
 
-/*   Message */
-receiver_id: null,
+  /*   Message */
+  receiver_id: null,
 
-shouldRefetch: false,
+  shouldRefetch: false,
 
-commentId:'',
+  commentId: "",
 
-
-totalComments: {}, // Initial state for total comments by post ID
-
-
-
-
-
+  totalComments: {}, // Initial state for total comments by post ID
 };
 
 export const homeSlice = createSlice({
@@ -169,7 +158,7 @@ export const homeSlice = createSlice({
     },
 
     /* Friend Requests reducers */
-/*<<--->> if we unfriend anyone we will treat them as cancelRequests  */
+    /*<<--->> if we unfriend anyone we will treat them as cancelRequests  */
     setRequestSent: (state, action) => {
       const { userId } = action.payload;
       state.sentRequests[userId] = true; // Mark request as sent
@@ -201,198 +190,170 @@ export const homeSlice = createSlice({
       delete state.cancelRequests[userId]; // Remove from sent if accepted
     },
 
+    /* Group */
 
-/* Group */
+    setGroupAudience(state, action) {
+      state.audience = action.payload;
+    },
+    setGroupDetails(state, action) {
+      state.groupDetails = action.payload;
+    },
 
-setGroupAudience(state, action) {
-  state.audience = action.payload;
-},
-setGroupDetails(state, action) {
-  state.groupDetails = action.payload;
-},
+    setPageUpdate: (state, action) => {
+      state.pageUpdate = action.payload; // Update the pageUpdate state
+    },
 
-setPageUpdate: (state, action) => {
-  state.pageUpdate = action.payload;  // Update the pageUpdate state
-},
+    setAdminGroups: (state, action) => {
+      state.adminGroups = action.payload;
+    },
+    // Add this to your homeSlice
+    setGroupName: (state, action) => {
+      const { groupId, newName } = action.payload;
+      state.adminGroups = state.adminGroups.map((group) =>
+        group.group_id === groupId ? { ...group, group_name: newName } : group
+      );
+    },
 
-setAdminGroups: (state, action) => {
-  state.adminGroups = action.payload;
-},
-// Add this to your homeSlice
-setGroupName: (state, action) => {
-  const { groupId, newName } = action.payload;
-  state.adminGroups = state.adminGroups.map((group) =>
-    group.group_id === groupId
-      ? { ...group, group_name: newName }
-      : group
-  );
-},
-
-/*<--- Page --->*/
-/* 
+    /*<--- Page --->*/
+    /* 
 pageAddress: '',
 pageCategory: '',
 pageLocation: '',
 pageEmail:'',
 pageDetails:'', */
 
+    setPagePhone(state, action) {
+      state.pagePhone = action.payload;
+    },
+    setpageCategory(state, action) {
+      state.pageCategory = action.payload;
+    },
+    setpageLocation(state, action) {
+      state.pageLocation = action.payload;
+    },
+    setpageEmail(state, action) {
+      state.pageEmail = action.payload;
+    },
+    setpageDetails(state, action) {
+      state.pageDetails = action.payload;
+    },
 
-setPagePhone(state, action) {
-  state.pagePhone = action.payload;
-},
-setpageCategory(state, action) {
-  state.pageCategory = action.payload;
-},
-setpageLocation(state, action) {
-  state.pageLocation = action.payload;
-},
-setpageEmail(state, action) {
-  state.pageEmail = action.payload;
-},
-setpageDetails(state, action) {
-  state.pageDetails = action.payload;
-},
+    setGroupUpdate: (state, action) => {
+      state.groupUpdate = action.payload; // Update the groupUpdate state
+    },
+    setPageError: (state, action) => {
+      state.pageError = action.payload; // Update the groupUpdate state
+    },
 
-setGroupUpdate: (state, action) => {
-  state.groupUpdate = action.payload;  // Update the groupUpdate state
-},
-setPageError: (state, action) => {
-  state.pageError = action.payload;  // Update the groupUpdate state
-},
+    /* Love and Unlike */
 
+    setLoveReaction: (state, action) => {
+      const { postId, isActive } = action.payload;
+      if (isActive) {
+        state.loveReactions[postId] = true; // Mark as loved
+        delete state.unlikeReactions[postId]; // Remove the 'unlike' if it was previously active
+      } else {
+        delete state.loveReactions[postId]; // Remove love reaction if deactivated
+      }
+    },
 
-
-
-/* Love and Unlike */
-
-setLoveReaction: (state, action) => {
-  const { postId, isActive } = action.payload;
-  if (isActive) {
-    state.loveReactions[postId] = true; // Mark as loved
-    delete state.unlikeReactions[postId]; // Remove the 'unlike' if it was previously active
-  } else {
-    delete state.loveReactions[postId]; // Remove love reaction if deactivated
-  }
-},
-
-setUnlikeReactions: (state, action) => {
-  const { postId, isActive } = action.payload;
-  if (isActive) {
-    state.unlikeReactions[postId] = true; // Mark as unliked
-    delete state.loveReactions[postId]; // Remove love reaction if it was previously active
-  } else {
-    delete state.unlikeReactions[postId]; // Remove unlike reaction if deactivated
-  }
-}
-,
-
-
-
-/* Love and Unlike for comment */
-/* commentLoveReactions: {}, // To store rejected/canceled friend requests by user ID
+    setUnlikeReactions: (state, action) => {
+      const { postId, isActive } = action.payload;
+      if (isActive) {
+        state.unlikeReactions[postId] = true; // Mark as unliked
+        delete state.loveReactions[postId]; // Remove love reaction if it was previously active
+      } else {
+        delete state.unlikeReactions[postId]; // Remove unlike reaction if deactivated
+      }
+    },
+    /* Love and Unlike for comment */
+    /* commentLoveReactions: {}, // To store rejected/canceled friend requests by user ID
 commentUnlikeReactions: {},     // To store sent friend requests by user ID
  */
 
+    setCommentsLoveReaction: (state, action) => {
+      const { commentID, isActive } = action.payload;
+      if (isActive) {
+        state.commentLoveReactions[commentID] = true; // Mark as loved
+        delete state.commentUnlikeReactions[commentID]; // Remove the 'unlike' if it was previously active
+      } else {
+        delete state.commentLoveReactions[commentID]; // Remove love reaction if deactivated
+      }
+    },
 
-
-setCommentsLoveReaction: (state, action) => {
-  const { commentID, isActive } = action.payload;
-  if (isActive) {
-    state.commentLoveReactions[commentID] = true; // Mark as loved
-    delete state.commentUnlikeReactions[commentID]; // Remove the 'unlike' if it was previously active
-  } else {
-    delete state.commentLoveReactions[commentID]; // Remove love reaction if deactivated
-  }
-},
-
-setCommentsUnlikeReactions: (state, action) => {
-  const { commentID, isActive } = action.payload;
-  if (isActive) {
-    state.commentUnlikeReactions[commentID] = true; // Mark as unliked
-    delete state.commentLoveReactions[commentID]; // Remove love reaction if it was previously active
-  } else {
-    delete state.commentUnlikeReactions[commentID]; // Remove unlike reaction if deactivated
-  }
-}
-,
-
-/* replyLoveReactions: {}, // To store rejected/canceled friend requests by user ID
+    setCommentsUnlikeReactions: (state, action) => {
+      const { commentID, isActive } = action.payload;
+      if (isActive) {
+        state.commentUnlikeReactions[commentID] = true; // Mark as unliked
+        delete state.commentLoveReactions[commentID]; // Remove love reaction if it was previously active
+      } else {
+        delete state.commentUnlikeReactions[commentID]; // Remove unlike reaction if deactivated
+      }
+    },
+    /* replyLoveReactions: {}, // To store rejected/canceled friend requests by user ID
 replyUnlikeReactions: {},     // To store sent friend requests by user ID
 
  */
 
-setReplyLoveReaction: (state, action) => {
-  const { replyID, isActive } = action.payload;
-  if (isActive) {
-    state.replyLoveReactions[replyID] = true; // Mark as loved
-    delete state.replyUnlikeReactions[replyID]; // Remove the 'unlike' if it was previously active
-  } else {
-    delete state.replyLoveReactions[replyID]; // Remove love reaction if deactivated
-  }
-},
+    setReplyLoveReaction: (state, action) => {
+      const { replyID, isActive } = action.payload;
+      if (isActive) {
+        state.replyLoveReactions[replyID] = true; // Mark as loved
+        delete state.replyUnlikeReactions[replyID]; // Remove the 'unlike' if it was previously active
+      } else {
+        delete state.replyLoveReactions[replyID]; // Remove love reaction if deactivated
+      }
+    },
 
-setReplyUnlikeReactions: (state, action) => {
-  const { replyID, isActive } = action.payload;
-  if (isActive) {
-    state.replyUnlikeReactions[replyID] = true; // Mark as unliked
-    delete state.replyLoveReactions[replyID]; // Remove love reaction if it was previously active
-  } else {
-    delete state.replyUnlikeReactions[replyID]; // Remove unlike reaction if deactivated
-  }
-}
-,
+    setReplyUnlikeReactions: (state, action) => {
+      const { replyID, isActive } = action.payload;
+      if (isActive) {
+        state.replyUnlikeReactions[replyID] = true; // Mark as unliked
+        delete state.replyLoveReactions[replyID]; // Remove love reaction if it was previously active
+      } else {
+        delete state.replyUnlikeReactions[replyID]; // Remove unlike reaction if deactivated
+      }
+    },
+    /*   Online Users */
+    setUserOnline: (state, action) => {
+      state.onlineUsers.push(action.payload);
+    },
+    setUserOffline: (state, action) => {
+      state.onlineUsers = state.onlineUsers.filter(
+        (userId) => userId !== action.payload
+      );
+    },
 
+    /* Message */
+    setReceiverId: (state, action) => {
+      state.receiver_id = action.payload;
+    },
 
+    triggerRefetch: (state) => {
+      state.shouldRefetch = !state.shouldRefetch; // Toggling state
+    },
 
-
-
-
-
-
-
-
-
-
-
-/*   Online Users */
-setUserOnline: (state, action) => {
-  state.onlineUsers.push(action.payload);
-},
-setUserOffline: (state, action) => {
-  state.onlineUsers = state.onlineUsers.filter(
-    (userId) => userId !== action.payload
-  );
-},
-
-
-/* Message */
-setReceiverId: (state, action) => {
-  state.receiver_id = action.payload;
-},
-
-
-triggerRefetch: (state) => {
-  state.shouldRefetch = !state.shouldRefetch; // Toggling state
-},
-
-/* Comments */
+    /* Comments */
     /* Profile state reducers */
     setCommentId: (state, action) => {
       state.commentId = action.payload;
     },
 
-
     setTotalComments: (state, action) => {
       const { postId, totalComments } = action.payload;
       state.totalComments[postId] = totalComments; // Store total comments by post ID
-    }
+    },
 
+    /* isFollowing */
+    setFollowing: (state, action) => {
+      const { userId } = action.payload;
+      state.isFollowing[userId] = true;
+    },
 
-
-
-
-
-
+    setUnFollowing: (state, action) => {
+      const { userId } = action.payload;
+      state.isFollowing[userId] = false;
+    },
   },
 });
 /*<--- Page --->*/
@@ -404,26 +365,26 @@ pageEmail:'',
 pageDetails:'', */
 
 export const {
- setGroupUpdate,
- setTotalComments,
- setCommentId,
- triggerRefetch,
- setReplyLoveReaction,
- setReplyUnlikeReactions,
- setReceiverId,
- setUserOffline,
- setUserOnline,
- setLoveReaction,
- setUnlikeReactions,
- setPageError,
- setPageUpdate,
- setPagePhone,
- setpageCategory,
- setpageLocation,
- setpageEmail,
- setpageDetails,
- setGroupName,
- setAdminGroups,
+  setGroupUpdate,
+  setTotalComments,
+  setCommentId,
+  triggerRefetch,
+  setReplyLoveReaction,
+  setReplyUnlikeReactions,
+  setReceiverId,
+  setUserOffline,
+  setUserOnline,
+  setLoveReaction,
+  setUnlikeReactions,
+  setPageError,
+  setPageUpdate,
+  setPagePhone,
+  setpageCategory,
+  setpageLocation,
+  setpageEmail,
+  setpageDetails,
+  setGroupName,
+  setAdminGroups,
   setProfile_picture,
   setUser_id,
   setUser_fname,
@@ -447,7 +408,9 @@ export const {
   setGroupAudience,
   setGroupDetails,
   setCommentsLoveReaction,
-  setCommentsUnlikeReactions
+  setCommentsUnlikeReactions,
+  setFollowing,
+  setUnFollowing
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

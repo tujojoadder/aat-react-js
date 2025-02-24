@@ -13,7 +13,7 @@ import {
   setRequestCancel,
 } from "../../home/HomeSlice";
 import { handleApiError } from "../../handleApiError/handleApiError";
-import "./ProfileButton.css";
+
 import { useParams } from "react-router-dom";
 
 export default function ProfileButton({ type }) {
@@ -132,7 +132,7 @@ export default function ProfileButton({ type }) {
       return (
         <button
           onClick={handleCancelButton}
-          className="btn-cancel-request p-1 button-size"
+          className="btn-cancel-request  button-size"
           type="button"
           disabled={cancelingRequest}
           style={{

@@ -3,9 +3,7 @@ import { useParams } from "react-router-dom";
 import ProfileSkeleton from "./ProfileSkeleton/ProfileSkeleton";
 import ProfileHomeBack from "./ProfileHomeBack/ProfileHomeBack";
 import ProfilePost from "./ProfilePost/ProfilePost";
-import {
-  useGetUserDetailsQuery,
-} from "../../services/friendsApi";
+import { useGetUserDetailsQuery } from "../../services/friendsApi";
 import ImageContainer from "../Friends/ImageContainer/ImageContainer";
 import FriendsContainer from "./FriendsContainer/FriendsContainer";
 import FollowerContainer from "./FollowerContainer/FollowerContainer";
@@ -18,9 +16,9 @@ import LargeScreenProfile from "../LargeScreenBack/LargeScreenProfileBack";
 import { NavLink } from "react-router-dom";
 import MidScreenBack from "../SmallScreenBack/MidScreenBack";
 import ProfileButton from "./ProfileButton/ProfileButton";
+import FollowButton from "./ProfileButton/FollowButton";
 export default function Profile() {
   const { id } = useParams();
-
 
   const scrollRef = useRef(null);
   const [currentTab, setCurrentTab] = useState("More");
@@ -130,7 +128,7 @@ export default function Profile() {
 
   return (
     <>
-      {isSuccess  && (
+      {isSuccess && (
         <div
           className="friend-home main border-start border-end mb-1 m-0 p-0"
           style={{ backgroundColor: "white", minHeight: "100vh" }}
@@ -138,7 +136,7 @@ export default function Profile() {
           <div
             ref={scrollRef}
             className="header__wrapper m-0 p-0"
-            style={{ overflowY: "scroll", overflowX:'hidden' }}
+            style={{ overflowY: "scroll", overflowX: "hidden" }}
           >
             {/*    Back buttons */}
             <SmallScreenBack
@@ -157,7 +155,7 @@ export default function Profile() {
               <div className="left__col">
                 <div className="img__container">
                   <img
-                    src={  `${process.env.REACT_APP_LARAVEL_URL}/${profileData?.data?.profile_picture}`    }
+                    src={`${process.env.REACT_APP_LARAVEL_URL}/${profileData?.data?.profile_picture}`}
                     style={{ backgroundColor: "lightgray" }}
                     alt="Profile"
                   />
@@ -173,10 +171,16 @@ export default function Profile() {
                   <div className="d-flex justify-content-center justify-content-sm-end">
                     {/*  massage and Manage will stay for admin */}
 
-                    <div className="mx-4">
+                    <div className="">
                       <ProfileButton
                         type={profileData?.data?.friend_state}
                         user_id={id}
+                      />
+                    </div>
+                    <div className="mr-4 ml-3">
+                      <FollowButton
+                        userId={id}
+                        is_following={profileData?.data?.is_following}
                       />
                     </div>
                   </div>

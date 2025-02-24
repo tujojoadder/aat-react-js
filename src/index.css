@@ -321,3 +321,19 @@ max-width: 100%;
   right: 0;
   border: 2px solid white;
 }
+
+
+
+
+/* 
+blue---> #1682e8
+disable color -->  #e8dddc
+*/
+.button-size{
+  min-width: 90px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+
+}

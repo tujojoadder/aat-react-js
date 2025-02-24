@@ -178,6 +178,16 @@ export const profileApi = createApi({
         body: { image_id },
       }),
     }),
+
+
+    toggoleUserFollow:builder.mutation({
+      query:(body)=>({
+      url:'toggoleuserfollow',
+      method:'POST',
+      body:body
+      }),
+      invalidatesTags:["Following"]
+     }),
   }),
 });
 
@@ -206,4 +216,5 @@ useGetSpecificUserAboutQuery,
   useGetAuthUserFollowerQuery,
   useGetAuthUserFollowingQuery,
   useGetAuthUserFriendQuery,
+  useToggoleUserFollowMutation
 } = profileApi;
