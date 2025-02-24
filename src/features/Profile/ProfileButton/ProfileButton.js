@@ -7,7 +7,6 @@ import {
   useUnfriendUserMutation,
 } from "../../../services/friendsApi";
 import {
-  setToastSuccess,
   setRequestSent,
   setRequestRejected,
   setRequestAccepted,
@@ -47,9 +46,7 @@ export default function ProfileButton({ type }) {
     try {
       const res = await sendFriendRequest({ receiver_id: id });
       if (res.data) {
-        dispatch(
-          setToastSuccess({ toastSuccess: "Friend request sent successfully" })
-        );
+
         dispatch(setRequestSent({ userId: id }));
       } else if (res.error) {
         handleApiError(res.error, dispatch);
@@ -65,11 +62,7 @@ export default function ProfileButton({ type }) {
     try {
       const res = await cancelFriendRequest({ receiver_id: id });
       if (res.data) {
-        dispatch(
-          setToastSuccess({
-            toastSuccess: "Friend request canceled successfully",
-          })
-        );
+     
         dispatch(setRequestCancel({ userId: id }));
       } else if (res.error) {
         handleApiError(res.error, dispatch);
@@ -88,7 +81,6 @@ export default function ProfileButton({ type }) {
         sender_id: id,
         decision: "accepted",
       }).unwrap();
-      dispatch(setToastSuccess({ toastSuccess: "Friend added successfully" }));
       dispatch(setRequestAccepted({ userId: id }));
     } catch (error) {
       handleApiError(error, dispatch);
@@ -107,7 +99,6 @@ export default function ProfileButton({ type }) {
         decision: "rejected",
       }).unwrap();
 
-      dispatch(setToastSuccess({ toastSuccess: "Friend request rejected" }));
       dispatch(setRequestRejected({ userId: id }));
     } catch (error) {
       handleApiError(error, dispatch);
@@ -132,12 +123,12 @@ export default function ProfileButton({ type }) {
   // User has recived a request
 
   if (
-    sentRequests === true ||
-    cancelRequests === true ||
-    acceptedRequests === true ||
-    rejectedRequests === true
+    sentRequests ||
+    cancelRequests ||
+    acceptedRequests ||
+    rejectedRequests  
   ) {
-    if (sentRequests === true) {
+    if (sentRequests  ) {
       return (
         <button
           onClick={handleCancelButton}
@@ -161,7 +152,7 @@ export default function ProfileButton({ type }) {
           )}
         </button>
       );
-    } else if (cancelRequests === true) {
+    } else if (cancelRequests) {
       return (
         <button
           onClick={handleAddButton}
@@ -187,7 +178,7 @@ export default function ProfileButton({ type }) {
           )}
         </button>
       );
-    } else if (acceptedRequests === true) {
+    } else if (acceptedRequests) {
       return (
         <button
           onClick={handleUnfriend}
@@ -211,7 +202,7 @@ export default function ProfileButton({ type }) {
           )}
         </button>
       );
-    } else if (rejectedRequests === true) {
+    } else if (rejectedRequests) {
       return (
         <button
           onClick={handleAddButton}

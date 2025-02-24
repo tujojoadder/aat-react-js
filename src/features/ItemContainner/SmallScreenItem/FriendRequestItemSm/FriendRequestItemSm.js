@@ -22,6 +22,7 @@ export default function FriendRequestItemSm({
   const isRequestAccepted = useSelector((state) => state.home.acceptedRequests[user_id]);
   const isRequestRejected = useSelector((state) => state.home.rejectedRequests[user_id]);
   const isRequestSent = useSelector((state) => state.home.sentRequests[user_id]);
+  const isCancelRequests = useSelector((state) => state.home.cancelRequests[user_id]);
 
   const [
     ManageFriendRequestMutation,
@@ -100,7 +101,7 @@ export default function FriendRequestItemSm({
         <p className="text-muted mb-0 text-truncate">{handle}</p>
       </div>
       <div className="d-flex">
-        {!isRequestAccepted && !isRequestRejected && !isRequestSent ? (
+        {!isRequestAccepted && !isRequestRejected && !isRequestSent && !isCancelRequests ? (
           <>
             <div className="add-delete-button me-2">
               <button
@@ -155,7 +156,9 @@ export default function FriendRequestItemSm({
               Request Accepted
             </button>
           </div>
-        ) : (
+        ) : isRequestRejected ?
+        
+        (
           <div className="add-friend-button">
             <button
               className="btn py-2 btn-md"
@@ -165,7 +168,7 @@ export default function FriendRequestItemSm({
               Request Rejected
             </button>
           </div>
-        )}
+        ):null}
       </div>
     </div>
   );
