@@ -17,6 +17,7 @@ import { NavLink } from "react-router-dom";
 import MidScreenBack from "../SmallScreenBack/MidScreenBack";
 import ProfileButton from "./ProfileButton/ProfileButton";
 import FollowButton from "./ProfileButton/FollowButton";
+import LockScreen from "./LockProfile/LockProfile";
 export default function Profile() {
   const { id } = useParams();
 
@@ -126,6 +127,9 @@ export default function Profile() {
     backgroundColor: "lightgrey", // Added for debugging
   };
 
+  console.log("friend :" + profileData?.data?.friend_state);
+  console.log("privacy :" + profileData?.data?.privacy_setting);
+
   return (
     <>
       {isSuccess && (
@@ -177,147 +181,164 @@ export default function Profile() {
                         user_id={id}
                       />
                     </div>
-                    <div className="mr-4 ml-3">
-                      <FollowButton
-                        userId={id}
-                        is_following={profileData?.data?.is_following}
-                      />
-                    </div>
+
+                    {/* follow button only if user is not locked his profile */}
+                    {profileData?.data?.privacy_setting !== "locked" ? (
+                      <div className="ml-3">
+                        <FollowButton
+                          userId={id}
+                          is_following={profileData?.data?.is_following}
+                        />
+                      </div>
+                    ) : null}
+                    <div className="mr-4 "></div>
                   </div>
                 </nav>
               </div>
             </div>
 
-            {/* Tabs */}
-            <ul className="nav nav-tabs mt-3 mx-2 ">
-              <li className="nav-item">
-                <a
-                  className="nav-link active"
-                  href="#post"
-                  data-bs-toggle="tab"
-                >
-                  Posts
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#image" data-bs-toggle="tab">
-                  Photos
-                </a>
-              </li>
-              <li className="nav-item d-none d-lg-block">
-                <a className="nav-link" href="#friends" data-bs-toggle="tab">
-                  Friends
-                </a>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  href="#"
-                  role="button"
-                  aria-expanded="false"
-                >
-                  {currentTab}
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
+            {/* Lock screen or tabs */}
+
+            {profileData?.data?.friend_state !== "friend" &&
+            profileData?.data?.privacy_setting === "locked" ? (
+              <LockScreen />
+            ) : (
+              <>
+                <ul className="nav nav-tabs mt-3 mx-2 ">
+                  <li className="nav-item">
                     <a
-                      className="dropdown-item d-lg-none"
+                      className="nav-link active"
+                      href="#post"
+                      data-bs-toggle="tab"
+                    >
+                      Posts
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#image" data-bs-toggle="tab">
+                      Photos
+                    </a>
+                  </li>
+                  <li className="nav-item d-none d-lg-block">
+                    <a
+                      className="nav-link"
                       href="#friends"
                       data-bs-toggle="tab"
-                      onClick={() => handleTabClick("Friends")}
                     >
                       Friends
                     </a>
                   </li>
-                  <li>
+                  <li className="nav-item dropdown">
                     <a
-                      className="dropdown-item"
-                      href="#follower"
-                      data-bs-toggle="tab"
-                      onClick={() => handleTabClick("Follower")}
+                      className="nav-link dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      href="#"
+                      role="button"
+                      aria-expanded="false"
                     >
-                      Follower
+                      {currentTab}
                     </a>
-                  </li>
-                  <li>
-                    <a
-                      className="dropdown-item"
-                      href="#following"
-                      data-bs-toggle="tab"
-                      onClick={() => handleTabClick("Following")}
-                    >
-                      Following
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="dropdown-item"
-                      href="#about"
-                      data-bs-toggle="tab"
-                      onClick={() => handleTabClick("About")}
-                    >
-                      About
-                    </a>
+                    <ul className="dropdown-menu">
+                      <li>
+                        <a
+                          className="dropdown-item d-lg-none"
+                          href="#friends"
+                          data-bs-toggle="tab"
+                          onClick={() => handleTabClick("Friends")}
+                        >
+                          Friends
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className="dropdown-item"
+                          href="#follower"
+                          data-bs-toggle="tab"
+                          onClick={() => handleTabClick("Follower")}
+                        >
+                          Follower
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className="dropdown-item"
+                          href="#following"
+                          data-bs-toggle="tab"
+                          onClick={() => handleTabClick("Following")}
+                        >
+                          Following
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className="dropdown-item"
+                          href="#about"
+                          data-bs-toggle="tab"
+                          onClick={() => handleTabClick("About")}
+                        >
+                          About
+                        </a>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
-              </li>
-            </ul>
 
-            {/* Tab Content */}
-            <div className="tab-content p-3 px-0">
-              {/* Posts Tab Content */}
-              <div className="tab-pane fade show active" id="post">
-                <h5 className="ms-4 mb-4" color="#65676b">
-                  Posts
-                </h5>
-                <ProfilePost userId={id} />
-              </div>
+                {/* Tab Content */}
+                <div className="tab-content p-3 px-0">
+                  {/* Posts Tab Content */}
+                  <div className="tab-pane fade show active" id="post">
+                    <h5 className="ms-4 mb-4" color="#65676b">
+                      Posts
+                    </h5>
+                    <ProfilePost userId={id} />
+                  </div>
 
-              {/* Photos Tab Content */}
-              <div className="tab-pane fade" id="image">
-                <h5 className="ms-4 mb-1" color="#65676b">
-                  Photos
-                </h5>
+                  {/* Photos Tab Content */}
+                  <div className="tab-pane fade" id="image">
+                    <h5 className="ms-4 mb-1" color="#65676b">
+                      Photos
+                    </h5>
 
-                <ImageContainer userId={id} />
-              </div>
+                    <ImageContainer userId={id} />
+                  </div>
 
-              {/* Friends Tab Content */}
-              <div className="tab-pane fade" id="friends">
-                <h5 className="ms-4 mb-1" color="#65676b">
-                  Friends
-                </h5>
+                  {/* Friends Tab Content */}
+                  <div className="tab-pane fade" id="friends">
+                    <h5 className="ms-4 mb-1" color="#65676b">
+                      Friends
+                    </h5>
 
-                <FriendsContainer userId={id} />
-              </div>
+                    <FriendsContainer userId={id} />
+                  </div>
 
-              {/* Follower Tab Content */}
-              <div className="tab-pane fade" id="follower">
-                <h5 className="ms-4 mb-1" color="#65676b">
-                  Follower
-                </h5>
+                  {/* Follower Tab Content */}
+                  <div className="tab-pane fade" id="follower">
+                    <h5 className="ms-4 mb-1" color="#65676b">
+                      Follower
+                    </h5>
 
-                <FollowerContainer userId={id} />
-              </div>
+                    <FollowerContainer userId={id} />
+                  </div>
 
-              {/* Following Tab Content */}
-              <div className="tab-pane fade" id="following">
-                <h5 className="ms-4 mb-1" color="#65676b">
-                  Following
-                </h5>
+                  {/* Following Tab Content */}
+                  <div className="tab-pane fade" id="following">
+                    <h5 className="ms-4 mb-1" color="#65676b">
+                      Following
+                    </h5>
 
-                <FollowingContainer userId={id} />
-              </div>
+                    <FollowingContainer userId={id} />
+                  </div>
 
-              {/* About Tab Content */}
-              <div className="tab-pane fade" id="about">
-                <h5 className="ms-4 mb-1" color="#65676b">
-                  About
-                </h5>
-                <About userId={id} />
-              </div>
-            </div>
+                  {/* About Tab Content */}
+                  <div className="tab-pane fade" id="about">
+                    <h5 className="ms-4 mb-1" color="#65676b">
+                      About
+                    </h5>
+                    <About userId={id} />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
