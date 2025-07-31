@@ -44,7 +44,7 @@ export default function AllFriendList({
         ></span>
       </div>
       <div className="profile-info flex-grow-1">
-        <p className="fw-bold mb-0 text-truncate">{name} {reciverID}</p>
+        <p className="fw-bold mb-0 text-truncate">{name}</p>
         <p className="text-muted mb-0 text-truncate">{handle}</p>
       </div>
     </div>
