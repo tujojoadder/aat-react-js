@@ -24,9 +24,9 @@ export default function Home() {
 
   const { data, isFetching, isError, isSuccess } = useGetPostsQuery(page);
 
-if (isSuccess) {
-  console.log(data);
-}
+  if (isSuccess) {
+    console.log(data);
+  }
 
   useEffect(() => {
     if (isSuccess && data?.data) {
@@ -98,11 +98,7 @@ if (isSuccess) {
             </div>
           ))}
 
-          <div
-            ref={ref}
-            className="loading-trigger"
-           
-          >
+          <div ref={ref} className="loading-trigger">
             {isFetching && <Spinner />}
           </div>
         </div>

@@ -4,9 +4,11 @@ import {
   useSaveAboutMutation,
   useUpdateBirthdateMutation,
   useUpdateGenderMutation,
+  useUpdateProfilePictureMutation,
+  useUpdateCoverPhotoMutation,
 } from "../../../services/profileApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setToastSuccess } from "../../home/HomeSlice";
+import { setToastSuccess, setProfile_picture, setCover_photo } from "../../home/HomeSlice";
 import { handleApiError } from "../../handleApiError/handleApiError";
 import ProfileHomeBack from "../ProfileHomeBack/ProfileHomeBack";
 import SmallScreenBack from "../../SmallScreenBack/SmallScreenBack";
@@ -16,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProfileManage() {
   const birthdate = useSelector((state) => state.home.birthdate);
   const currentGender = useSelector((state) => state.home.gender);
-const navigate=useNavigate();
+  const navigate = useNavigate();
   const {
     data: useGetAboutDataQueryuseGetAboutDataQueryData,
     isSuccess: useGetAboutDataQuerySucess,
@@ -26,10 +28,10 @@ const navigate=useNavigate();
     refetch: useGetAboutDataQueryrefetch,
   } = useGetAboutDataQuery();
 
-/*   if (useGetAboutDataQuerySucess) {
-    console.log(useGetAboutDataQueryuseGetAboutDataQueryData);
-  }
- */
+  /*   if (useGetAboutDataQuerySucess) {
+      console.log(useGetAboutDataQueryuseGetAboutDataQueryData);
+    }
+   */
   const [birthday, setBirthday] = useState(() => {
     if (birthdate) {
       const [year, month, day] = birthdate.split("-");
@@ -93,6 +95,15 @@ const navigate=useNavigate();
   ] = useUpdateBirthdateMutation();
   const [updateGender, { isLoading: isSavingGender }] =
     useUpdateGenderMutation();
+
+  /*  <--- Image Upload Mutations ---> */
+  const [updateProfilePicture, { isLoading: isUploadingProfile }] = useUpdateProfilePictureMutation();
+  const [updateCoverPhoto, { isLoading: isUploadingCover }] = useUpdateCoverPhotoMutation();
+
+  /* <--- File Input Refs ---> */
+  const profileInputRef = React.useRef(null);
+  const coverInputRef = React.useRef(null);
+
 
   // Handlers
   const handleInputChange = (e) => {
@@ -169,7 +180,7 @@ const navigate=useNavigate();
   };
 
 
-/* Edite button */
+  /* Edite button */
   const handleEdit = (section) => {
     if (section === "About") {
       setEditAbout(true);
@@ -180,17 +191,51 @@ const navigate=useNavigate();
     }
   };
 
-/* handleChangeProfile button */
-const handleChangeProfile = () => {
- navigate('setprofile');
-};
+  /* handleChangeProfile button */
+  const handleChangeProfile = () => {
+    profileInputRef.current.click();
+  };
 
+  const handleProfileFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
 
+      try {
+        const res = await updateProfilePicture(formData).unwrap();
+        if (res.image_url) {
+          dispatch(setToastSuccess({ toastSuccess: "Profile picture updated successfully!" }));
+          dispatch(setProfile_picture({ profile_picture: res.image_url }));
+        }
+      } catch (err) {
+        handleApiError(err, dispatch);
+      }
+    }
+  };
 
-/* handleChangeCover button */
-const handleChangeCover = () => {
-  navigate('setcoverphoto');
-};
+  /* handleChangeCover button */
+  const handleChangeCover = () => {
+    coverInputRef.current.click();
+  };
+
+  const handleCoverFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      try {
+        const res = await updateCoverPhoto(formData).unwrap();
+        if (res.image_url) {
+          dispatch(setToastSuccess({ toastSuccess: "Cover photo updated successfully!" }));
+          dispatch(setCover_photo({ cover_photo: res.image_url }));
+        }
+      } catch (err) {
+        handleApiError(err, dispatch);
+      }
+    }
+  };
 
 
   const populateDays = () => {
@@ -216,19 +261,33 @@ const handleChangeCover = () => {
         <div className="row justify-content-center">
           {/* Button for Changing Profile Picture */}
           <div className="col-auto">
-            <button onClick={handleChangeProfile} className="btn p-2 btn-primary d-flex align-items-center">
+            <input
+              type="file"
+              style={{ display: 'none' }}
+              ref={profileInputRef}
+              onChange={handleProfileFileChange}
+              accept="image/*"
+            />
+            <button onClick={handleChangeProfile} className="btn p-2 btn-primary d-flex align-items-center" disabled={isUploadingProfile}>
               <i className="fas fa-user-circle me-2"></i>{" "}
               {/* Font Awesome Icon for Profile */}
-              Change Profile Picture
+              {isUploadingProfile ? "Uploading..." : "Change Profile Picture"}
             </button>
           </div>
 
           {/* Button for Changing Cover Photo */}
           <div className="col-auto">
-            <button onClick={handleChangeCover}  className="btn btn-secondary p-2 d-flex align-items-center">
+            <input
+              type="file"
+              style={{ display: 'none' }}
+              ref={coverInputRef}
+              onChange={handleCoverFileChange}
+              accept="image/*"
+            />
+            <button onClick={handleChangeCover} className="btn btn-secondary p-2 d-flex align-items-center" disabled={isUploadingCover}>
               <i className="fas fa-image me-2"></i>{" "}
               {/* Font Awesome Icon for Cover Photo */}
-              Change Cover Photo
+              {isUploadingCover ? "Uploading..." : "Change Cover Photo"}
             </button>
           </div>
         </div>

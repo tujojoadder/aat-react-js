@@ -188,6 +188,24 @@ export const profileApi = createApi({
       }),
       invalidatesTags:["Following"]
      }),
+
+     /* Update Profile Picture (Direct) */
+     updateProfilePicture: builder.mutation({
+      query: (formData) => ({
+        url: "/update-profile-picture",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+
+    /* Update Cover Photo (Direct) */
+    updateCoverPhoto: builder.mutation({
+      query: (formData) => ({
+        url: "/update-cover-photo",
+        method: "POST",
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -216,5 +234,7 @@ useGetSpecificUserAboutQuery,
   useGetAuthUserFollowerQuery,
   useGetAuthUserFollowingQuery,
   useGetAuthUserFriendQuery,
-  useToggoleUserFollowMutation
+  useToggoleUserFollowMutation,
+  useUpdateProfilePictureMutation,
+  useUpdateCoverPhotoMutation
 } = profileApi;
