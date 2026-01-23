@@ -23,6 +23,7 @@ export default function Profile() {
 
   const scrollRef = useRef(null);
   const [currentTab, setCurrentTab] = useState("More");
+  const [activeTab, setActiveTab] = useState("post"); // Set default active tab to 'post'
 
   /* // Create a unique key for storing the scroll position
   const localStorageKey = `scrollPosition_${id}`;
@@ -200,33 +201,37 @@ export default function Profile() {
             {/* Lock screen or tabs */}
 
             {profileData?.data?.friend_state !== "friend" &&
-            profileData?.data?.privacy_setting === "locked" ? (
+              profileData?.data?.privacy_setting === "locked" ? (
               <LockScreen />
             ) : (
               <>
                 <ul className="nav nav-tabs mt-3 mx-2 ">
                   <li className="nav-item">
-                    <a
-                      className="nav-link active"
-                      href="#post"
-                      data-bs-toggle="tab"
+                    <button
+                      className={`nav-link ${activeTab === "post" ? "active" : ""}`}
+                      onClick={() => setActiveTab("post")}
+                      type="button"
                     >
                       Posts
-                    </a>
+                    </button>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#image" data-bs-toggle="tab">
+                    <button
+                      className={`nav-link ${activeTab === "image" ? "active" : ""}`}
+                      onClick={() => setActiveTab("image")}
+                      type="button"
+                    >
                       Photos
-                    </a>
+                    </button>
                   </li>
                   <li className="nav-item d-none d-lg-block">
-                    <a
-                      className="nav-link"
-                      href="#friends"
-                      data-bs-toggle="tab"
+                    <button
+                      className={`nav-link ${activeTab === "friends" ? "active" : ""}`}
+                      onClick={() => setActiveTab("friends")}
+                      type="button"
                     >
                       Friends
-                    </a>
+                    </button>
                   </li>
                   <li className="nav-item dropdown">
                     <a
@@ -240,44 +245,52 @@ export default function Profile() {
                     </a>
                     <ul className="dropdown-menu">
                       <li>
-                        <a
+                        <button
                           className="dropdown-item d-lg-none"
-                          href="#friends"
-                          data-bs-toggle="tab"
-                          onClick={() => handleTabClick("Friends")}
+                          onClick={() => {
+                            handleTabClick("Friends");
+                            setActiveTab("friends");
+                          }}
+                          type="button"
                         >
                           Friends
-                        </a>
+                        </button>
                       </li>
                       <li>
-                        <a
+                        <button
                           className="dropdown-item"
-                          href="#follower"
-                          data-bs-toggle="tab"
-                          onClick={() => handleTabClick("Follower")}
+                          onClick={() => {
+                            handleTabClick("Follower");
+                            setActiveTab("follower");
+                          }}
+                          type="button"
                         >
                           Follower
-                        </a>
+                        </button>
                       </li>
                       <li>
-                        <a
+                        <button
                           className="dropdown-item"
-                          href="#following"
-                          data-bs-toggle="tab"
-                          onClick={() => handleTabClick("Following")}
+                          onClick={() => {
+                            handleTabClick("Following");
+                            setActiveTab("following");
+                          }}
+                          type="button"
                         >
                           Following
-                        </a>
+                        </button>
                       </li>
                       <li>
-                        <a
+                        <button
                           className="dropdown-item"
-                          href="#about"
-                          data-bs-toggle="tab"
-                          onClick={() => handleTabClick("About")}
+                          onClick={() => {
+                            handleTabClick("About");
+                            setActiveTab("about");
+                          }}
+                          type="button"
                         >
                           About
-                        </a>
+                        </button>
                       </li>
                     </ul>
                   </li>
@@ -286,55 +299,75 @@ export default function Profile() {
                 {/* Tab Content */}
                 <div className="tab-content p-3 px-0">
                   {/* Posts Tab Content */}
-                  <div className="tab-pane fade show active" id="post">
-                    <h5 className="ms-4 mb-4" color="#65676b">
-                      Posts
-                    </h5>
-                    <ProfilePost userId={id} />
+                  <div className={`tab-pane fade ${activeTab === "post" ? "show active" : ""}`} id="post">
+                    {activeTab === "post" && (
+                      <>
+                        <h5 className="ms-4 mb-4" color="#65676b">
+                          Posts
+                        </h5>
+                        <ProfilePost userId={id} />
+                      </>
+                    )}
                   </div>
 
                   {/* Photos Tab Content */}
-                  <div className="tab-pane fade" id="image">
-                    <h5 className="ms-4 mb-1" color="#65676b">
-                      Photos
-                    </h5>
-
-                    <ImageContainer userId={id} />
+                  <div className={`tab-pane fade ${activeTab === "image" ? "show active" : ""}`} id="image">
+                    {activeTab === "image" && (
+                      <>
+                        <h5 className="ms-4 mb-1" color="#65676b">
+                          Photos
+                        </h5>
+                        <ImageContainer userId={id} />
+                      </>
+                    )}
                   </div>
 
                   {/* Friends Tab Content */}
-                  <div className="tab-pane fade" id="friends">
-                    <h5 className="ms-4 mb-1" color="#65676b">
-                      Friends
-                    </h5>
-
-                    <FriendsContainer userId={id} />
+                  <div className={`tab-pane fade ${activeTab === "friends" ? "show active" : ""}`} id="friends">
+                    {activeTab === "friends" && (
+                      <>
+                        <h5 className="ms-4 mb-1" color="#65676b">
+                          Friends
+                        </h5>
+                        <FriendsContainer userId={id} />
+                      </>
+                    )}
                   </div>
 
                   {/* Follower Tab Content */}
-                  <div className="tab-pane fade" id="follower">
-                    <h5 className="ms-4 mb-1" color="#65676b">
-                      Follower
-                    </h5>
-
-                    <FollowerContainer userId={id} />
+                  <div className={`tab-pane fade ${activeTab === "follower" ? "show active" : ""}`} id="follower">
+                    {activeTab === "follower" && (
+                      <>
+                        <h5 className="ms-4 mb-1" color="#65676b">
+                          Follower
+                        </h5>
+                        <FollowerContainer userId={id} />
+                      </>
+                    )}
                   </div>
 
                   {/* Following Tab Content */}
-                  <div className="tab-pane fade" id="following">
-                    <h5 className="ms-4 mb-1" color="#65676b">
-                      Following
-                    </h5>
-
-                    <FollowingContainer userId={id} />
+                  <div className={`tab-pane fade ${activeTab === "following" ? "show active" : ""}`} id="following">
+                    {activeTab === "following" && (
+                      <>
+                        <h5 className="ms-4 mb-1" color="#65676b">
+                          Following
+                        </h5>
+                        <FollowingContainer userId={id} />
+                      </>
+                    )}
                   </div>
 
                   {/* About Tab Content */}
-                  <div className="tab-pane fade" id="about">
-                    <h5 className="ms-4 mb-1" color="#65676b">
-                      About
-                    </h5>
-                    <About userId={id} />
+                  <div className={`tab-pane fade ${activeTab === "about" ? "show active" : ""}`} id="about">
+                    {activeTab === "about" && (
+                      <>
+                        <h5 className="ms-4 mb-1" color="#65676b">
+                          About
+                        </h5>
+                        <About userId={id} />
+                      </>
+                    )}
                   </div>
                 </div>
               </>
